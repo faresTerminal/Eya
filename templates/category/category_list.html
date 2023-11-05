@@ -1,0 +1,83 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load thumbnail %}
+ 
+
+{% block content %}
+
+ <main class="main">
+        	<div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
+        		<div class="container">
+        			<h1 class="page-title">Product By Category<span>category</span></h1>
+        		</div><!-- End .container -->
+        	</div><!-- End .page-header -->
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="elements-list.html">Category</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Show Category</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+
+            <div class="page-content">
+                <div class="container">
+                	
+                	<hr class="mb-4">
+
+                	<h2 class="title text-center mb-3">Categories</h2><!-- End .title mb-2 -->
+					
+                    <div class="owl-carousel owl-simple" data-toggle="owl" 
+                        data-owl-options='{
+                            "nav": false, 
+                            "dots": true,
+                            "margin": 20,
+                            "loop": false,
+                            "responsive": {
+                                "0": {
+                                    "items":1
+                                },
+                                "480": {
+                                    "items":2
+                                },
+                                "768": {
+                                    "items":3
+                                },
+                                "992": {
+                                    "items":4
+                                },
+                                "1200": {
+                                    "items":4,
+                                    "nav": true,
+                                    "dots": false
+                                }
+                            }
+                        }'>
+                        {% for category in categories %}
+            			<div class="banner banner-cat">
+                			<a href="{% url 'products_by_category' category.slug %}">
+                				{% thumbnail category.cat_image "275x275" crop="center" as ml %}
+                				<img width="{{ ml.width }}" height="{{ml.height }}" src="{{ml.url}}" alt="Banner">
+                				{% endthumbnail %}
+                			</a>
+
+                			<div class="banner-content banner-content-static text-center">
+                				<h3 class="banner-title">{{category.category_name}}</h3><!-- End .banner-title -->
+                				<h4 class="banner-subtitle">{{product_count}} Products</h4><!-- End .banner-subtitle -->
+                				<a href="{% url 'products_by_category' category.slug %}" class="banner-link">Shop Now</a>
+                			</div><!-- End .banner-content -->
+            			</div><!-- End .banner -->
+            			{% endfor %}
+
+        			</div><!-- End .banners-carousel owl-carousel owl-simple -->
+
+                	<hr class="mb-4">
+                </div><!-- End .container -->
+
+            </div><!-- End .page-content -->
+
+        </main><!-- End .main -->
+
+
+{% endblock %}

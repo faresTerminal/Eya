@@ -1,0 +1,149 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load thumbnail %} 
+
+
+{% block content %}
+
+    <style>
+        
+        .containerer {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+        }
+        .checkbox-label {
+            margin-right: 10px;
+        }
+        button {
+            display: block;
+            width: 30%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+<main class="main">
+  <div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
+    <div class="container">
+      <h1 class="page-title">Add Coupon<span>products</span></h1>
+    </div><!-- End .container -->
+  </div><!-- End .page-header -->
+  <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Add Product</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Create Coupon</li>
+      </ol>
+    </div><!-- End .container -->
+  </nav><!-- End .breadcrumb-nav -->
+</main>
+
+
+<div class="container">
+	<div class="row">
+
+		<div class="col-lg-9">
+
+			<div class="containerer">
+    <h2>Add Coupon for {{ product.product_name }}</h2>
+    <div style="text-align: center;">
+        <!-- Display the product price -->
+        <p style="text-align: center;">Product Price: ${{ product.price }}</p>
+        
+        <!-- Display the product image -->
+        <img src="{{ product.images.url }}" alt="{{ product.product_name }}" style="max-width: 200px; display: block; margin: 0 auto;">
+    </div>
+    
+    <form method="post">
+        {% csrf_token %}
+        <!-- Input field for the action (add_coupon or remove_coupon) -->
+        <input type="hidden" name="action" value="add_coupon">
+
+        <div class="form-group">
+            <label for="code">Coupon Code:</label><br>
+            <small><strong>Create Coupon Code for Example: EzrFG43</strong></small><br>
+            <input style="width: 50%;" type="text" name="code" id="code" required>
+        </div>
+        <div class="form-group">
+            <label for="discount">Discount Amount:</label><br>
+            <small><strong>If you want to create a coupon<br> for 2% from price product, enter the value 2</strong></small><br>
+            <input style="width: 50%;" type="text" name="discount" id="price" class="form-input" pattern="[0-9]*" inputmode="numeric" required>
+        </div>
+        <div class="form-group checkbox-group">
+            <label class="checkbox-label" for="active">Active:</label>
+            <input type="checkbox" name="active" id="active" checked>
+        </div>
+        <button type="submit">Add Coupon</button>
+    </form>
+</div>
+			
+		</div>
+		<div class="col-lg-3">
+           {% if coupon %}
+        <h5>Existing Coupons</h5>
+        <ul>
+            {% for c in coupon %}
+                <li>
+                    <strong>Coupon: {{ c.code }}</strong> |
+                    Discount: {{ c.discount }}% |<br>
+                    from price {{product.price}} $<br>
+
+                    Status: {% if c.active %}<strong style="color: green;">Active</strong> {% else %}<strong style="color: red;">Inactive</strong> {% endif %} |
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="remove_coupon">
+                        <input type="hidden" name="coupon_id" value="{{ c.id }}">
+                        <button style="background: none;
+                         color: red;" type="submit">Remove </button>
+                    </form>
+                </li>
+                <hr>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>
+		</div>
+		
+	</div>
+	
+</div>
+
+
+
+
+
+
+
+{% endblock %}

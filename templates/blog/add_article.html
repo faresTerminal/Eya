@@ -1,0 +1,151 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load thumbnail %} 
+ 
+
+{% block content %}
+
+<!-- article_form.html -->
+
+ <script src="{% static 'tinymce/tinymce.min.js' %}"></script>
+ <script>
+    tinymce.init({selector: '#id_body'});
+ </script>
+
+
+<main class="main">
+            <div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
+                <div class="container">
+                    <h1 class="page-title">Add Article<span>Blog</span></h1>
+                </div><!-- End .container -->
+            </div><!-- End .page-header -->
+            <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Blog</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">create a article</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+
+</main>
+<div class="container">
+	<br>
+	<div class="row">
+		<div class="col-sm-0"></div>
+		<div class="col-sm-9">
+
+			   <form method="post" enctype="multipart/form-data" >
+                                   	{% csrf_token %}
+			                				<div class="row">
+			                				   <div class="tab-pane fade show active" id=" tab-dashboard" role="tabpanel" aria-labelledby="tab-dashboard-link">
+								    	           <p>Hello <span class="font-weight-normal text-dark">User</span> (not <span class="font-weight-normal text-dark">User</span>? <a href="#">Log out</a>) 
+								    	              <br>
+								    	               From your account dashboard you can view your <a href="#tab-orders" class="tab-trigger-link link-underline">recent orders</a>, manage your <a href="#tab-address" class="tab-trigger-link">shipping and billing addresses</a>, and <a href="#tab-account" class="tab-trigger-link">edit your password and account details</a>.</p>
+								               </div><!-- .End .tab-pane -->
+			                					<div class="col-sm-6">
+			                						<label>Title *</label>
+			                						<input type="text" name="title" class="form-control" required>
+			                						<small class="form-text">This will be how your name will be displayed in the account section and in reviews</small>
+			                					</div><!-- End .col-sm-6 -->
+
+			                					<div class="col-sm-6">
+			                						<label>Add Image  *</label>
+			                						<input name="image" type="file" class="form-control" required>
+			                						<small class="form-text">This will be how your name will be displayed in the account section and in reviews</small>
+			                						
+			                					</div><!-- End .col-sm-6 -->
+			                				</div><!-- End .row -->
+			                				<label>Body *</label>
+	        							    <textarea name="body" style="height: 500px;" id="id_body" class="form-control" cols="30" rows="4" placeholder="here you can create you article and you can add images and links and more ..."></textarea>
+	        							    <small class="form-text">This will be how your name will be displayed in the account section and in reviews</small>
+			                				
+                                            <br>
+                                            <hr>
+		                					<button type="submit" class="btn btn-outline-primary-2">
+			                					<span>Post Article</span>
+			            						<i class="icon-long-arrow-right"></i>
+			                				</button>
+			   </form>
+			
+		</div>
+		<div class="col-sm-3">
+			<aside>
+                			<div class="sidebar">
+                				<div class="widget widget-search">
+                                    <h3 class="widget-title">Search</h3><!-- End .widget-title -->
+
+                                     <form action="{% url 'Blog_Search' %}" class="search" method='GET'>
+                                        <label for="ws" class="sr-only">Search in blog</label>
+                                        <input type="search" class="form-control" name="keyword" id="ws" placeholder="Search in blog" required>
+                                        <button type="submit" class="btn"><i class="icon-search"></i><span class="sr-only">Search</span></button>
+                                    </form>
+                                </div><!-- End .widget -->
+
+                               
+
+                                <div class="widget">
+                                    <h3 class="widget-title">Popular Posts</h3><!-- End .widget-title -->
+
+                                    <ul class="posts-list">
+                                        {% for posts in popular_posts %}
+                                        <li>
+                                            <figure>
+                                                <a href="{% url 'show_article' id=posts.id slug=posts.slug %}">
+                                                     {% thumbnail posts.image "80x80" crop="center" as bc %}
+                                                    <img width="{{ bc.width }}" height="{{bc.height }}" src="{{bc.url}}">
+                                                    {% endthumbnail %}
+                                                </a>
+                                            </figure>
+
+                                            <div>
+                                                <span>{{posts.posted_on}}</span>
+                                                <h4><a href="{% url 'show_article' id=posts.id slug=posts.slug %}">{{posts.title}}.</a></h4>
+                                            </div>
+                                        </li>
+                                        {% endfor %}
+                                        
+                                    </ul><!-- End .posts-list -->
+                                </div><!-- End .widget -->
+
+                                <div class="widget widget-banner-sidebar">
+                                    <div class="banner-sidebar-title">ad box 280 x 280</div><!-- End .ad-title -->
+                                    
+                                    <div class="banner-sidebar">
+                                        <a href="{% url 'Clearance_Products' %}">
+                                            <img src="{% static 'images/blog/sidebar/banner.jpg' %}" alt="banner">
+                                        </a>
+                                    </div><!-- End .banner-ad -->
+                                </div><!-- End .widget -->
+
+                                <div class="widget">
+                                    <h3 class="widget-title">Products Tags</h3><!-- End .widget-title -->
+
+                                       
+                                        
+                                    <div class="tagcloud">
+                                    	{% for category in categories %}
+                                        <a href="{{category.get_url}}">{{category.category_name}}</a>
+                                        {% endfor %}
+                                       
+                                    </div><!-- End .tagcloud -->
+                                </div><!-- End .widget -->
+
+                                <div class="widget widget-text">
+                                    <h3 class="widget-title">About Blog</h3><!-- End .widget-title -->
+
+                                    <div class="widget-text-content">
+                                        <p>Welcome to our store! We offer a wide selection of items for you to explore. From fashion to tech, we've got it all. Start shopping now and find your favorites!</p>
+                                    </div><!-- End .widget-text-content -->
+                                </div><!-- End .widget -->
+                			</div><!-- End .sidebar sidebar-shop -->
+                		</aside><!-- End .col-lg-3 -->
+		</div>
+	</div>
+</div>
+                             
+
+
+
+{% endblock %}

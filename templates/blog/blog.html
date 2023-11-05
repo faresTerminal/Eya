@@ -1,0 +1,208 @@
+{% extends 'homebase.html' %}
+{% load static %}
+
+{% load thumbnail %} 
+
+{% block content %}
+
+ <main class="main">
+            <div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
+                <div class="container">
+                    <h1 class="page-title">Blog Listing<span>Blog</span></h1>
+                </div><!-- End .container -->
+            </div><!-- End .page-header -->
+            <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Blog</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Listing</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+
+            <div class="page-content">
+                <div class="container">
+                    <div class="toolbox">
+                        <div class="toolbox-left">
+                            <a href="#" class="sidebar-toggler"><i class="icon-bars"></i>Filters</a>
+                        </div><!-- End .toolbox-left -->
+
+                        <div class="toolbox-center">
+                            <div class="toolbox-info">
+                                Showing <span> {{blog_count}}</span> Blogs
+                            </div><!-- End .toolbox-info -->
+                        </div><!-- End .toolbox-center -->
+
+                        <div class="toolbox-right">
+                            <div class="toolbox-sort">
+                               
+                            </div><!-- End .toolbox-sort -->
+                        </div><!-- End .toolbox-right -->
+                    </div><!-- End .toolbox -->
+
+                    <div class="row">
+                         
+                        {% if blog %}
+                        <div class="col-lg-9">
+                            {% for a in blog %}
+                            <article class="entry entry-list">
+                                <div class="row align-items-center">
+                                    <div class="col-md-5">
+                                        <figure class="entry-media">
+                                            <a href="{% url 'show_article' id=a.id slug=a.slug %}">
+                                                {% thumbnail a.image "375x235" crop="center" as blog_pic %}
+                                                <img width="{{ blog_pic.width }}" height="{{blog_pic.height }}" src="{{blog_pic.url}}">
+                                                {% endthumbnail %}
+                                            </a>
+                                        </figure><!-- End .entry-media -->
+                                    </div><!-- End .col-md-5 -->
+
+                                    <div class="col-md-7">
+                                        <div class="entry-body">
+                                            <div class="entry-meta">
+                                                <span class="entry-author">
+                                                    by <a href="#">{{user.first_name}}</a>
+                                                </span>
+                                                <span class="meta-separator">|</span>
+                                                <a href="#">{{a.publish}}</a>
+                                                <span class="meta-separator">|</span>
+                                                <a href="#">{{a.comment_count}} Comments</a>
+                                            </div><!-- End .entry-meta -->
+
+                                            <h2 class="entry-title">
+                                                <a href="{% url 'show_article' id=a.id slug=a.slug %}">{{a.title}}</a>
+                                            </h2><!-- End .entry-title -->
+
+                                            
+
+                                            <div class="entry-content">
+                                                <p>{{a.body|safe|linebreaks|truncatewords_html:35}}</p>
+                                                <a href="{% url 'show_article' id=a.id slug=a.slug %}" class="read-more">Continue Reading</a>
+                                            </div><!-- End .entry-content -->
+                                        </div><!-- End .entry-body -->
+                                    </div><!-- End .col-md-7 -->
+                                </div><!-- End .row -->
+                            </article><!-- End .entry -->
+                            {% endfor %}
+
+                            
+
+
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination">
+                                    <li class="page-item disabled">
+                                        <a class="page-link page-link-prev" href="#" aria-label="Previous" tabindex="-1" aria-disabled="true">
+                                            <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>Prev
+                                        </a>
+                                    </li>
+                                    <li class="page-item active" aria-current="page"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link page-link-next" href="#" aria-label="Next">
+                                            Next <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div><!-- End .col-lg-9 -->
+                        {% else %}
+                        <div class="col-lg-9">
+                            <div>
+                                <h5 class="text-center text-info">No Rusalt Found it ... please try again</h5>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        <aside class="col-lg-3">
+                            <div class="sidebar">
+                                <div class="widget widget-search">
+                                    <h3 class="widget-title">Search</h3><!-- End .widget-title -->
+
+                                     <form action="{% url 'Blog_Search' %}" class="search" method='GET'>
+                                        <label for="ws" class="sr-only">Search in blog</label>
+                                        <input type="search" class="form-control" name="keyword" id="ws" placeholder="Search in blog" required>
+                                        <button type="submit" class="btn"><i class="icon-search"></i><span class="sr-only">Search</span></button>
+                                    </form>
+                                </div><!-- End .widget -->
+
+                                <div class="widget widget-cats">
+                                    <h3 class="widget-title">Categories</h3><!-- End .widget-title -->
+
+                                    <ul>
+                                        {% for category in categories %}
+                                        <li><a href="#">{{category.category_name}}<span>3</span></a></li>
+                                        {% endfor %}
+                                        
+                                    </ul>
+                                </div><!-- End .widget -->
+
+                                <div class="widget">
+                                    <h3 class="widget-title">Popular Posts</h3><!-- End .widget-title -->
+
+                                    <ul class="posts-list">
+                                        {% for p in popular_posts %}
+                                        <li>
+                                            <figure>
+                                                <a href="#">
+                                                    {% thumbnail p.image "80x80" crop="center" as blogs_pic %}
+                                                    <img width="{{ blogs_pic.width }}" height="{{blogs_pic.height }}" src="{{blogs_pic.url}}">
+                                                    {% endthumbnail %}
+                                                </a>
+                                            </figure>
+
+                                            <div>
+                                                <span>{{p.posted_on}}</span>
+                                                <h4><a href="#">{{p.title}}.</a></h4>
+                                            </div>
+                                        </li>
+                                        {% endfor %}
+                                       
+                                    </ul><!-- End .posts-list -->
+                                </div><!-- End .widget -->
+
+                                
+                
+                   
+
+                    
+                        
+
+                       
+                        {% for clr in signbord %}
+                        
+                            <div class="banner">
+                                <a href="#">
+                                     {% thumbnail clr.image_slide "280x280" crop="center" as clr_pic %}
+                                      <img width="{{ clr_pic.width }}" height="{{clr.height }}" src="{{clr_pic.url}}">
+                                      {% endthumbnail %}
+                                </a>
+
+                                <div class="banner-content">
+                                    <h2 class="banner-subtitle text-dark">{{clr.product}}</h2><!-- End .banner-subtitle -->
+                                    <h3 class="banner-title text-dark">{{clr.big_title}}.<br> $ {{clr.price}}</h3><!-- End .banner-title -->
+                                   
+                                    <a href="#" class="banner-link">Click here</a>
+                                </div><!-- End .banner-content -->
+                            </div><!-- End .banner -->
+                       
+                        {% endfor %}
+                   
+                
+
+                                
+
+                                <div class="widget widget-text">
+                                    <h3 class="widget-title">About Blog</h3><!-- End .widget-title -->
+
+                                    <div class="widget-text-content">
+                                        <p>Welcome to our store! We offer a wide selection of items for you to explore. From fashion to tech, we've got it all. Start shopping now and find your favorites!.</p>
+                                    </div><!-- End .widget-text-content -->
+                                </div><!-- End .widget -->
+                            </div><!-- End .sidebar -->
+                        </aside><!-- End .col-lg-3 -->
+                    </div><!-- End .row -->
+                </div><!-- End .container -->
+            </div><!-- End .page-content -->
+        </main><!-- End .main -->
+{% endblock %}

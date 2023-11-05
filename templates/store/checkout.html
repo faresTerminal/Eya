@@ -1,0 +1,196 @@
+{% extends 'homebase.html' %}
+{% load static %}
+
+ 
+
+{% block content %}
+
+ <main class="main">
+        	<div class="page-header text-center" style="background-image: url({% static 'images/page-header-bg.jpg' %})">
+        		<div class="container">
+        			<h1 class="page-title">Checkout<span>Shop</span></h1>
+        		</div><!-- End .container -->
+        	</div><!-- End .page-header -->
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Checkout</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+
+            <div class="page-content">
+            	<div class="checkout">
+	                <div class="container">
+	                	{% if cart_items %}
+            			<form action="{% url 'place_order' %}" method="POST">
+            				{% csrf_token %}
+		                	<div class="row">
+		                		<div class="col-lg-6">
+		                			<h2 class="checkout-title">Billing Details</h2><!-- End .checkout-title -->
+		                				<div class="row">
+		                					<div class="col-sm-6">
+		                						<label>First Name *</label>
+		                						<input name="first_name" type="text" class="form-control" required>
+		                					</div><!-- End .col-sm-6 -->
+
+		                					<div class="col-sm-6">
+		                						<label>Last Name *</label>
+		                						<input name="last_name" type="text" class="form-control" required>
+		                					</div><!-- End .col-sm-6 -->
+		                				</div><!-- End .row -->
+
+	            						
+
+	            						<label>address line 1 *</label>
+	            						<input name="address_line_1" type="text" class="form-control" required>
+	            						
+	            						
+                                        <div class="row">
+                                        	<div class="col-sm-6">
+		                						<label>State / Wilaya *</label>
+		                						<input name="state" type="text" class="form-control" required>
+		                				    </div><!-- End .col-sm-6 -->
+		                					<div class="col-sm-6">
+		                						<label>city / Comun *</label>
+		                						<input name="city" type="text" class="form-control" required>
+		                					</div><!-- End .col-sm-6 -->
+
+		                					
+		                				</div><!-- End .row -->
+	            						
+	            						
+
+	            						
+
+		                				<div class="row">
+		                					
+
+		                					<div class="col-sm-6">
+		                						<label>Phone *</label>
+		                						<input name="phone" type="tel" class="form-control" required>
+		                					</div><!-- End .col-sm-6 -->
+		                				</div><!-- End .row -->
+
+	                					
+
+	        							
+
+	                					<label>Order notes (optional)</label>
+	        							<textarea name="order_note" class="form-control" cols="30" rows="4" placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
+		                		</div><!-- End .col-lg-9 -->
+		                		<aside class="col-lg-6">
+		                			<div class="summary">
+		                				<h3 class="summary-title">Your Order</h3><!-- End .summary-title -->
+
+		                				<table class="table table-summary">
+		                					<thead>
+		                						<tr>
+		                							<th>Product</th>
+		                							<th>Quantity</th>
+		                							<th>Total</th>
+		                						</tr>
+		                					</thead>
+
+		                					<tbody>
+		                						<tr>
+		                							{% for cart_item in cart_items %}
+		                							<tr>
+											<td class="product-col">
+												<div class="product" style="background: no-repeat;">
+													<figure class="product-media">
+														<a href="#">
+															<img src="{{cart_item.product.images.url}}" alt="Product image">
+														</a>
+													</figure>
+
+													<h3 class="product-title">
+														<a href="#">{{ cart_item.product.product_name}}</a>
+														<p class="text-muted small">
+					                                       {% if cart_item.variations.all  %}
+
+					                                          	{% for item in  cart_item.variations.all %}
+						                                         	{{ item.variation_category | capfirst }} : {{ item.variation_value | capfirst }} <br>
+
+					                                    	    {% endfor %}
+					                                    	    {% if cart_item.product.clearance_price%}
+					                                    	    {{cart_item.product.clearance_price}} DA
+					                                    	    {% else %}
+					                                    	    {{cart_item.product.price}} DA
+					                                    	    {% endif %}
+				                                     	    {% endif %}
+			                                        	</p>
+													</h3><!-- End .product-title -->
+												</div><!-- End .product -->
+											</td>
+		                							<td style="text-align: center;"> {{cart_item.quantity}} </td>
+		                							<td>DA {{cart_item.sub_total}}</td>
+
+		                						</tr>
+
+		                						{% endfor %}
+		                						
+		                						<tr class="summary-subtotal">
+		                							<td>Subtotal:</td>
+		                							<td>DA {{total}}</td>
+		                						</tr><!-- End .summary-subtotal -->
+		                						<tr>
+		                							<td>Shipping:</td>
+		                							<td> DA {{total_shipping_cost}}</td>
+		                						</tr>
+		                						
+		                						
+		                						
+		                						<tr class="summary-total">
+		                							<td>Total:</td>
+		                							<td>DA {{grand_total}}</td>
+		                						</tr><!-- End .summary-total -->
+		                					</tbody>
+		                				</table><!-- End .table table-summary -->
+
+		                				<div class="accordion-summary" id="accordion-payment">
+										    
+
+										   
+
+										    <div class="card">
+										        <div class="card-header" id="heading-3">
+										            <h2 class="card-title">
+										                <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-3" aria-expanded="true" aria-controls="collapse-3">
+										                    Cash on delivery
+										                </a>
+										            </h2>
+										        </div><!-- End .card-header -->
+										        <div id="collapse-3" class="collapse" aria-labelledby="heading-3" data-parent="#accordion-payment">
+										            <div class="card-body">Quisque volutpat mattis eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. 
+										            </div><!-- End .card-body -->
+										        </div><!-- End .collapse -->
+										    </div><!-- End .card -->
+
+										   
+
+										    
+										</div><!-- End .accordion -->
+
+		                				<button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
+		                					<span class="btn-text">Place Order</span>
+		                					<span class="btn-hover-text">Proceed to Checkout</span>
+		                				</button>
+		                			</div><!-- End .summary -->
+		                		</aside><!-- End .col-lg-3 -->
+		                	</div><!-- End .row -->
+            			</form>
+            			{%else %}
+                         <div class="text-center">
+	                	        <h5 class="text-center">You have no item in cart</h5>
+	                	        <a href="{% url 'store' %}" type="button" class="btn btn-light">Go to Store</a>
+                         </div>
+            			{% endif %}
+	                </div><!-- End .container -->
+                </div><!-- End .checkout -->
+            </div><!-- End .page-content -->
+        </main><!-- End .main -->
+
+{% endblock %}

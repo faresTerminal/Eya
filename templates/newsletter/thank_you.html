@@ -1,0 +1,24 @@
+{% extends 'homebase.html' %}
+{% load static %}
+
+ 
+
+{% block content %}
+<div>
+<hr class="mt-4 mb-4">
+                     <div class="row">
+                     	<div class="col-lg-3"></div>
+                     	<div class="col-lg-6">
+                    <div class="text-center">
+                        <h2 class="title">thank you for subcribing</h2><!-- End .title -->
+                        <p>"Thank you for subscribing to our newsletter! We're excited to have you join our community. You'll now receive regular updates, exclusive offers, and the latest news delivered right to your inbox. We appreciate your interest and look forward to sharing valuable content with you. If you ever have any questions or feedback, feel free to reach out to our team. Welcome aboard!"</p>
+                        <div class="heading-right">
+                            <a href="{% url 'store' %}" class="title-link">Start Shopping Now <i class="icon-long-arrow-right"></i></a>
+                        </div>
+                    </div><!-- End .text-center -->
+                    </div>
+                    <div class="col-lg-3"></div>
+                     </div>
+                    <hr class="mt-4 mb-4">
+</div>
+{% endblock %}

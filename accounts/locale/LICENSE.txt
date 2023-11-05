@@ -1,0 +1,2 @@
+msgid "This is the license text."
+msgstr ""

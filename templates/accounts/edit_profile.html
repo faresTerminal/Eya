@@ -1,0 +1,110 @@
+{% extends 'homebase.html' %}
+{% load static %}
+
+{% load thumbnail %}
+
+{% block content %}
+ <main class="main">
+        	<div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
+        		<div class="container">
+
+        			<h1 class="page-title">My Account<span>{{user.full_name}}</span></h1>
+        		</div><!-- End .container -->
+        	</div><!-- End .page-header -->
+            <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Account</a>
+                        <li class="breadcrumb-item active" aria-current="page">Edit Profie</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+
+            <div class="page-content">
+            	<div class="dashboard">
+	                <div class="container">
+	                	<div class="row">
+	                		{% include 'includes/dashboard_sidebar.html' %}
+
+	                		<div class="col-md-8 col-lg-9">
+	                			<div class="tab-content">
+								    <div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel" aria-labelledby="tab-dashboard-link">
+								    	<div class="text-right">
+								    		 {% thumbnail userprofile.profile_picture "120x120" crop="center" as profile_pic %}
+				                            <img width="{{ profile_pic.width }}" height="{{profile_pic.height }}" src="{{profile_pic.url}}"style="border-radius:30px;">
+				                            {% endthumbnail %}
+			                            </div>
+			                            <br>
+								    	<form action="{% url 'edit_profile' %}" method="POST" enctype="multipart/form-data">
+			                				<div class="row">
+			                					{% csrf_token %}
+			                					<div class="col-sm-6">
+			                						<label>First Name *</label>
+			                						{{user_form.first_name}}
+			                					</div><!-- End .col-sm-6 -->
+
+			                					<div class="col-sm-6">
+			                						<label>Last Name *</label>
+			                						{{user_form.last_name}}
+			                					</div><!-- End .col-sm-6 -->
+			                				</div><!-- End .row -->
+
+		            						<div class="row">
+			                					<div class="col-sm-6">
+			                						<label>Phone *</label>
+			                						{{user_form.phone_number}}
+			                					</div><!-- End .col-sm-6 -->
+
+			                					<div class="col-sm-6">
+			                						<label>Profile Picture *</label>
+			                						{{profile_form.profile_picture}}
+
+			                					</div><!-- End .col-sm-6 -->
+			                				</div><!-- End .row -->
+
+		                					<label>adress line 1 *</label>
+		        							{{profile_form.address_line1}}
+
+		        							<label>adress line 2 *</label>
+		        							{{profile_form.address_line2}}
+
+		            						<div class="row">
+			                					<div class="col-sm-4">
+			                						<label>Country *</label>
+			                						{{profile_form.country}}
+			                					</div><!-- End .col-sm-6 -->
+			                					<div class="col-sm-4">
+			                						<label>City *</label>
+			                						{{profile_form.city}}
+			                					</div><!-- End .col-sm-6 -->
+
+			                					<div class="col-sm-4">
+			                						<label>State *</label>
+			                						{{profile_form.state}}
+
+			                					</div><!-- End .col-sm-6 -->
+			                				</div><!-- End .row -->
+
+		                					<button type="submit" class="btn btn-outline-primary-2">
+			                					<span>SAVE CHANGES</span>
+			            						<i class="icon-long-arrow-right"></i>
+			                				</button>
+			                			</form>
+								    	
+								    </div><!-- .End .tab-pane -->
+
+								    
+
+								   
+
+								   
+								</div>
+	                		</div><!-- End .col-lg-9 -->
+	                	</div><!-- End .row -->
+	                </div><!-- End .container -->
+                </div><!-- End .dashboard -->
+            </div><!-- End .page-content -->
+        </main><!-- End .main -->
+
+{% endblock %}
