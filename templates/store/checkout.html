@@ -88,9 +88,9 @@
 		                				<table class="table table-summary">
 		                					<thead>
 		                						<tr>
-		                							<th>Product</th>
-		                							<th>Quantity</th>
-		                							<th>Total</th>
+		                							<th style="text-align: center;">Product</th>
+		                							<th style="text-align: center;">Quantity</th>
+		                							<th style="text-align: center;">Total</th>
 		                						</tr>
 		                					</thead>
 
@@ -126,7 +126,7 @@
 												</div><!-- End .product -->
 											</td>
 		                							<td style="text-align: center;"> {{cart_item.quantity}} </td>
-		                							<td>DA {{cart_item.sub_total}}</td>
+		                							<td style="text-align: center;">DA {{cart_item.sub_total}}</td>
 
 		                						</tr>
 
@@ -164,7 +164,7 @@
 										            </h2>
 										        </div><!-- End .card-header -->
 										        <div id="collapse-3" class="collapse" aria-labelledby="heading-3" data-parent="#accordion-payment">
-										            <div class="card-body">Quisque volutpat mattis eros. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. 
+										            <div class="card-body">With Cash on Delivery (CoD), you can pay for your order in cash when it is delivered to your doorstep. CoD provides convenience and trust for customers who may prefer not to use electronic payment methods or want to inspect the product before payment.
 										            </div><!-- End .card-body -->
 										        </div><!-- End .collapse -->
 										    </div><!-- End .card -->
@@ -192,5 +192,44 @@
                 </div><!-- End .checkout -->
             </div><!-- End .page-content -->
         </main><!-- End .main -->
+<style type="text/css">
+	/* Adjust layout for screens under 561px */
+/* Mobile-friendly styles for screens under 561px */
+@media (max-width: 561px) {
+    .checkout-mobile, .checkout-summary {
+        padding: 10px; /* Add padding to the billing details and order summary for better spacing on small screens */
+    }
 
+    .checkout-title, .summary-title {
+        font-size: 18px; /* Adjust title font size for mobile */
+    }
+
+    .form-control {
+        width: 100%; /* Make form controls full width on mobile */
+        margin-bottom: 10px; /* Add spacing between form controls */
+    }
+
+    .table-summary {
+        font-size: 14px; /* Decrease font size for table summary on mobile */
+    }
+
+    .btn-order {
+        padding: 10px 15px; /* Increase button padding for touch-friendly experience */
+        font-size: 16px; /* Increase button font size */
+    }
+    .summary{
+    	display: inline list-item;
+    	background: none;
+    	border: none;
+    }
+    tbody{
+    	margin-top: 1em;
+    }
+    .footer{
+    	text-align: center;
+    }
+}
+
+
+</style>
 {% endblock %}
