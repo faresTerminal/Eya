@@ -72,8 +72,12 @@
 									</td>
 									<td>
 										<div class="price-wrap">
-											<var class="price">DA {{ cart_item.sub_total }}</var>
-											<small class="text-muted"> DA {{ cart_item.product.price }} each </small>
+											{% if cart_item.product.clearance_price%}
+											<var class="price">{{ cart_item.product.clearance_price }} DA</var>
+											{% else %}
+											<var class="price">{{ cart_item.product.clearance_price }} DA</var>
+											{% endif %}
+											
 										</div> <!-- price-wrap .// -->
 									</td>
 
@@ -94,16 +98,16 @@
                         
 						<dl class="dlist-align">
 							<dt>Total price:</dt>
-							<dd class="text-right">DA {{total}}</dd>
+							<dd class="text-right">{{total}} DA</dd>
 						</dl>
 						<dl class="dlist-align">
 							<dt>Shipping:</dt>
-							<dd class="text-right"> DA {{ total_shipping_cost }}</dd>
+							<dd class="text-right"> {{ total_shipping_cost }} DA</dd>
 						</dl>
 						
 						<dl class="dlist-align">
 							<dt>Grand Total:</dt>
-							<dd class="text-right text-dark b"><strong>DA {{grand_total}}</strong></dd>
+							<dd class="text-right text-dark b"><strong>{{grand_total}} DA</strong></dd>
 						</dl>
 						<hr>
 
@@ -129,7 +133,26 @@
 	</div> <!-- container .//  -->
 </section>
 <!-- ========================= SECTION CONTENT END// ========================= -->
+<style >
+	
+@media (max-width: 561px) {
 
 
+tr {
+	font-size: 15px;
+	text-align: center;
+}
+.title {
+	font-size: 15px; 
+}
+thead {
+	text-align: center;
+
+}
+
+
+}
+
+</style>
 
 {% endblock %}

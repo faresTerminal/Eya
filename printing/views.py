@@ -13,7 +13,7 @@ from store.models import Product
 
 def printing(request):
       current_user = request.user
-      complete_orders = Order.objects.filter(product__buyer=current_user).order_by('-id')
+      complete_orders = Order.objects.filter(product__buyer=current_user, status = 'Completed').order_by('-id')
       context = {
 	'complete_orders': complete_orders,
 	} 

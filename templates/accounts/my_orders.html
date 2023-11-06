@@ -51,7 +51,7 @@
       <td>{{order.full_name}}</td>
       <td>{{order.phone}}</td>
       <td>{{order.order_total}} DA </td>
-      <td>{{order.created_at}}<br><a href="{% url 'order_detail' order.order_number %}">see your order info</a></td>
+      <td>{{order.created_at|date}}<br><a href="{% url 'order_detail' order.order_number %}"> order info</a></td>
     </tr>
     {% endfor %}
   
@@ -75,5 +75,13 @@
                 </div><!-- End .dashboard -->
             </div><!-- End .page-content -->
         </main><!-- End .main -->
+        <style>
+@media (max-width: 561px) {
 
+
+tr{
+    font-size: 12px;
+   
+}
+</style>
 {% endblock %}

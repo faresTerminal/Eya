@@ -78,7 +78,7 @@
     <h2>Add Clearance Price {{ product.product_name }}</h2>
     <div style="text-align: center;">
         <!-- Display the product price -->
-        <p style="text-align: center;">Product Price: ${{ product.price }}</p>
+        <p style="text-align: center;">Product Price: {{ product.price }} DA</p>
         
         <!-- Display the product image -->
         <img src="{{ product.images.url }}" alt="{{ product.product_name }}" style="max-width: 200px; display: block; margin: 0 auto;">
@@ -90,7 +90,7 @@
 
         <div class="form-group">
             <label for="code">Clearance Price:</label><br>
-            <small><strong>Create Coupon Code for Example: EzrFG43</strong></small><br>
+            <small><strong>Add New Clearance Price </strong></small><br>
             <input style="width: 70%;" type="text" name="clearance_price" id="code" required>
         </div>
         
