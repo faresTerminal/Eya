@@ -228,9 +228,7 @@ TINYMCE_DEFAULT_CONFIG = {
 
 
 
-# for pdf 
-WKHTMLTOPDF_CMD = r'C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe'
-pdfkit_config = pdfkit.configuration(wkhtmltopdf=WKHTMLTOPDF_CMD)
+
 
 
 
