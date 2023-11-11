@@ -172,6 +172,7 @@ def cart(request, total=0, quantity=0, cart_items=None):
     message = ""
     discount = 0
     cart_item = None  # Initialize cart_item to None
+    total_shipping_cost = 0
 
     try:
         # Fetch cart_items based on user authentication

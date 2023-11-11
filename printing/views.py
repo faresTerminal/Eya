@@ -47,7 +47,8 @@ def order_detail(request, order_id):
 
 
 # Define pdfkit_config with the path to wkhtmltopdf
-WKHTMLTOPDF_CMD = ''
+WKHTMLTOPDF_CMD = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
+
 pdfkit_config = pdfkit.configuration(wkhtmltopdf=WKHTMLTOPDF_CMD)
 
 def generate_and_save_pdf(request, order_id):

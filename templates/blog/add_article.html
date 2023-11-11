@@ -40,9 +40,14 @@
                                    	{% csrf_token %}
 			                				<div class="row">
 			                				   <div class="tab-pane fade show active" id=" tab-dashboard" role="tabpanel" aria-labelledby="tab-dashboard-link">
-								    	           <p>Hello <span class="font-weight-normal text-dark">User</span> (not <span class="font-weight-normal text-dark">User</span>? <a href="#">Log out</a>) 
+								    	           <p>(Hello <span class="font-weight-normal text-dark">{{user.full_name}})</span>  
 								    	              <br>
-								    	               From your account dashboard you can view your <a href="#tab-orders" class="tab-trigger-link link-underline">recent orders</a>, manage your <a href="#tab-address" class="tab-trigger-link">shipping and billing addresses</a>, and <a href="#tab-account" class="tab-trigger-link">edit your password and account details</a>.</p>
+                                                      <strong>To post an article on our Django website:</strong><br>
+
+                                                    <strong>1.</strong> When Click on "Add Article."<br>
+                                                    <strong>2.</strong> Input a compelling title, upload an image, and create a article after share your content.<br>
+                                                    <strong>3.</strong> Hit "Post Article" to instantly publish your article with title, image, and paragraph.
+								    	               .</p>
 								               </div><!-- .End .tab-pane -->
 			                					<div class="col-sm-6">
 			                						<label>Title *</label>

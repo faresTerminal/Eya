@@ -299,8 +299,10 @@ def change_password(request):
 @login_required(login_url='login')
 def order_detail(request, order_id):
 
-    order_detail = OrderProduct.objects.filter(order__order_number=order_id)
     order = Order.objects.get(order_number=order_id)
+
+    order_detail = OrderProduct.objects.filter(order=order)
+    #order = Order.objects.get(order_number=order_id)
     
     subtotal = 0
     for i in order_detail:

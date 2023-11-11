@@ -28,10 +28,30 @@
     tbody{
     	margin-top: 1em;
     }
+    
+   
+    tr {
+    font-size: 12px;
+    text-align: center;
+    }
+    .title {
+    font-size: 15px; 
+    }
+    thead {
+    text-align: center;
+
+    }
+    .container{
+    width: 100% !important;
+   
+    }
 
     /* footer */
     .footer{
         text-align: center;
+    }
+    button{
+        width: 60%;
     }
 
     /* end footer */

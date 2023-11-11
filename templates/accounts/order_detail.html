@@ -2,7 +2,22 @@
 {% load static %}
 
 {% block content %}
+<main class="main">
+            <div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
+                <div class="container">
 
+                    <h1 class="page-title">My Order<span>order: {{ order.order_number }} </span></h1>
+                </div><!-- End .container -->
+            </div><!-- End .page-header -->
+            <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Account</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">My orders</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
 <div class="container" style="margin: 50px auto; background: #f1f1f1; padding: 20px;">
     <div class="row invoice">
         <div class="col-md-12">
@@ -21,13 +36,13 @@
                             </div>
                         </div>
                         <div class="col-lg-6 text-right">
-                            <h5 style="text-align: center;">Eco-dz Shopping</h5>
+                            <p style="text-align: center;"><strong>Eco-dz Shopping</strong></p>
                         </div>
                         <div class="col-lg-12">
                             <div class="invoice-details">
                                 <div class="well">
-                                    <h4>Order #{{ order.order_number }}</h4>
-                                    <p><strong>Order Date:</strong> {{ order.created_at }}</p>
+                                    <p><strong>Order #</strong>{{ order.order_number }}</p>
+                                    <p><strong>Order Date:</strong> {{order.created_at|date}}</p>
                                 </div>
                             </div>
                             <div class="invoice-items">
@@ -47,10 +62,10 @@
                                                     {{ item.product.product_name }}
                                                     <p class="small text-muted">
                                                         {% if item.variations.all %}
-                                                            {% for variation in item.variations.all %}
-                                                                {{ variation.variation_category | capfirst }}: {{ variation.variation_value | capfirst }}<br>
-                                                            {% endfor %}
-                                                        {% endif %}
+                                                                {% for i in item.variations.all %}
+                                                                    {{ i.variation_category | capfirst }} : {{ i.variation_value | capfirst }} <br>
+                                                                {% endfor %}
+                                                            {% endif %}
                                                     </p>
                                                 </td>
                                                 <td class="text-center">{{ item.quantity }}</td>
@@ -85,5 +100,6 @@
         </div>
     </div>
 </div>
+</main>
 
 {% endblock %}

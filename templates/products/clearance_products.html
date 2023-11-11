@@ -37,7 +37,7 @@
       <th scope="col">Image</th>
       <th scope="col">Product name</th>
       <th scope="col">Price</th>
-      <th scope="col">Handle</th>
+      <th scope="col">Status</th>
     </tr>
   </thead>
   <tbody>
@@ -45,8 +45,8 @@
     <tr>
       <th scope="row"><img src="{{ product.images.url }}" alt="{{ product.product_name }}" style="max-width: 100px; height: auto;"></th>
       <td>{{product.product_name}}</td>
-      <td>{{product.price}}</td>
-      <td><a href="{% url 'update_product' product.id %}">Add Clearance</a> <br> </td>
+      <td>{{product.price}} DA</td>
+      <td style="text-align: center;"><a href="{% url 'update_product' product.id %}">Clear Price</a> </td>
      
     </tr>
     {% endfor %}

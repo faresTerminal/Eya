@@ -87,6 +87,7 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/skins/skin-demo-3.css' %}">
     <link rel="stylesheet" href="{% static 'css/demos/demo-3.css' %}">
+    <link rel="stylesheet" href="{% static 'css/mobile.css' %}">
     <link rel="stylesheet" href="{% static 'css/styi.css' %}">
     <!-- arabic font -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/arabic-font.css' %}">
@@ -539,27 +540,26 @@
 
                                 
                             </li>
-                            <li>
-                                <a href="elements-list.html">Elements</a>
-                                
-                            </li>
+                           
                         </ul>
                     </nav><!-- End .mobile-nav -->
                 </div><!-- .End .tab-pane -->
                 <div class="tab-pane fade" id="mobile-cats-tab" role="tabpanel" aria-labelledby="mobile-cats-link">
                     <nav class="mobile-cats-nav">
                         <ul class="mobile-cats-menu">
-                            <li><a class="mobile-cats-lead" href="#">Daily offers</a></li>
-                            <li><a class="mobile-cats-lead" href="#">Gift Ideas</a></li>
-                            <li><a href="#">Beds</a></li>
-                            <li><a href="#">Lighting</a></li>
-                            <li><a href="#">Sofas & Sleeper sofas</a></li>
-                            <li><a href="#">Storage</a></li>
-                            <li><a href="#">Armchairs & Chaises</a></li>
-                            <li><a href="#">Decoration </a></li>
-                            <li><a href="#">Kitchen Cabinets</a></li>
-                            <li><a href="#">Coffee & Tables</a></li>
-                            <li><a href="#">Outdoor Furniture </a></li>
+                            {% for category in categories %}
+                            <li><a class="mobile-cats-lead" href="{% url 'products_by_category' category.slug %}">{{ category.category_name }}</a></li>
+                            
+                            
+                            
+                            
+                            {% if category_dict|get:category %}
+                            {% for subcategory in category_dict|get:category %}
+                            <li><a href="{% url 'products_by_category' category.slug subcategory.slug %}">{{ subcategory.name }}</a></li>
+                            {% endfor %}
+                            {% endif %}
+                           
+                            {% endfor %}
                         </ul><!-- End .mobile-cats-menu -->
                     </nav><!-- End .mobile-cats-nav -->
                 </div><!-- .End .tab-pane -->
