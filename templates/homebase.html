@@ -165,9 +165,9 @@
                                                     {% if user_profile_picture %}
                                                     <li><dir class="text-right">
                                                         
-                                                        <img style="width: 30px;
+                                                        <img style="width: 60px;
                                                         border-radius: 50%;
-                                                     height: 30px;" src="{{ user_profile_picture.url }}">
+                                                     height: 60px;" src="{{ user_profile_picture.url }}">
                                                      
                                                     </dir>
                                                     </li>
@@ -243,7 +243,7 @@
                         </div><!-- End .compare-dropdown -->
                          {% if user.is_staff %}
                          <div class="wishlist">
-                            <a href="{% url 'printer:printing' %}" title="Orders">
+                            <a href="{% url 'printing' %}" title="Orders">
                                 <div class="icon">
                                     <i class="la la-lightbulb-o"></i>
                                     <span class="wishlist-count badge">{{seller_order_count}}</span>
@@ -484,10 +484,11 @@
         <div class="mobile-menu-wrapper">
             <span class="mobile-menu-close"><i class="icon-close"></i></span>
             
-            <form action="#" method="get" class="mobile-search">
+            <form action="{% url 'search' %}" method="get" class="mobile-search">
                 <label for="mobile-search" class="sr-only">Search</label>
-                <input type="search" class="form-control" name="mobile-search" id="mobile-search" placeholder="Search in..." required>
+                <input type="search" class="form-control" name="keyword" id="q" placeholder="Search in..." required>
                 <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+                 
             </form>
 
             <ul class="nav nav-pills-mobile nav-border-anim" role="tablist">

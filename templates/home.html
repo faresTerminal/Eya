@@ -41,7 +41,9 @@
                                     <div class="intro-slide">
                                         <figure class="slide-image">
                                             <picture>
-                                                <source media="(max-width: 480px)" srcset="assets/images/demos/demo-3/slider/slide-1-480w.jpg">
+                                                {% thumbnail products.image_slide "415x345" crop="center" as ki %}
+                                                <source width="{{ ki.width }}" height="{{ki.height }}"  srcset="{{ki.url}}">
+                                                {% endthumbnail %}
                                                 {% thumbnail products.image_slide "779x399" crop="center" as kil %}
                                                 <img width="{{ kil.width }}" height="{{kil.height }}" src="{{kil.url}}" alt="Image Desc">
                                                  {% endthumbnail %}

@@ -11,13 +11,7 @@ from store.models import Product
 # Create your views here.
 
 
-def printing(request):
-      current_user = request.user
-      complete_orders = Order.objects.filter(product__buyer=current_user, status = 'Completed').order_by('-id')
-      context = {
-	'complete_orders': complete_orders,
-	} 
-      return render(request, 'printing/printing.html', context)
+
 
 def order_detail(request, order_id):
    

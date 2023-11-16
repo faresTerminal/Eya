@@ -323,3 +323,30 @@ def order_detail(request, order_id):
 
 def register_confirme_link(request):
     return render (request, 'accounts/register_confirme_link.html')
+
+
+
+def printing(request):
+      current_user = request.user
+      complete_orders = Order.objects.filter(product__buyer=current_user, status = 'Completed').order_by('-id')
+      context = {
+      'complete_orders': complete_orders,
+      } 
+      return render(request, 'accounts/printing.html', context)
+
+
+
+
+def remove_completed_orders(request, order_id):
+    # Retrieve the order or return a 404 response if it doesn't exist
+    order = get_object_or_404(Order, id=order_id, product__buyer=request.user, status='Completed')
+
+    if request.user.is_authenticated:
+        
+       order.delete()
+
+    return redirect('printing') 
+    
+
+
+   

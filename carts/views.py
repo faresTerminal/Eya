@@ -255,10 +255,7 @@ def checkout(request, total=0, quantity=0, cart_items=None):
     try:
         
         grand_total = 0
-        message = ""
-        discount = 0
-        active_coupon = None
-
+      
         if request.user.is_authenticated:
             cart_items = CartItem.objects.filter(user=request.user, is_active=True)
         else:
@@ -274,46 +271,7 @@ def checkout(request, total=0, quantity=0, cart_items=None):
                 quantity += cart_item.quantity
 
         
-         # Get the coupon code entered by the user
-        coupon_code = request.GET.get("coupon_code")
-
-        # Check if there is an active coupon with the entered code
-        if active_coupon:
-           try:
-               active_coupon = Coupon.objects.get(code=coupon_code, active=True, product = cart_item.product)
-           except Coupon.DoesNotExist:
-               active_coupon = None
-
-
-        if active_coupon:
-            discount = active_coupon.discount
-           
-
-            # Update dis_coupon in CartItem model
-            for cart_item in cart_items:
-                cart_item.dis_coupon = discount
-                cart_item.save()
-
-        # Handle coupon form submission
-        if request.method == "POST":
-            coupon_code = request.POST.get("coupon_code")
-            try:
-                coupon = Coupon.objects.get(code=coupon_code, active=True, product = cart_item.product)
-                discount = coupon.discount
-                message = f"Coupon applied! Discount: {discount}%"
-                
-
-                # Update dis_coupon in CartItem model
-                for cart_item in cart_items:
-                    cart_item.dis_coupon = discount
-                    cart_item.save()
-            except Coupon.DoesNotExist:
-                message = "Coupon not active."
-    
-          # If dis_coupon is greater than 0, apply the discount to the total
-        for cart_item in cart_items:
-            if cart_item.dis_coupon > 0:
-                total -= (total * (cart_item.dis_coupon / 100))
+       
         # i do this line just to see shipping value in temlate outside FOR LOOP
         total_shipping_cost = sum(cart_item.product.shipping for cart_item in cart_items)
         grand_total = total + total_shipping_cost
@@ -330,27 +288,9 @@ def checkout(request, total=0, quantity=0, cart_items=None):
         
         'total_shipping_cost': total_shipping_cost,
         'grand_total': grand_total,
-        'message': message,
-        'discount': discount,
-        'dis_coupon': cart_item.dis_coupon if 'cart_item' in locals() else 0,
+       
     }
 
     return render(request, 'store/checkout.html', context)
 
 
-def apply_coupon(request):
-    if request.method == 'POST':
-        form = CouponForm(request.POST)
-        if form.is_valid():
-            code = form.cleaned_data['code']
-            try:
-                coupon = Coupon.objects.get(code=code, active=True, expires__gt=timezone.now())
-                request.session['applied_coupon'] = coupon.id
-                return redirect('checkout')
-            except Coupon.DoesNotExist:
-                message = 'Invalid coupon code or coupon is not active'
-                return render(request, 'store/cart.html', {'form': form, 'error_message': message})
-    else:
-        form = CouponForm()
-    
-    return render(request, 'store/cart.html', {'form': form})

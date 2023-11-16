@@ -1,0 +1,84 @@
+{% extends 'homebase.html' %}
+{% load static %}
+
+
+
+{% block content %}
+ <main class="main">
+        	<div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
+        		<div class="container">
+
+        			<h1 class="page-title">My Account<span>{{user.full_name}}</span></h1>
+        		</div><!-- End .container -->
+        	</div><!-- End .page-header -->
+            <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Account</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">My Confirmed Orders</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+
+            <div class="page-content">
+            	<div class="dashboard">
+	                <div class="container">
+	                	<div class="row">
+	                		{% include 'includes/dashboard_sidebar.html' %}
+
+
+	                		<div class="col-md-8 col-lg-9">
+	                			<div class="tab-content">
+								    <div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel" aria-labelledby="tab-dashboard-link">
+{%if complete_orders %}
+								    	
+							    	<!-- create table for orders -->
+								    	<table class="table">
+  <thead>
+    <tr>
+      <th scope="col"><b>Order#</b></th>
+      <th scope="col"><b>Billing Name</b></th>
+      <th scope="col"><b>Phone</b></th>
+      <th scope="col"><b>Order Total</b></th>
+      <th scope="col"><b>Print</b></th>
+    </tr>
+  </thead>
+  <tbody>
+  	{% for order in complete_orders %}
+    <tr>
+      <td > #{{order.order_number}}</td>
+      <td>{{order.full_name}}</td>
+      <td>{{order.phone}}</td>
+      <td>{{order.order_total}} DA </td>
+      <td><a href="{% url 'printer:order_detail' order.id %}"> order info </a></td>
+      <td class="remove-col"><a href="{% url 'remove_completed_orders' order.id %}" class="btn-remove" onclick="return confirm('Are you sure you want to delete this item?')"><i class="icon-close"></i></a></td>
+    </tr>
+    {% endfor %}
+  
+  </tbody>
+</table>
+{% else%}
+<p>No Confirmed Orders has been made yet.</p>
+{% endif %}
+								    	<!-- end create table for orders -->
+								    	<a href="{% url 'home' %}" class="btn btn-outline-primary-2"><span>Eco-dz Shopping</span><i class="icon-long-arrow-right"></i></a>
+								    	
+								    </div><!-- .End .tab-pane -->
+
+								   
+
+								    
+								</div>
+	                		</div><!-- End .col-lg-9 -->
+	                	</div><!-- End .row -->
+	                </div><!-- End .container -->
+                </div><!-- End .dashboard -->
+            </div><!-- End .page-content -->
+        </main><!-- End .main -->
+      
+
+
+
+
+{% endblock %}
