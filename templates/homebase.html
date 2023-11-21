@@ -52,7 +52,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Eco-dz Shopping</title>
     <meta name="keywords" content="HTML5 Template">
-    <meta name="description" content="Eco-dz - Bootstrap eCommerce Template">
+    <meta name ="title" property="og:title" content="{{art.title}}">
+    <meta name="body" >
     <meta name="author" content="p-themes">
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/icons/apple-touch-icon.png' %}">
@@ -179,18 +180,16 @@
                                                      height: 30px;" src="#">
                                                      
                                                     </dir>
-                                                    </li>
+                                                    </li><br>
                                                     {% endif %}
                                                      
-                                                    <li><a href="#">{{user.first_name}}</a></li>
+                                                    <li><a href="{% url 'dashboard' %}">{{user.username}}</a></li>
                                                     <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
                                                     {% if user.is_staff %}
-                                                    <li><a href="{% url 'add_product' %}">Add Product</a>
-                                                    </li>
-                                                     <li><a href="{% url 'list_clearance_products' %}">Add Clearance</a>
-                                                    </li>
-                                                    <li><a href="{% url 'create_article' %}">Add Article</a>
-                                                    </li>
+                                                    <li><a href="{% url 'Management_Center' %}">Management Center</a></li>
+                                                   
+                                                    
+                                                    
                                                     {% endif %}
                                                     <li><a href="{% url 'logout'%}">Log Out</a></li>
                                                     

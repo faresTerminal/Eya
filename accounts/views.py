@@ -13,7 +13,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
-
+from store.models import Product
 from carts.views import _cart_id
 from carts.models import Cart, CartItem
 import requests
@@ -149,6 +149,9 @@ def dashboard(request):
     return render(request, 'accounts/dashboard.html', context)
 
 
+
+
+    
 
 def activate(request, uidb64, token):
     try:
@@ -346,6 +349,30 @@ def remove_completed_orders(request, order_id):
        order.delete()
 
     return redirect('printing') 
+
+def User_Products(request):
+    current_user = request.user
+    products = Product.objects.filter(buyer = current_user, is_available = True)
+
+    context = {
+     'products': products,
+    }
+    return render(request, 'accounts/edit_products.html', context)
+
+
+   
+
+
+def remove_product(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+
+    if request.method == 'POST':
+        # Assuming you want to confirm the deletion with a POST request
+        product.delete()
+        return redirect('User_Products')  # Redirect to a page showing the list of remaining products
+
+    return render(request, 'accounts/remove_product.html', {'product': product})
+
     
 
 

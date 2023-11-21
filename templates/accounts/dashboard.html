@@ -26,8 +26,9 @@
 	                <div class="container">
 	                	<div class="row">
 	                		{% include 'includes/dashboard_sidebar.html' %}
-
+                        
 	                		<div class="col-md-8 col-lg-9">
+                        <p style="text-align: center;">Dashboard</p> <br>
 	                			<div class="tab-content">
 								    <div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel" aria-labelledby="tab-dashboard-link">
 								    	<p>Hello <span class="font-weight-normal text-dark">{{user.first_name}}</span>  <a href="{% url 'logout' %}">Log out</a>) you have <b> {{ orders.count}} orders.</b> 
@@ -38,7 +39,11 @@
 								    			{% thumbnail userprofile.profile_picture "120x120" crop="center" as profile_pic %}
 								    			<img style="width: 150px;
                                                    border-radius: 1em !important;" width="{{ profile_pic.width }}" height="{{profile_pic.height }}" src="{{profile_pic.url}}" class="rounded float-end" alt="...">
-                                                {% endthumbnail %}
+                        {% endthumbnail %}
+                        <br>
+                        <a href="{% url 'add_product' %}">Add Product</a><br>
+                        <a href="{% url 'list_clearance_products' %}">Clearance Price</a><br>
+                        <a href="{% url 'create_article' %}"> Add Article</a><br><br>
 								    		</div>
 								    		<div class="col-lg-10">
 								    			<div class="card" >
@@ -46,9 +51,12 @@
                                                      Your Information
                                                      </div>
                                                         <ul class="list-group list-group-flush">
-                                                           <li class="list-group-item">Email: {{user.email}}</li>
-                                                           <li class="list-group-item">first/last name: {{user.first_name}} </li>
-                                                           <li class="list-group-item">Last name: {{user.last_name}}</li>
+                                                           <li class="list-group-item"><b>Email:</b> {{user.email}}</li>
+                                                           <li class="list-group-item"><b>Full Name:</b> {{user.full_name}} </li>
+                                                           <li class="list-group-item"> <b>User Name:</b> {{user.username}}</li>
+                                                           <li class="list-group-item"><b>Phone Number:</b> {{user.phone_number}}</li>
+                                                           <li class="list-group-item"><b>Joined At:</b> {{user.date_joined}}</li>
+                                                           <li class="list-group-item"><b>Last Login:</b> {{user.last_login }}</li>
                                                         </ul>
                                                     </div>
 								    		</div>

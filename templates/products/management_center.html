@@ -1,0 +1,91 @@
+{% extends 'homebase.html' %}
+{% load static %}
+
+{% load thumbnail %}
+
+{% block content %}
+ <main class="main">
+          <div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
+            <div class="container">
+
+              <h1 class="page-title">Management Center<span></span></h1>
+            </div><!-- End .container -->
+          </div><!-- End .page-header -->
+            <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        
+                        <li class="breadcrumb-item active" aria-current="page">Management Center</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+
+            <div class="page-content">
+              <div class="dashboard">
+                  <div class="container">
+                    <div class="row">
+                      {% include 'includes/management_center_sidebar.html' %}
+                        
+                      <div class="col-md-8 col-lg-9">
+                        <p style="text-align: center;">Management Center</p> <br>
+                        <div class="tab-content">
+                    <div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel" aria-labelledby="tab-dashboard-link">
+                      <p>Hello <span class="font-weight-normal text-dark">{{user.first_name}}</span>  <a href="{% url 'logout' %}">Log out</a>) you have <b> {{ orders.count}} orders.</b> 
+                      <br>
+                      From your account dashboard you can view your <a href="{% url 'my_orders' %}" class="tab-trigger link-underline">recent orders</a>, manage your <a href="{% url 'edit_profile' %}" class="tab-trigger">edit your profile</a>, and <a href="{% url 'change_password' %}" class="tab-trigger">edit your password </a>.</p>
+                      <div class="row">
+                        <div class="col-lg-2">
+                          
+                        </div>
+                        <div class="col-lg-10">
+                          
+                      </div>
+                      
+                    </div><!-- .End .tab-pane -->
+
+                    <div class="tab-pane fade" id="tab-orders" role="tabpanel" aria-labelledby="tab-orders-link">
+                      {%if orders %}
+                      
+                      <!-- create table for orders -->
+                      <table class="table">
+  <thead>
+    <tr>
+      <th scope="col"><b>Order#</b></th>
+      <th scope="col"><b>Billing Name</b></th>
+      <th scope="col"><b>Phone</b></th>
+      <th scope="col"><b>Order Total</b></th>
+      <th scope="col"><b>Date</b></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for order in orders%}
+    <tr>
+      <td >{{order.order_number}}</td>
+      <td>{{order.full_name}}</td>
+      <td>{{order.phone}}</td>
+      <td>{{order.order_total}} $ </td>
+      <td>{{order.created_at}}<br><a href="#">see your product info</a></td>
+    </tr>
+    {% endfor %}
+  
+  </tbody>
+</table>
+{% else%}
+<p>No order has been made yet.</p>
+{% endif %}
+                      
+                      
+
+                        
+
+                   
+                
+                      </div><!-- End .col-lg-9 -->
+                    </div><!-- End .row -->
+                  </div><!-- End .container -->
+                </div><!-- End .dashboard -->
+            </div><!-- End .page-content -->
+        </main><!-- End .main -->
+
+{% endblock %}

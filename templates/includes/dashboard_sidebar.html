@@ -4,17 +4,23 @@
 								        <a class="nav-link {% if '/accounts/' == request.path %}active{% endif %} "   href="{% url 'dashboard' %}" >Dashboard</a>
 								    </li>
 								    <li class="nav-item">
+								        <a class="nav-link {% if '/User_Products/' in request.path %}active{% endif %} "   href="{% url 'User_Products' %}" >Edit Product</a>
+								    </li>
+								    
+								     
+								    <li class="nav-item">
 								        <a class="nav-link {% if '/my_orders/' in request.path %}active{% endif %}" id="tab-orders-link"  href="{% url 'my_orders' %}">Orders</a>
 								    </li>
 								    <li class="nav-item">
 								        <a class="nav-link {% if '/edit_profile/' in request.path %}active{% endif %}"   href="{% url 'edit_profile' %}" >Edit Profile</a>
 								    </li>
+								     <li class="nav-item">
+								        <a class="nav-link {% if '/printing/' in request.path %}active{% endif %}" id="tab-address-link"  href="{% url 'printing' %}" >Orders Confirmed</a>
+								    </li>
 								    <li class="nav-item">
 								        <a class="nav-link {% if '/change_password/' in request.path %}active{% endif %}" id="tab-address-link"  href="{% url 'change_password' %}" >Change Password</a>
 								    </li>
-								    <li class="nav-item">
-								        <a class="nav-link {% if '/printing/' in request.path %}active{% endif %}" id="tab-address-link"  href="{% url 'printing' %}" >Orders Confirmed</a>
-								    </li>
+								   
 								   
 								    <li class="nav-item">
 								        <a class="nav-link" href="{% url 'logout' %}">Sign Out</a>

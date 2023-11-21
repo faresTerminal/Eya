@@ -56,29 +56,29 @@
 <main class="main">
   <div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
     <div class="container">
-      <h1 class="page-title">Add Coupon<span>products</span></h1>
+      <h1 class="page-title">Add Clearance<span>Price</span></h1>
     </div><!-- End .container -->
   </div><!-- End .page-header -->
   <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
     <div class="container">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">Add Product</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Create Coupon</li>
+        <li class="breadcrumb-item"><a href="#">Clearance</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Add Clearance Price</li>
       </ol>
     </div><!-- End .container -->
   </nav><!-- End .breadcrumb-nav -->
-</main>
+
 <div class="container">
   <div class="row">
-
+{% include 'includes/management_center_sidebar.html' %}
     <div class="col-lg-9">
 
       <div class="containerer">
-    <h2>Add Clearance Price {{ product.product_name }}</h2>
+    <h5>Add Clearance Price {{ product.product_name }}</h5>
     <div style="text-align: center;">
         <!-- Display the product price -->
-        <p style="text-align: center;">Product Price: {{ product.price }} DA</p>
+        <p style="text-align: left;" >Product Price: <b>{{ product.price }} DA</b></p>
         
         <!-- Display the product image -->
         <img src="{{ product.images.url }}" alt="{{ product.product_name }}" style="max-width: 200px; display: block; margin: 0 auto;">
@@ -98,7 +98,7 @@
             <label class="checkbox-label" for="active">Active:</label>
             <input type="checkbox" name="is_clearance" id="active" checked>
         </div>
-        <button  type="submit">Update Price</button>
+        <button style="background-color: #fcb941;"  type="submit">Update Price</button>
     </form>
 </div>
       
@@ -111,5 +111,5 @@
   </div>
   
 </div>
-
+</main>
 {% endblock %}

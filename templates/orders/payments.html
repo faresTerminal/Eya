@@ -58,7 +58,7 @@
 												<a href="{{ cart_item.product.get_url }}" class="title text-dark">{{ cart_item.product.product_name }}</a><br>
 												
 														
-															<img style="max-width: 100px; height: auto;" src="{{cart_item.product.images.url}}" alt="Product image">
+															
 														
 													
 												<p class="text-muted small">
@@ -80,7 +80,7 @@
 											{% if cart_item.product.clearance_price%}
 											<var class="price">{{ cart_item.product.clearance_price }} DA</var>
 											{% else %}
-											<var class="price">{{ cart_item.product.clearance_price }} DA</var>
+											<var class="price">{{ cart_item.product.price }} DA</var>
 											{% endif %}
 											
 										</div> <!-- price-wrap .// -->

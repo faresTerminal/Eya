@@ -33,7 +33,7 @@
 <div class="container">
 	<br>
 	<div class="row">
-		<div class="col-sm-0"></div>
+		{% include 'includes/management_center_sidebar.html' %}
 		<div class="col-sm-9">
 
 			   <form method="post" enctype="multipart/form-data" >
@@ -75,78 +75,7 @@
 			   </form>
 			
 		</div>
-		<div class="col-sm-3">
-			<aside>
-                			<div class="sidebar">
-                				<div class="widget widget-search">
-                                    <h3 class="widget-title">Search</h3><!-- End .widget-title -->
-
-                                     <form action="{% url 'Blog_Search' %}" class="search" method='GET'>
-                                        <label for="ws" class="sr-only">Search in blog</label>
-                                        <input type="search" class="form-control" name="keyword" id="ws" placeholder="Search in blog" required>
-                                        <button type="submit" class="btn"><i class="icon-search"></i><span class="sr-only">Search</span></button>
-                                    </form>
-                                </div><!-- End .widget -->
-
-                               
-
-                                <div class="widget">
-                                    <h3 class="widget-title">Popular Posts</h3><!-- End .widget-title -->
-
-                                    <ul class="posts-list">
-                                        {% for posts in popular_posts %}
-                                        <li>
-                                            <figure>
-                                                <a href="{% url 'show_article' id=posts.id slug=posts.slug %}">
-                                                     {% thumbnail posts.image "80x80" crop="center" as bc %}
-                                                    <img width="{{ bc.width }}" height="{{bc.height }}" src="{{bc.url}}">
-                                                    {% endthumbnail %}
-                                                </a>
-                                            </figure>
-
-                                            <div>
-                                                <span>{{posts.posted_on}}</span>
-                                                <h4><a href="{% url 'show_article' id=posts.id slug=posts.slug %}">{{posts.title}}.</a></h4>
-                                            </div>
-                                        </li>
-                                        {% endfor %}
-                                        
-                                    </ul><!-- End .posts-list -->
-                                </div><!-- End .widget -->
-
-                                <div class="widget widget-banner-sidebar">
-                                    <div class="banner-sidebar-title">ad box 280 x 280</div><!-- End .ad-title -->
-                                    
-                                    <div class="banner-sidebar">
-                                        <a href="{% url 'Clearance_Products' %}">
-                                            <img src="{% static 'images/blog/sidebar/banner.jpg' %}" alt="banner">
-                                        </a>
-                                    </div><!-- End .banner-ad -->
-                                </div><!-- End .widget -->
-
-                                <div class="widget">
-                                    <h3 class="widget-title">Products Tags</h3><!-- End .widget-title -->
-
-                                       
-                                        
-                                    <div class="tagcloud">
-                                    	{% for category in categories %}
-                                        <a href="{{category.get_url}}">{{category.category_name}}</a>
-                                        {% endfor %}
-                                       
-                                    </div><!-- End .tagcloud -->
-                                </div><!-- End .widget -->
-
-                                <div class="widget widget-text">
-                                    <h3 class="widget-title">About Blog</h3><!-- End .widget-title -->
-
-                                    <div class="widget-text-content">
-                                        <p>Welcome to our store! We offer a wide selection of items for you to explore. From fashion to tech, we've got it all. Start shopping now and find your favorites!</p>
-                                    </div><!-- End .widget-text-content -->
-                                </div><!-- End .widget -->
-                			</div><!-- End .sidebar sidebar-shop -->
-                		</aside><!-- End .col-lg-3 -->
-		</div>
+		
 	</div>
 </div>
                              

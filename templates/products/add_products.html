@@ -14,7 +14,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index.html">Home</a></li>
                 <li class="breadcrumb-item"><a href="#">Add Product</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Create Coupon</li>
+                <li class="breadcrumb-item active" aria-current="page">create new product</li>
             </ol>
         </div><!-- End .container -->
     </nav><!-- End .breadcrumb-nav -->
@@ -22,7 +22,8 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-6">
+        {% include 'includes/management_center_sidebar.html' %}
+        <div class="col-lg-5">
             <div class="containerer">
                 <h2>Add New Product</h2>
                 <form method="post" enctype="multipart/form-data">
@@ -85,7 +86,7 @@
                 </form>
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-4">
             <div class="page-content">
                 <h2 class="title text-center mb-3">Publishing Information</h2>
                 <div class="accordion accordion-rounded" id="accordion-1">

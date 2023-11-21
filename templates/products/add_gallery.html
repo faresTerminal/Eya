@@ -136,7 +136,8 @@ li {
 
 <div class="container">
   <div class="row">
-    <div class="col-lg-6">
+     {% include 'includes/management_center_sidebar.html' %}
+    <div class="col-lg-5">
       <h2 class="page-title">Add Product Gallery</h2>
       <div class="row">
         <div class="col-md-12 form-container">
@@ -166,7 +167,7 @@ li {
       </div>
     </div>
 
-    <div class="col-lg-6">
+    <div class="col-lg-4">
 
 <h2  class="page-title">Information about your product</h2>
 <table class="table">
@@ -192,6 +193,10 @@ li {
   <div class="product-image">
     <img src="{{ gl.image.url }}" alt="{{ product.product_name }}">
   </div>
+    <form method="post" action="{% url 'remove_gallery_image' product.id gl.id %}">
+        {% csrf_token %}
+        <button class="btn-remove" type="submit"><i class="icon-close"></i></button>
+    </form>
   {% endfor %}
   
 </div>

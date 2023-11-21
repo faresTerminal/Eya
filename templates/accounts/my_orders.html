@@ -32,16 +32,16 @@
 	                			<div class="tab-content">
 								    <div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel" aria-labelledby="tab-dashboard-link">
 {%if orders %}
-								    	
-							    	<!-- create table for orders -->
-								    	<table class="table">
+<p style="text-align: center;">List of Buyer Products</p> <br>								    	
+<!-- create table for orders -->
+<table class="table">
   <thead>
     <tr>
       <th scope="col"><b>Order#</b></th>
       <th scope="col"><b>Billing Name</b></th>
       <th scope="col"><b>Phone</b></th>
       <th scope="col"><b>Order Total</b></th>
-      <th scope="col"><b>Date</b></th>
+      <th scope="col"><b>Info</b></th>
     </tr>
   </thead>
   <tbody>
@@ -51,7 +51,7 @@
       <td>{{order.full_name}}</td>
       <td>{{order.phone}}</td>
       <td>{{order.order_total}} DA </td>
-      <td>{{order.created_at|date}}<br><a href="{% url 'order_detail' order.order_number %}"> order info</a></td>
+      <td><a href="{% url 'order_detail' order.order_number %}"> order info</a></td>
     </tr>
     {% endfor %}
   

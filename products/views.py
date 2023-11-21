@@ -19,6 +19,22 @@ def add_product(request):
         product_form = ProductForm()
     return render(request, 'products/add_products.html', {'product_form': product_form})
 
+def edit_product(request, product_id):
+    # Retrieve the product instance
+    product = get_object_or_404(Product, id=product_id)
+
+    if request.method == 'POST':
+        product_form = ProductForm(request.POST, request.FILES, instance=product)
+        if product_form.is_valid():
+            edited_product = product_form.save(commit=False)
+            edited_product.buyer = request.user  # Set the currently logged-in user as the buyer
+            edited_product.save()
+             # Redirect to the user's product page
+            return HttpResponseRedirect(reverse('add_variants', args=[product_id]))
+    else:
+        product_form = ProductForm(instance=product)
+
+    return render(request, 'products/edit_product.html', {'product_form': product_form, 'product': product})
 
 
 
@@ -41,6 +57,21 @@ def add_variants(request, product_id):
 
     return render(request, 'products/add_variants.html', {'variant_form': variant_form, 'product': product, 'variants': variants})
 
+def remove_variant(request, product_id, variant_id):
+    product = get_object_or_404(Product, id=product_id)
+    variant = get_object_or_404(Variation, id=variant_id)
+
+    if request.method == 'POST':
+        # Assuming you want to confirm the deletion with a POST request
+        variant.delete()
+        return redirect('add_variants', product_id=product_id)
+
+    return render(request, 'products/remove_variant.html', {'product': product, 'variant': variant})
+
+
+
+
+
 
 def add_gallery_images(request, product_id):
     product = Product.objects.get(id=product_id)
@@ -56,6 +87,16 @@ def add_gallery_images(request, product_id):
         gallery_image_form = GalleryImageForm()
     return render(request, 'products/add_gallery.html', {'gallery_image_form': gallery_image_form, 'product': product, 'gallery': gallery, 'variants': variants})
 
+def remove_gallery_image(request, product_id, image_id):
+    product = get_object_or_404(Product, id=product_id)
+    image = get_object_or_404(ProductGallery, id=image_id)
+
+    if request.method == 'POST':
+        # Assuming you want to confirm the deletion with a POST request
+        image.delete()
+        return redirect('add_gallery_images', product_id=product_id)
+
+    return render(request, 'products/remove_gallery_image.html', {'product': product, 'image': image})
 
 def add_description(request, product_id):
     product = Product.objects.get(id=product_id)
@@ -109,5 +150,6 @@ def update_product(request, product_id):
 
 
 
-
+def Management_Center(request):
+    return render(request, 'products/management_center.html')
 

@@ -18,88 +18,79 @@
                     </ol>
                 </div><!-- End .container -->
             </nav><!-- End .breadcrumb-nav -->
-<div class="container" style="margin: 50px auto; background: #f1f1f1; padding: 20px;">
-    <div class="row invoice">
-        <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="invoice-from">
-                                <h4>Invoiced To</h4>
-                                <address>
-                                    {{ order.full_name }}<br>
-                                    {{ order.full_address }}<br>
-                                    {{ order.city }}, {{ order.state }}<br>
-                                    {{ order.country }}
-                                </address>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 text-right">
-                            <p style="text-align: center;"><strong>Eco-dz Shopping</strong></p>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="invoice-details">
-                                <div class="well">
-                                    <p><strong>Order #</strong>{{ order.order_number }}</p>
-                                    <p><strong>Order Date:</strong> {{order.created_at|date}}</p>
-                                </div>
-                            </div>
-                            <div class="invoice-items">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-center">Products</th>
-                                                <th class="text-center">Qty</th>
-                                                <th class="text-center">Total</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for item in order_detail %}
-                                            <tr>
-                                                <td style="text-align: center;">
-                                                    {{ item.product.product_name }}
-                                                    <p class="small text-muted">
+
+<!-- order -->
+<div class="container">
+    <div class="row">
+{% include 'includes/dashboard_sidebar.html' %}
+        <div class="col-lg-9">
+
+             <div class="tab-pane " id="tab-address" role="tabpanel" aria-labelledby="tab-address-link">
+                                        <p>The following addresses will be used on the checkout page by default,<br> And we show your product you buy it.</p><br>
+
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="card card-dashboard">
+                                                    <div class="card-body">
+                                                        <h3 class="card-title">Billing Address</h3><!-- End .card-title -->
+
+                                                        <p>{{ order.full_name }}<br>
+                                                         Phone : {{order.phone}}<br>
+                                                        {{ order.full_address }}<br>
+                                                        {{ order.city }}, {{ order.state }}<br>
+                                                        {{ order.country }}<br>
+                                                        <p><strong>Order # </strong>{{ order.order_number }}</p>
+                                                        <p><strong>Order Date: </strong> {{order.created_at|date}}</p>
+
+                                                       </p>
+                                                    </div><!-- End .card-body -->
+                                                </div><!-- End .card-dashboard -->
+                                            </div><!-- End .col-lg-6 -->
+
+                                            <div class="col-lg-6">
+                                                <div class="card card-dashboard">
+                                                    <div class="card-body">
+                                                        <h3 class="card-title">Product Show</h3><!-- End .card-title -->
+
+                                                        {% for item in order_detail %}
+                                                        <p><b> {{ item.product.product_name }}.</b><br>
+                                                             <p class="small text-muted">
                                                         {% if item.variations.all %}
                                                                 {% for i in item.variations.all %}
                                                                     {{ i.variation_category | capfirst }} : {{ i.variation_value | capfirst }} <br>
                                                                 {% endfor %}
                                                             {% endif %}
-                                                    </p>
-                                                </td>
-                                                <td class="text-center">{{ item.quantity }}</td>
-                                                <td class="text-center">{{ item.product_price }} DA</td>
-                                            </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th colspan="2" class="text-right">Sub Total:</th>
-                                                <td class="text-center">{{ subtotal }} DA</td>
-                                            </tr>
-                                            <tr>
-                                                <th colspan="2" class="text-right">Shipping:</th>
-                                                <td class="text-center">{{ order.shipping_total }} DA</td>
-                                            </tr>
-                                            <tr>
-                                                <th colspan="2" class="text-right">Grand Total:</th>
-                                                <td class="text-center">{{ order.order_total }} DA</td>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="invoice-footer">
-                                <p class="text-center">Thank you for shopping with us!</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                                                    </p><br>
+                                                    Quantity: {{ item.quantity }}<br>
+                                                    {{ item.product_price }} DA <br>
+                                                        </p>
+                                                        {% endfor %}
+                                                       </p>
+                                                    </div><!-- End .card-body -->
+                                                </div><!-- End .card-dashboard -->
+
+                                                <div class="card card-dashboard">
+                                                    <div class="card-body">
+                                                        <h3 class="card-title">Calculate</h3><!-- End .card-title -->
+                                                        
+                                                        <p>Subtotal: {{ subtotal }} DA</p>
+                                                        <p>Shipping: {{ order.shipping_total }} DA</p>
+                                                        <p>Grand Total: {{ order.order_total }} DA</p>
+                                                    </div><!-- End .card-body -->
+                                                </div><!-- End .card-dashboard -->
+                                            </div><!-- End .col-lg-6 -->
+                                        </div><!-- End .row -->
+                                    </div><!-- .End .tab-pane -->
+            
         </div>
+        
     </div>
+    
 </div>
+
+
 </main>
+
+
 
 {% endblock %}

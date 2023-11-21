@@ -135,7 +135,8 @@ li {
 
 <div class="container">
   <div class="row">
-    <div class="col-lg-6">
+   {% include 'includes/management_center_sidebar.html' %}
+    <div class="col-lg-5">
       <h2 class="page-title">Add Variants</h2>
       <div class="row">
         <div class="col-md-12 form-container">
@@ -174,7 +175,7 @@ li {
       </div>
     </div>
 
-    <div class="col-lg-6">
+    <div class="col-lg-4">
   <!-- Display saved variants information -->
   <div class="variants-info">
     
@@ -196,8 +197,18 @@ li {
 
           <li>
             <div class="cell">{{ variant.variation_category }}</div>
-            <div class="cell">{{ variant.variation_value }}</div>
+            <div class="cell">
+              <!--form to remove one variant -->
+               <form method="post" action="{% url 'remove_variant' product.id variant.id %}">
+               {% csrf_token %}
+                <button class="btn-remove" type="submit"><i class="icon-close"></i></button>
+             </form>
+             <!-- variant value -->
+             {{ variant.variation_value }}
+            </div>
+            
           </li>
+
         {% endfor %}
       </ul>
     </div>

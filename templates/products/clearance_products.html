@@ -1,67 +1,96 @@
+
+
+
 {% extends 'homebase.html' %}
 {% load static %}
-{% load thumbnail %} 
 
+{% load thumbnail %}
 
 {% block content %}
+ <main class="main">
+          <div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
+            <div class="container">
 
-<main class="main">
-  <div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
-    <div class="container">
-      <h1 class="page-title">Add Clearance<span>clearance</span></h1>
-    </div><!-- End .container -->
-  </div><!-- End .page-header -->
-  <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
-    <div class="container">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">Add Product</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Create Clearance</li>
-      </ol>
-    </div><!-- End .container -->
-  </nav><!-- End .breadcrumb-nav -->
-</main>
- 
+              <h1 class="page-title">My Account<span>{{user.full_name}}</span></h1>
+            </div><!-- End .container -->
+          </div><!-- End .page-header -->
+            <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Account</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">My Confirmed Orders</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
 
- <div class="container">
- 	<div class="row">
+            <div class="page-content">
+              <div class="dashboard">
+                  <div class="container">
+                    <div class="row">
+                      {% include 'includes/management_center_sidebar.html' %}
 
- 		<div class="col-lg-3">
- 			
- 		</div>
- 		<div class="col-lg-6">
 
- 			<table class="table">
+                      <div class="col-md-8 col-lg-9">
+                        <div class="tab-content">
+                    <div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel" aria-labelledby="tab-dashboard-link">
+{%if user_products %}
+<p style="text-align: center;">List of Products</p>                     
+<!-- create table for orders -->
+<table class="table">
   <thead>
     <tr>
-      <th scope="col">Image</th>
-      <th scope="col">Product name</th>
-      <th scope="col">Price</th>
-      <th scope="col">Status</th>
+      <th scope="col"><b>Image</b></th>
+      <th scope="col"><b>Product Name</b></th>
+      <th scope="col"><b>Price</b></th>
+      <th scope="col"><b>Edit</b></th>
+     
     </tr>
   </thead>
   <tbody>
-  	{% for product in user_products%}
+    {% for product in user_products %}
     <tr>
-      <th scope="row"><img src="{{ product.images.url }}" alt="{{ product.product_name }}" style="max-width: 100px; height: auto;"></th>
+      <td >
+        {% thumbnail product.images "70x70" crop="center" as product_pic %}
+       <img width="{{ product_pic.width }}" height="{{product_pic.height }}" src="{{product_pic.url}}"style="border-radius:5px;">
+       {% endthumbnail %}
+
+     </td>
       <td>{{product.product_name}}</td>
+      {% if product.clearance_price %}
+      <td>{{product.clearance_price}} DA <br><small>Clear Price</small> </td>
+      {% else%}
       <td>{{product.price}} DA</td>
+      {% endif %}
+      
+     
       <td style="text-align: center;"><a href="{% url 'update_product' product.id %}">Clear Price</a> </td>
      
-    </tr>
     {% endfor %}
-    
-   
+  
   </tbody>
 </table>
- 			
- 		</div>
- 		<div class="col-lg-3">
- 			
- 		</div>
- 		
- 	</div>
- 	
- </div>
+{% else%}
+<p>You have No Products to Make Clearance For It.</p>
+{% endif %}
+                      <!-- end create table for orders -->
+                      <a href="{% url 'add_product' %}" class="btn btn-outline-primary-2"><span>Add Product</span><i class="icon-long-arrow-right"></i></a>
+                      
+                    </div><!-- .End .tab-pane -->
+
+                   
+
+                    
+                </div>
+                      </div><!-- End .col-lg-9 -->
+                    </div><!-- End .row -->
+                  </div><!-- End .container -->
+                </div><!-- End .dashboard -->
+            </div><!-- End .page-content -->
+        </main><!-- End .main -->
+      
+
+
+
 
 {% endblock %}
