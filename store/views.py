@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Product, ReviewRating, Wishlist, ProductGallery, Coupon, Descriptions
+from .models import Product, ReviewRating, Wishlist, ProductGallery, Coupon, Descriptions, Variation
 from category.models import Category, SubCategory
 from carts.models import CartItem
 from django.db.models import Q
@@ -7,10 +7,13 @@ import random
 from carts.views import _cart_id
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.http import HttpResponse
-from .forms import ReviewForm, CouponForm
+from .forms import ReviewForm, CouponForm, SignboardForm
 from django.contrib import messages
 from django.db.models import Avg # when filter as top products(top rating)
 from django.db import models
+from django.db.models import Avg, Count, Prefetch
+
+
 
 def store(request, category_slug=None, subcategory_slug = None):
     categories = None
@@ -19,7 +22,14 @@ def store(request, category_slug=None, subcategory_slug = None):
 
     if category_slug != None:
         categories = get_object_or_404(Category, slug=category_slug)
-        products = Product.objects.filter(category=categories, is_available=True)
+        # Get variant information for each featured product
+        variants_prefetch = Prefetch(
+          'variations',
+          queryset=Variation.objects.filter(is_active=True),
+          to_attr='variants'
+        )
+        products = Product.objects.filter(category=categories, is_available=True).prefetch_related(variants_prefetch)
+        
         paginator = Paginator(products, 3)
         page = request.GET.get('page')
         paged_products = paginator.get_page(page)
@@ -30,7 +40,14 @@ def store(request, category_slug=None, subcategory_slug = None):
         products = products.filter(subcategory=subcategories)
        
     else:
-        products = Product.objects.all().filter(is_available=True).order_by('-id')
+        # Get variant information for each featured product
+        variants_prefetch = Prefetch(
+          'variations',
+          queryset=Variation.objects.filter(is_active=True),
+          to_attr='variants'
+        )
+        products = Product.objects.all().filter(is_available=True).order_by('-id').prefetch_related(variants_prefetch)
+        
         
         paginator = Paginator(products, 8)
         page = request.GET.get('page')
@@ -40,12 +57,19 @@ def store(request, category_slug=None, subcategory_slug = None):
      
     context = {
         'products': paged_products,
+        
         'product_count': product_count,
 
     }
     return render(request, 'store/store.html', context)
 
 def product_detail(request, category_slug, product_slug, subcategory_slug=None):
+     # Get variant information for each featured product
+    variants_prefetch = Prefetch(
+          'variations',
+          queryset=Variation.objects.filter(is_active=True),
+          to_attr='variants'
+    )
     try:
         if subcategory_slug:
            single_product = Product.objects.get(category__slug=category_slug, subcategory__slug=subcategory_slug, slug=product_slug)
@@ -55,18 +79,19 @@ def product_detail(request, category_slug, product_slug, subcategory_slug=None):
     except Exception as e:
         raise e
 
-    # add products to wishlist
+   
    
     # Get the reviews
     reviews = ReviewRating.objects.filter(product_id=single_product.id, status=True)
     review_count = reviews.count()
     previous_product = Product.objects.filter(created_date__lt=single_product.created_date).last()
     next_product = Product.objects.filter(created_date__gt=single_product.created_date).first()
-    all_products = Product.objects.all().order_by('id')[:5]
+    all_products = Product.objects.all().order_by('id')[:5].prefetch_related(variants_prefetch)
     # Get the product gallery for single product
     product_gallery = ProductGallery.objects.filter(product_id=single_product.id).order_by('id')[:4]
     descriptions = single_product.descriptions.all()
     galleries = single_product.galleries.all()
+    
     
     context = {
         'single_product': single_product,
@@ -125,6 +150,7 @@ def submit_review(request, product_id):
 def wishlist(request):
 
     wishlist_items = Wishlist.objects.filter(user=request.user)
+    
     context = {
     'wishlist_items': wishlist_items,
         }
@@ -151,8 +177,15 @@ def remove_from_wishlist(request, product_id):
 
 def Featured_Products(request):
 
+     # Get variant information for each product
+    variants_prefetch = Prefetch(
+          'variations',
+          queryset=Variation.objects.filter(is_active=True),
+          to_attr='variants'
+    )
+
     productss = Product.objects.annotate(cartitem_count=models.Count('cartitem'))
-    featured_products = productss.order_by('-cartitem_count')
+    featured_products = productss.order_by('-cartitem_count').prefetch_related(variants_prefetch)
     paginator = Paginator(featured_products, 6)
     page = request.GET.get('page')
     paged_products = paginator.get_page(page)
@@ -168,9 +201,16 @@ def Featured_Products(request):
 
 def Top_Products(request):
 
+     # Get variant information for each product
+    variants_prefetch = Prefetch(
+          'variations',
+          queryset=Variation.objects.filter(is_active=True),
+          to_attr='variants'
+    )
+
     top_products = Product.objects.annotate(average_rating=Avg('reviewrating__rating')).filter(
         average_rating__gt=0  # Only select products with a rating greater than 0
-    ).order_by('-average_rating')  # Order by highest average rating first
+    ).order_by('-average_rating').prefetch_related(variants_prefetch)  # Order by highest average rating first
 
     paginator = Paginator(top_products, 6)
     page = request.GET.get('page')
@@ -187,7 +227,14 @@ def Top_Products(request):
 
 def Clearance_Products(request):
 
-    clearance_products = Product.objects.filter(is_clearance =True).order_by('-id')  # Order by highest average rating first
+    # Get variant information for each product
+    variants_prefetch = Prefetch(
+          'variations',
+          queryset=Variation.objects.filter(is_active=True),
+          to_attr='variants'
+    )
+
+    clearance_products = Product.objects.filter(is_clearance =True).order_by('-id').prefetch_related(variants_prefetch)  # Order by highest average rating first
 
     paginator = Paginator(clearance_products, 6)
     page = request.GET.get('page')
@@ -204,13 +251,20 @@ def Clearance_Products(request):
 
 
 def products_by_category(request, category_slug, subcategory_slug=None):
+     # Get variant information for each product
+    variants_prefetch = Prefetch(
+          'variations',
+          queryset=Variation.objects.filter(is_active=True),
+          to_attr='variants'
+    )
+    
     category = get_object_or_404(Category, category_name=category_slug)
 
     if subcategory_slug:
         subcategory = get_object_or_404(SubCategory, slug=subcategory_slug, category=category)
-        products = Product.objects.filter(category=category, subcategory=subcategory, is_available=True)
+        products = Product.objects.filter(category=category, subcategory=subcategory, is_available=True).prefetch_related(variants_prefetch)
     else:
-        products = Product.objects.filter(category=category, is_available=True)
+        products = Product.objects.filter(category=category, is_available=True).prefetch_related(variants_prefetch)
 
     context = {
         'products': products,
@@ -238,6 +292,18 @@ def get_coupon(request, code):
 
 
 
+def create_signboard(request):
+    curren_user = request.user
+    product = Product.objects.filter(buyer = curren_user)
+    if request.method == 'POST':
+        form = SignboardForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Signboard created successfully!')
+            return redirect('Management_Center')  # Replace with the URL or name of the success page
+    else:
+        form = SignboardForm()
 
+    return render(request, 'products/add_signboard.html', {'form': form, 'product': product})
 
 

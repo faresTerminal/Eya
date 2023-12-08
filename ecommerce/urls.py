@@ -46,6 +46,7 @@ urlpatterns = [
     path('newsletter/', include('newsletter.urls')),
     path('products/', include('products.urls')),
     path('printing/', include('printing.urls')),
+    path('stock/', include('stock.urls')),
    
 
     

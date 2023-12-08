@@ -28,6 +28,8 @@ urlpatterns = [
     path('features_products/', views.Featured_Products, name='Featured_Products'),
     path('top_products/', views.Top_Products, name='Top_Products'),
     path('clearance_products/', views.Clearance_Products, name='Clearance_Products'),
+
+    path('create-signboard/', views.create_signboard, name='create_signboard'),
     
    
 

@@ -5,7 +5,7 @@ from .forms import OrderForm
 import datetime
 from .models import Order, OrderProduct
 import json
-from store.models import Product
+from store.models import Product, Variation
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 
@@ -14,11 +14,11 @@ from django.db import transaction
 
 
 
-def place_order(request, total = 0):
+def place_order(request, total = 0, quantity = 0):
     current_user = request.user
 
     # If the cart count is less than or equal to 0, then redirect back to shop
-    cart_items = CartItem.objects.filter(user=current_user)
+    cart_items = CartItem.objects.filter(user=current_user, is_active=True)
     cart_count = cart_items.count()
     if cart_count <= 0:
         return redirect('store')
@@ -26,11 +26,18 @@ def place_order(request, total = 0):
     grand_total = 0
     
 
+    # Check if cart_items is not empty
+        
     for cart_item in cart_items:
-        if cart_item.product.clearance_price:
-            total += (cart_item.product.clearance_price * cart_item.quantity)
-        else:
-            total += (cart_item.product.price * cart_item.quantity)
+
+                if cart_item.variations.exists() and cart_item.variations.first().clearance_price:
+                    
+                    total += (cart_item.variations.first().clearance_price * cart_item.quantity)
+                    quantity += cart_item.quantity
+                else:
+                    
+                    total += (cart_item.variations.first().price * cart_item.quantity)
+                    quantity += cart_item.quantity
 
     
     grand_total += total 
@@ -74,10 +81,10 @@ def place_order(request, total = 0):
                     orderproduct.product = cart_item.product
                     orderproduct.quantity = cart_item.quantity
 
-                    if cart_item.product.clearance_price:
-                        orderproduct.product_price = cart_item.product.clearance_price
+                    if cart_item.variations.first().clearance_price:
+                        orderproduct.product_price = cart_item.variations.first().clearance_price
                     else:
-                        orderproduct.product_price = cart_item.product.price
+                        orderproduct.product_price = cart_item.variations.first().price
 
                     orderproduct.ordered = True
                     orderproduct.save()
@@ -115,6 +122,7 @@ def generate_order_number(order):
 
 
 def order_complete(request, order_number):
+    total_shipping_cost = 0
     current_user = request.user
     try:
         order = Order.objects.get(order_number=order_number)
@@ -125,6 +133,7 @@ def order_complete(request, order_number):
         # Retrieve the associated OrderProducts and mark them as ordered
         ordered_products = OrderProduct.objects.filter(order=order)
         for product in ordered_products:
+            
             product.ordered = True
             product.save()
 
@@ -134,15 +143,10 @@ def order_complete(request, order_number):
 
         cart_items = CartItem.objects.filter(user=current_user)
         for item in cart_items:
+         
           total_shipping_cost = sum(item.product.shipping for item in cart_items)
 
-
-        # Reduce the quantity of the sold products
-        product = Product.objects.get(id=item.product_id)
-        product.stock -= item.quantity
-        product.save()
-
-        
+         
 
         # Clear cart
         CartItem.objects.filter(user=request.user).delete()

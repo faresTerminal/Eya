@@ -24,10 +24,12 @@ class CartItem(models.Model):
     is_active = models.BooleanField(default=True)
 
     def sub_total(self):
-        if self.product.clearance_price and self.product.clearance_price > 0:
-            return self.product.clearance_price * self.quantity
+       
+
+        if self.variations.first().clearance_price and self.variations.first().clearance_price > 0:
+            return self.variations.first().clearance_price * self.quantity
         else:
-            return self.product.price * self.quantity
+            return self.variations.first().price * self.quantity
 
          # Apply discount as a percentage if dis_coupon is greater than zero
         if self.dis_coupon and self.dis_coupon > 0:

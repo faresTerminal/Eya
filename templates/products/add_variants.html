@@ -145,21 +145,29 @@ li {
             <h3 style="font-size: 24px; margin-bottom: 10px;">{{ product.product_name }}</h3>
             <p style="font-size: 16px; margin-bottom: 10px;">Description: {{ product.description }}</p>
             <img src="{{ product.images.url }}" alt="{{ product.product_name }}" style="max-width: 100px; height: auto;">
-            <p style="font-size: 18px; color: #2ecc71; font-weight: bold; margin-bottom: 20px;">Price: {{ product.price }} DA</p>
+           
           </div>
           <form method="post" enctype="multipart/form-data" action="{% url 'add_variants' product.id %}">
             {% csrf_token %}
-            <div class="form-group">
-              <label for="variation_category">Variation Category</label>
-              <select name="variation_category" id="variation_category" class="form-input wide-input">
-                <option value="color">Color</option>
-                <option value="size">Size</option>
-              </select>
+           <div class="form-group">
+              <label for="color">Color</label>
+              <input type="text" name="color" id="color" class="form-input" >
             </div>
             <div class="form-group">
-              <label for="variant_value">Variant Value</label>
-              <input type="text" name="variation_value" id="variant_value" class="form-input" required>
+              <label for="size">Size</label>
+              <input type="text" name="size" id="size" class="form-input" >
             </div>
+            
+            <div class="form-group">
+              <label for="price">Price</label>
+              <input type="text" name="price" id="price" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label for="quantity">Quantity</label>
+              <input type="text" name="quantity" id="quantity" class="form-input" required>
+            </div>
+            
+            <br>
             <div class="form-group">
               <label  for="is_active">Active</label>
               <input type="checkbox" name="is_active" id="is_active" class="form-checkbox" checked>
@@ -196,7 +204,7 @@ li {
         {% for variant in variants %}
 
           <li>
-            <div class="cell">{{ variant.variation_category }}</div>
+            <div class="cell">{{ variant.id}}</div>
             <div class="cell">
               <!--form to remove one variant -->
                <form method="post" action="{% url 'remove_variant' product.id variant.id %}">
@@ -204,7 +212,7 @@ li {
                 <button class="btn-remove" type="submit"><i class="icon-close"></i></button>
              </form>
              <!-- variant value -->
-             {{ variant.variation_value }}
+             {{ variant.color }}<hr><br>{{ variant.size }}<hr><br>{{ variant.price }} DA<hr><br>{{ variant.quantity }}
             </div>
             
           </li>

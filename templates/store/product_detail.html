@@ -85,57 +85,142 @@
                             </div>
                                         <a class="ratings-text" href="#product-review-link" id="review-link">( {{single_product.countReview}} Reviews )</a>
                                     </div><!-- End .rating-container -->
-                                      {% if single_product.clearance_price > 0 %}
-                                      
-                                         
-                                      <span class=" label-sale" style="background: cornsilk;">Sale</span>
-                                      <div class="product-price">
+    {% if single_product.variations.all %}
+    {% with first_variation=single_product.variations.first %}
+        {% if first_variation.clearance_price > 0 %}
+            <span class="label-sale" style="background: cornsilk;">Sale</span>
+            <div class="product-price">
+                <span class="new-price" style="color: green;">
+                    {{ first_variation.clearance_price }} DA
+                </span>
+                <span style="text-decoration: line-through;" class="old-price">
+                    {{ first_variation.price }} DA
+                </span>
+            </div><!-- End .product-price -->
+        {% else %}
+            <div class="product-price">
+                {{ first_variation.price }} DA
+            </div><!-- End .product-price -->
+        {% endif %}
+    {% endwith %}
 
-                                        <span class="new-price"  style="color: green;">
-                                        {{single_product.clearance_price}} DA</span>
-                                        <span style="text-decoration: line-through;" class="old-price">{{single_product.price}} DA</span>
 
-                                     </div><!-- End .product-price -->
-                                     {% else %}
-                                    <div class="product-price">
-                                         {{single_product.price}} DA
-                                    </div><!-- End .product-price -->
-                                    {% endif %}
+
+{% endif %}
 
                                     
 
                                     <div class="product-content">
                                         <p>{{single_product.description}} </p>
                                     </div><!-- End .product-content -->
+ 
 
                                     <div class="details-filter-row details-row-size">
                                         <label>Color:</label>
 
                                         <div class="product-nav product-nav-thumbs">
-                                            <select name="color" id="size" class="form-control" required="">
+                                            <select name="color" id="color-options" class="form-control" required="">
                                                 <option value="#" disabled="disabled" selected="selected">Select a color</option>
-                                                {% for i in single_product.variation_set.colors%}
-                                                <option value="{{i.variation_value | lower}}">{{i.variation_value | capfirst }}</option>
+                                                {% for variation in single_product.variations.all %}
+                                                {% if variation.color %}
+                                                <option value="{{ variation.color | lower }}" data-color="{{ variation.color }}" data-price="{% if variation.clearance_price %}{{ variation.clearance_price }}{% else %}{{ variation.price }}{% endif %}" >{{ variation.color|capfirst }}</option>
+                                                {% endif %}
                                                 {% endfor %}
                                                 
                                             </select>
                                         </div><!-- End .product-nav -->
                                     </div><!-- End .details-filter-row -->
+                                        
+ 
+
+
 
                                     <div class="details-filter-row details-row-size">
                                         <label for="size">Size:</label>
                                         <div class="select-custom">
-                                            <select name="size" id="size" class="form-control">
+                                            <select name="size" id="size-options" class="form-control">
                                                 <option value="#" selected="selected" selected="select">Select a size</option>
-                                                {% for i in single_product.variation_set.sizes%}
-                                                <option value="{{i.variation_value | lower}}">{{i.variation_value | capfirst }}</option>
-                                                {% endfor %}
+                                                 {% for variation in single_product.variations.all %}
+                                                {% if variation.size %}
+                                                <option value="{{ variation.size | lower }}" title="{{ variation.size }}" data-price="{% if variation.clearance_price %}{{ variation.clearance_price }}{% else %}{{ variation.price }}{% endif %}" data-color="{{ variation.color }}" data-quantity = {{variation.quantity}}>{{ variation.size|capfirst }}</option>
+                                                 {% endif %}
+                                                 {% endfor %}
                                                 
                                             </select>
                                         </div><!-- End .select-custom -->
 
                                        
                                         <a href="#" class="size-guide"><i class="icon-th-list"></i>size guide</a>
+                                    </div><!-- End .details-filter-row -->
+
+ 
+
+<!-- Your existing HTML content -->
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#size-options option").hide();
+        // Function to update the price based on the selected size
+        function updatePrice(selectedSize) {
+            // Find the size variant associated with the selected size
+            var variant = $('#size-options option[title="' + selectedSize + '"]');
+            if (variant.length > 0) {
+                // Get the price from the data attribute and update the display
+                var selectedPrice = variant.data('price');
+                $('.product-price').text(selectedPrice + ' DA');
+            }
+
+        }
+
+        // Event listener for size option click
+        $('#size-options option').click(function (event) {
+            event.preventDefault();
+
+            // Get the selected size
+            var selectedSize = $(this).attr('title');
+
+            // Update the price display based on the selected size
+            updatePrice(selectedSize);
+
+            // Optionally, submit the form to refresh the page with the new size
+            // Uncomment the line below if you want to automatically submit the form
+            // $('#product-form').submit();
+        });
+
+        // Event listener for color option click
+        $('#color-options option').click(function (event) {
+            event.preventDefault();
+            $("#size-options").show();
+            
+
+            
+
+
+
+            // Get the selected color
+            var selectedColor = $(this).data('color');
+
+            // Filter and show only size variants related to the selected color
+            $('#size-options option').hide();
+            $('#size-options option[data-color="' + selectedColor + '"]').show();
+
+            // Update the price based on the first visible size option
+            var selectedSize = $('#size-options option:visible').first().attr('title');
+            updatePrice(selectedSize);
+
+            // Optionally, perform other actions based on the selectedColor
+
+            // Refresh the page with the selected color
+            // Replace '/path/to/your/product-page' with the actual URL of your product detail page
+            
+        });
+    });
+</script>
+
+
+
+ 
                                     </div><!-- End .details-filter-row -->
 
                                     <div class="details-filter-row details-row-size">
@@ -146,13 +231,35 @@
                                     </div><!-- End .details-filter-row -->
 
                                     <div class="product-details-action">
-                                        {%if single_product.stock <= 0 %}
-                                        <h5 class="text-danger">Out Of Stock </h5>
-                                        {% else %}
+                                       
+                                       <p id="out-of-stock-message" class="text-danger" style="display: none;">Out Of Stock</p>
+
+                                       <button type="submit" class="btn-product btn-cart" id="add-to-cart-button">
+                                         <span>add to cart</span>
+                                       </button>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#size-options, #qty").on("change keyup", function () {
+            var selectedOption = $("#size-options").find("option:selected");
+            var quantity = selectedOption.data("quantity");
+            var inputQuantity = parseInt($("#qty").val());
+
+            if (quantity < inputQuantity || quantity === 0) {
+                $("#out-of-stock-message").show();
+                $("#add-to-cart-button").hide();
+            } else {
+                $("#out-of-stock-message").hide();
+                $("#add-to-cart-button").show();
+            }
+        });
+    });
+</script>
+
+
+
+                                       
                                         
-                                        
-                                        <button type="submit" class="btn-product btn-cart"><span>add to cart</span></button>
-                                        {%endif %}
                                         
 
                                         <div class="details-action-wrapper">
@@ -367,9 +474,24 @@
                                     <a href="#">{{random.category}}</a>
                                 </div><!-- End .product-cat -->
                                 <h3 class="product-title"><a href="{{random.get_url}}">{{random.product_name}}</a></h3><!-- End .product-title -->
-                                <div class="product-price">
-                                    {{random.price}} DA
-                                </div><!-- End .product-price -->
+                               
+                                {% if random.variants %}
+                                         <div class="product-price">
+                                            <span>
+                                                {{ random.variants.0.price }} DA
+                                            </span>
+                                            
+
+                                            {% if random.variants.0.clearance_price > 0 %}
+                                                    
+                                            
+                                                   
+                                                    <span style="margin-left: 5px;" class="old-price text-success"> {{random.variants.0.clearance_price}} DA</span>
+
+                                            {% endif %}
+
+                                {% endif %}
+                                        </div>
                                 <div class="ratings-container">
                                     <div class="rating-star">
                                 <span>
@@ -404,5 +526,7 @@
                 </div><!-- End .container -->
             </div><!-- End .page-content -->
         </main><!-- End .main -->
+
+
 
 {% endblock %}

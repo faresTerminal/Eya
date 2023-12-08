@@ -147,10 +147,10 @@
                                 {% for item in ordered_products %}
                                 <tr>
                                     <td>{{ item.product.product_name }}
-                                        <p class="text-muted small">
+                                        <p style="font-size: 20px;" class="text-muted small">
                                             {% if item.variations.all %}
                                             {% for i in item.variations.all %}
-                                            {{ i.variation_category | capfirst }} : {{ i.variation_value | capfirst }}
+                                            {{ i.color | capfirst }} : {{ i.size | capfirst }}
                                             <br>
                                             {% endfor %}
                                             {% endif %}

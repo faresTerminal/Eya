@@ -185,7 +185,9 @@
                                                      
                                                     <li><a href="{% url 'dashboard' %}">{{user.username}}</a></li>
                                                     <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                                                    <li><a href="{% url 'stock' %}">Stock</a></li>
                                                     {% if user.is_staff %}
+                                                    <li><a href="{% url 'stock_sammary' %}">Sammary</a></li>
                                                     <li><a href="{% url 'Management_Center' %}">Management Center</a></li>
                                                    
                                                     
@@ -706,6 +708,6 @@
     <!-- Main JS File -->
     <script src="{% static 'js/main4.js' %}"></script>
     <script src="{% static 'js/demos/demo-3.js' %}"></script>
-    <script src="https://www.paypal.com/sdk/js?client-id=AVBSMqNtoZ1IUO6lrSe6-vm9AIV1ZKN8CgXu_nINRs80xELRs650mh3yR62groIUg-GCe59Od_EFOG6O&currency=USD"></script>
+    <!--<script src="https://www.paypal.com/sdk/js?client-id=AVBSMqNtoZ1IUO6lrSe6-vm9AIV1ZKN8CgXu_nINRs80xELRs650mh3yR62groIUg-GCe59Od_EFOG6O&currency=USD"></script>-->
 
 </html>

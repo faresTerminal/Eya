@@ -1,0 +1,136 @@
+
+
+
+{% extends 'homebase.html' %}
+{% load static %}
+{% load thumbnail%}
+{% block content %}
+<main class="main">
+    <div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
+        <div class="container">
+            <h1 class="page-title">Stock History<span>products</span></h1>
+        </div><!-- End .container -->
+    </div><!-- End .page-header -->
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Add Product</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Stock History</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+  
+<div class="container">
+  <div class="row">
+{% include 'includes/stock_sidebar.html' %}
+    <div class="col-lg-9">
+      
+
+         <div class="inventory-container">
+          <h5>Stock History</h5>
+          
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Prodcut Name</th>
+      <th scope="col">Q.B.Change</th>
+      <th scope="col">Q.A.Change</th>
+      <th scope="col">Unit Change</th>
+      <th scope="col">Reason</th>
+      <th scope="col">Change date</th>
+     
+
+     
+    </tr>
+  </thead>
+  <tbody>
+    
+    {% for p in stock_history %}
+    <tr class="{% if p.is_low_stock %}low-stock{% endif %}">
+      <td>
+         {% thumbnail p.product.product.images "50x50" crop="center" as p_pic %}                                                          
+          <img width="{{ p_pic.width }}" height="{{p_pic.height }}" src="{{p_pic.url}}">
+          {% endthumbnail %}
+      </td style='text-align: center;'>
+      <td>{{p.product.product.product_name}}<br>{{p.product.color}}: {{p.product.size}}</td>
+      <td>{{p.quantity_before_change}}</td>
+      <td>{{p.quantity_after_change}}</td>
+      {% if p.unit_change > 0%}
+      <td style="color: green;">(+ {{p.unit_change}})</td>
+      {% else %}
+      <td style="color: red;"> ({{p.unit_change}})</td>
+      {% endif %}
+
+      <td>{{p.reason_for_change}}</td>
+      <td>{{p.change_date}}</td>
+     
+      
+
+     
+    </tr>
+    {% endfor %}
+    
+  </tbody>
+</table>
+<h5>Ajustment Stock History</h5>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Prodcut Name</th>
+      <th scope="col">Adjustment Type</th>
+      <th scope="col">Q</th>
+     
+      <th scope="col">Reason</th>
+      <th scope="col">Adjustment date</th>
+     
+
+     
+    </tr>
+  </thead>
+  <tbody>
+    
+    {% for p in adjustment_stock_history %}
+    <tr class="{% if p.is_low_stock %}low-stock{% endif %}">
+      <td>
+         {% thumbnail p.product.product.images "50x50" crop="center" as p_pic %}                                                          
+          <img width="{{ p_pic.width }}" height="{{p_pic.height }}" src="{{p_pic.url}}">
+          {% endthumbnail %}
+      </td style='text-align: center;'>
+      <td>{{p.product.product.product_name}}<br>{{p.product.color}}: {{p.product.size}}</td>
+      <td>{{p.adjustment_type}}</td>
+      {% if p.adjustment_type == 'add'%}
+      <td style="color: green;"> (+ {{p.quantity}})</td>
+      {%else%}
+      <td style="color: red;"> (- {{p.quantity}})</td>
+      {% endif %}
+      
+      
+
+      <td>{{p.reason}}</td>
+      <td>{{p.timestamp}}</td>
+     
+      
+
+     
+    </tr>
+    {% endfor %}
+    
+  </tbody>
+</table>
+
+   
+         </div>
+    
+    </div>
+  
+  </div>
+</div>
+</main>
+{% endblock %}
+
+
+
+

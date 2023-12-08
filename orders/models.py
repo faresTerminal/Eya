@@ -2,7 +2,7 @@ from django.db import models
 from accounts.models import Account
 from store.models import Product, Variation
 
-
+from cities_light.models import City, Region
 
 
 
@@ -58,5 +58,12 @@ class OrderProduct(models.Model):
 
     def __str__(self):
         return self.product.product_name
+
+
+
+
+class City_Region(models.Model):
+    city = models.ForeignKey(City, on_delete=models.CASCADE)
+    region = models.ForeignKey(Region, on_delete=models.CASCADE)
 
     

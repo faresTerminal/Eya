@@ -15,16 +15,16 @@ class ProductGalleryInline(admin.TabularInline):
     extra = 4
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('product_name', 'price', 'stock', 'category', 'modified_date', 'is_available')
+    list_display = ('product_name', 'category', 'modified_date', 'is_available')
     prepopulated_fields = {'slug': ('product_name',)}
     inlines = [ProductGalleryInline]
     
 
 class VariationAdmin(admin.ModelAdmin):
-    list_display = ('product', 'variation_category', 'variation_value', 'is_active')
+    list_display = ('product', 'color', 'size', 'price', 'is_active')
     list_editable = ('is_active',)
     # filter as product name in admin page
-    list_filter = ('product', 'variation_category', 'variation_value')
+    list_filter = ('product', 'color', 'size', 'price')
 
 
     

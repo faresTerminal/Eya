@@ -32,24 +32,6 @@
                                             <div class="col-lg-6">
                                                 <div class="card card-dashboard">
                                                     <div class="card-body">
-                                                        <h3 class="card-title">Billing Address</h3><!-- End .card-title -->
-
-                                                        <p>{{ order.full_name }}<br>
-                                                         Phone : {{order.phone}}<br>
-                                                        {{ order.full_address }}<br>
-                                                        {{ order.city }}, {{ order.state }}<br>
-                                                        {{ order.country }}<br>
-                                                        <p><strong>Order # </strong>{{ order.order_number }}</p>
-                                                        <p><strong>Order Date: </strong> {{order.created_at|date}}</p>
-
-                                                       </p>
-                                                    </div><!-- End .card-body -->
-                                                </div><!-- End .card-dashboard -->
-                                            </div><!-- End .col-lg-6 -->
-
-                                            <div class="col-lg-6">
-                                                <div class="card card-dashboard">
-                                                    <div class="card-body">
                                                         <h3 class="card-title">Product Show</h3><!-- End .card-title -->
 
                                                         {% for item in order_detail %}
@@ -65,6 +47,32 @@
                                                     {{ item.product_price }} DA <br>
                                                         </p>
                                                         {% endfor %}
+                                                       </p>
+                                                    </div><!-- End .card-body -->
+                                                </div><!-- End .card-dashboard -->
+                                                 <div class="card card-dashboard">
+                                                    <div class="card-body">
+                                                        <h3 class="card-title">Product Image</h3><!-- End .card-title -->
+                                                        
+                                                       <img src="{{order.product.images.url}}">
+                                                    </div><!-- End .card-body -->
+                                                </div><!-- End .card-dashboard -->
+                                            </div><!-- End .col-lg-6 -->
+
+                                            <div class="col-lg-6">
+                                                <div class="card card-dashboard">
+                                                    
+                                                    <div class="card-body">
+                                                        <h3 class="card-title">Billing Address</h3><!-- End .card-title -->
+
+                                                        <p>{{ order.full_name }}<br>
+                                                         Phone : {{order.phone}}<br>
+                                                        {{ order.full_address }}<br>
+                                                        {{ order.city }}, {{ order.state }}<br>
+                                                        {{ order.country }}<br>
+                                                        <p><strong>Order # </strong>{{ order.order_number }}</p>
+                                                        <p><strong>Order Date: </strong> {{order.created_at|date}}</p>
+
                                                        </p>
                                                     </div><!-- End .card-body -->
                                                 </div><!-- End .card-dashboard -->

@@ -12,6 +12,9 @@
 								        <a class="nav-link {% if '/list_clearance_products/' in request.path %}active{% endif %}" id="tab-orders-link"  href="{% url 'list_clearance_products' %}">Clearance Price</a>
 								    </li>
 								    <li class="nav-item">
+								        <a class="nav-link {% if '/create-signboard/' in request.path %}active{% endif %}"   href="{% url 'create_signboard' %}" >Add Signboards</a>
+								    </li>
+								     <li class="nav-item">
 								        <a class="nav-link {% if '/create_article/' in request.path %}active{% endif %}"   href="{% url 'create_article' %}" >Add Article</a>
 								    </li>
 								    

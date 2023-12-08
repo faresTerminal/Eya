@@ -75,13 +75,14 @@
     <div class="col-lg-9">
 
       <div class="containerer">
-    <h5>Add Clearance Price {{ product.product_name }}</h5>
+    <h5>Add Clearance Price {{ product.product.product_name }}<br></h5>
+    <p>{{product.color}}: {{product.size}}</p>
     <div style="text-align: center;">
         <!-- Display the product price -->
         <p style="text-align: left;" >Product Price: <b>{{ product.price }} DA</b></p>
         
         <!-- Display the product image -->
-        <img src="{{ product.images.url }}" alt="{{ product.product_name }}" style="max-width: 200px; display: block; margin: 0 auto;">
+        <img src="{{ product.product.images.url }}" alt="{{ product.product_name }}" style="max-width: 200px; display: block; margin: 0 auto;">
     </div>
     
     <form method="post" enctype="multipart/form-data">

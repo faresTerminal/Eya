@@ -50,14 +50,19 @@
                     <div class="products">
                         <div class="row">
                             {% for s in products %}
+
+                          
                             
                             <div class="col-6 col-md-4 col-lg-4 col-xl-3">
                                 <div class="product">
                                     <figure class="product-media">
-                                        {% if s.clearance_price > 0 %}
+                                        {% if s.variants %}
+
+                                        {% if s.variants.0.clearance_price > 0 %}
                                         <span class="product-label label-sale">Sale</span>
                                         {% else%}
                                         <span class="product-label label-new">New</span>
+                                        {% endif %}
                                         {% endif %}
                                         <a href="{{s.get_url}}">
                                             {% thumbnail s.images "275x275" crop="center" as azer %}
@@ -84,16 +89,24 @@
                                             <a href="#">Women</a>
                                         </div><!-- End .product-cat -->
                                         <h3 class="product-title"><a href="{{s.get_url}}">{{s.product_name}}</a></h3><!-- End .product-title -->
-
+                                          {% if s.variants %}
                                          <div class="product-price">
-                                            {{s.price}} DA
-                                            {% if s.clearance_price > 0 %}
+                                            <span>
+                                                {{ s.variants.0.price }} DA
+                                            </span>
+                                            
+
+                                            {% if s.variants.0.clearance_price > 0 %}
                                                     
                                             
-                                                    <span class="new-price">{{s.discount_price}} DA</span>
-                                                    <span class="old-price text-success">{{s.clearance_price}} DA</span>
+                                                   
+                                                    <span style="margin-left: 5px;" class="old-price text-success"> {{s.variants.0.clearance_price}} DA</span>
+
                                             {% endif %}
+
+                                          
                                         </div><!-- End .product-price -->
+                                        {% endif %}
                                         <div class="ratings-container">
                                              <div class="rating-star">
                                 <span>
@@ -113,7 +126,11 @@
                                 </div><!-- End .product -->
 
                             </div><!-- End .col-sm-6 col-lg-4 col-xl-3 -->
+                            
                             {% endfor %}
+                            
+                            
+
                             {%else %}
                             <div>
                                 <h5 class="text-center text-info">No Rusalt Found it ... please try again</h5>

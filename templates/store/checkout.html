@@ -112,14 +112,15 @@
 					                                       {% if cart_item.variations.all  %}
 
 					                                          	{% for item in  cart_item.variations.all %}
-						                                         	{{ item.variation_category | capfirst }} : {{ item.variation_value | capfirst }} <br>
+						                                         	 {{ item.color | capfirst }} : {{ item.size | capfirst }} <br>
 
-					                                    	    {% endfor %}
-					                                    	    {% if cart_item.product.clearance_price%}
-					                                    	    {{cart_item.product.clearance_price}} DA
+					                                    	    
+					                                    	    {% if item.clearance_price%}
+					                                    	   <b> {{item.clearance_price}} DA</b>
 					                                    	    {% else %}
-					                                    	    {{cart_item.product.price}} DA
+					                                    	   <b> {{item.price}} DA</b>
 					                                    	    {% endif %}
+					                                    	    {% endfor %}
 				                                     	    {% endif %}
 			                                        	</p>
 													</h3><!-- End .product-title -->

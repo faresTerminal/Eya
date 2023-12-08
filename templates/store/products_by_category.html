@@ -80,19 +80,20 @@
 
                                     <div class="product-body">
                                         <div class="product-cat">
-                                            <a href="#">Women</a>
+                                            <a href="#">{{s.category}}</a>
                                         </div><!-- End .product-cat -->
                                         <h3 class="product-title"><a href="{{s.get_url}}">{{s.product_name}}</a></h3><!-- End .product-title -->
-
+                                          {% if s.variants %}
                                          <div class="product-price">
-                                           Was  {{s.price}} DA
-                                            {% if s.clearance_price > 0 %}
+                                            {{ s.variants.0.price }} DA
+                                            {% if s.variants.0.clearance_price > 0 %}
                                                     
                                             
-                                                    <span class="new-price">{{s.discount_price}} DA</span>
-                                                    <span class="old-price text-success">{{s.clearance_price}} DA</span>
+                                                   
+                                                    <span style="margin-left: 5px;" class="old-price text-success">{{s.variants.0.clearance_price}} DA</span>
                                             {% endif %}
                                         </div><!-- End .product-price -->
+                                        {% endif %}
                                         <div class="ratings-container">
                                              <div class="rating-star">
                                 <span>

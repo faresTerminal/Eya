@@ -72,7 +72,8 @@ INSTALLED_APPS = [
     'social',
     'social_django',
     'cities_light',
-    'crispy_forms',
+    'stock',
+    
 
     
 ]
@@ -91,11 +92,7 @@ MIDDLEWARE = [
 
 ]
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https"
-
-SITE_ID = 1
 LOGIN_REDIRECT_URL = "/"
 
 ROOT_URLCONF = 'ecommerce.urls'

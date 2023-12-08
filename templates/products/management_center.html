@@ -20,6 +20,14 @@
                     </ol>
                 </div><!-- End .container -->
             </nav><!-- End .breadcrumb-nav -->
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-success text-center" role="alert">
+  {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+ 
 
             <div class="page-content">
               <div class="dashboard">

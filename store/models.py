@@ -30,10 +30,9 @@ class Product(models.Model):
     product_name    = models.CharField(max_length=200, unique=True)
     slug            = models.SlugField(max_length=200, unique=True)
     description     = models.TextField(max_length=500, blank=True)
-    price           = models.IntegerField(blank = False)
-    clearance_price = models.IntegerField(blank=True, null = True)
     images          = models.ImageField(upload_to='photos/products')
-    stock           = models.IntegerField()
+    
+   
     is_available    = models.BooleanField(default=True)
     is_clearance    = models.BooleanField(default=False)
     category        = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
@@ -74,8 +73,7 @@ class Product(models.Model):
             count = int(reviews['count'])
         return count
 
-    def discount_price(self):
-       return self.price - self.clearance_price
+    
 
     def save(self, *args, **kwargs):
         
@@ -84,35 +82,53 @@ class Product(models.Model):
             self.slug = slugify(self.product_name)
 
         super().save(*args, **kwargs)
-    
 
     
 
-    
 class VariationManager(models.Manager):
     def colors(self):
-        return super(VariationManager, self).filter(variation_category='color', is_active=True)
+        return super(VariationManager, self).filter(color='color', is_active=True)
 
     def sizes(self):
-        return super(VariationManager, self).filter(variation_category='size', is_active=True)
-    
+        return super(VariationManager, self).filter(size='size', is_active=True)    
 
-variation_category_choice = (
-    ('color', 'color'),
-    ('size', 'size'),
-)
 
 class Variation(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    variation_category = models.CharField(max_length=100, choices=variation_category_choice)
-    variation_value     = models.CharField(max_length=100)
+    product             = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='variations')
+    color               = models.CharField(max_length=255, blank = True)
+    size                = models.CharField(max_length=255, blank =True)
+    price               = models.IntegerField(blank = False)
+    clearance_price     = models.IntegerField(blank = True, default=0)
+    quantity            = models.PositiveIntegerField(default=0, blank = False)
+    initial_stock_quantity = models.PositiveIntegerField(default=0, blank=False)
+    reorder_point = models.PositiveIntegerField(default=0, blank=False)
     is_active           = models.BooleanField(default=True)
     created_date        = models.DateTimeField(auto_now=True)
 
+
     objects = VariationManager()
 
+    
+
     def __str__(self):
-        return self.variation_value
+        return "{} {}".format(self.color, self.size)
+
+    def discount_price(self):
+       return self.price - self.clearance_price
+
+    def is_low_stock(self):
+        return self.quantity < self.reorder_point
+
+    def stock_difference(self):
+        return self.initial_stock_quantity - self.quantity
+
+    
+
+    def valuation(self):
+        return self.quantity * self.price
+
+    def Clearance_valuation(self):
+        return self.quantity * self.clearance_price
 
 
 class ReviewRating(models.Model):

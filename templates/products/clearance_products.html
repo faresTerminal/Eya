@@ -48,23 +48,23 @@
     </tr>
   </thead>
   <tbody>
-    {% for product in user_products %}
+    {% for p in variation_clearance %}
     <tr>
       <td >
-        {% thumbnail product.images "70x70" crop="center" as product_pic %}
+        {% thumbnail p.product.images "70x70" crop="center" as product_pic %}
        <img width="{{ product_pic.width }}" height="{{product_pic.height }}" src="{{product_pic.url}}"style="border-radius:5px;">
        {% endthumbnail %}
 
      </td>
-      <td>{{product.product_name}}</td>
-      {% if product.clearance_price %}
-      <td>{{product.clearance_price}} DA <br><small>Clear Price</small> </td>
+      <td>{{p.product.product_name}}<br>{{p.color}}: {{p.size}}</td>
+      {% if p.clearance_price %}
+      <td>{{p.clearance_price}} DA <br><small>Clear Price</small> </td>
       {% else%}
-      <td>{{product.price}} DA</td>
+      <td>{{p.price}} DA</td>
       {% endif %}
       
      
-      <td style="text-align: center;"><a href="{% url 'update_product' product.id %}">Clear Price</a> </td>
+      <td style="text-align: center;"><a href="{% url 'update_product' p.id %}">Clear Price</a> </td>
      
     {% endfor %}
   

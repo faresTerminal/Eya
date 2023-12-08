@@ -15,23 +15,29 @@ def _cart_id(request):
         cart = request.session.create()
     return cart
 
+
+ 
+   
 def add_cart(request, product_id):
     current_user = request.user
     product = Product.objects.get(id=product_id) #get the product
-    # If the user is authenticated
+   # If the user is authenticated
     if current_user.is_authenticated:
         product_variation = []
         if request.method == 'POST':
-            for item in request.POST:
-                key = item
-                value = request.POST[key]
+            color = request.POST.get('color')
+            size = request.POST.get('size')
+           
 
-                try:
-                    variation = Variation.objects.get(product=product, variation_category__iexact=key, variation_value__iexact=value)
-                    product_variation.append(variation)
-                except:
-                    pass
+            
 
+            try:
+                variation = Variation.objects.get(product=product, color__iexact=color, size__iexact=size)
+                product_variation.append(variation)
+
+
+            except Variation.DoesNotExist:
+                pass
 
         is_cart_item_exists = CartItem.objects.filter(product=product, user=current_user).exists()
         # Get quantity from the POST data
@@ -70,20 +76,32 @@ def add_cart(request, product_id):
                 cart_item.variations.clear()
                 cart_item.variations.add(*product_variation)
             cart_item.save()
+
+        cart_item = CartItem.objects.filter(product=product, user=current_user)
+        for item in cart_item:
+             for variation in item.variations.all():
+              variation.quantity = max(0, variation.quantity - item.quantity)
+              variation.save()
+
+
         return redirect('cart')
     # If the user is not authenticated
     else:
         product_variation = []
         if request.method == 'POST':
-            for item in request.POST:
-                key = item
-                value = request.POST[key]
+            color = request.POST.get('color')
+            size = request.POST.get('size')
+           
 
-                try:
-                    variation = Variation.objects.get(product=product, variation_category__iexact=key, variation_value__iexact=value)
-                    product_variation.append(variation)
-                except:
-                    pass
+            
+
+            try:
+                variation = Variation.objects.get(product=product, color__iexact=color, size__iexact=size)
+                product_variation.append(variation)
+
+
+            except Variation.DoesNotExist:
+                pass
 
 
         try:
@@ -134,7 +152,10 @@ def add_cart(request, product_id):
                 cart_item.variations.add(*product_variation)
             cart_item.save()
 
+
+
         return redirect('cart')
+        
 
 def remove_cart(request, product_id, cart_item_id):
 
@@ -149,6 +170,7 @@ def remove_cart(request, product_id, cart_item_id):
             cart_item.quantity -= 1
             cart_item.save()
         else:
+           
             cart_item.delete()
     except:
         pass
@@ -163,6 +185,14 @@ def remove_cart_item(request, product_id, cart_item_id):
     else:
         cart = Cart.objects.get(cart_id=_cart_id(request))
         cart_item = CartItem.objects.get(product=product, cart=cart, id=cart_item_id)
+
+    cart_item = CartItem.objects.filter(product=product, user=request.user)
+    for item in cart_item:
+             for variation in item.variations.all():
+                 variation.quantity = max(0, variation.quantity + item.quantity)
+                 variation.save()
+
+
     cart_item.delete()
     return redirect('cart')
 
@@ -172,7 +202,7 @@ def cart(request, total=0, quantity=0, cart_items=None):
    
     grand_total = 0
     message = ""
-    discount = 0
+   
     cart_item = None  # Initialize cart_item to None
     total_shipping_cost = 0
 
@@ -187,50 +217,20 @@ def cart(request, total=0, quantity=0, cart_items=None):
         # Check if cart_items is not empty
         if cart_items:
             for cart_item in cart_items:
-                if cart_item.product.clearance_price:
-                    total += (cart_item.product.clearance_price * cart_item.quantity)
+
+                if cart_item.variations.exists() and cart_item.variations.first().clearance_price:
+                    
+                    total += (cart_item.variations.first().clearance_price * cart_item.quantity)
                     quantity += cart_item.quantity
                 else:
-                    total += (cart_item.product.price * cart_item.quantity)
+                    
+                    total += (cart_item.variations.first().price * cart_item.quantity)
                     quantity += cart_item.quantity
 
-            
+       
 
-            # Get the coupon code entered by the user
-            coupon_code = request.GET.get("coupon_code")
-
-            # Check if there is an active coupon with the entered code
-            try:
-                active_coupon = Coupon.objects.get(code=coupon_code, active=True, product=cart_item.product)
-            except Coupon.DoesNotExist:
-                active_coupon = None
-
-          
-
-            for cart_item in cart_items:
-                      cart_item.dis_coupon = discount
-                      cart_item.save()
                 
 
-
-            if request.method == "POST":
-                coupon_code = request.POST.get("coupon_code")
-                try:
-                    coupon = Coupon.objects.get(code=coupon_code, active=True, product=cart_item.product)
-                    discount = coupon.discount
-                    message = f"Coupon applied! Discount: {discount}%"
-
-                    # Update dis_coupon in CartItem model
-                    for cart_item in cart_items:
-                        cart_item.dis_coupon = discount
-                        cart_item.save()
-                except Coupon.DoesNotExist:
-                    message = "Coupon not active"
-
-            # Apply discounts based on dis_coupon
-            for cart_item in cart_items:
-                if cart_item.dis_coupon > 0:
-                    total -= (total * (cart_item.dis_coupon / 100))
 
 
             total_shipping_cost = sum(cart_item.product.shipping for cart_item in cart_items)
@@ -246,8 +246,7 @@ def cart(request, total=0, quantity=0, cart_items=None):
         'cart_items': cart_items,
         'grand_total': grand_total,
         'message': message,
-        'discount': discount,
-        'dis_coupon': cart_item.dis_coupon if cart_item else 0,  # Use cart_item if it's not None
+       
     }
     return render(request, 'store/cart.html', context)
 
@@ -264,13 +263,18 @@ def checkout(request, total=0, quantity=0, cart_items=None):
             cart = Cart.objects.get(cart_id=_cart_id(request))
             cart_items = CartItem.objects.filter(cart=cart, is_active=True)
 
-        for cart_item in cart_items:
-            if cart_item.product.clearance_price:
-                total += (cart_item.product.clearance_price * cart_item.quantity)
-                quantity += cart_item.quantity
-            else:
-                total += (cart_item.product.price * cart_item.quantity)
-                quantity += cart_item.quantity
+         # Check if cart_items is not empty
+        if cart_items:
+            for cart_item in cart_items:
+
+                if cart_item.variations.exists() and cart_item.variations.first().clearance_price:
+                    
+                    total += (cart_item.variations.first().clearance_price * cart_item.quantity)
+                    quantity += cart_item.quantity
+                else:
+                    
+                    total += (cart_item.variations.first().price * cart_item.quantity)
+                    quantity += cart_item.quantity
 
         
        

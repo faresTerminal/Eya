@@ -1,0 +1,143 @@
+<!-- inventory_app/templates/inventory_app/stock_adjustment.html -->
+
+{% extends 'homebase.html' %}
+{% load static %}
+{% load thumbnail %}
+{% block content %}
+<style>
+  .form-group {
+    display: inline-block;
+    margin-right: 20px; /* Add spacing between fields */
+  }
+
+  /* Rest of your existing styles */
+  .slider {
+    width: 100%;
+    height: 15px;
+    background-color: #ccc;
+    position: relative;
+  }
+
+  .slider-handle {
+   
+    background-color: #007bff;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+  }
+
+  #price-value {
+    display: block;
+    margin-top: 10px;
+  }
+</style>
+
+
+
+  <style>
+    .page-title {
+      font-size: 24px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    .form-container {
+      background-color: #fff;
+      padding: 20px;
+      border: 1px solid #e1e1e1;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .form-checkbox {
+      margin-right: 5px;
+    }
+
+    .form-label {
+      font-weight: normal;
+    }
+
+    .btn-save {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .btn-save:hover {
+      background-color: #0056b3;
+    }
+  </style>
+<main class="main">
+    <div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
+        <div class="container">
+            <h1 class="page-title">Stock Adjustment<span>products</span></h1>
+        </div><!-- End .container -->
+    </div><!-- End .page-header -->
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Add Product</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Stock Adjustment</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+<div class="container">
+	<div class="row">
+		{% include 'includes/stock_sidebar.html' %}
+		<div class="col-lg-9">
+
+  
+    <h5>Stock Adjustment for {{ product.product_name }}</h5>
+    {% thumbnail product.images "120x120" crop="center" as p_pic %}                                                          
+          <img width="{{ p_pic.width }}" height="{{p_pic.height }}" src="{{p_pic.url}}">
+     {% endthumbnail %}
+
+    <form method="post" >
+      {% csrf_token %}
+      
+      
+      <div class="form-group">
+              <label for="adjustment_type">Adjustment Type:</label>
+              <select name="adjustment_type" id="adjustment_type" class="form-input wide-input">
+               
+                  <option value="add">add</option>
+                  <option value="subtract">subtract</option>
+               
+               
+              </select>
+      </div>
+       <br>
+       <div class="form-group">
+                        <label for="stock">Quantity:</label>
+                        <input type="text" name="quantity" id="stock" class="form-input" pattern="[0-9]*" inputmode="numeric">
+       </div>
+       <br>
+       <div class="form-group">
+                        <label for="description">Reason</label>
+                        <textarea name="reason" id="description" class="form-input" rows="4" required></textarea>
+       </div>
+       <br>
+      <button type="submit" class="btn btn-primary">Adjust Stock</button>
+    </form>
+
+  </div>
+
+</div>
+</div>
+</main>
+{% endblock %}

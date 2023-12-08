@@ -39,8 +39,7 @@
     <tr>
       <th scope="col"><b>Image</b></th>
       <th scope="col"><b>Product Name</b></th>
-      <th scope="col"><b>Price</b></th>
-      <th scope="col"><b>Stock</b></th>
+     
       <th scope="col"><b>Edit</b> </th>
       <th scope="col"><b>Remove</b></th>
     </tr>
@@ -55,12 +54,7 @@
 
      </td>
       <td>{{product.product_name}}</td>
-      {% if product.clearance_price %}
-      <td>{{product.clearance_price}} DA <br><small>Clear Price</small> </td>
-      {% else%}
-      <td>{{product.price}} DA</td>
-      {% endif %}
-      <td>{{product.stock}}</td>
+      
       <td><b><a style="color: green;" href="{% url 'edit_product' product.id%}">Edit</a></b> </td>
       <td><b> <form method="post" action="{% url 'remove_product' product.id %}">
         {% csrf_token %}

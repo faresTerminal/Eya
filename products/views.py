@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from products.forms import ProductForm, VariantForm, GalleryImageForm, ProductUpdateForm, DescriptionForm
+from products.forms import ProductForm, VariantForm, GalleryImageForm, VariationtUpdateForm, DescriptionForm
 from store.models import Product, Variation, ProductGallery, Descriptions
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -12,7 +12,8 @@ def add_product(request):
         product_form = ProductForm(request.POST, request.FILES)
         if product_form.is_valid():
             product = product_form.save(commit=False)
-            product.buyer = request.user  # Set the currently logged-in user as the buyer
+            product.buyer = request.user
+            # Set the currently logged-in user as the buyer
             product.save()
             return redirect('add_variants', product_id=product.id)
     else:
@@ -47,6 +48,7 @@ def add_variants(request, product_id):
         if variant_form.is_valid():
             variant = variant_form.save(commit=False)
             variant.product = product
+            
             variant.save()
 
             
@@ -118,26 +120,29 @@ def list_clearance_products(request):
     
     user = request.user  
     user_products = Product.objects.filter(buyer=user)
+    variation_clearance = Variation.objects.filter(product__in = user_products)
 
     context = {
         'user_products': user_products,
+        'variation_clearance': variation_clearance,
     }
 
     return render(request, 'products/clearance_products.html', context)
 
 
 def update_product(request, product_id):
-    product = Product.objects.get(id=product_id)
+    product = Variation.objects.get(id=product_id)
+    
 
     if request.method == 'POST':
-        form = ProductUpdateForm(request.POST, instance=product)
+        form = VariationtUpdateForm(request.POST, instance=product)
         if form.is_valid():
             form.save()
             # Redirect to the product detail page or any other page as needed
-            return redirect('product_detail', category_slug=product.category.slug, product_slug=product.slug)
+            return redirect('list_clearance_products')
 
     else:
-        form = ProductUpdateForm(instance=product)
+        form = VariationtUpdateForm(instance=product)
 
     context = {
         'product': product,

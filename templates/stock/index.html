@@ -1,0 +1,114 @@
+
+
+{% extends 'homebase.html' %}
+{% load static %}
+{% load thumbnail%}
+{% block content %}
+<main class="main">
+    <div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
+        <div class="container">
+            <h1 class="page-title">Inventory Overview<span>products</span></h1>
+        </div><!-- End .container -->
+    </div><!-- End .page-header -->
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Add Product</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Inventory Overview</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+  
+<div class="container">
+  <div class="row">
+{% include 'includes/stock_sidebar.html' %}
+    <div class="col-lg-9">
+      
+
+  <div class="inventory-container">
+    <h2>Inventory Overview</h2>
+
+    <div class="summary">
+      <h3>Summary:</h3>
+
+      <ul>
+        <li>Total Number of Products: {{ total_products }}</li>
+        <li>Low-Stock Products:<br>
+          <ul>
+            {% for p in low_stock_variations %}
+            <div style="color: #c82f77;">
+              <li>
+               
+                              <img style="width: 10%;" src="{{p.product.images.url}}" alt="Product image">
+                            
+              </li>
+              <li><b>{{ p.product.product_name }}</b><br> - <b>{{p.color}}: {{p.size}}
+              {{ product.stock }}</b> in <b>{{ p.product.category }}</b> Category</li>
+            </div>
+            <hr>
+            {% endfor %}
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="detailed-products">
+      <h3>Detailed Product Information:</h3>
+      <div class="row">
+        {% for p in products %}
+        <div class="col-lg-4">
+           <ul>
+          
+          <li>
+            <strong>{{p.product_name}}</strong>
+            <ul>
+              {% for variation in p.variations.all %}
+                <li>
+                                
+                                Variation: {{ variation.color | capfirst }} : {{ variation.size | capfirst }} <br>
+                                 Stock Quantity: {{ variation.quantity }}<br>
+                                 <hr>
+                               
+               </li>
+              {% endfor %}
+              
+              <li>Category: {{p.category}}</li><br>
+              <li>
+                {% thumbnail p.images "80x80" crop="center" as p_pic %}                                                          
+                <img width="{{ p_pic.width }}" height="{{p_pic.height }}" src="{{p_pic.url}}">
+                {% endthumbnail %}
+              </li>
+              <!-- Add more product details as needed -->
+            </ul>
+          </li>
+         
+      </ul>
+        </div>
+        {% endfor %}
+        
+      </div>
+
+     <a href="{% url 'product_list_stock' %}">See More</a>
+    </div><br>
+
+    <div class="other-metrics">
+      <h3>Other Relevant Metrics:</h3>
+
+      <!-- Add more metrics as needed -->
+      <ul>
+        <li>Average Stock Quantity: {{average_stock}} %</li>
+        
+        <!-- Add more metrics as needed -->
+      </ul>
+    </div>
+  </div>
+
+      
+    </div>
+    
+  </div>
+  
+</div>
+</main>
+{% endblock %}

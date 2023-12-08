@@ -169,13 +169,15 @@
                             {% for p in featured_products %}
                             <div class="product product-2">
                                 <figure class="product-media">
-                                    {% if p.clearance_price > 0 %}
+                                {% if p.variants %}
+                                    {% if p.variants.0.clearance_price > 0 %}
                                         <span class="product-label label-sale">{% trans "Sale" %}</span>
                                         {% else%}
                                         {% if p.is_new %}
                                         <span class="product-label label-new">{% trans "New" %}</span>
-                                        {% endif %}
-                                        {% endif %}
+                                    {% endif %}
+                                    {% endif %}
+                                {% endif %}
                                     <a href="{{p.get_url}}">
                                         {% thumbnail p.images "275x275" crop="center" as lj %}
                                         <img width="{{ lj.width }}" height="{{lj.height }}" src="{{lj.url}}" class="product-image">
@@ -198,15 +200,17 @@
                                         <a href="#">{{p.category}}</a>
                                     </div><!-- End .product-cat -->
                                     <h3 class="product-title"><a href="{{p.get_url}}">{{p.product_name}}</a></h3><!-- End .product-title -->
+                                    {% if p.variants %}
                                     <div class="product-price">
-                                            {{p.price}} DA
-                                            {% if p.clearance_price > 0 %}
+                                            {{p.variants.0.price}} DA
+                                            {% if p.variants.0.clearance_price > 0 %}
                                                     
                                             
-                                                    <span class="new-price">{{p.discount_price}} DA</span>
-                                                    <span class="old-price text-success">Was {{p.clearance_price}} DA</span>
+                                                   
+                                                    <span style="margin-left: 5px;" class="old-price text-success"> {{p.variants.0.clearance_price}} DA</span>
                                             {% endif %}
-                                        </div><!-- End .product-price -->
+                                     </div><!-- End .product-price -->
+                                     {% endif %}
                                     <div class="ratings-container">
                                         <div class="rating-star">
                                 <span>
@@ -252,16 +256,19 @@
                             {% for sale in on_sale %}
                             <div class="product product-2">
                                 <figure class="product-media">
-                                    {% if sale.clearance_price > 0 %}
+                                    {% if sale.variants %}
+                                    {% if sale.variants.0.clearance_price > 0  %}
                                         <span class="product-label label-sale">{% trans "Sale" %}</span>
                                         {% else%}
                                         <span class="product-label label-new">{% trans "New" %}</span>
                                         {% endif %}
+                                    {% endif %}
                                     <a href="{{sale.get_url}}">
                                         {% thumbnail sale.images "275x275" crop="center" as sales %}
                                         <img width="{{ sales.width }}" height="{{sales.height }}" src="{{sales.url}}" class="product-image">
                                         {% endthumbnail %}
                                     </a>
+
                                     
 
                                     <div class="product-action-vertical">
@@ -279,15 +286,20 @@
                                         <a href="#">Digital Cameras</a>
                                     </div><!-- End .product-cat -->
                                     <h3 class="product-title"><a href="{{sale.get_url}}">{{sale.product_name}}</a></h3><!-- End .product-title -->
+                                    {% if sale.variants %}
                                      <div class="product-price">
-                                            {{sale.price}} DA
-                                            {% if sale.clearance_price > 0 %}
+                                        
+                                            {{sale.variants.0.price}} DA
+                                            {% if sale.variants.0.clearance_price > 0  %}
                                                     
                                             
-                                                    <span class="new-price">{{sale.discount_price}} DA</span>
-                                                    <span class="old-price text-success">Was {{sale.clearance_price}} DA</span>
+                                                    
+                                                    <span style="margin-left: 5px;" class="old-price text-success"> {{sale.variants.0.clearance_price}} DA</span>
                                             {% endif %}
-                                        </div><!-- End .product-price -->
+                                        
+                                    </div><!-- End .product-price -->
+                                    {% endif %}
+
                                     <div class="ratings-container">
                                        <div class="rating-star">
                                 <span>
@@ -332,11 +344,13 @@
                             {% for rating in top_rated_products %}
                             <div class="product product-2">
                                 <figure class="product-media">
-                                    {% if rating.clearance_price > 0 %}
+                                    {% if rating.variants %}
+                                    {% if rating.variants.0.clearance_price > 0  %}
                                         <span class="product-label label-sale">{% trans "Sale" %}</span>
                                         {% else%}
                                         <span class="product-label label-new">{% trans "New" %}</span>
                                         {% endif %}
+                                    {% endif %}
                                     <a href="{{rating.get_url}}">
                                         {% thumbnail rating.images "275x275" crop="center" as rate %}
                                         <img width="{{ rate.width }}" height="{{rate.height }}" src="{{rate.url}}" class="product-image">
@@ -359,16 +373,18 @@
                                         <a href="#">{{rating.category}}</a>
                                     </div><!-- End .product-cat -->
                                     <h3 class="product-title"><a href="{{rating.get_url}}">{{rating.product_name}}</a></h3>
+                                    {% if rating.variants %}
                                     <div class="product-price">
-                                            {{rating.price}} DA
-                                            {% if rating.clearance_price > 0 %}
+                                            {{rating.variants.0.price}} DA
+                                            {% if rating.variants.0.clearance_price > 0  %}
                                                     
                                             
-                                                    <span class="new-price">{{rating.discount_price}} DA</span>
-                                                    <span class="old-price text-success">Was {{rating.clearance_price}} DA</span>
+                                                    
+                                                    <span style="margin-left: 5px;" class="old-price text-success">{{rating.variants.0.clearance_price}} DA</span>
                                             {% endif %}
-                                            <span class="out-text">{{rating.stock}} in Stock</span>
-                                        </div><!-- End .product-price -->
+                                            <span class="out-text">{{rating.variants.0.quantity}} in Stock</span>
+                                    </div><!-- End .product-price -->
+                                    {% endif %}
                                     <div class="ratings-container">
                                         <div class="rating-star">
                                 <span>
@@ -407,7 +423,7 @@
                                     <div class="cta-text">
                                         <p>{{deal.big_title}}<br> <strong>{{deal.product.product_name}}</strong></p>
                                     </div><!-- End .cta-text -->
-                                    <a href="{% url 'add_cart' deal.id %}" class="btn btn-primary btn-round"><span>Add to Cart be with {{deal.product.clearance_price}} DA</span><i class="icon-long-arrow-right"></i></a>
+                                    <a href="{% url 'add_cart' deal.id %}" class="btn btn-primary btn-round"><span>Add to Cart be with {{deal.clear_price}} DA</span><i class="icon-long-arrow-right"></i></a>
                                 </div><!-- End .cta-content -->
                             </div><!-- End .col-xl-7 -->
                         </div><!-- End .row -->
@@ -434,10 +450,10 @@
 
                                 <div class="deal-content">
                                     <h3 class="product-title"><a href="product.html">{{deals.product}}</a></h3><!-- End .product-title -->
-
+                                 
                                     <div class="product-price">
-                                        <span class="new-price">${{deals.product.clearance_price}}</span>
-                                        <span class="old-price">Was ${{deals.product.price}}</span>
+                                        <span class="new-price">{{deals.clear_price}} DA</span>
+                                        <span class="old-price">Was {{deals.price}} DA</span>
                                     </div><!-- End .product-price -->
 
                                     <a href="{{deals.product.get_url}}" class="btn btn-link"><span>{% trans "Shop Now" %}</span><i class="icon-long-arrow-right"></i></a>
@@ -498,10 +514,12 @@
                                                     <a href="#">{{clear.category}}</a>
                                                 </div><!-- End .product-cat -->
                                                 <h3 class="product-title"><a href="{{clear.get_url}}">{{clear.product_name}}</a></h3><!-- End .product-title -->
+                                                {% if clear.variants %}
                                                 <div class="product-price">
-                                                    <span class="new-price">${{clear.clearance_price}}</span>
-                                                    <span class="old-price">Was ${{clear.price}}</span>
+                                                    <span class="new-price">{{clear.variants.0.clearance_price}} DA</span>
+                                                    <span class="old-price"> {{clear.variants.0.price}} DA</span>
                                                 </div><!-- End .product-price -->
+                                                {% endif %}
                                                 <div class="ratings-container">
                                                     <div class="rating-star">
                                 <span>

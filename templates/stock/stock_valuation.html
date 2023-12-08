@@ -1,0 +1,90 @@
+
+
+{% extends 'homebase.html' %}
+{% load static %}
+{% load thumbnail%}
+{% block content %}
+<main class="main">
+    <div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
+        <div class="container">
+            <h1 class="page-title">Stock Valuation<span>products</span></h1>
+        </div><!-- End .container -->
+    </div><!-- End .page-header -->
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Add Product</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Stock Valuation</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+  
+<div class="container">
+  <div class="row">
+{% include 'includes/stock_sidebar.html' %}
+    <div class="col-lg-9">
+      
+
+         <div class="inventory-container">
+          <h3>Stock Valuation</h3>
+          <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Prodcut Name</th>
+     
+      <th scope="col">Stock</th>
+      <th scope="col">Price</th>
+      <th scope="col">Valuation</th>
+
+     
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in variation_valuation %}
+    <tr class="{% if p.is_low_stock %}low-stock{% endif %}">
+      <td>
+         {% thumbnail p.product.images "50x50" crop="center" as p_pic %}                                                          
+          <img width="{{ p_pic.width }}" height="{{p_pic.height }}" src="{{p_pic.url}}">
+          {% endthumbnail %}
+      </td>
+      <td>{{p.product.product_name}}<br>{{p.color}}: {{p.size}}</td>
+      
+      
+      
+      
+      
+      <td>{{p.initial_stock_quantity}}</td>
+      
+      
+      <td >{{p.price}} DA</td>
+      
+
+      <td>{{ p.valuation|floatformat:2 }} DA</td>
+      
+     
+      
+
+     
+    </tr>
+    {% endfor %}
+   
+  </tbody>
+</table>
+<p>Total Stock Valuation:<b> {{ total_valuation|floatformat:2 }} DA </b></p>
+   
+
+   
+         
+   
+
+      
+         </div>
+    
+    </div>
+  
+  </div>
+</div>
+</main>
+{% endblock %}
