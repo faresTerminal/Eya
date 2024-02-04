@@ -3,7 +3,26 @@
 {% load thumbnail %} 
  
 
+{% load i18n %}
+
 {% block content %}
+{% if current_language == 'ar' %}
+    <style>
+      .main {
+        direction: rtl;
+      }
+      tr{
+        text-align: center;
+      }
+      .row{
+        text-align: right;
+      }
+      .product-media{
+        margin-right: 0.2rem !important;
+        margin-left: 1em !important;
+      }
+    </style>
+   {% endif %}
 
 <!-- article_form.html -->
 
@@ -16,20 +35,20 @@
 <main class="main">
             <div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
                 <div class="container">
-                    <h1 class="page-title">Add Article<span>Blog</span></h1>
+                    <h1 class="page-title">{% trans 'Add Article' %}<span>{% trans 'Blog' %}</span></h1>
                 </div><!-- End .container -->
             </div><!-- End .page-header -->
             <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
                 <div class="container">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Blog</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">create a article</li>
+                        <li class="breadcrumb-item"><a href="index.html">{% trans 'Home' %}</a></li>
+                        <li class="breadcrumb-item"><a href="#">{% trans 'Blog' %}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{% trans 'Create a Article' %}</li>
                     </ol>
                 </div><!-- End .container -->
             </nav><!-- End .breadcrumb-nav -->
 
-</main>
+
 <div class="container">
 	<br>
 	<div class="row">
@@ -40,36 +59,36 @@
                                    	{% csrf_token %}
 			                				<div class="row">
 			                				   <div class="tab-pane fade show active" id=" tab-dashboard" role="tabpanel" aria-labelledby="tab-dashboard-link">
-								    	           <p>(Hello <span class="font-weight-normal text-dark">{{user.full_name}})</span>  
+								    	           <p>({% trans 'Hello' %} <span class="font-weight-normal text-dark">{{user.full_name}})</span>  
 								    	              <br>
-                                                      <strong>To post an article on our Django website:</strong><br>
+                                                      <strong>{% trans 'To post an article on our Django website' %}:</strong><br>
 
-                                                    <strong>1.</strong> When Click on "Add Article."<br>
-                                                    <strong>2.</strong> Input a compelling title, upload an image, and create a article after share your content.<br>
-                                                    <strong>3.</strong> Hit "Post Article" to instantly publish your article with title, image, and paragraph.
+                                                    <strong>1.</strong> {% trans 'When Click on' %} "{% trans 'Add Article' %}."<br>
+                                                    <strong>2.</strong> {% trans 'Input a compelling title, upload an image, and create a article after share your content' %}.<br>
+                                                    <strong>3.</strong> {% trans 'Hit Post Article to instantly publish your article with title, image, and paragraph' %}.
 								    	               .</p>
 								               </div><!-- .End .tab-pane -->
 			                					<div class="col-sm-6">
-			                						<label>Title *</label>
+			                						<label>{% trans 'Title' %} *</label>
 			                						<input type="text" name="title" class="form-control" required>
-			                						<small class="form-text">This will be how your name will be displayed in the account section and in reviews</small>
+			                						<small class="form-text">{% trans 'This will be how your name will be displayed in the account section and in reviews' %}</small>
 			                					</div><!-- End .col-sm-6 -->
 
 			                					<div class="col-sm-6">
-			                						<label>Add Image  *</label>
+			                						<label>{% trans 'Add Image' %}  *</label>
 			                						<input name="image" type="file" class="form-control" required>
-			                						<small class="form-text">This will be how your name will be displayed in the account section and in reviews</small>
+			                						<small class="form-text">{% trans 'This will be how your name will be displayed in the account section and in reviews' %}</small>
 			                						
 			                					</div><!-- End .col-sm-6 -->
 			                				</div><!-- End .row -->
-			                				<label>Body *</label>
+			                				<label>{% trans 'Body' %} *</label>
 	        							    <textarea name="body" style="height: 500px;" id="id_body" class="form-control" cols="30" rows="4" placeholder="here you can create you article and you can add images and links and more ..."></textarea>
-	        							    <small class="form-text">This will be how your name will be displayed in the account section and in reviews</small>
+	        							    <small class="form-text">{% trans 'This will be how your name will be displayed in the account section and in reviews' %}</small>
 			                				
                                             <br>
                                             <hr>
 		                					<button type="submit" class="btn btn-outline-primary-2">
-			                					<span>Post Article</span>
+			                					<span>{% trans 'Post Article' %}</span>
 			            						<i class="icon-long-arrow-right"></i>
 			                				</button>
 			   </form>
@@ -78,7 +97,7 @@
 		
 	</div>
 </div>
-                             
+</main>                             
 
 
 

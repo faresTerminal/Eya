@@ -3,20 +3,31 @@
 
  
 
+{% load i18n %}
 {% block content %}
+{% if current_language == 'ar' %}
+    <style>
+        .main {
+            direction: rtl;
+        }
+        tr{
+            text-align: center;
+        }
+    </style>
+   {% endif %}
 
  <main class="main">
         	<div class="page-header text-center" style="background-image: url({% static 'images/page-header-bg.jpg' %})">
         		<div class="container">
-        			<h1 class="page-title">About us <span>Pages</span></h1>
+        			<h1 class="page-title">{% trans 'About us' %} <span>{% trans 'Pages' %}</span></h1>
         		</div><!-- End .container -->
         	</div><!-- End .page-header -->
             <nav aria-label="breadcrumb" class="breadcrumb-nav">
                 <div class="container">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">About us </li>
+                        <li class="breadcrumb-item"><a href="index.html">{% trans 'Home' %}</a></li>
+                        <li class="breadcrumb-item"><a href="#">{% trans 'Pages' %}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{% trans 'About us' %} </li>
                     </ol>
                 </div><!-- End .container -->
             </nav><!-- End .breadcrumb-nav -->
@@ -26,17 +37,17 @@
                     <div class="row">
                         <div class="col-lg-10 offset-lg-1">
                             <div class="about-text text-center mt-3">
-                                <h2 class="title text-center mb-2">Who We Are</h2><!-- End .title text-center mb-2 -->
+                                <h2 class="title text-center mb-2">{% trans 'Who We Are' %}</h2><!-- End .title text-center mb-2 -->
                                 <p>
-                                    <strong>"Eco-dz Shopping: Your Sustainable Lifestyle Companion"</strong><br>
+                                    <strong>"{% trans 'Eco-dz Shopping: Your Sustainable Lifestyle Companion' %}"</strong><br>
 
-Eco-dz Shopping is your one-stop destination for eco-conscious living. We offer a carefully curated range of sustainable and ethically sourced products that align with your values.
+{% trans 'Eco-dz Shopping is your one-stop destination for eco-conscious living. We offer a carefully curated range of sustainable and ethically sourced products that align with your values.
 
 Our commitment to transparency means you can make informed choices, knowing the environmental and social impact of each purchase.
 
 From eco-friendly household essentials to fashion with a conscience, we make sustainable living simple and accessible.
 
-Join us in our mission to make every purchase count, and be part of a community shaping a greener, more ethical world. Welcome to Eco-dz Shopping, where your choices lead to positive change.
+Join us in our mission to make every purchase count, and be part of a community shaping a greener, more ethical world. Welcome to Eco-dz Shopping, where your choices lead to positive change' %}.
                                 </p>
                                 <img src="{% static 'images/demos/demo-3/vb.png' %}" alt="signature" class="mx-auto mb-5">
 
@@ -51,8 +62,8 @@ Join us in our mission to make every purchase count, and be part of a community 
                                     <i class="icon-puzzle-piece"></i>
                                 </span>
                                 <div class="icon-box-content">
-                                    <h3 class="icon-box-title">Design Quality</h3><!-- End .icon-box-title -->
-                                    <p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero <br>eu augue.</p>
+                                    <h3 class="icon-box-title">{% trans 'Design Quality' %}</h3><!-- End .icon-box-title -->
+                                    <p>{% trans 'Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero <br>eu augue.</p>
                                 </div><!-- End .icon-box-content -->
                             </div><!-- End .icon-box -->
                         </div><!-- End .col-lg-4 col-sm-6 -->
@@ -63,8 +74,8 @@ Join us in our mission to make every purchase count, and be part of a community 
                                     <i class="icon-life-ring"></i>
                                 </span>
                                 <div class="icon-box-content">
-                                    <h3 class="icon-box-title">Professional Support</h3><!-- End .icon-box-title -->
-                                    <p>Praesent dapibus, neque id cursus faucibus, <br>tortor neque egestas augue, eu vulputate <br>magna eros eu erat. </p>
+                                    <h3 class="icon-box-title">{% trans 'Professional Support' %}</h3><!-- End .icon-box-title -->
+                                    <p>{% trans 'Praesent dapibus, neque id cursus faucibus' %}, <br>tortor neque egestas augue, eu vulputate <br>magna eros eu erat. </p>
                                 </div><!-- End .icon-box-content -->
                             </div><!-- End .icon-box -->
                         </div><!-- End .col-lg-4 col-sm-6 -->
@@ -75,8 +86,8 @@ Join us in our mission to make every purchase count, and be part of a community 
                                     <i class="icon-heart-o"></i>
                                 </span>
                                 <div class="icon-box-content">
-                                    <h3 class="icon-box-title">Made With Love</h3><!-- End .icon-box-title -->
-                                    <p>Pellentesque a diam sit amet mi ullamcorper <br>vehicula. Nullam quis massa sit amet <br>nibh viverra malesuada.</p> 
+                                    <h3 class="icon-box-title">{% trans 'Made With Love' %}</h3><!-- End .icon-box-title -->
+                                    <p>{% trans 'Pellentesque a diam sit amet mi ullamcorper' %} <br>{% trans 'vehicula. Nullam quis massa sit amet' %} <br>{% trans 'nibh viverra malesuada.' %}</p> 
                                 </div><!-- End .icon-box-content -->
                             </div><!-- End .icon-box -->
                         </div><!-- End .col-lg-4 col-sm-6 -->
@@ -89,7 +100,7 @@ Join us in our mission to make every purchase count, and be part of a community 
 
                 <div class="bg-light-2 pt-6 pb-7 mb-6">
                     <div class="container">
-                        <h2 class="title text-center mb-4">Meet Our Team</h2><!-- End .title text-center mb-2 -->
+                        <h2 class="title text-center mb-4">{% trans 'Meet Our Team' %}</h2><!-- End .title text-center mb-2 -->
 
                         <div class="row">
                             <div class="col-sm-6 col-lg-3">
@@ -247,7 +258,7 @@ Join us in our mission to make every purchase count, and be part of a community 
 
                         <div class="text-center mt-3">
                             <a href="blog.html" class="btn btn-sm btn-minwidth-lg btn-outline-primary-2">
-                                <span>LETS START WORK</span>
+                                <span>{% trans 'LETS START WORK' %}</span>
                                 <i class="icon-long-arrow-right"></i>
                             </a>
                         </div><!-- End .text-center -->
@@ -258,8 +269,8 @@ Join us in our mission to make every purchase count, and be part of a community 
                     <div class="row">
                         <div class="col-lg-10 offset-lg-1">
                             <div class="brands-text text-center mx-auto mb-6">
-                                <h2 class="title">The world's premium design brands in one destination.</h2><!-- End .title -->
-                                <p>Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nis</p>
+                                <h2 class="title">{% trans 'The worlds premium design brands in one destination.' %}</h2><!-- End .title -->
+                                <p>{% trans 'Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nis' %}</p>
                             </div><!-- End .brands-text -->
                             <div class="brands-display">
                                 <div class="row justify-content-center">

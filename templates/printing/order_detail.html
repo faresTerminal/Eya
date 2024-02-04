@@ -178,7 +178,7 @@
                                
                                 <tr>
                                     <th colspan="2" class="text-right">Grand Total:</th>
-                                    <th class="text-center">{{ order.order_total }} DA</th>
+                                    <th class="text-center">{{ order.order_total|floatformat:2 }} DA</th>
                                 </tr>
                             </tfoot>
                         </table>

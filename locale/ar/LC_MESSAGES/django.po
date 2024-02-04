@@ -2,13 +2,13 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-# 
+#
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-16 16:39+0200\n"
+"POT-Creation-Date: 2024-01-31 01:30+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#: .\ecommerce\settings.py:187 .\templates\homebase.html:198
+msgid "English"
+msgstr "انجليزي"
+
+#: .\ecommerce\settings.py:188 .\templates\homebase.html:200
+msgid "Arabic"
+msgstr "عربي"
+
+#: .\ecommerce\settings.py:189 .\templates\homebase.html:199
+msgid "French"
+msgstr "فرنسي"
 
 #: .\env\Lib\site-packages\django\contrib\messages\apps.py:7
 msgid "Messages"
@@ -173,8 +185,7 @@ msgid "Null characters are not allowed."
 msgstr ""
 
 #: .\env\Lib\site-packages\django\db\models\base.py:1187
-#: .\env\Lib\site-packages\django\forms\models.py:760
-#: .\templates\home.html:700
+#: .\env\Lib\site-packages\django\forms\models.py:760 .\templates\home.html:862
 msgid "and"
 msgstr ""
 
@@ -407,6 +418,8 @@ msgid "File"
 msgstr ""
 
 #: .\env\Lib\site-packages\django\db\models\fields\files.py:377
+#: .\templates\accounts\edit_products.html:62
+#: .\templates\products\clearance_products.html:62
 msgid "Image"
 msgstr ""
 
@@ -568,12 +581,15 @@ msgstr[1] ""
 
 #: .\env\Lib\site-packages\django\forms\formsets.py:379
 #: .\env\Lib\site-packages\django\forms\formsets.py:386
+#: .\templates\accounts\dashboard.html:96
+#: .\templates\accounts\my_orders.html:62
+#: .\templates\orders\order_complete.html:49
 msgid "Order"
-msgstr ""
+msgstr "طلبية"
 
 #: .\env\Lib\site-packages\django\forms\formsets.py:391
 msgid "Delete"
-msgstr ""
+msgstr "حذف"
 
 #: .\env\Lib\site-packages\django\forms\models.py:755
 #, python-format
@@ -680,23 +696,23 @@ msgstr ""
 
 #: .\env\Lib\site-packages\django\utils\dateformat.py:65
 msgid "p.m."
-msgstr ""
+msgstr "مساء"
 
 #: .\env\Lib\site-packages\django\utils\dateformat.py:66
 msgid "a.m."
-msgstr ""
+msgstr "صباحا"
 
 #: .\env\Lib\site-packages\django\utils\dateformat.py:71
 msgid "PM"
-msgstr ""
+msgstr "مساء"
 
 #: .\env\Lib\site-packages\django\utils\dateformat.py:72
 msgid "AM"
-msgstr ""
+msgstr "صباح"
 
 #: .\env\Lib\site-packages\django\utils\dateformat.py:149
 msgid "midnight"
-msgstr ""
+msgstr "منتصف الليل"
 
 #: .\env\Lib\site-packages\django\utils\dateformat.py:151
 msgid "noon"
@@ -704,31 +720,32 @@ msgstr ""
 
 #: .\env\Lib\site-packages\django\utils\dates.py:6
 msgid "Monday"
-msgstr ""
+msgstr "الاثنين"
 
 #: .\env\Lib\site-packages\django\utils\dates.py:6
 msgid "Tuesday"
-msgstr ""
+msgstr "الثلالثاء"
 
 #: .\env\Lib\site-packages\django\utils\dates.py:6
 msgid "Wednesday"
-msgstr ""
+msgstr "الأربعاء"
 
 #: .\env\Lib\site-packages\django\utils\dates.py:6
 msgid "Thursday"
-msgstr ""
+msgstr "الخميس"
 
 #: .\env\Lib\site-packages\django\utils\dates.py:6
 msgid "Friday"
-msgstr ""
+msgstr "الجمعة"
 
 #: .\env\Lib\site-packages\django\utils\dates.py:7
 msgid "Saturday"
-msgstr ""
+msgstr "السبت"
 
 #: .\env\Lib\site-packages\django\utils\dates.py:7
+#: .\templates\blog\contact.html:87
 msgid "Sunday"
-msgstr ""
+msgstr "الأحد"
 
 #: .\env\Lib\site-packages\django\utils\dates.py:10
 msgid "Mon"
@@ -1074,6 +1091,9 @@ msgid ""
 "submitting forms. This cookie is required for security reasons, to ensure "
 "that your browser is not being hijacked by third parties."
 msgstr ""
+"تظهر لك هذه الرسالة لأن هذا الموقع يتطلب ملف تعريف الارتباط CSRF عندما إرسال "
+"النماذج. ملف تعريف الارتباط هذا مطلوب لأسباب أمنية، لضمان أن متصفحك لا يتم "
+"اختطافه من قبل أطراف ثالثة"
 
 #: .\env\Lib\site-packages\django\views\csrf.py:137
 msgid ""
@@ -1158,161 +1178,2372 @@ msgstr ""
 msgid "Index of %(directory)s"
 msgstr ""
 
-#: .\templates\home.html:66
-msgid "Click Here"
+#: .\templates\accounts\500.html:28
+#: .\templates\accounts\change_password.html:33
+#: .\templates\accounts\dashboard.html:38
+#: .\templates\accounts\edit_products.html:39
+#: .\templates\accounts\edit_profile.html:39
+#: .\templates\accounts\my_orders.html:39
+#: .\templates\accounts\user_message.html:39 .\templates\blog\about.html:28
+#: .\templates\blog\add_article.html:44 .\templates\blog\blog.html:37
+#: .\templates\blog\blog_detail.html:60 .\templates\blog\contact.html:35
+#: .\templates\category\category_list.html:34 .\templates\homebase.html:422
+#: .\templates\products\add_gallery.html:148
+#: .\templates\products\add_products.html:34
+#: .\templates\products\add_signboard.html:34
+#: .\templates\products\add_variants.html:168
+#: .\templates\products\clearance_products.html:39
+#: .\templates\products\management_center.html:36
+#: .\templates\products\update_product.html:87 .\templates\stock\index.html:37
+#: .\templates\stock\low_stock.html:35
+#: .\templates\stock\product_list_stock.html:59
+#: .\templates\stock\stock_adjustment.html:35
+#: .\templates\stock\stock_history.html:36
+#: .\templates\stock\stock_sammary.html:34
+#: .\templates\stock\stock_update_adjust.html:112
+#: .\templates\stock\stock_valuation.html:35
+#: .\templates\stock\update_stock.html:115 .\templates\store\cart.html:27
+#: .\templates\store\checkout.html:33
+#: .\templates\store\clearance_products.html:36
+#: .\templates\store\featured_products.html:36
+#: .\templates\store\product_chat.html:26
+#: .\templates\store\product_detail.html:40 .\templates\store\store.html:33
+#: .\templates\store\top_products.html:36 .\templates\store\wishlist.html:39
+msgid "Home"
+msgstr "صفحة الرئسية"
+
+#: .\templates\accounts\500.html:29 .\templates\blog\about.html:22
+#: .\templates\blog\about.html:29 .\templates\blog\contact.html:36
+#: .\templates\homebase.html:433
+msgid "Pages"
+msgstr "صفحات"
+
+#: .\templates\accounts\500.html:30
+msgid "Service Error 500"
+msgstr "خطأ في الخدمة 500"
+
+#: .\templates\accounts\500.html:37
+msgid "Server Error (500)"
+msgstr "خطأ في الخادم (500)"
+
+#: .\templates\accounts\500.html:40
+msgid "BACK TO HOMEPAGE"
+msgstr "العودة لصفحة الرئسية"
+
+#: .\templates\accounts\change_password.html:27
+#: .\templates\accounts\dashboard.html:32
+#: .\templates\accounts\edit_profile.html:33
+#: .\templates\accounts\my_orders.html:33
+#: .\templates\accounts\user_message.html:33 .\templates\homebase.html:518
+#: .\templates\products\clearance_products.html:33
+msgid "My Account"
+msgstr "حسابي"
+
+#: .\templates\accounts\change_password.html:34
+#: .\templates\accounts\edit_products.html:40
+#: .\templates\accounts\edit_profile.html:40
+#: .\templates\accounts\my_orders.html:40
+#: .\templates\accounts\user_message.html:40
+#, fuzzy
+#| msgid "My Account"
+msgid "Account"
+msgstr "حسابي"
+
+#: .\templates\accounts\change_password.html:35
+#: .\templates\accounts\change_password.html:47
+#: .\templates\includes\dashboard_sidebar.html:22
+msgid "Change Password"
+msgstr "تغيير كلمة المرور"
+
+#: .\templates\accounts\change_password.html:53
+msgid "Current password (leave blank to leave unchanged)"
+msgstr "كلمة المرور الحالية (اتركها فارغة لتركها دون تغيير)"
+
+#: .\templates\accounts\change_password.html:56
+msgid "New password (leave blank to leave unchanged)"
+msgstr "كلمة المرور الجديدة (اتركها فارغة لتركها دون تغيير)"
+
+#: .\templates\accounts\change_password.html:59
+msgid "Confirm new password"
+msgstr "تأكيد كلمة السر"
+
+#: .\templates\accounts\change_password.html:63
+#: .\templates\accounts\edit_profile.html:111
+msgid "SAVE CHANGES"
+msgstr "حفظ التغير"
+
+#: .\templates\accounts\chat_room_messages.html:55
+#, fuzzy
+#| msgid "Billing Details"
+msgid "Message Detail"
+msgstr "تفاصيل الفاتورة"
+
+#: .\templates\accounts\chat_room_messages.html:56
+#: .\templates\accounts\user_message.html:63
+msgid "Sender"
 msgstr ""
 
-#: .\templates\home.html:88
-msgid "Top Product"
+#: .\templates\accounts\chat_room_messages.html:57
+#: .\templates\blog\contact.html:125 .\templates\blog\contact.html:126
+msgid "Message"
 msgstr ""
 
-#: .\templates\home.html:90 .\templates\home.html:102
-#: .\templates\home.html:114
-#: .\templates\home.html:411
-msgid "Shop Now"
+#: .\templates\accounts\chat_room_messages.html:62
+#, fuzzy
+#| msgid "Contact Information"
+msgid "Conversation"
+msgstr "معلومات الإتصال"
+
+#: .\templates\accounts\chat_room_messages.html:79
+#, fuzzy
+#| msgid "Reply"
+msgid "Your Reply:"
+msgstr "رد على التعليق"
+
+#: .\templates\accounts\chat_room_messages.html:81
+#, fuzzy
+#| msgid "Reply"
+msgid "Send Reply"
+msgstr "رد على التعليق"
+
+#: .\templates\accounts\dashboard.html:40
+#: .\templates\accounts\dashboard.html:52 .\templates\homebase.html:250
+#: .\templates\includes\dashboard_sidebar.html:5
+#: .\templates\includes\management_center_sidebar.html:25
+msgid "Dashboard"
+msgstr "لوحة القيادة"
+
+#: .\templates\accounts\dashboard.html:55
+msgid " Hello"
+msgstr "مرحبا"
+
+#: .\templates\accounts\dashboard.html:55
+msgid "  you have"
+msgstr "لديك"
+
+#: .\templates\accounts\dashboard.html:55
+#, fuzzy
+#| msgid "Orders"
+msgid "  orders"
+msgstr "طلبات"
+
+#: .\templates\accounts\dashboard.html:57
+msgid " From your account dashboard you can view your"
+msgstr "من لوحة التحكم الخاصة بحسابك، يمكنك عرض حسابك"
+
+#: .\templates\accounts\dashboard.html:57
+msgid " recent orders"
+msgstr "الطلبيات الأخيرة"
+
+#: .\templates\accounts\dashboard.html:57
+msgid " manage your"
+msgstr "تعديل"
+
+#: .\templates\accounts\dashboard.html:57
+msgid " edit your profile"
+msgstr "تعديل الحساب"
+
+#: .\templates\accounts\dashboard.html:57
+msgid " and"
+msgstr "و"
+
+#: .\templates\accounts\dashboard.html:57
+msgid " edit your password"
+msgstr "تعديل كلمة المرور الخاصة بك"
+
+#: .\templates\accounts\dashboard.html:65
+#: .\templates\accounts\edit_products.html:138
+#: .\templates\includes\management_center_sidebar.html:8
+#: .\templates\products\add_products.html:28
+#: .\templates\products\add_signboard.html:35
+#: .\templates\products\clearance_products.html:137
+msgid "Add Product"
+msgstr "إضافة منتج"
+
+#: .\templates\accounts\dashboard.html:66
+#: .\templates\includes\management_center_sidebar.html:13
+#: .\templates\products\management_center.html:67
+#: .\templates\products\update_product.html:115
+msgid "Clearance Price"
+msgstr "تخفيضات"
+
+#: .\templates\accounts\dashboard.html:67 .\templates\blog\add_article.html:38
+#: .\templates\blog\add_article.html:66
+#: .\templates\includes\management_center_sidebar.html:19
+msgid "Add Article"
+msgstr "أضف مقال"
+
+#: .\templates\accounts\dashboard.html:72
+msgid "Your Information"
+msgstr "معلوماتك"
+
+#: .\templates\accounts\dashboard.html:76
+msgid " Email:"
+msgstr "البريد الإلكتروني"
+
+#: .\templates\accounts\dashboard.html:77
+msgid " Full Name"
+msgstr "الاسم الكامل"
+
+#: .\templates\accounts\dashboard.html:78
+msgid " User Name"
+msgstr "اسم المستخدم"
+
+#: .\templates\accounts\dashboard.html:79
+msgid " Phone Number"
+msgstr "رقم الهاتف"
+
+#: .\templates\accounts\dashboard.html:80
+msgid " Joined At"
+msgstr "تاريخ الإنضمام"
+
+#: .\templates\accounts\dashboard.html:81
+msgid " Last Login"
+msgstr "التسجيل الأخير"
+
+#: .\templates\accounts\dashboard.html:97
+#: .\templates\accounts\my_orders.html:63
+msgid "Billing Name"
+msgstr "تفاصيل الفاتورة"
+
+#: .\templates\accounts\dashboard.html:98
+#: .\templates\accounts\edit_profile.html:78
+#: .\templates\accounts\my_orders.html:64 .\templates\blog\contact.html:114
+#: .\templates\blog\contact.html:115 .\templates\store\checkout.html:88
+msgid "Phone"
+msgstr "الهاتف"
+
+#: .\templates\accounts\dashboard.html:99
+#: .\templates\accounts\my_orders.html:65
+msgid "Order Total"
+msgstr "مبلغ الطلبية"
+
+#: .\templates\accounts\dashboard.html:100
+#: .\templates\accounts\user_message.html:64 .\templates\store\store.html:60
+msgid "Date"
+msgstr "تاريخ"
+
+#: .\templates\accounts\dashboard.html:110
+msgid "see your product info"
+msgstr "معلومات عن المنتج"
+
+#: .\templates\accounts\dashboard.html:117
+#: .\templates\accounts\my_orders.html:124
+msgid "No order has been made yet"
+msgstr "لا طلبيات متوفرة"
+
+#: .\templates\accounts\edit_products.html:33
+#: .\templates\accounts\printing.html:30
+#, fuzzy
+#| msgid "My Account"
+msgid " My Account"
+msgstr "حسابي"
+
+#: .\templates\accounts\edit_products.html:41
+msgid "My Confirmed Orders"
+msgstr "الطلبيات المأكدة"
+
+#: .\templates\accounts\edit_products.html:57
+#: .\templates\products\clearance_products.html:57
+msgid "List of Products"
+msgstr "قائمة المنتجات"
+
+#: .\templates\accounts\edit_products.html:63
+#: .\templates\accounts\user_message.html:62
+#: .\templates\products\add_products.html:97
+#: .\templates\products\add_products.html:164
+#: .\templates\products\clearance_products.html:63
+#: .\templates\stock\product_list_stock.html:93
+#: .\templates\stock\stock_sammary.html:50
+msgid "Product Name"
+msgstr "المنتج"
+
+#: .\templates\accounts\edit_products.html:65
+#: .\templates\accounts\edit_products.html:80
+#: .\templates\products\clearance_products.html:65
+msgid "Edit"
+msgstr "تعديل"
+
+#: .\templates\accounts\edit_products.html:66
+#: .\templates\accounts\edit_products.html:85
+msgid "Remove"
+msgstr "حذف"
+
+#: .\templates\accounts\edit_products.html:99
+#: .\templates\accounts\edit_products.html:105
+#: .\templates\accounts\my_orders.html:88
+#: .\templates\accounts\my_orders.html:94 .\templates\blog\blog.html:118
+#: .\templates\blog\blog.html:124
+#: .\templates\products\clearance_products.html:98
+#: .\templates\products\clearance_products.html:104
+#: .\templates\stock\product_list_stock.html:142
+#: .\templates\stock\product_list_stock.html:148
+#: .\templates\stock\stock_adjustment.html:103
+#: .\templates\stock\stock_adjustment.html:109
+#: .\templates\store\clearance_products.html:149
+#: .\templates\store\clearance_products.html:155
+#: .\templates\store\featured_products.html:158
+#: .\templates\store\featured_products.html:164
+#: .\templates\store\product_detail.html:50 .\templates\store\store.html:169
+#: .\templates\store\store.html:175 .\templates\store\top_products.html:160
+#: .\templates\store\top_products.html:166
+msgid "Prev"
+msgstr "السابق"
+
+#: .\templates\accounts\edit_products.html:115
+#: .\templates\accounts\my_orders.html:104 .\templates\blog\blog.html:134
+#: .\templates\products\clearance_products.html:114
+#: .\templates\stock\product_list_stock.html:158
+#: .\templates\stock\stock_adjustment.html:119
+#: .\templates\store\clearance_products.html:165
+#: .\templates\store\featured_products.html:174
+#: .\templates\store\store.html:185 .\templates\store\top_products.html:176
+msgid "of All"
+msgstr "من الكل"
+
+#: .\templates\accounts\edit_products.html:121
+#: .\templates\accounts\edit_products.html:127
+#: .\templates\accounts\my_orders.html:110
+#: .\templates\accounts\my_orders.html:116 .\templates\blog\blog.html:140
+#: .\templates\blog\blog.html:146
+#: .\templates\products\clearance_products.html:120
+#: .\templates\products\clearance_products.html:126
+#: .\templates\stock\product_list_stock.html:164
+#: .\templates\stock\product_list_stock.html:170
+#: .\templates\stock\stock_adjustment.html:125
+#: .\templates\stock\stock_adjustment.html:131
+#: .\templates\store\clearance_products.html:171
+#: .\templates\store\clearance_products.html:177
+#: .\templates\store\featured_products.html:180
+#: .\templates\store\featured_products.html:186
+#: .\templates\store\product_detail.html:55 .\templates\store\store.html:191
+#: .\templates\store\top_products.html:182
+#: .\templates\store\top_products.html:188
+msgid "Next"
+msgstr "التالي"
+
+#: .\templates\accounts\edit_products.html:135
+msgid "You have No Products to Selle It"
 msgstr ""
 
-#: .\templates\home.html:100
-msgid "Clearance"
+#: .\templates\accounts\edit_profile.html:41
+msgid "Edit Profie"
+msgstr "تعديل الحساب"
+
+#: .\templates\accounts\edit_profile.html:53
+#: .\templates\includes\dashboard_sidebar.html:16
+msgid "Edit Profile"
+msgstr "تعديل الحساب"
+
+#: .\templates\accounts\edit_profile.html:66 .\templates\store\checkout.html:51
+msgid "First Name"
+msgstr "الاسم"
+
+#: .\templates\accounts\edit_profile.html:71 .\templates\store\checkout.html:56
+msgid "Last Name"
+msgstr "اللقب"
+
+#: .\templates\accounts\edit_profile.html:83
+msgid "Profile Picture"
+msgstr "صورة شخصية"
+
+#: .\templates\accounts\edit_profile.html:96
+msgid "City * Comun"
+msgstr "البلدية"
+
+#: .\templates\accounts\edit_profile.html:101
+msgid "State * Wilaya"
+msgstr "الولاية"
+
+#: .\templates\accounts\edit_profile.html:107
+msgid "adress line 1"
+msgstr "عنوان الإقامة"
+
+#: .\templates\accounts\my_orders.html:41
+#: .\templates\accounts\user_message.html:41
+#, fuzzy
+#| msgid "Orders"
+msgid "My orders"
+msgstr "طلبات"
+
+#: .\templates\accounts\my_orders.html:57
+msgid "List of Buyer Products"
+msgstr "قائمة منتجات المشتري"
+
+#: .\templates\accounts\my_orders.html:66
+msgid "Info"
+msgstr "معلومات"
+
+#: .\templates\accounts\my_orders.html:75
+#, fuzzy
+#| msgid "Date"
+msgid "Da"
+msgstr "تاريخ"
+
+#: .\templates\accounts\my_orders.html:76
+msgid "order info"
+msgstr "مشاهدة الطلبية"
+
+#: .\templates\accounts\my_orders.html:127
+#: .\templates\accounts\user_message.html:87
+msgid "More SHOPING"
+msgstr "المزيد من التسوق"
+
+#: .\templates\accounts\printing.html:37 .\templates\blog\faqs.html:45
+msgid " Home"
+msgstr "صفحة الرئسية"
+
+#: .\templates\accounts\printing.html:38
+msgid " Account"
+msgstr "حسابي"
+
+#: .\templates\accounts\printing.html:39
+msgid " My Confirmed Orders"
+msgstr "الطلبيات المأكدة"
+
+#: .\templates\accounts\printing.html:51
+msgid " Orders Confirmed"
+msgstr "تأكيد الطلبية"
+
+#: .\templates\accounts\printing.html:60
+msgid " Order"
+msgstr "طلبية"
+
+#: .\templates\accounts\printing.html:61
+msgid " Billing Name"
+msgstr "تفاصيل الفاتورة"
+
+#: .\templates\accounts\printing.html:62
+msgid " Phone"
+msgstr "الهاتف"
+
+#: .\templates\accounts\printing.html:63
+msgid " Order Total"
+msgstr "مبلغ الطلبية"
+
+#: .\templates\accounts\printing.html:64
+msgid " Print"
+msgstr "طباعة"
+
+#: .\templates\accounts\printing.html:73
+#, fuzzy
+#| msgid "DA"
+msgid " DA"
+msgstr "دج"
+
+#: .\templates\accounts\printing.html:74
+msgid " order info"
+msgstr "مشاهدة الطلبية"
+
+#: .\templates\accounts\printing.html:92 .\templates\accounts\printing.html:99
+#, fuzzy
+#| msgid "Prev"
+msgid " Prev"
+msgstr "السابق"
+
+#: .\templates\accounts\printing.html:109
+#, fuzzy
+#| msgid "of All"
+msgid " of All"
+msgstr "من الكل"
+
+#: .\templates\accounts\printing.html:116
+#: .\templates\accounts\printing.html:122
+#, fuzzy
+#| msgid "Next"
+msgid " Next"
+msgstr "التالي"
+
+#: .\templates\accounts\printing.html:130
+#, fuzzy
+#| msgid "No order has been made yet"
+msgid " No Confirmed Orders have been made yet"
+msgstr "لا طلبيات متوفرة"
+
+#: .\templates\accounts\user_message.html:57
+#, fuzzy
+#| msgid "List of Products"
+msgid "List of Messages Products"
+msgstr "قائمة المنتجات"
+
+#: .\templates\accounts\user_message.html:75
+msgid "see message"
 msgstr ""
 
-#: .\templates\home.html:112 .\templates\home.html:126
-msgid "Featured"
+#: .\templates\accounts\user_message.html:84
+#, fuzzy
+#| msgid "No order has been made yet"
+msgid "No messages has been made yet"
+msgstr "لا طلبيات متوفرة"
+
+#: .\templates\blog\about.html:22 .\templates\blog\about.html:30
+#, fuzzy
+#| msgid "About"
+msgid "About us"
+msgstr "من نحن"
+
+#: .\templates\blog\about.html:40
+msgid "Who We Are"
+msgstr "من نحن ؟"
+
+#: .\templates\blog\about.html:42
+msgid "Eco-dz Shopping: Your Sustainable Lifestyle Companion"
+msgstr "تسوق Eco-dz: رفيقك في أسلوب الحياة المستدام"
+
+#: .\templates\blog\about.html:65
+msgid "Design Quality"
+msgstr "جودة التصميم"
+
+#: .\templates\blog\about.html:77
+#, fuzzy
+#| msgid "We Support"
+msgid "Professional Support"
+msgstr "نحن ندعم"
+
+#: .\templates\blog\about.html:78
+msgid "Praesent dapibus, neque id cursus faucibus"
 msgstr ""
 
-#: .\templates\home.html:129
-msgid "On Sale"
+#: .\templates\blog\about.html:89
+msgid "Made With Love"
 msgstr ""
 
-#: .\templates\home.html:132
-msgid "Top Rated"
+#: .\templates\blog\about.html:90
+msgid "Pellentesque a diam sit amet mi ullamcorper"
 msgstr ""
 
-#: .\templates\home.html:164 .\templates\home.html:238
-#: .\templates\home.html:311 .\templates\home.html:446
-msgid "Sale"
+#: .\templates\blog\about.html:90
+msgid "vehicula. Nullam quis massa sit amet"
 msgstr ""
 
-#: .\templates\home.html:166 .\templates\home.html:240
-#: .\templates\home.html:313
-msgid "New"
+#: .\templates\blog\about.html:90
+msgid "nibh viverra malesuada."
 msgstr ""
 
-#: .\templates\home.html:176 .\templates\home.html:250
-#: .\templates\home.html:323 .\templates\home.html:455
-msgid "add to wishlist"
+#: .\templates\blog\about.html:103
+msgid "Meet Our Team"
+msgstr "التق بفريقنا"
+
+#: .\templates\blog\about.html:261
+msgid "LETS START WORK"
+msgstr "لنبدأ العمل"
+
+#: .\templates\blog\about.html:272
+msgid "The worlds premium design brands in one destination."
 msgstr ""
 
-#: .\templates\home.html:180 .\templates\home.html:254
-#: .\templates\home.html:327 .\templates\home.html:459
-msgid "add to cart"
+#: .\templates\blog\about.html:273
+msgid ""
+"Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, "
+"aliquet vel, dapibus id, mattis vel, nis"
 msgstr ""
 
-#: .\templates\home.html:372
-msgid "New Deals"
-msgstr ""
+#: .\templates\blog\add_article.html:38 .\templates\blog\add_article.html:45
+#: .\templates\blog\blog.html:31 .\templates\blog\blog.html:38
+#: .\templates\blog\blog_detail.html:61 .\templates\homebase.html:453
+msgid "Blog"
+msgstr "مقالات"
 
-#: .\templates\home.html:390
-msgid "Deals & Outlet"
-msgstr ""
+#: .\templates\blog\add_article.html:46
+msgid "Create a Article"
+msgstr "كتابة مقال"
 
-#: .\templates\home.html:391
-msgid "Today’s deal and more"
-msgstr ""
+#: .\templates\blog\add_article.html:62
+msgid "Hello"
+msgstr "مرحبا"
 
-#: .\templates\home.html:491
-msgid "Shop more Outlet deals"
-msgstr ""
+#: .\templates\blog\add_article.html:64
+msgid "To post an article on our Django website"
+msgstr "لنشر مقال على موقعك"
 
-#: .\templates\home.html:554
-msgid "From Our Blog"
-msgstr ""
+#: .\templates\blog\add_article.html:66
+msgid "When Click on"
+msgstr "عند الضغط على"
 
-#: .\templates\home.html:596
+#: .\templates\blog\add_article.html:67
+msgid ""
+"Input a compelling title, upload an image, and create a article after share "
+"your content"
+msgstr "أدخل عنوانًا جذابًا، وحمّل صورة، وأنشئ مقالًا بعد المشاركةالمحتوى الخاص بك"
+
+#: .\templates\blog\add_article.html:68
+msgid ""
+"Hit Post Article to instantly publish your article with title, image, and "
+"paragraph"
+msgstr "اضغط على نشر مقال لنشر مقالتك على الفور مع العنوان والصورة وفقرة"
+
+#: .\templates\blog\add_article.html:72
+msgid "Title"
+msgstr "العنوان "
+
+#: .\templates\blog\add_article.html:74 .\templates\blog\add_article.html:80
+#: .\templates\blog\add_article.html:86
+msgid ""
+"This will be how your name will be displayed in the account section and in "
+"reviews"
+msgstr ""
+"ستكون هذه هي الطريقة التي سيتم بها عرض اسمك في قسم الحساب وفي المراجعات"
+
+#: .\templates\blog\add_article.html:78
+msgid "Add Image"
+msgstr "إضافة الصور"
+
+#: .\templates\blog\add_article.html:84
+msgid "Body"
+msgstr "كتابة المقال"
+
+#: .\templates\blog\add_article.html:91
+msgid "Post Article"
+msgstr "أنشر المقال"
+
+#: .\templates\blog\blog.html:31
+msgid "Blog Listing"
+msgstr "قائمة المقالات"
+
+#: .\templates\blog\blog.html:53 .\templates\store\store.html:49
+msgid "Showing"
+msgstr "إظهار"
+
+#: .\templates\blog\blog.html:53
+#, fuzzy
+#| msgid "Blog"
+msgid "Blogs"
+msgstr "مقالات"
+
+#: .\templates\blog\blog.html:101 .\templates\home.html:758
 msgid "Continue Reading"
+msgstr "أكمل القراءة"
+
+#: .\templates\blog\blog.html:157 .\templates\store\featured_products.html:145
+#: .\templates\store\store.html:156 .\templates\store\top_products.html:147
+msgid "No Rusalt Found it ... please try again"
+msgstr "لم يتم العثور على نتيجة...يرجى المحاولة مرة أخرى"
+
+#: .\templates\blog\blog.html:165 .\templates\blog\blog.html:170
+#: .\templates\blog\blog_detail.html:258 .\templates\blog\blog_detail.html:263
+#: .\templates\homebase.html:292
+msgid "Search"
+msgstr "البحث"
+
+#: .\templates\blog\blog.html:168 .\templates\blog\blog_detail.html:261
+#, fuzzy
+#| msgid "Search"
+msgid "Search in blog"
+msgstr "البحث"
+
+#: .\templates\blog\blog.html:175 .\templates\category\category_list.html:46
+msgid "Categories"
+msgstr "جميع الفئات"
+
+#: .\templates\blog\blog.html:186 .\templates\blog\blog_detail.html:270
+msgid "Popular Posts"
+msgstr "مقالات شائعة"
+
+#: .\templates\blog\blog.html:241 .\templates\blog\blog_detail.html:317
+#, fuzzy
+#| msgid "About"
+msgid "About Blog"
+msgstr "من نحن"
+
+#: .\templates\blog\blog.html:244 .\templates\blog\blog_detail.html:320
+msgid ""
+"Welcome to our store! We offer a wide selection of items for you to explore. "
+"From fashion to tech, weve got it all. Start shopping now and find your "
+"favorites!"
+msgstr "أهلأ بكم في متجرنا! نحن نقدم مجموعة واسعة من العناصر لتستكشفها"
+
+#: .\templates\blog\blog_detail.html:51
+#, fuzzy
+#| msgid "Billing Details"
+msgid "Blog Detail"
+msgstr "تفاصيل الفاتورة"
+
+#: .\templates\blog\blog_detail.html:53
+msgid "created by"
+msgstr "حرر من طرف"
+
+#: .\templates\blog\blog_detail.html:81
+msgid "by"
+msgstr "من طرف"
+
+#: .\templates\blog\blog_detail.html:111
+msgid "Share this post"
+msgstr "مشاركة هذا المقال"
+
+#: .\templates\blog\blog_detail.html:127
+msgid "Previous Post"
+msgstr "المقال السابق"
+
+#: .\templates\blog\blog_detail.html:133
+msgid "Next Post"
+msgstr "المقال التالي"
+
+#: .\templates\blog\blog_detail.html:140
+msgid "Related Posts"
+msgstr "المنشورات ذات الصلة"
+
+#: .\templates\blog\blog_detail.html:174 .\templates\blog\blog_detail.html:191
+msgid "Comments"
+msgstr "التعليقات"
+
+#: .\templates\blog\blog_detail.html:205
+msgid "Reply"
+msgstr "رد على التعليق"
+
+#: .\templates\blog\blog_detail.html:226
+msgid "Leave A Reply"
+msgstr "دع تعليق"
+
+#: .\templates\blog\blog_detail.html:232
+msgid "Comment"
+msgstr "تعليق"
+
+#: .\templates\blog\blog_detail.html:237 .\templates\blog\contact.html:102
+#: .\templates\blog\contact.html:103
+msgid "Name"
+msgstr "اللقب"
+
+#: .\templates\blog\blog_detail.html:242 .\templates\blog\contact.html:107
+#: .\templates\blog\contact.html:108
+msgid "Email"
+msgstr "البريد الإلكتروني"
+
+#: .\templates\blog\blog_detail.html:248
+msgid "POST COMMENT"
+msgstr "ضع تعليق"
+
+#: .\templates\blog\blog_detail.html:304
+#, fuzzy
+#| msgid "Top Product"
+msgid "Products Tags"
+msgstr "المنتج"
+
+#: .\templates\blog\contact.html:37
+#, fuzzy
+#| msgid "Contact us"
+msgid " Contact us "
+msgstr "اتصل بنا"
+
+#: .\templates\blog\contact.html:44
+#, fuzzy
+#| msgid "Contact us"
+msgid " Contact us"
+msgstr "اتصل بنا"
+
+#: .\templates\blog\contact.html:44
+msgid "keep in touch with us"
+msgstr "البقاء على اتصال معنا"
+
+#: .\templates\blog\contact.html:52
+msgid "Contact Information"
+msgstr "معلومات الإتصال"
+
+#: .\templates\blog\contact.html:53
+msgid ""
+"Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu "
+"pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum "
+"et, dapibus sed, urna"
 msgstr ""
 
-#: .\templates\home.html:608
+#: .\templates\blog\contact.html:57 .\templates\blog\contact.html:78
+msgid "The Office"
+msgstr "المتجر"
+
+#: .\templates\blog\contact.html:62
+msgid "40 sidi rached Est Tipaza, N 10012, Algeria"
+msgstr "40 مؤسسة سيدي راشد تيبازة، رقم 10012، الجزائر"
+
+#: .\templates\blog\contact.html:83
+#, fuzzy
+#| msgid "Saturday"
+msgid "Monday-Saturday"
+msgstr "السبت"
+
+#: .\templates\blog\contact.html:95
+#, fuzzy
+#| msgid "Got Any Questions?"
+msgid " Got Any Questions?"
+msgstr "هل لديك أي سؤال ؟"
+
+#: .\templates\blog\contact.html:96
+#, fuzzy
+#| msgid "Use the form below to get in touch with the sales team"
+msgid " Use the form below to get in touch with the sales team"
+msgstr "استخدم النموذج أدناه للتواصل مع فريق المبيعات"
+
+#: .\templates\blog\contact.html:119 .\templates\blog\contact.html:120
+msgid "Subject"
+msgstr ""
+
+#: .\templates\blog\contact.html:129
+msgid "SUBMIT"
+msgstr ""
+
+#: .\templates\blog\faqs.html:39
+msgid "F.A.Q"
+msgstr ""
+
+#: .\templates\blog\faqs.html:39
+#, fuzzy
+#| msgid "Pages"
+msgid " Pages"
+msgstr "صفحات"
+
+#: .\templates\blog\faqs.html:47 .\templates\homebase.html:496
+#, fuzzy
+#| msgid "FAQs"
+msgid "FAQ"
+msgstr "الأسئلة الشائعة"
+
+#: .\templates\blog\faqs.html:54
+#, fuzzy
+#| msgid "Publishing Information"
+msgid "Shipping Information"
+msgstr "كيفية النشر"
+
+#: .\templates\blog\faqs.html:60
+msgid "How will my parcel be delivered?"
+msgstr ""
+
+#: .\templates\blog\faqs.html:251
+msgid " If You Have More Questions"
+msgstr ""
+
+#: .\templates\blog\faqs.html:252
+msgid " Quisque volutpat mattis eros"
+msgstr ""
+
+#: .\templates\blog\faqs.html:256
+msgid " CONTACT US"
+msgstr "اتصل بنا"
+
+#: .\templates\category\category_list.html:28
+msgid "Product By Category"
+msgstr "المنتج حسب الفئة"
+
+#: .\templates\category\category_list.html:35
+msgid "Show Category"
+msgstr "عرض الفئات"
+
+#: .\templates\home.html:83
+msgid "Today:"
+msgstr "اليوم:"
+
+#: .\templates\home.html:87 .\templates\home.html:235 .\templates\home.html:240
+#: .\templates\home.html:324 .\templates\home.html:330
+#: .\templates\home.html:413 .\templates\home.html:418
+#: .\templates\home.html:463 .\templates\home.html:494
+#: .\templates\home.html:495 .\templates\home.html:560
+#: .\templates\home.html:562 .\templates\home.html:622
+#: .\templates\home.html:623 .\templates\products\update_product.html:104
+#: .\templates\store\product_detail.html:474
+msgid "DA"
+msgstr "دج"
+
+#: .\templates\home.html:91
+msgid "Click Here"
+msgstr "انقر هنا"
+
+#: .\templates\home.html:118
+msgid "Top Product"
+msgstr "أعلى المنتج"
+
+#: .\templates\home.html:132 .\templates\homebase.html:463
+#: .\templates\products\update_product.html:88
+msgid "Clearance"
+msgstr "تخفيضات"
+
+#: .\templates\home.html:148 .\templates\home.html:164
+msgid "Featured"
+msgstr "متميز"
+
+#: .\templates\home.html:167
+msgid "On Sale"
+msgstr "للبيع"
+
+#: .\templates\home.html:170
+msgid "Top Rated"
+msgstr "أعلى التقييمات"
+
+#: .\templates\home.html:203 .\templates\home.html:291
+#: .\templates\home.html:382 .\templates\home.html:534
+#: .\templates\home.html:596 .\templates\store\clearance_products.html:77
+#: .\templates\store\store.html:79 .\templates\store\top_products.html:79
+msgid "Sale"
+msgstr "تخفيض"
+
+#: .\templates\home.html:206 .\templates\home.html:294
+#: .\templates\home.html:385 .\templates\store\featured_products.html:82
+#: .\templates\store\store.html:82 .\templates\store\top_products.html:82
+msgid "New"
+msgstr "جديد"
+
+#: .\templates\home.html:218 .\templates\home.html:307
+#: .\templates\home.html:397 .\templates\home.html:543
+#: .\templates\home.html:605 .\templates\store\clearance_products.html:86
+#: .\templates\store\featured_products.html:93
+#: .\templates\store\product_detail.html:667 .\templates\store\store.html:94
+#: .\templates\store\top_products.html:94
+msgid "add to wishlist"
+msgstr "أضف إلى المفضلة"
+
+#: .\templates\home.html:222 .\templates\home.html:311
+#: .\templates\home.html:401 .\templates\home.html:547
+#: .\templates\home.html:609 .\templates\store\product_detail.html:378
+#: .\templates\store\product_detail.html:672
+msgid "add to cart"
+msgstr "أضغ إلى السلة"
+
+#: .\templates\home.html:456
+msgid "New Deals"
+msgstr "عروض جديدة"
+
+#: .\templates\home.html:463
+msgid "Shop Now with"
+msgstr "تسوق الآن ب"
+
+#: .\templates\home.html:476
+msgid "Deals & Outlet"
+msgstr "الصفقات والمنفذ"
+
+#: .\templates\home.html:477
+msgid "Today’s deal and more"
+msgstr "صفقة اليوم وأكثر"
+
+#: .\templates\home.html:498
+msgid "Shop Now"
+msgstr "تسوق الآن"
+
+#: .\templates\home.html:651
+msgid "Shop more Outlet deals"
+msgstr "تسوق المزيد من عروض المخرج"
+
+#: .\templates\home.html:716
+msgid "From Our Blog"
+msgstr "من مدونتنا"
+
+#: .\templates\home.html:770
 msgid "View more articles"
-msgstr ""
+msgstr "عرض المزيد من المقالات"
 
-#: .\templates\home.html:628
+#: .\templates\home.html:790
 msgid "Free Shipping"
-msgstr ""
+msgstr "ًالشحن مجانا"
 
-#: .\templates\home.html:629
-msgid "Orders $50 or more"
-msgstr ""
+#: .\templates\home.html:791
+msgid "Orders 30000 DA or more"
+msgstr "الطلبات بقيمة 30000 دج أو أكثر"
 
-#: .\templates\home.html:641
+#: .\templates\home.html:803
 msgid "Free Returns"
-msgstr ""
+msgstr "إرجاع مجاني"
 
-#: .\templates\home.html:642
+#: .\templates\home.html:804
 msgid "Within 30 days"
-msgstr ""
+msgstr "خلال 30 يوما"
 
-#: .\templates\home.html:654
+#: .\templates\home.html:816
 #, python-format
 msgid "Get 20%% Off 1 Item"
-msgstr ""
+msgstr "احصل على خصم 20%% على قطعة واحدة"
 
-#: .\templates\home.html:655
+#: .\templates\home.html:817
 msgid "when you sign up"
-msgstr ""
+msgstr "عند التسجيل"
 
-#: .\templates\home.html:667
+#: .\templates\home.html:829
 msgid "We Support"
-msgstr ""
+msgstr "نحن ندعم"
 
-#: .\templates\home.html:668
+#: .\templates\home.html:830
 msgid "24/7 amazing services"
-msgstr ""
+msgstr "24/7 خدمات مذهلة"
 
-#: .\templates\home.html:699
+#: .\templates\home.html:861
 msgid "Get the Latest Deals"
-msgstr ""
+msgstr "احصل على أحدث العروض"
 
-#: .\templates\home.html:700
+#: .\templates\home.html:862
 msgid "receive"
-msgstr ""
+msgstr "يستلم"
 
-#: .\templates\home.html:700
-msgid "$20 coupon"
-msgstr ""
+#: .\templates\home.html:862
+msgid "2000 DA coupon"
+msgstr "قسيمة بقيمة 2000دج"
 
-#: .\templates\home.html:700
+#: .\templates\home.html:862
 msgid "for first shopping"
-msgstr ""
+msgstr "للتسوق الأول"
 
-#: .\templates\home.html:708
+#: .\templates\home.html:871
 msgid "Subscrib Now"
-msgstr ""
+msgstr "إشترك الآن"
 
-#: .\templates\homebase.html:329
-msgid "Home"
-msgstr ""
+#: .\templates\homebase.html:173 .\templates\homebase.html:225
+msgid "Profile"
+msgstr "حسابي"
 
-#: .\templates\homebase.html:333
+#: .\templates\homebase.html:195
+msgid "Language"
+msgstr "اللغة"
+
+#: .\templates\homebase.html:211
+msgid "Make an Account"
+msgstr "إنشاء حساب"
+
+#: .\templates\homebase.html:214
+msgid "Login"
+msgstr "تسجيل الدخول الآن"
+
+#: .\templates\homebase.html:215
+msgid "Register"
+msgstr "حساب جديد"
+
+#: .\templates\homebase.html:249
+msgid "Log Out"
+msgstr "تسجيل خروج"
+
+#: .\templates\homebase.html:251 .\templates\includes\stock_sidebar.html:5
+#: .\templates\products\add_products.html:182
+#: .\templates\stock\stock_valuation.html:56
+msgid "Stock"
+msgstr "مخزون"
+
+#: .\templates\homebase.html:254
+#: .\templates\includes\management_center_sidebar.html:5
+#: .\templates\products\management_center.html:30
+#: .\templates\products\management_center.html:38
+msgid "Management Center"
+msgstr "مركز الإدارة"
+
+#: .\templates\homebase.html:294
+msgid "Search product"
+msgstr "البحث عن المنتج"
+
+#: .\templates\homebase.html:315 .\templates\includes\dashboard_sidebar.html:12
+msgid "Orders"
+msgstr "طلبات"
+
+#: .\templates\homebase.html:326 .\templates\store\wishlist.html:33
+#: .\templates\store\wishlist.html:41
+msgid "Wishlist"
+msgstr "قائمة الرغبات"
+
+#: .\templates\homebase.html:337
+msgid "Cart"
+msgstr "السلة"
+
+#: .\templates\homebase.html:375 .\templates\homebase.html:524
+msgid "View Cart"
+msgstr "عرض السلة"
+
+#: .\templates\homebase.html:376 .\templates\store\checkout.html:27
+#: .\templates\store\checkout.html:35
+msgid "Checkout"
+msgstr "الدفع"
+
+#: .\templates\homebase.html:389
+msgid "Browse Categories"
+msgstr "تصفح الفئات"
+
+#: .\templates\homebase.html:395
+msgid "All Products"
+msgstr "جميع المنتجات"
+
+#: .\templates\homebase.html:427 .\templates\store\cart.html:21
+#: .\templates\store\cart.html:28 .\templates\store\checkout.html:27
+#: .\templates\store\checkout.html:34
+#: .\templates\store\clearance_products.html:30
+#: .\templates\store\clearance_products.html:37
+#: .\templates\store\featured_products.html:30
+#: .\templates\store\featured_products.html:37
+#: .\templates\store\product_chat.html:20
+#: .\templates\store\product_chat.html:27 .\templates\store\store.html:27
+#: .\templates\store\store.html:34 .\templates\store\top_products.html:30
+#: .\templates\store\top_products.html:37 .\templates\store\wishlist.html:33
+#: .\templates\store\wishlist.html:40
 msgid "Shop"
-msgstr ""
+msgstr "تسوق"
 
-#: .\templates\homebase.html:339
-msgid "Pages"
-msgstr ""
-
-#: .\templates\homebase.html:343
+#: .\templates\homebase.html:437 .\templates\homebase.html:494
 msgid "About"
-msgstr ""
+msgstr "من نحن"
 
-#: .\templates\homebase.html:348
+#: .\templates\homebase.html:442
 msgid "Contact"
-msgstr ""
+msgstr "اتصل بنا"
 
-#: .\templates\homebase.html:353
+#: .\templates\homebase.html:447
 msgid "FAQs"
+msgstr "الأسئلة الشائعة"
+
+#: .\templates\homebase.html:463
+msgid "Up to 30 percent Off"
+msgstr "حتى 30 في المئة خصم"
+
+#: .\templates\homebase.html:479
+msgid "Eco-dz Shopping is your one-stop destination for eco-conscious living."
+msgstr "يعد Eco-dz Shopping وجهتك الوحيدة لعيش التجارة الإلكترونية."
+
+#: .\templates\homebase.html:483
+msgid "Got Question? Call us 24/7"
+msgstr "حصلت على السؤال؟ اتصل بنا 24/7"
+
+#: .\templates\homebase.html:491
+msgid " Useful Links"
+msgstr "روابط مفيدة"
+
+#: .\templates\homebase.html:497
+msgid "Contact us"
+msgstr "اتصل بنا"
+
+#: .\templates\homebase.html:504
+msgid "Customer Service"
+msgstr "خدمة الزبائن"
+
+#: .\templates\homebase.html:508
+msgid "Returns"
+msgstr "عائدات"
+
+#: .\templates\homebase.html:509 .\templates\orders\order_complete.html:94
+#: .\templates\orders\payments.html:113
+#: .\templates\products\add_products.html:181 .\templates\store\cart.html:140
+#: .\templates\store\checkout.html:157
+msgid "Shipping"
+msgstr "ًالشحن "
+
+#: .\templates\homebase.html:510
+msgid "Terms and conditions"
+msgstr "الأحكام والشروط"
+
+#: .\templates\homebase.html:511
+msgid "Privacy Policy"
+msgstr "سياسة الخصوصية"
+
+#: .\templates\homebase.html:522
+msgid "Sign In"
+msgstr "تسجيل الدخول"
+
+#: .\templates\homebase.html:525
+msgid "My Wishlist"
+msgstr "قائمة الرغبات"
+
+#: .\templates\homebase.html:527
+msgid "Help"
+msgstr "مساعدة"
+
+#: .\templates\homebase.html:537
+msgid "Copyright © 2026 Eco-dz Shopping. All Rights Reserved."
+msgstr "حقوق الطبع والنشر © 2026 Eco-dz للتسوق. كل الحقوق محفوظة"
+
+#: .\templates\includes\dashboard_sidebar.html:8
+msgid "Edit Product"
+msgstr "تعديل المنتج"
+
+#: .\templates\includes\dashboard_sidebar.html:19
+msgid "Orders Confirmed"
+msgstr "تأكيد الطلبية"
+
+#: .\templates\includes\dashboard_sidebar.html:25
+#: .\templates\includes\stock_sidebar.html:27
+msgid "Sign Out"
+msgstr "تسجيل  الخروج"
+
+#: .\templates\includes\management_center_sidebar.html:16
+msgid "Add Signboards"
+msgstr "إضافة لافتات"
+
+#: .\templates\includes\stock_sidebar.html:8
+msgid "Product List"
+msgstr "قائمة المنتجات"
+
+#: .\templates\includes\stock_sidebar.html:13
+#: .\templates\stock\stock_adjustment.html:29
+#: .\templates\stock\stock_update_adjust.html:114
+msgid "Stock Adjustment"
+msgstr "تعديل المخزون"
+
+#: .\templates\includes\stock_sidebar.html:16
+#: .\templates\stock\low_stock.html:29
+msgid "Low Stock"
+msgstr "مخزون منخفض"
+
+#: .\templates\includes\stock_sidebar.html:19
+#: .\templates\stock\stock_sammary.html:45
+#: .\templates\stock\stock_valuation.html:29
+#: .\templates\stock\stock_valuation.html:37
+#: .\templates\stock\stock_valuation.html:49
+msgid "Stock Valuation"
+msgstr "تقييم المخزون"
+
+#: .\templates\includes\stock_sidebar.html:22
+#: .\templates\stock\stock_history.html:30
+#: .\templates\stock\stock_history.html:39
+#: .\templates\stock\stock_history.html:51
+msgid "Stock History"
+msgstr "تاريخ المخزون"
+
+#: .\templates\orders\order_complete.html:9
+msgid "Command Confirmed"
+msgstr "تأكيد الطلبية"
+
+#: .\templates\orders\order_complete.html:12
+#, fuzzy
+#| msgid "Shop Now"
+msgid "Shop more"
+msgstr "تسوق الآن"
+
+#: .\templates\orders\order_complete.html:34
+msgid "Invoiced To"
+msgstr "يتم ارسال الطلبية إلى"
+
+#: .\templates\orders\order_complete.html:51
+#, fuzzy
+#| msgid "Orders"
+msgid "Order Date"
+msgstr "طلبات"
+
+#: .\templates\orders\order_complete.html:62
+#: .\templates\store\product_detail.html:41 .\templates\store\store.html:49
+#, fuzzy
+#| msgid "Top Product"
+msgid "Products"
+msgstr "المنتج"
+
+#: .\templates\orders\order_complete.html:63
+#: .\templates\stock\stock_history.html:104
+msgid "Qty"
+msgstr "الكمية"
+
+#: .\templates\orders\order_complete.html:64 .\templates\store\cart.html:53
+#: .\templates\store\cart.html:147 .\templates\store\checkout.html:109
+#: .\templates\store\checkout.html:164
+msgid "Total"
+msgstr "المجموع"
+
+#: .\templates\orders\order_complete.html:90
+#, fuzzy
+msgid "Sub Total"
+msgstr "المجموع الأولي"
+
+#: .\templates\orders\order_complete.html:101
+#: .\templates\orders\payments.html:118
+#, fuzzy
+#| msgid "Total"
+msgid "Grand Total"
+msgstr "المجموع"
+
+#: .\templates\orders\order_complete.html:109
+msgid "Thank you for shopping with us!"
+msgstr "شكرا لتسوقك معنا"
+
+#: .\templates\orders\payments.html:11
+msgid "Review Your Order and Make Payment"
+msgstr "معاينة الطلبية مع الدفع"
+
+#: .\templates\orders\payments.html:16
+#, fuzzy
+#| msgid "Billing Details"
+msgid "Billing Address"
+msgstr "تفاصيل الفاتورة"
+
+#: .\templates\orders\payments.html:25
+#, fuzzy
+#| msgid "Orders"
+msgid "Order Note"
+msgstr "طلبات"
+
+#: .\templates\orders\payments.html:32
+msgid "Payment Method"
+msgstr "طريقة الدفع"
+
+#: .\templates\orders\payments.html:34
+#, fuzzy
+#| msgid "Cash on delivery"
+msgid "Cash On Delivery"
+msgstr "الدفع عند الاستلام"
+
+#: .\templates\orders\payments.html:39
+#, fuzzy
+#| msgid "All Products"
+msgid "Review Products"
+msgstr "جميع المنتجات"
+
+#: .\templates\orders\payments.html:44
+#: .\templates\products\add_signboard.html:51
+#: .\templates\store\checkout.html:107 .\templates\store\wishlist.html:52
+#, fuzzy
+#| msgid "Top Product"
+msgid "Product"
+msgstr "المنتج"
+
+#: .\templates\orders\payments.html:45
+#: .\templates\products\add_variants.html:206
+#: .\templates\stock\stock_update_adjust.html:145
+#: .\templates\store\cart.html:52 .\templates\store\checkout.html:108
+msgid "Quantity"
+msgstr "الكمية"
+
+#: .\templates\orders\payments.html:46
+#: .\templates\products\add_products.html:166
+#: .\templates\products\add_signboard.html:74
+#: .\templates\products\add_variants.html:202
+#: .\templates\products\clearance_products.html:64
+#: .\templates\products\update_product.html:81
+#: .\templates\stock\stock_valuation.html:57 .\templates\store\cart.html:51
+msgid "Price"
+msgstr "السعر"
+
+#: .\templates\orders\payments.html:109
+#, fuzzy
+#| msgid "Total"
+msgid "Total price"
+msgstr "المجموع"
+
+#: .\templates\orders\payments.html:127
+#, fuzzy
+#| msgid "Cash on delivery"
+msgid "cash on delivery"
+msgstr "الدفع عند الاستلام"
+
+#: .\templates\orders\payments.html:128
+msgid "Confirm Command"
+msgstr "تأكيد الطلبية"
+
+#: .\templates\products\add_gallery.html:142
+msgid "Add Gallery"
+msgstr "إضافة معرض"
+
+#: .\templates\products\add_gallery.html:142
+#: .\templates\products\add_products.html:119
+#: .\templates\products\add_signboard.html:84
+msgid "Images"
+msgstr "الصورة الرئسية"
+
+#: .\templates\products\add_gallery.html:150
+msgid "Create Gallery"
+msgstr "إضافة معرض"
+
+#: .\templates\products\add_gallery.html:160
+msgid "Add Product Gallery"
+msgstr "إضافة معرض المنتجات"
+
+#: .\templates\products\add_gallery.html:174
+msgid "Add Images"
+msgstr "إضافة الصور"
+
+#: .\templates\products\add_gallery.html:177
+msgid "Upload Image"
+msgstr "إضافة الصور"
+
+#: .\templates\products\add_gallery.html:183
+msgid "Show your Product"
+msgstr "استعراض المنتج"
+
+#: .\templates\products\add_gallery.html:184
+msgid "Add Description"
+msgstr "إضافة تفاصيل المنتج"
+
+#: .\templates\products\add_gallery.html:191
+msgid "Information about your product"
+msgstr "معلومات حول منتجك"
+
+#: .\templates\products\add_gallery.html:195
+msgid "img"
+msgstr "الصورة"
+
+#: .\templates\products\add_gallery.html:196
+msgid "product name"
+msgstr "المنتج"
+
+#: .\templates\products\add_gallery.html:226
+#: .\templates\products\add_variants.html:197
+msgid "Size"
+msgstr "الحجم"
+
+#: .\templates\products\add_gallery.html:243
+#: .\templates\products\add_variants.html:193
+msgid "Color"
+msgstr "اللون"
+
+#: .\templates\products\add_products.html:28
+#: .\templates\products\add_signboard.html:28 .\templates\stock\index.html:31
+#: .\templates\stock\low_stock.html:29
+#: .\templates\stock\stock_adjustment.html:29
+#: .\templates\stock\stock_history.html:30
+#: .\templates\stock\stock_update_adjust.html:106
+#: .\templates\stock\stock_valuation.html:29
+#: .\templates\stock\update_stock.html:109
+#, fuzzy
+#| msgid "Top Product"
+msgid "products"
+msgstr "المنتج"
+
+#: .\templates\products\add_products.html:36
+#, fuzzy
+#| msgid "All Products"
+msgid "create new product"
+msgstr "جميع المنتجات"
+
+#: .\templates\products\add_products.html:47
+msgid "Add New Product"
+msgstr "إضافة منتج جديد"
+
+#: .\templates\products\add_products.html:51
+msgid "Category"
+msgstr "الفئة"
+
+#: .\templates\products\add_products.html:53
+msgid "Select Category"
+msgstr "تصفح الفئات"
+
+#: .\templates\products\add_products.html:61
+msgid "Subcategory"
+msgstr "فئة فرعية"
+
+#: .\templates\products\add_products.html:63
+msgid "Select Subcategory"
+msgstr "اختر فئة فرعية"
+
+#: .\templates\products\add_products.html:101
+#: .\templates\products\add_products.html:165
+#: .\templates\products\add_variants.html:186
+#: .\templates\store\product_detail.html:505
+msgid "Description"
+msgstr "وصف"
+
+#: .\templates\products\add_products.html:106
+msgid "Select Shipping"
+msgstr "اختر طبيعة الشحن"
+
+#: .\templates\products\add_products.html:108
+msgid "Free Shipping (0 DA)"
+msgstr "الشحن مجاناً (0 دج)"
+
+#: .\templates\products\add_products.html:122
+#: .\templates\products\add_signboard.html:87
+msgid "Save Product"
+msgstr "حفض المنتج"
+
+#: .\templates\products\add_products.html:128
+#: .\templates\products\add_signboard.html:93
+msgid "Publishing Information"
+msgstr "كيفية النشر"
+
+#: .\templates\products\add_products.html:134
+msgid "How to Chose Category and SubCategory"
+msgstr "كيفية اختيار الفئة والفئة الفرعية"
+
+#: .\templates\products\add_products.html:140
+#: .\templates\products\add_signboard.html:105
+msgid ""
+"Choosing the right category after selecting a subcategory is crucial for "
+"effective organization and navigation. Follow these simple steps"
+msgstr ""
+"اختيار الفئة المناسبة بعد تحديد فئة فرعية أمر بالغ الأهمية لـ التنظيم "
+"والتنقل الفعال. اتبع هذه الخطوات البسيطة"
+
+#: .\templates\products\add_products.html:142
+#: .\templates\products\add_signboard.html:107
+msgid "Understand Your Subcategory"
+msgstr "فهم الفئة الفرعية الخاصة بك"
+
+#: .\templates\products\add_products.html:142
+#: .\templates\products\add_signboard.html:107
+msgid ""
+"First, ensure you have a clear understanding of your subcategory. Know what "
+"it encompasses"
+msgstr "أولاً، تأكد من أن لديك فهمًا واضحًا لفئتك الفرعية. اعرف ما هي أنه يشمل"
+
+#: .\templates\products\add_products.html:144
+#: .\templates\products\add_signboard.html:109
+msgid "Consider Relevance"
+msgstr "النظر في الصلة"
+
+#: .\templates\products\add_products.html:144
+#: .\templates\products\add_signboard.html:109
+msgid ""
+"Think about the primary purpose of your item or content and how it relates "
+"to the subcategory"
+msgstr ""
+"فكر في الغرض الأساسي من العنصر أو المحتوى الخاص بك ومدى ارتباطهإلى الفئة "
+"الفرعية"
+
+#: .\templates\products\add_products.html:145
+#: .\templates\products\add_signboard.html:110
+msgid "Explore Options"
+msgstr "استكشاف الخيارات"
+
+#: .\templates\products\add_products.html:145
+#: .\templates\products\add_signboard.html:110
+msgid ""
+"Look through available categories to find the one that best matches your "
+"item or content"
+msgstr ""
+"ابحث في الفئات المتاحة للعثور على الفئة التي تناسبك بشكل أفضلالعنصر أو "
+"المحتوى"
+
+#: .\templates\products\add_products.html:146
+#: .\templates\products\add_signboard.html:111
+msgid "Check for Precision"
+msgstr "تحقق من الدقة"
+
+#: .\templates\products\add_products.html:146
+#: .\templates\products\add_signboard.html:111
+msgid ""
+"Select a category that precisely represents your item or content, avoiding "
+"vague or overly broad choices"
+msgstr ""
+"اختر فئة تمثل العنصر أو المحتوى الخاص بك بدقة، وتجنب خيارات غامضة أو واسعة "
+"للغاية"
+
+#: .\templates\products\add_products.html:147
+#: .\templates\products\add_signboard.html:112
+msgid "Think Like a User"
+msgstr "فكر كمستخدم"
+
+#: .\templates\products\add_products.html:147
+#: .\templates\products\add_signboard.html:112
+msgid ""
+"Imagine how users would search for your item, and choose a category that "
+"aligns with their expectations"
+msgstr ""
+"تخيل كيف سيبحث المستخدمون عن العنصر الخاص بك، واختر فئة يتماشى مع توقعاتهم"
+
+#: .\templates\products\add_products.html:148
+msgid "Test the Waters"
+msgstr "احصل على أحدث العروض"
+
+#: .\templates\products\add_products.html:148
+msgid ""
+"If uncertain, try posting in one category and see how it performs. Adjust if "
+"necessary"
+msgstr ""
+"إذا كنت غير متأكد، فحاول النشر في فئة واحدة وشاهد مستوى أدائها. اضبط إذا "
+"ضروري"
+
+#: .\templates\products\add_products.html:149
+msgid ""
+"Consult Guidelines:<strong> Refer to any platform-specific guidelines for "
+"category selection"
+msgstr ""
+"راجع الإرشادات:<strong> راجع أي إرشادات خاصة بالنظام الأساسي لـ اختيار الفئة"
+
+#: .\templates\products\add_products.html:150
+msgid "Review and Refine"
+msgstr "المراجعة والتحسين"
+
+#: .\templates\products\add_products.html:150
+msgid ""
+"Periodically review your choice to ensure it remains the best fit as your "
+"content or items evolve "
+msgstr ""
+"قم بمراجعة اختيارك بشكل دوري للتأكد من أنه يظل الأنسب لكالمحتوى أو العناصر "
+"تتطور"
+
+#: .\templates\products\add_products.html:158
+msgid "how to Chose Product Name and Des and Price"
+msgstr "كيفية اختيار اسم المنتج والمواصفات والسعر"
+
+#: .\templates\products\add_products.html:164
+msgid ""
+" Choose a concise and descriptive name that highlights the products key "
+"features and purpose, making it easy for customers to understand"
+msgstr ""
+" اختر اسمًا موجزًا ووصفيًا يسلط الضوء على مفتاح المنتج الميزات والغرض، مما يسهل "
+"على العملاء فهمها"
+
+#: .\templates\products\add_products.html:165
+msgid ""
+"Craft a brief yet informative description, highlighting the products "
+"benefits, key specifications, and unique selling points"
+msgstr ""
+"قم بصياغة وصف موجز وغني بالمعلومات، مع تسليط الضوء على المنتجاتالفوائد "
+"والمواصفات الرئيسية ونقاط البيع الفريدة"
+
+#: .\templates\products\add_products.html:166
+msgid ""
+"Research the market and competitors to set a competitive and profitable "
+"price. Consider factors like production costs, demand, and perceived value"
+msgstr ""
+"دراسة السوق والمنافسين لتحديد بيئة تنافسية ومربحةالسعر. ضع في اعتبارك عوامل "
+"مثل تكاليف الإنتاج والطلب والقيمة المدركة"
+
+#: .\templates\products\add_products.html:167
+msgid "Test and Adjust"
+msgstr "اختبار وضبط"
+
+#: .\templates\products\add_products.html:167
+msgid ""
+"Continuously monitor performance and customer feedback to refine your "
+"product name, description, and price for optimal results"
+msgstr ""
+"مراقبة الأداء وتعليقات العملاء باستمرار لتحسيناسم المنتج ووصفه وسعره للحصول "
+"على أفضل النتائج"
+
+#: .\templates\products\add_products.html:175
+msgid "Select Shipping and Stock?"
+msgstr "حدد الشحن والمخزون؟"
+
+#: .\templates\products\add_products.html:181
+msgid ""
+"Offer diverse shipping options, calculate competitive rates, and communicate "
+"tracking"
+msgstr "تقديم خيارات شحن متنوعة وحساب الأسعار التنافسية والتواصلتتبع"
+
+#: .\templates\products\add_products.html:182
+msgid ""
+"Monitor inventory levels closely, adjust for seasons, and automate "
+"reordering for efficient stock management"
+msgstr ""
+"مراقبة مستويات المخزون عن كثب وضبطها حسب المواسم والتشغيل الآليإعادة الطلب "
+"من أجل إدارة فعالة للمخزون"
+
+#: .\templates\products\add_products.html:190
+msgid "My Image Product"
+msgstr "صور منتوجي"
+
+#: .\templates\products\add_products.html:196
+msgid ""
+"When selecting a product image, opt for a clear, high-resolution photo that "
+"showcases the item from its best angle, emphasizing its key features and "
+"qualities"
+msgstr ""
+"عند اختيار صورة المنتج، اختر صورة واضحة وعالية الدقة يعرض العنصر من أفضل "
+"زاوية له، مع التركيز على ميزاته الرئيسية والصفات"
+
+#: .\templates\products\add_signboard.html:28
+msgid "Add Signboard"
+msgstr "إضافة لافتة"
+
+#: .\templates\products\add_signboard.html:36
+msgid "add a signboard"
+msgstr "إضافة لافتة"
+
+#: .\templates\products\add_signboard.html:47
+msgid "Add New Signboard"
+msgstr "إضافة لافتة جديدة"
+
+#: .\templates\products\add_signboard.html:53
+msgid "Select Product"
+msgstr "حدد المنتج"
+
+#: .\templates\products\add_signboard.html:65
+msgid "Sub Title"
+msgstr "العنوان الفرعي"
+
+#: .\templates\products\add_signboard.html:69
+msgid "Big Title"
+msgstr "العنوان الرئيسي"
+
+#: .\templates\products\add_signboard.html:78
+#: .\templates\products\clearance_products.html:80
+#: .\templates\products\clearance_products.html:86
+msgid "Clear Price"
+msgstr "السعر بعد التخفيض"
+
+#: .\templates\products\add_signboard.html:99
+msgid "How to Chose Category and SubCategory?"
+msgstr "كيفية اختيار الفئة والفئة الفرعية؟"
+
+#: .\templates\products\add_signboard.html:121
+msgid "how to Chose Product Name and Des and Price?"
+msgstr "كيفية اختيار اسم المنتج والمواصفات والسعر؟"
+
+#: .\templates\products\add_variants.html:162
+msgid "Add Variant"
+msgstr "إضافة المتغيرات"
+
+#: .\templates\products\add_variants.html:162
+msgid "Variant"
+msgstr "المتغير"
+
+#: .\templates\products\add_variants.html:170
+msgid "Create Variants"
+msgstr "إنشاء متغير"
+
+#: .\templates\products\add_variants.html:180
+msgid "Add Variants"
+msgstr "إضافة المتغيرات"
+
+#: .\templates\products\add_variants.html:212
+#: .\templates\products\update_product.html:121
+msgid "Active"
+msgstr "ناشط"
+
+#: .\templates\products\add_variants.html:216
+msgid "Save Variant"
+msgstr "إحفظ المتغير"
+
+#: .\templates\products\add_variants.html:219
+msgid "Add Gallery Images for your Product"
+msgstr "إضافة مجموعة من الصور إلى منتوجك"
+
+#: .\templates\products\add_variants.html:221
+msgid "Upload Images"
+msgstr "إضافة الصور"
+
+#: .\templates\products\add_variants.html:230
+msgid "Saved Variants Information"
+msgstr "المتغيرات التي تم حفظها"
+
+#: .\templates\products\add_variants.html:233
+msgid "Variation Table"
+msgstr "جدول المتغيرات"
+
+#: .\templates\products\clearance_products.html:41
+#: .\templates\products\update_product.html:89
+#: .\templates\products\update_product.html:100
+#, fuzzy
+#| msgid "Clearance Price"
+msgid "Add Clearance Price"
+msgstr "تخفيضات"
+
+#: .\templates\products\clearance_products.html:134
+msgid "You have No Products to Make Clearance For It"
+msgstr "ليس لديك أي منتجات لتخليصها"
+
+#: .\templates\products\management_center.html:64
+msgid "Add Products"
+msgstr "إضافة منتج"
+
+#: .\templates\products\management_center.html:70
+msgid "Add SignBoards"
+msgstr "إضافة لافتات"
+
+#: .\templates\products\management_center.html:73
+msgid "Add Articles"
+msgstr "أضف مقال"
+
+#: .\templates\products\management_center.html:78
+msgid ""
+"This feature allows administrators or sellers to add new products to the "
+"online store. It typically involves entering details such as product name, "
+"description, images, pricing, and other relevant information"
+msgstr ""
+"تتيح هذه الميزة للمسؤولين أو البائعين إضافة منتجات جديدة إلى متجر على "
+"الإنترنت. يتضمن عادةً إدخال تفاصيل مثل اسم المنتج،الوصف والصور والأسعار "
+"والمعلومات الأخرى ذات الصلة"
+
+#: .\templates\products\management_center.html:79
+msgid ""
+"Product management may also include options for organizing products into "
+"categories and specifying inventory levels"
+msgstr ""
+"قد تتضمن إدارة المنتج أيضًا خيارات لتنظيم المنتجات فيالفئات وتحديد مستويات "
+"المخزون"
+
+#: .\templates\products\management_center.html:82
+msgid ""
+"The clearance price feature likely enables users to set discounted prices "
+"for products during a clearance sale or promotional period"
+msgstr ""
+"من المحتمل أن تتيح ميزة سعر التصفية للمستخدمين تحديد أسعار مخفضة للمنتجات "
+"خلال فترة التخفيضات أو العروض الترويجية"
+
+#: .\templates\products\management_center.html:83
+msgid ""
+"Administrators may be able to specify the original price and the discounted "
+"clearance price for selected products"
+msgstr ""
+"قد يتمكن المسؤولون من تحديد السعر الأصلي والسعر المخفضسعر التصفية لمنتجات "
+"مختارة"
+
+#: .\templates\products\management_center.html:86
+msgid ""
+"The add signboards feature suggests the ability to include visual elements "
+"or promotional banners on the website"
+msgstr ""
+"ميزة إضافة اللافتات تشير إلى إمكانية تضمين العناصر المرئية أو لافتات ترويجية "
+"على الموقع"
+
+#: .\templates\products\management_center.html:87
+msgid ""
+"This feature may allow administrators to create and upload graphical "
+"signboards or banners for promotional purposes, showcasing deals or special "
+"offers"
+msgstr ""
+"قد تسمح هذه الميزة للمسؤولين بإنشاء وتحميل الرسوم البيانيةاللافتات أو "
+"اللافتات لأغراض ترويجية أو عرض العروض أو العروض الخاصةعروض"
+
+#: .\templates\products\management_center.html:90
+msgid ""
+"Adding articles is a content management feature that enables administrators "
+"to publish informational or promotional articles on the website"
+msgstr ""
+"إن إضافة المقالات هي إحدى ميزات إدارة المحتوى التي تمكن المسؤولين لنشر "
+"مقالات إعلامية أو ترويجية على الموقع"
+
+#: .\templates\products\management_center.html:91
+msgid ""
+"This could be used for blog posts, news updates, or any other content "
+"relevant to the websites audience"
+msgstr ""
+"يمكن استخدام هذا لمشاركات المدونة أو تحديثات الأخبار أو أي محتوى آخرذات صلة "
+"بجمهور مواقع الويب"
+
+#: .\templates\products\update_product.html:81
+msgid "Add Clearance"
+msgstr "إضافة سعر تخفيض"
+
+#: .\templates\products\update_product.html:104
+msgid "Product Price"
+msgstr "سعر المنتج"
+
+#: .\templates\products\update_product.html:116
+msgid "Add New Clearance Price"
+msgstr "إضافة سعر تخفيض جديد"
+
+#: .\templates\products\update_product.html:124
+msgid "Update  Price"
+msgstr "تحديث السعر"
+
+#: .\templates\stock\index.html:31 .\templates\stock\index.html:39
+#: .\templates\stock\index.html:51 .\templates\stock\low_stock.html:37
+#: .\templates\stock\product_list_stock.html:61
+#: .\templates\stock\stock_adjustment.html:37
+#: .\templates\stock\update_stock.html:117
+msgid "Inventory Overview"
+msgstr "نظرة عامة على المخزون"
+
+#: .\templates\stock\index.html:38 .\templates\stock\product_list_stock.html:60
+msgid "Stock Information "
+msgstr "معلوماتك"
+
+#: .\templates\stock\index.html:54
+msgid "Summary"
+msgstr "ملخص"
+
+#: .\templates\stock\index.html:57
+#, fuzzy
+#| msgid "List of Products"
+msgid "Total Number of Products"
+msgstr "قائمة المنتجات"
+
+#: .\templates\stock\index.html:58
+#, fuzzy
+#| msgid "List of Products"
+msgid "Low-Stock Products"
+msgstr "قائمة المنتجات"
+
+#: .\templates\stock\index.html:78
+msgid "Detailed Product Information"
+msgstr "معلومات مفصلة عن المنتج"
+
+#: .\templates\stock\index.html:113
+msgid "See More"
+msgstr "رؤية المزيد"
+
+#: .\templates\stock\index.html:117
+msgid "Other Relevant Metrics"
+msgstr "مقاييس ذات الصلة الأخرى"
+
+#: .\templates\stock\index.html:121
+msgid "Average Stock Quantity"
+msgstr "الكمية المتوسطة في المخزون"
+
+#: .\templates\stock\low_stock.html:36 .\templates\stock\stock_history.html:37
+#: .\templates\stock\stock_sammary.html:35
+#: .\templates\stock\stock_update_adjust.html:113
+#: .\templates\stock\stock_valuation.html:36
+#: .\templates\stock\update_stock.html:116
+msgid "Low Stock information"
+msgstr "معلومات المخزون المنخفض"
+
+#: .\templates\stock\low_stock.html:49
+msgid "Product List with Low Stock"
+msgstr "قائمة المنتجات ذات المخزون المنخفض"
+
+#: .\templates\stock\low_stock.html:54
+#: .\templates\stock\stock_adjustment.html:54
+#: .\templates\stock\stock_history.html:57
+#: .\templates\stock\stock_history.html:102
+#: .\templates\stock\stock_valuation.html:54
+msgid "Prodcut Name"
+msgstr "المنتج"
+
+#: .\templates\stock\low_stock.html:55
+#: .\templates\stock\product_list_stock.html:94
+#: .\templates\stock\stock_adjustment.html:55
+#: .\templates\stock\stock_sammary.html:51
+msgid "Initial Stock"
+msgstr "المخزون الأولي"
+
+#: .\templates\stock\low_stock.html:56
+#: .\templates\stock\product_list_stock.html:95
+#: .\templates\stock\stock_adjustment.html:56
+msgid "Sell Stock"
+msgstr "بيع المخزون"
+
+#: .\templates\stock\low_stock.html:57
+#: .\templates\stock\product_list_stock.html:96
+#: .\templates\stock\stock_adjustment.html:57
+msgid "Rest Stock"
+msgstr "المخزون المتبقي"
+
+#: .\templates\stock\low_stock.html:58
+#: .\templates\stock\product_list_stock.html:97
+#: .\templates\stock\stock_adjustment.html:58
+msgid "Reorder Point"
+msgstr "نقطة إعادة الطلب"
+
+#: .\templates\stock\low_stock.html:81
+#: .\templates\stock\product_list_stock.html:121
+#: .\templates\stock\stock_adjustment.html:81
+msgid "low-stock"
+msgstr "مخزون منخفض"
+
+#: .\templates\stock\product_list_stock.html:53
+msgid "Stock Information"
+msgstr "معلوماتك"
+
+#: .\templates\stock\product_list_stock.html:77
+msgid "Filter by Name"
+msgstr "تصفية حسب الاسم"
+
+#: .\templates\stock\product_list_stock.html:78
+msgid "Enter product name or Variations"
+msgstr "أدخل اسم المنتج أو التغييرات"
+
+#: .\templates\stock\product_list_stock.html:88
+msgid "Products List And Stock Details"
+msgstr "قائمة المنتجات وتفاصيل المخزون"
+
+#: .\templates\stock\product_list_stock.html:98
+msgid "Update"
+msgstr "تحديث"
+
+#: .\templates\stock\product_list_stock.html:127
+#: .\templates\stock\update_stock.html:109
+#: .\templates\stock\update_stock.html:127
+#: .\templates\stock\update_stock.html:157
+msgid "Update Stock"
+msgstr "تحديث المخزون"
+
+#: .\templates\stock\stock_adjustment.html:36
+msgid "stock adjustment"
+msgstr "تعديل المخزون"
+
+#: .\templates\stock\stock_adjustment.html:49
+msgid "Product List And Information du Stock"
+msgstr "قائمة المنتجات ومعلومات المخزون"
+
+#: .\templates\stock\stock_adjustment.html:59
+msgid "Adjust "
+msgstr "تعديل المخزون"
+
+#: .\templates\stock\stock_adjustment.html:88
+#: .\templates\stock\stock_update_adjust.html:154
+msgid "Adjust Stock"
+msgstr "تعديل المخزون"
+
+#: .\templates\stock\stock_history.html:58
+msgid "Q.B.Change"
 msgstr ""
 
-#: .\templates\homebase.html:359
-msgid "Blog"
+#: .\templates\stock\stock_history.html:59
+msgid "Q.A.Change"
 msgstr ""
+
+#: .\templates\stock\stock_history.html:60
+msgid "Unit Change"
+msgstr "تغيير الوحدة"
+
+#: .\templates\stock\stock_history.html:61
+#: .\templates\stock\stock_history.html:106
+#: .\templates\stock\stock_update_adjust.html:150
+msgid "Reason"
+msgstr "السبب"
+
+#: .\templates\stock\stock_history.html:62
+msgid "Change date"
+msgstr "تغيير التاريخ"
+
+#: .\templates\stock\stock_history.html:97
+msgid "Ajustment Stock History"
+msgstr "تاريخ تعديل المخزون"
+
+#: .\templates\stock\stock_history.html:103
+#: .\templates\stock\stock_update_adjust.html:134
+msgid "Adjustment Type"
+msgstr "نوع التعديل"
+
+#: .\templates\stock\stock_history.html:107
+msgid "Adjustment date"
+msgstr "تاريخ التعديل"
+
+#: .\templates\stock\stock_sammary.html:28
+#: .\templates\stock\stock_sammary.html:36
+#, fuzzy
+#| msgid "Stock Status"
+msgid "Stock Summary"
+msgstr "وضع مخزون"
+
+#: .\templates\stock\stock_sammary.html:53
+#, fuzzy
+#| msgid "Stock"
+msgid "Initial Valuation"
+msgstr "التقييم الأولي"
+
+#: .\templates\stock\stock_sammary.html:54
+#, fuzzy
+#| msgid "Stock"
+msgid "Selling Stock"
+msgstr "بيع المخزون"
+
+#: .\templates\stock\stock_sammary.html:55
+msgid "Selling Price"
+msgstr "سعر البيع"
+
+#: .\templates\stock\stock_sammary.html:76
+#: .\templates\stock\stock_valuation.html:94
+msgid "Total Stock Valuation"
+msgstr "تقييم إجمالي المخزون"
+
+#: .\templates\stock\stock_update_adjust.html:106
+msgid "Stock Update Adjustment"
+msgstr "تعديل تحديث المخزون"
+
+#: .\templates\stock\stock_update_adjust.html:124
+msgid "Stock Adjustment for"
+msgstr "تعديل المخزون ل"
+
+#: .\templates\stock\stock_update_adjust.html:137
+msgid "add"
+msgstr "إضافة"
+
+#: .\templates\stock\stock_update_adjust.html:138
+msgid "subtract"
+msgstr "طرح"
+
+#: .\templates\stock\stock_valuation.html:58
+msgid "Valuation"
+msgstr "القيمة المالية"
+
+#: .\templates\stock\update_stock.html:139
+msgid "New Stock Quantity"
+msgstr "مخزون جديد"
+
+#: .\templates\stock\update_stock.html:153
+msgid "Reason for Change"
+msgstr "السبب في التغيير"
+
+#: .\templates\store\cart.html:21 .\templates\store\cart.html:29
+#: .\templates\store\product_chat.html:28
+msgid "Shopping Cart"
+msgstr "سلة التسوق"
+
+#: .\templates\store\cart.html:41
+#, fuzzy
+#| msgid "Your Wishlist is Empty"
+msgid "Your Shopping Cart is Empty"
+msgstr "قائمة رغباتك فارغة"
+
+#: .\templates\store\cart.html:42 .\templates\store\checkout.html:205
+#: .\templates\store\wishlist.html:119
+msgid "Go to Store"
+msgstr "تابع التسوق"
+
+#: .\templates\store\cart.html:50
+msgid " Product"
+msgstr "المنتج"
+
+#: .\templates\store\cart.html:124
+msgid "UPDATE CART"
+msgstr "تحديث السلة"
+
+#: .\templates\store\cart.html:129
+#, fuzzy
+#| msgid "Total"
+msgid "Cart Total"
+msgstr "المجموع"
+
+#: .\templates\store\cart.html:135 .\templates\store\checkout.html:153
+msgid "Subtotal"
+msgstr "المجموع الأولي"
+
+#: .\templates\store\cart.html:153
+msgid "PROCEED TO CHECKOUT"
+msgstr "بدأ عملية الدفع"
+
+#: .\templates\store\cart.html:156
+msgid "CONTINUE SHOPPING"
+msgstr "تابع التسوق"
+
+#: .\templates\store\checkout.html:48
+msgid "Billing Details"
+msgstr "تفاصيل الفاتورة"
+
+#: .\templates\store\checkout.html:63
+msgid "address line 1"
+msgstr "عنوان الإقامة"
+
+#: .\templates\store\checkout.html:69
+msgid "State / Wilaya"
+msgstr "الولاية"
+
+#: .\templates\store\checkout.html:73
+msgid "city / Comun"
+msgstr "البلدية"
+
+#: .\templates\store\checkout.html:97
+msgid "Order notes (optional)"
+msgstr "ملاحظات الطلب (اختياري)"
+
+#: .\templates\store\checkout.html:102
+#, fuzzy
+#| msgid "Orders"
+msgid "Your Order"
+msgstr "طلبات"
+
+#: .\templates\store\checkout.html:179
+msgid "Cash on delivery"
+msgstr "الدفع عند الاستلام"
+
+#: .\templates\store\checkout.html:184
+msgid ""
+"With Cash on Delivery (CoD), you can pay for your order in cash when it is "
+"delivered to your doorstep. CoD provides convenience and trust for customers "
+"who may prefer not to use electronic payment methods or want to inspect the "
+"product before payment."
+msgstr ""
+"مع الدفع عند الاستلام (CoD)، يمكنك دفع ثمن طلبك نقدًا عندما يكون يتم توصيلها "
+"إلى باب منزلك. توفر CoD الراحة والثقة للعملاء الذين قد يفضلون عدم استخدام "
+"وسائل الدفع الإلكترونية أو يرغبون في فحص المنتج قبل الدفع."
+
+#: .\templates\store\checkout.html:195
+msgid "Place Order"
+msgstr "طلب المنتج"
+
+#: .\templates\store\checkout.html:196
+msgid "Proceed to Checkout"
+msgstr "بدأ عملية الدفع"
+
+#: .\templates\store\checkout.html:204
+msgid "You have no item in cart"
+msgstr "لا يوجد أي منتج في السلة"
+
+#: .\templates\store\clearance_products.html:30
+#: .\templates\store\featured_products.html:30 .\templates\store\store.html:27
+#: .\templates\store\top_products.html:30
+msgid "Market"
+msgstr "سوق"
+
+#: .\templates\store\clearance_products.html:38
+msgid "Clearance Products"
+msgstr "تخفيضات"
+
+#: .\templates\store\clearance_products.html:136
+msgid "No Products For Clearance"
+msgstr ""
+
+#: .\templates\store\featured_products.html:38
+msgid "Featured Products"
+msgstr "منتجات مميزة"
+
+#: .\templates\store\product_chat.html:20
+msgid "Chat"
+msgstr ""
+
+#: .\templates\store\product_detail.html:114
+#: .\templates\store\product_detail.html:710
+#, fuzzy
+#| msgid "All Products"
+msgid "Reviews"
+msgstr "جميع المنتجات"
+
+#: .\templates\store\product_detail.html:149
+msgid "Color:"
+msgstr "اللون"
+
+#: .\templates\store\product_detail.html:170
+msgid "Please select a (Color)"
+msgstr "من فضلك إختر اللون"
+
+#: .\templates\store\product_detail.html:174
+msgid "Please select a (Size)"
+msgstr "من فضلك إختر الحجم"
+
+#: .\templates\store\product_detail.html:179
+msgid "Size:"
+msgstr "الحجم"
+
+#: .\templates\store\product_detail.html:193
+msgid "size guide"
+msgstr "دليل الحجم"
+
+#: .\templates\store\product_detail.html:364
+msgid "Out Of Stock"
+msgstr "غير متوفر في المخزن"
+
+#: .\templates\store\product_detail.html:366
+msgid "Qty:"
+msgstr "الكمية"
+
+#: .\templates\store\product_detail.html:464
+msgid "Add to Wishlist"
+msgstr "أضف إلى المفضلة"
+
+#: .\templates\store\product_detail.html:472
+msgid "Shipping:"
+msgstr "ًالشحن "
+
+#: .\templates\store\product_detail.html:481
+#, fuzzy
+#| msgid "Browse Categories"
+msgid "Category:"
+msgstr "تصفح الفئات"
+
+#: .\templates\store\product_detail.html:488
+msgid "Share:"
+msgstr "شارك المنتج"
+
+#: .\templates\store\product_detail.html:508
+#, fuzzy
+#| msgid "Contact Information"
+msgid "Additional information"
+msgstr "معلومات الإتصال"
+
+#: .\templates\store\product_detail.html:511
+msgid "Shipping & Returns"
+msgstr "الشحن والاسترجاع"
+
+#: .\templates\store\product_detail.html:514
+#: .\templates\store\product_detail.html:545
+msgid "Reviews (2)"
+msgstr "التقيمات"
+
+#: .\templates\store\product_detail.html:522
+#, fuzzy
+#| msgid "Contact Information"
+msgid "Product Information"
+msgstr "معلومات الإتصال"
+
+#: .\templates\store\product_detail.html:528
+#, fuzzy
+#| msgid "Contact Information"
+msgid "Information"
+msgstr "معلومات الإتصال"
+
+#: .\templates\store\product_detail.html:534
+#, fuzzy
+#| msgid "Free Returns"
+msgid "Delivery & returns"
+msgstr "إرجاع مجاني"
+
+#: .\templates\store\product_detail.html:572
+msgid "Helpful (2)"
+msgstr "مفيد (2)"
+
+#: .\templates\store\product_detail.html:573
+msgid "Unhelpful (0)"
+msgstr "غير مفيد (0)"
+
+#: .\templates\store\product_detail.html:579
+msgid "Write Your Review"
+msgstr "أكتب تقيمك"
+
+#: .\templates\store\product_detail.html:583
+msgid "How do you rate this product?"
+msgstr "كيف تقيم هذا المنتج؟"
+
+#: .\templates\store\product_detail.html:598
+msgid "Review Title:"
+msgstr "عنوان التقيم:"
+
+#: .\templates\store\product_detail.html:601
+msgid "Review:"
+msgstr "التقيم."
+
+#: .\templates\store\product_detail.html:609
+msgid "You must be logged in to post a review."
+msgstr "يجب عليك تسجيل الدخول لنشر التعليق."
+
+#: .\templates\store\product_detail.html:609
+msgid "Login now"
+msgstr "تسجيل الدخول الآن"
+
+#: .\templates\store\product_detail.html:624
+msgid "You May Also Like"
+msgstr "ربما يعجبك أيضا"
+
+#: .\templates\store\store.html:55
+msgid "Sort by:"
+msgstr "ترتيب حسب:"
+
+#: .\templates\store\store.html:58
+msgid "Most Popular"
+msgstr "الأكثر شعبية"
+
+#: .\templates\store\store.html:59
+#, fuzzy
+#| msgid "Top Rated"
+msgid "Most Rated"
+msgstr "أعلى التقييمات"
+
+#: .\templates\store\store.html:102
+msgid "compare"
+msgstr "يقارن"
+
+#: .\templates\store\top_products.html:38
+msgid "Top Products"
+msgstr "أعلى المنتج"
+
+#: .\templates\store\wishlist.html:53
+msgid "Available since"
+msgstr "متاح منذ"
+
+#: .\templates\store\wishlist.html:54
+msgid "Stock Status"
+msgstr "وضع مخزون"
+
+#: .\templates\store\wishlist.html:83
+#, fuzzy
+#| msgid "Out Of Stock"
+msgid "Out of stock"
+msgstr "غير متوفر في المخزن"
+
+#: .\templates\store\wishlist.html:85
+#, fuzzy
+#| msgid "Stock"
+msgid "In stock"
+msgstr "مخزون"
+
+#: .\templates\store\wishlist.html:90
+#, fuzzy
+#| msgid "Out Of Stock"
+msgid "Out of Stock"
+msgstr "غير متوفر في المخزن"
+
+#: .\templates\store\wishlist.html:95
+#, fuzzy
+#| msgid "add to cart"
+msgid "Add to Cart"
+msgstr "أضغ إلى السلة"
+
+#: .\templates\store\wishlist.html:108
+#, fuzzy
+#| msgid "Share:"
+msgid "Share on:"
+msgstr "شارك المنتج"
+
+#: .\templates\store\wishlist.html:118
+msgid "Your Wishlist is Empty"
+msgstr "قائمة رغباتك فارغة"
+
+#~ msgid "English Text"
+#~ msgstr "Arabic Translation"
+
+#, fuzzy
+#~| msgid "Log Out"
+#~ msgid " Log out"
+#~ msgstr "تسجيل خروج"
+
+#~ msgid "Are you sure you want to delete this item?"
+#~ msgstr "هل أنت متأكد أنك تريد حذف هذا المنتج؟"
+
+#~ msgid "The world"
+#~ msgstr "العالم"
+
+#~ msgid "Clearance</a><span class=\"highlight\">&nbsp; Up to 30%% Off"
+#~ msgstr "تخفيضات تصل إلى 30% كخصم"

@@ -32,15 +32,15 @@ class Product(models.Model):
     description     = models.TextField(max_length=500, blank=True)
     images          = models.ImageField(upload_to='photos/products')
     
-   
     is_available    = models.BooleanField(default=True)
     is_clearance    = models.BooleanField(default=False)
     category        = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     subcategory = models.ForeignKey(SubCategory, on_delete=models.SET_NULL, null=True)
-    shipping = models.IntegerField(
+    shipping = models.DecimalField(max_digits=10, decimal_places=2,
         choices=SHIPPING_CHOICES,
         default=0  # Default to Free Shipping
     )
+    
     featured = models.BooleanField(default=False)
     previous_product = models.ForeignKey(
         'self', related_name='previous', on_delete=models.SET_NULL, blank=True, null=True)
@@ -85,6 +85,8 @@ class Product(models.Model):
 
     
 
+    
+
 class VariationManager(models.Manager):
     def colors(self):
         return super(VariationManager, self).filter(color='color', is_active=True)
@@ -97,8 +99,8 @@ class Variation(models.Model):
     product             = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='variations')
     color               = models.CharField(max_length=255, blank = True)
     size                = models.CharField(max_length=255, blank =True)
-    price               = models.IntegerField(blank = False)
-    clearance_price     = models.IntegerField(blank = True, default=0)
+    price               = models.DecimalField(max_digits=10, decimal_places=2)
+    clearance_price     = models.DecimalField(max_digits=10, decimal_places=2, blank=True, default=0.0)
     quantity            = models.PositiveIntegerField(default=0, blank = False)
     initial_stock_quantity = models.PositiveIntegerField(default=0, blank=False)
     reorder_point = models.PositiveIntegerField(default=0, blank=False)
@@ -129,6 +131,8 @@ class Variation(models.Model):
 
     def Clearance_valuation(self):
         return self.quantity * self.clearance_price
+
+ 
 
 
 class ReviewRating(models.Model):
@@ -229,5 +233,8 @@ class Descriptions(models.Model):
         first_5_words = ' '.join(words[:5])
 
         return first_5_words
+
+
+
 
 

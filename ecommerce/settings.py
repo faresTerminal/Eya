@@ -74,6 +74,7 @@ INSTALLED_APPS = [
     'cities_light',
     'stock',
     
+    
 
     
 ]
@@ -126,6 +127,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
+ASGI_APPLICATION = 'ecommerce.asgi.application'
 # this setting do it, when i use a Account Apps
 AUTH_USER_MODEL = 'accounts.Account'
 
@@ -289,4 +291,7 @@ CITIES_LIGHT_DATA_FILES = {
         'urls': [],  # Use appropriate source
     },
 }
+
+
+
 

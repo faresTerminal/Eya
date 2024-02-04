@@ -24,6 +24,7 @@ urlpatterns = [
 
 
     path('my_orders/', views.my_orders, name='my_orders'),
+   
     path('printing/', views.printing, name='printing'),
     path('User_Products/', views.User_Products, name='User_Products'),
     # remove a product

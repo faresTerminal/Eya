@@ -12,13 +12,17 @@ from django.contrib import messages
 from django.db.models import Avg # when filter as top products(top rating)
 from django.db import models
 from django.db.models import Avg, Count, Prefetch
-
-
+from django.utils import timezone
+# Import the Counter class from the collections module
+from collections import Counter
+from django.contrib.auth.decorators import login_required
 
 def store(request, category_slug=None, subcategory_slug = None):
     categories = None
     subcategories = None
     products = None
+
+    current_time = timezone.now()
 
     if category_slug != None:
         categories = get_object_or_404(Category, slug=category_slug)
@@ -30,7 +34,7 @@ def store(request, category_slug=None, subcategory_slug = None):
         )
         products = Product.objects.filter(category=categories, is_available=True).prefetch_related(variants_prefetch)
         
-        paginator = Paginator(products, 3)
+        paginator = Paginator(products, 12)
         page = request.GET.get('page')
         paged_products = paginator.get_page(page)
         product_count = products.count()
@@ -49,10 +53,16 @@ def store(request, category_slug=None, subcategory_slug = None):
         products = Product.objects.all().filter(is_available=True).order_by('-id').prefetch_related(variants_prefetch)
         
         
-        paginator = Paginator(products, 8)
+        paginator = Paginator(products, 12)
         page = request.GET.get('page')
         paged_products = paginator.get_page(page)
         product_count = products.count()
+
+
+         # Update the products to include a 'is_new' attribute based on the creation date(here we use paginator)
+        for product in paged_products:
+            time_difference = current_time - product.created_date
+            product.is_new = time_difference.days == 0
         
      
     context = {
@@ -64,6 +74,8 @@ def store(request, category_slug=None, subcategory_slug = None):
     return render(request, 'store/store.html', context)
 
 def product_detail(request, category_slug, product_slug, subcategory_slug=None):
+
+    current_time = timezone.now()
      # Get variant information for each featured product
     variants_prefetch = Prefetch(
           'variations',
@@ -80,17 +92,42 @@ def product_detail(request, category_slug, product_slug, subcategory_slug=None):
         raise e
 
    
-   
+  
+
     # Get the reviews
     reviews = ReviewRating.objects.filter(product_id=single_product.id, status=True)
     review_count = reviews.count()
     previous_product = Product.objects.filter(created_date__lt=single_product.created_date).last()
     next_product = Product.objects.filter(created_date__gt=single_product.created_date).first()
-    all_products = Product.objects.all().order_by('id')[:5].prefetch_related(variants_prefetch)
+    all_products = Product.objects.all().order_by('-id')[:5].prefetch_related(variants_prefetch)
     # Get the product gallery for single product
     product_gallery = ProductGallery.objects.filter(product_id=single_product.id).order_by('id')[:4]
     descriptions = single_product.descriptions.all()
     galleries = single_product.galleries.all()
+
+     # Update the products to include a 'is_new' attribute based on the creation date
+    for product in all_products:
+        time_difference = current_time - product.created_date
+        product.is_new = time_difference.days == 0
+
+     # Get unique colors and sizes using Counters
+    # Get unique colors and associated data using Counters
+    unique_colors_data = []
+    for variation in single_product.variations.all():
+        if variation.color:
+            # Check if the color is not already in the unique_colors_data list
+            if not any(color_data['color'] == variation.color for color_data in unique_colors_data):
+                unique_colors_data.append({
+                    'color': variation.color,
+                    'size': variation.size,
+                    'price': variation.clearance_price if variation.clearance_price else variation.price,
+                    'quantity': variation.quantity,
+                })
+
+
+       
+
+        
     
     
     context = {
@@ -104,6 +141,8 @@ def product_detail(request, category_slug, product_slug, subcategory_slug=None):
         'all_products': all_products,
         'product_gallery': product_gallery,
         'galleries': galleries,
+        'unique_colors_data': unique_colors_data,
+
         
     }
     return render(request, 'store/product_detail.html', context)
@@ -177,6 +216,8 @@ def remove_from_wishlist(request, product_id):
 
 def Featured_Products(request):
 
+    current_time = timezone.now()
+
      # Get variant information for each product
     variants_prefetch = Prefetch(
           'variations',
@@ -186,10 +227,15 @@ def Featured_Products(request):
 
     productss = Product.objects.annotate(cartitem_count=models.Count('cartitem'))
     featured_products = productss.order_by('-cartitem_count').prefetch_related(variants_prefetch)
-    paginator = Paginator(featured_products, 6)
+    paginator = Paginator(featured_products, 12)
     page = request.GET.get('page')
     paged_products = paginator.get_page(page)
     product_count = featured_products.count()
+
+    # to dispaly product if new or not
+    for product in paged_products:
+        time_difference = current_time - product.created_date
+        product.is_new = time_difference.days == 0
 
     context = {
      'featured_products': paged_products,
@@ -200,6 +246,8 @@ def Featured_Products(request):
 
 
 def Top_Products(request):
+
+    current_time = timezone.now()
 
      # Get variant information for each product
     variants_prefetch = Prefetch(
@@ -212,10 +260,15 @@ def Top_Products(request):
         average_rating__gt=0  # Only select products with a rating greater than 0
     ).order_by('-average_rating').prefetch_related(variants_prefetch)  # Order by highest average rating first
 
-    paginator = Paginator(top_products, 6)
+    paginator = Paginator(top_products, 12)
     page = request.GET.get('page')
     paged_products = paginator.get_page(page)
     product_count = top_products.count()
+
+     # to dispaly product if new or not
+    for product in paged_products:
+        time_difference = current_time - product.created_date
+        product.is_new = time_difference.days == 0
 
     context = {
      'top_products': paged_products,
@@ -236,7 +289,7 @@ def Clearance_Products(request):
 
     clearance_products = Product.objects.filter(is_clearance =True).order_by('-id').prefetch_related(variants_prefetch)  # Order by highest average rating first
 
-    paginator = Paginator(clearance_products, 6)
+    paginator = Paginator(clearance_products, 12)
     page = request.GET.get('page')
     paged_products = paginator.get_page(page)
     product_count = clearance_products.count()
@@ -305,5 +358,8 @@ def create_signboard(request):
         form = SignboardForm()
 
     return render(request, 'products/add_signboard.html', {'form': form, 'product': product})
+
+
+
 
 

@@ -3,7 +3,26 @@
 {% extends 'homebase.html' %}
 {% load static %}
 {% load thumbnail %}
+{% load i18n %}
+
 {% block content %}
+{% if current_language == 'ar' %}
+    <style>
+      .main {
+        direction: rtl;
+      }
+      tr{
+        text-align: center;
+      }
+      .row{
+        text-align: right;
+      }
+      .product-media{
+        margin-right: 0.2rem !important;
+        margin-left: 1em !important;
+      }
+    </style>
+   {% endif %}
 <style>
   .form-group {
     display: inline-block;
@@ -67,6 +86,9 @@
     .form-label {
       font-weight: normal;
     }
+    .span{
+      margin-right: 2em;
+    }
 
     .btn-save {
       background-color: #007bff;
@@ -84,15 +106,15 @@
 <main class="main">
     <div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
         <div class="container">
-            <h1 class="page-title">Update Stock<span>products</span></h1>
+            <h1 class="page-title">{% trans 'Update Stock' %}<span>{% trans 'products' %}</span></h1>
         </div><!-- End .container -->
     </div><!-- End .page-header -->
     <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
         <div class="container">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Add Product</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Inventory Overview</li>
+                <li class="breadcrumb-item"><a href="index.html">{% trans 'Home' %}</a></li>
+                <li class="breadcrumb-item"><a href="#">{% trans 'Low Stock information' %}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{% trans 'Inventory Overview' %}</li>
             </ol>
         </div><!-- End .container -->
     </nav><!-- End .breadcrumb-nav -->
@@ -102,8 +124,8 @@
   {% include 'includes/stock_sidebar.html' %}
   <div class="col-lg-9">
   <div >
-    <h5>Update Stock - {{ product.product.product_name }}</h5>
-    {{product.color}}: {{product.size}}
+    <h5>{% trans 'Update Stock' %} - {{ product.product.product_name }}</h5>
+    <span class="span">{{product.color}}: {{product.size}}</span>
      {% thumbnail product.product.images "120x120" crop="center" as p_pic %}                                                          
           <img width="{{ p_pic.width }}" height="{{p_pic.height }}" src="{{p_pic.url}}">
      {% endthumbnail %}
@@ -114,7 +136,7 @@
       
        
        <div class="form-group">
-        <label for="qty">New Stock Quantity:</label><br>
+        <label for="qty">{% trans 'New Stock Quantity' %}:</label><br>
          <div class="details-filter-row details-row-size">
                                         
                                         <div class="product-details-quantity">
@@ -128,11 +150,11 @@
 
      
        <div class="form-group">
-                        <label for="reason_for_change">Reason for Change:</label>
+                        <label for="reason_for_change">{% trans 'Reason for Change' %}:</label>
                         <textarea name="reason_for_change" id="reason_for_change" class="form-input" rows="4" required></textarea>
        </div>
       <br>
-      <button class="btn btn-primary" type="submit">Update Stock</button>
+      <button class="btn btn-primary" type="submit">{% trans 'Update Stock' %}</button>
     </form>
     </div>
   </div>

@@ -3,7 +3,39 @@
 
 {% load thumbnail %} 
 
+{% load i18n %}
 {% block content %}
+{% if current_language == 'ar' %}
+    <style>
+        .main {
+            direction: rtl;
+        }
+        tr{
+            text-align: center;
+        }
+        .entry-body{
+            text-align: center;
+        }
+        .widget{
+            text-align: right;
+        }
+        .reply{
+            text-align: right;
+        }
+        .comments{
+            text-align: right;
+        }
+        .icon-linkedin{
+            margin-right: 2em;
+        }
+        .comment-date{
+            margin-right: 1em;
+        }
+        .title{
+            text-align: right;
+        }
+    </style>
+   {% endif %}
 
 <head>
     <meta property="og:title" content="{{art.title}}">
@@ -12,25 +44,26 @@
     <meta property="og:url" content="{{request.build_absolute_uri}}">
 
 </head>
+{% include 'includes/alerts.html' %}
  <main class="main">
         	<div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
         		<div class="container">
-        			<h1 class="page-title">Blog Detail<span>{{art.title}}</span></h1>
+        			<h1 class="page-title">{% trans 'Blog Detail' %}<span>{{art.title}}</span></h1>
                     <br>
-                    <h5 class="widget-title">by : {{art.bloger}}<span></span></h5>
+                    <h5 class="widget-title">{% trans 'created by' %} :<b> {{art.bloger.username}}</b><span></span></h5>
 
         		</div><!-- End .container -->
         	</div><!-- End .page-header -->
             <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
                 <div class="container">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Blog</a></li>
+                        <li class="breadcrumb-item"><a href="index.html">{% trans 'Home' %}</a></li>
+                        <li class="breadcrumb-item"><a href="#">{% trans 'Blog' %}</a></li>
                         <li class="breadcrumb-item active" aria-current="page">{{art.title}}</li>
                     </ol>
                 </div><!-- End .container -->
             </nav><!-- End .breadcrumb-nav -->
-            {% include 'includes/alerts.html' %}
+           
             <div class="page-content">
                 <div class="container">
                 	<div class="row">
@@ -45,12 +78,12 @@
                                 <div class="entry-body">
                                     <div class="entry-meta">
                                         <span class="entry-author">
-                                            by <a href="#">{{user.first_name}}</a>
+                                            {% trans 'by' %} <a href="#">{{user.first_name}}</a>
                                         </span>
                                         <span class="meta-separator">|</span>
                                         <a href="#">{{art.publish}}</a>
                                         <span class="meta-separator">|</span>
-                                        <a href="#">2 Comments</a>
+                                        
                                     </div><!-- End .entry-meta -->
 
                                     <h2 class="entry-title">
@@ -75,7 +108,7 @@
 
                                         <div class="col-md-auto mt-2 mt-md-0">
                                             <div class="social-icons social-icons-color">
-                                                <span class="social-label">Share this post:</span>
+                                                <span class="social-label">{% trans 'Share this post' %}:</span>
                                                 <a href="https://www.facebook.com/sharer/sharer.php?u=https://127.0.0.1:8000/{{request.build_absolute_uri}}" class="social-icon social-facebook" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
                                                 <a href="#" class="social-icon social-twitter" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
                                                 <a href="#" class="social-icon social-pinterest" title="Pinterest" target="_blank"><i class="icon-pinterest"></i></a>
@@ -91,20 +124,20 @@
                             <nav class="pager-nav" aria-label="Page navigation">
                             	{% if previous_post %}
                                 <a class="pager-link pager-link-prev" href="{% url 'show_article' previous_post.id previous_post.slug%}" aria-label="Previous" tabindex="-1">
-                                    Previous Post
+                                    {% trans 'Previous Post' %}
                                     <span class="pager-link-title">{{previous_post}}</span>
                                 </a>
                                 {% endif %}
                                  {% if next_post %}
                                 <a class="pager-link pager-link-next" href="{% url 'show_article' next_post.id next_post.slug%}" aria-label="Next" tabindex="-1">
-                                    Next Post
+                                    {% trans 'Next Post' %}
                                     <span class="pager-link-title">{{next_post}}</span>
                                 </a>
                                 {% endif %}
                             </nav><!-- End .pager-nav -->
 
                             <div class="related-posts">
-                                <h3 class="title">Related Posts</h3><!-- End .title -->
+                                <h3 class="title">{% trans 'Related Posts' %}</h3><!-- End .title -->
 
                                 <div class="owl-carousel owl-simple" data-toggle="owl" 
                                     data-owl-options='{
@@ -138,7 +171,7 @@
                                             <div class="entry-meta">
                                                 <a href="#">{{t.publish}}</a>
                                                 <span class="meta-separator">|</span>
-                                                <a href="#">2 Comments</a>
+                                                <a href="#">2 {% trans 'Comments' %}</a>
                                             </div><!-- End .entry-meta -->
 
                                             <h2 class="entry-title">
@@ -155,7 +188,7 @@
                             </div><!-- End .related-posts -->
 
                             <div class="comments">
-                                <h3 class="title">{{art.comment_count}} Comments</h3><!-- End .title -->
+                                <h3 class="title">{{art.comment_count}} {% trans 'Comments' %}</h3><!-- End .title -->
 
                                 <ul>
                                 	{% for cm in add %}
@@ -169,9 +202,9 @@
                                             </figure>
 
                                             <div class="comment-body">
-                                                <a href="#" class="comment-reply">Reply</a>
+                                                <!--<a href="#" class="comment-reply">{% trans 'Reply' %}</a>-->
                                                 <div class="comment-user">
-                                                    <h4><a href="#">{{cm.name}}</a></h4>
+                                                    <h4><a href="#">{{cm.user_comment.username}}</a></h4>
                                                     <span class="comment-date">{{cm.date}}</span>
                                                 </div><!-- End .comment-user -->
 
@@ -190,29 +223,19 @@
                             </div><!-- End .comments -->
                             <div class="reply">
                                 <div class="heading">
-                                    <h3 class="title">Leave A Reply</h3><!-- End .title -->
+                                    <!<h3 class="title">{% trans 'Leave A Reply' %}</h3><!-- End .title -->
                                     <p class="title-desc">Your email address will not be published. Required fields are marked *</p>
                                 </div><!-- End .heading -->
 
                                 <form action="{% url 'save_comment' id=art.id slug=art.slug %}" method="POST">
                                 	{% csrf_token %}
-                                    <label for="reply-message" class="sr-only">Comment</label>
+                                    <label for="reply-message" class="sr-only">{% trans 'Comment' %}</label>
                                     <textarea name="comment"  id="reply-message" cols="30" rows="4" class="form-control" required placeholder="Comment *"></textarea>
 
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label for="reply-name" class="sr-only">Name</label>
-                                            <input type="text" name="name" class="form-control" id="reply-name"  required placeholder="Name *">
-                                        </div><!-- End .col-md-6 -->
-
-                                        <div class="col-md-6">
-                                            <label for="reply-email" class="sr-only">Email</label>
-                                            <input type="email" name="email" class="form-control" id="reply-email"  required placeholder="Email *">
-                                        </div><!-- End .col-md-6 -->
-                                    </div><!-- End .row -->
+                                    
 
                                     <button type="submit" class="btn btn-outline-primary-2">
-                                        <span>POST COMMENT</span>
+                                        <span>{% trans 'POST COMMENT' %}</span>
                                         <i class="icon-long-arrow-right"></i>
                                     </button>
                                 </form>
@@ -222,19 +245,19 @@
                 		<aside class="col-lg-3">
                 			<div class="sidebar">
                 				<div class="widget widget-search">
-                                    <h3 class="widget-title">Search</h3><!-- End .widget-title -->
+                                    <h3 class="widget-title">{% trans 'Search' %}</h3><!-- End .widget-title -->
 
                                      <form action="{% url 'Blog_Search' %}" class="search" method='GET'>
-                                        <label for="ws" class="sr-only">Search in blog</label>
+                                        <label for="ws" class="sr-only">{% trans 'Search in blog' %}</label>
                                         <input type="search" class="form-control" name="keyword" id="ws" placeholder="Search in blog" required>
-                                        <button type="submit" class="btn"><i class="icon-search"></i><span class="sr-only">Search</span></button>
+                                        <button type="submit" class="btn"><i class="icon-search"></i><span class="sr-only">{% trans 'Search' %}</span></button>
                                     </form>
                                 </div><!-- End .widget -->
 
                                
 
                                 <div class="widget">
-                                    <h3 class="widget-title">Popular Posts</h3><!-- End .widget-title -->
+                                    <h3 class="widget-title">{% trans 'Popular Posts' %}</h3><!-- End .widget-title -->
 
                                     <ul class="posts-list">
                                         {% for posts in popular_posts %}
@@ -268,7 +291,7 @@
                                 </div><!-- End .widget -->
 
                                 <div class="widget">
-                                    <h3 class="widget-title">Products Tags</h3><!-- End .widget-title -->
+                                    <h3 class="widget-title">{% trans 'Products Tags' %}</h3><!-- End .widget-title -->
 
                                        
                                         
@@ -281,10 +304,10 @@
                                 </div><!-- End .widget -->
 
                                 <div class="widget widget-text">
-                                    <h3 class="widget-title">About Blog</h3><!-- End .widget-title -->
+                                    <h3 class="widget-title">{% trans 'About Blog' %}</h3><!-- End .widget-title -->
 
                                     <div class="widget-text-content">
-                                        <p>Welcome to our store! We offer a wide selection of items for you to explore. From fashion to tech, we've got it all. Start shopping now and find your favorites!</p>
+                                        <p>{% trans 'Welcome to our store! We offer a wide selection of items for you to explore. From fashion to tech, weve got it all. Start shopping now and find your favorites!' %}</p>
                                     </div><!-- End .widget-text-content -->
                                 </div><!-- End .widget -->
                 			</div><!-- End .sidebar sidebar-shop -->

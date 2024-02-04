@@ -156,7 +156,7 @@ li {
             <h3 style="font-size: 24px; margin-bottom: 10px;">{{ product.product_name }}</h3>
             <p style="font-size: 16px; margin-bottom: 10px;">Description: {{ product.description }}</p>
             <img src="{{ product.images.url }}" alt="{{ product.product_name }}" style="max-width: 100px; height: auto;">
-            <p style="font-size: 18px; color: #2ecc71; font-weight: bold; margin-bottom: 20px;">Price: {{ product.price }} DA</p>
+            
           </div>
          
  <form method="post" enctype="multipart/form-data" >
@@ -224,11 +224,11 @@ li {
         </thead>
         <tbody>
           {% for variant in variants %}
-            {% if variant.variation_category == 'size' %}
+            
               <tr>
-                <td>{{ variant.variation_value }}</td>
+                <td>{{ variant.size }}</td>
               </tr>
-            {% endif %}
+           
           {% endfor %}
         </tbody>
       </table>
@@ -241,11 +241,11 @@ li {
         </thead>
         <tbody>
           {% for variant in variants %}
-            {% if variant.variation_category == 'color' %}
+           
               <tr>
-                <td>{{ variant.variation_value }}</td>
+                <td>{{ variant.color}}</td>
               </tr>
-            {% endif %}
+            
           {% endfor %}
         </tbody>
       </table>

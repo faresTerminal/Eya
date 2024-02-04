@@ -3,8 +3,13 @@
 {% load thumbnail %}
  {% load i18n %}
 {% load custom_filters %}
+{% load translation_tags %}
 {% block content %}
-
+<style>
+        /* Add your RTL CSS styles here */
+        body {
+          font-family: 'Cairo', sans-serif !important;
+        }
  <style>
     
 
@@ -17,10 +22,17 @@
         border-radius: 5px;
         padding: 10px;
         display: inline-block;
+
+        }
+        .banner {
+          position: relative;
 }
+
+
+
 </style>
   
-
+{% include 'includes/alerts.html' %}
         <main class="main">
             <div class="intro-section pt-3 pb-3 mb-2">
                 <div class="container">
@@ -49,29 +61,39 @@
                                                  {% endthumbnail %}
                                                  
                                             </picture>
-                                        </figure><!-- End .slide-image -->
 
+                                        </figure><!-- End .slide-image -->
+                                        
                                         <div class="intro-content">
                                             <h3 class="intro-subtitle text-primary">{{products.sub_title}}</h3><!-- End .h3 intro-subtitle -->
                                             <h1 class="intro-title">
+                                               
                                                 {{products.big_title}}
+                                               
+                                                
                                             </h1><!-- End .intro-title -->
+                                           
+
                                             <h1 class="intro-title">
+                                                
                                                 {{products.product}}
+                                                
                                             </h1><!-- End .intro-title -->
 
                                             <div class="intro-price">
-                                                <sup>Today:</sup>
+                                                <sup>{% trans 'Today:' %}</sup>
                                                 <span class="text-primary">
-                                                     {{products.clear_price}} DA
+                                                     {{products.clear_price|floatformat:2}} 
                                                 </span>
+                                                <span>{% trans 'DA' %}</span>
                                             </div><!-- End .intro-price -->
 
-                                            <a href="{{products.get_url}}" class="btn btn-primary btn-round">
+                                            <a href="{{products.product.get_url}}" class="btn btn-primary btn-round">
                                                 <span>{% trans "Click Here" %}</span>
                                                 <i class="icon-long-arrow-right"></i>
                                             </a>
                                         </div><!-- End .intro-content -->
+
                                     </div><!-- End .intro-slide -->
                                     {% endfor%}
 
@@ -89,11 +111,12 @@
                                     <a href="#">
                                         <img src="{% static 'images/demos/demo-3/banners/banner-1.jpg' %}" alt="Banner">
                                     </a>
+                                   
 
                                     <div class="banner-content">
-                                        <h4 class="banner-subtitle d-lg-none d-xl-block"><a href="{% url 'Top_Products' %}">{% trans "Top Product" %}</a></h4><!-- End .banner-subtitle -->
-                                        <h3 class="banner-title"><a href="{{top.get_url}}">{{top.product_name}}</a></h3><!-- End .banner-title -->
-                                        <a href="{% url 'Top_Products' %}" class="banner-link">{% trans "Shop Now" %}<i class="icon-long-arrow-right"></i></a>
+                                       
+                                        <h3  class="banner-title"><a href="{{top.get_url}}">{{top.product_name|wordwrap:16|linebreaksbr}}</a></h3><!-- End .banner-title -->
+                                        <a href="{% url 'Top_Products' %}" class="banner-link">{% trans "Top Product" %}<i class="icon-long-arrow-right"></i></a>
                                     </div><!-- End .banner-content -->
                                 </div><!-- End .banner -->
                                 {% endfor%}
@@ -102,27 +125,34 @@
                                     <a href="#">
                                         <img src="{% static 'images/demos/demo-3/banners/banner-2.jpg' %}" alt="Banner">
                                     </a>
+                                   
 
                                     <div class="banner-content">
-                                        <h4 class="banner-subtitle d-lg-none d-xl-block"><a href="{% url 'Clearance_Products' %}">{% trans "Clearance" %}</a></h4><!-- End .banner-subtitle -->
-                                        <h3 class="banner-title"><a href="{{cl.get_url}}">{{cl.product_name}}</a></h3><!-- End .banner-title -->
-                                        <a href="{% url 'Clearance_Products' %}" class="banner-link">{% trans "Shop Now" %}<i class="icon-long-arrow-right"></i></a>
+                                       
+                                        <h3  class="banner-title"><a href="{{cl.get_url}}">{{cl.product_name|wordwrap:16|linebreaksbr}}</a></h3><!-- End .banner-title -->
+                                        <a href="{% url 'Clearance_Products' %}" class="banner-link">{% trans "Clearance" %}<i class="icon-long-arrow-right"></i></a>
                                     </div><!-- End .banner-content -->
                                 </div><!-- End .banner -->
                                 {% endfor %}
-                                {% for f in featured_banner%}
-                                <div class="banner mb-0">
-                                    <a href="{% url 'Featured_Products'%}">
-                                        <img src="{% static 'images/demos/demo-3/banners/banner-3.jpg' %}" alt="Banner">
-                                    </a>
+                                {% for f in featured_banner %}
+<div class="banner mb-0">
+    <a href="{% url 'Featured_Products' %}">
+        <img src="{% static 'images/demos/demo-3/banners/banner-3.jpg' %}" alt="Banner">
+    </a>
 
-                                    <div class="banner-content">
-                                        <h4 class="banner-subtitle d-lg-none d-xl-block"><a href="{% url 'Featured_Products'%}">{% trans "Featured" %}</a></h4><!-- End .banner-subtitle -->
-                                        <h3 class="banner-title"><a href="{{f.get_url}}">{{f.product_name}}</a></h3><!-- End .banner-title -->
-                                        <a href="{% url 'Featured_Products' %}" class="banner-link">{% trans "Shop Now" %}<i class="icon-long-arrow-right"></i></a>
-                                    </div><!-- End .banner-content -->
-                                </div><!-- End .banner -->
-                                {% endfor %}
+    
+
+    <div class="banner-content">
+        
+        <h3  class="banner-title"><a href="{{ f.get_url }}">{{ f.product_name|wordwrap:16|linebreaksbr }}</a></h3>
+        <!-- End .banner-title -->
+        <a href="{% url 'Featured_Products' %}" class="banner-link">{% trans "Featured" %}<i class="icon-long-arrow-right"></i></a>
+    </div>
+    <!-- End .banner-content -->
+</div>
+<!-- End .banner -->
+{% endfor %}
+
                             </div><!-- End .intro-banners -->
                         </div><!-- End .col-lg-4 -->
                     </div><!-- End .row -->
@@ -202,12 +232,13 @@
                                     <h3 class="product-title"><a href="{{p.get_url}}">{{p.product_name}}</a></h3><!-- End .product-title -->
                                     {% if p.variants %}
                                     <div class="product-price">
-                                            {{p.variants.0.price}} DA
+                                            {{p.variants.0.price}}
+                                             <span>{% trans 'DA' %}</span>
                                             {% if p.variants.0.clearance_price > 0 %}
                                                     
                                             
                                                    
-                                                    <span style="margin-left: 5px;" class="old-price text-success"> {{p.variants.0.clearance_price}} DA</span>
+                                                    <span style="margin-left: 5px;" class="old-price text-success"> {{p.variants.0.clearance_price}} </span><span>{% trans 'DA' %}</span>
                                             {% endif %}
                                      </div><!-- End .product-price -->
                                      {% endif %}
@@ -260,7 +291,9 @@
                                     {% if sale.variants.0.clearance_price > 0  %}
                                         <span class="product-label label-sale">{% trans "Sale" %}</span>
                                         {% else%}
+                                        {% if sale.is_new %}
                                         <span class="product-label label-new">{% trans "New" %}</span>
+                                        {% endif %}
                                         {% endif %}
                                     {% endif %}
                                     <a href="{{sale.get_url}}">
@@ -289,12 +322,13 @@
                                     {% if sale.variants %}
                                      <div class="product-price">
                                         
-                                            {{sale.variants.0.price}} DA
+                                            {{sale.variants.0.price}} <span>{% trans 'DA' %}</span>
                                             {% if sale.variants.0.clearance_price > 0  %}
                                                     
                                             
                                                     
-                                                    <span style="margin-left: 5px;" class="old-price text-success"> {{sale.variants.0.clearance_price}} DA</span>
+                                                    <span style="margin-left: 5px;" class="old-price text-success"> {{sale.variants.0.clearance_price}} </span>
+                                                    <span>{% trans 'DA' %}</span>
                                             {% endif %}
                                         
                                     </div><!-- End .product-price -->
@@ -348,7 +382,9 @@
                                     {% if rating.variants.0.clearance_price > 0  %}
                                         <span class="product-label label-sale">{% trans "Sale" %}</span>
                                         {% else%}
+                                        {% if rating.is_new %}
                                         <span class="product-label label-new">{% trans "New" %}</span>
+                                        {% endif %}
                                         {% endif %}
                                     {% endif %}
                                     <a href="{{rating.get_url}}">
@@ -375,14 +411,15 @@
                                     <h3 class="product-title"><a href="{{rating.get_url}}">{{rating.product_name}}</a></h3>
                                     {% if rating.variants %}
                                     <div class="product-price">
-                                            {{rating.variants.0.price}} DA
+                                            {{rating.variants.0.price}} <span>{% trans 'DA' %}</span>
                                             {% if rating.variants.0.clearance_price > 0  %}
                                                     
                                             
                                                     
-                                                    <span style="margin-left: 5px;" class="old-price text-success">{{rating.variants.0.clearance_price}} DA</span>
+                                                    <span style="margin-left: 5px;" class="old-price text-success">{{rating.variants.0.clearance_price}}</span><span>{% trans 'DA' %}</span>
                                             {% endif %}
                                             <span class="out-text">{{rating.variants.0.quantity}} in Stock</span>
+
                                     </div><!-- End .product-price -->
                                     {% endif %}
                                     <div class="ratings-container">
@@ -411,7 +448,7 @@
 
             <div class="container">
                 {% for deal in signboard %}
-                <div class="cta cta-border cta-border-image mb-5 mb-lg-7" style="background-image: url({{deal.image_slide.url}});">
+                <div class="cta signboard cta-border cta-border-image mb-5 mb-lg-7" style="background-image: url({{deal.image_slide.url}});">
                     <div class="cta-border-wrapper bg-white">
                         <div class="row justify-content-center">
                             <div class="col-md-11 col-xl-11">
@@ -423,7 +460,9 @@
                                     <div class="cta-text">
                                         <p>{{deal.big_title}}<br> <strong>{{deal.product.product_name}}</strong></p>
                                     </div><!-- End .cta-text -->
-                                    <a href="{% url 'add_cart' deal.id %}" class="btn btn-primary btn-round"><span>Add to Cart be with {{deal.clear_price}} DA</span><i class="icon-long-arrow-right"></i></a>
+                                    
+                                    <a href="{{deal.product.get_url}}" class="btn btn-primary btn-round"><span>{% trans 'Shop Now with' %} {{deal.clear_price}}</span><span>{% trans 'DA' %}</span><i class="icon-long-arrow-right"></i></a>
+                                    
                                 </div><!-- End .cta-content -->
                             </div><!-- End .col-xl-7 -->
                         </div><!-- End .row -->
@@ -440,6 +479,7 @@
                     </div><!-- End .heading -->
 
                     <div class="row">
+                        {% if deals_outlet %}
                         {% for deals in deals_outlet %}
                         <div class="col-lg-6 deal-col">
                             <div class="deal" style="background-image: url('{{deals.image_slide.url}}');">
@@ -452,8 +492,8 @@
                                     <h3 class="product-title"><a href="product.html">{{deals.product}}</a></h3><!-- End .product-title -->
                                  
                                     <div class="product-price">
-                                        <span class="new-price">{{deals.clear_price}} DA</span>
-                                        <span class="old-price">Was {{deals.price}} DA</span>
+                                        <span class="new-price">{{deals.clear_price}}</span><span>{% trans 'DA' %}</span>
+                                        <span class="old-price">Was {{deals.price}}</span><span>{% trans 'DA' %}</span>
                                     </div><!-- End .product-price -->
 
                                     <a href="{{deals.product.get_url}}" class="btn btn-link"><span>{% trans "Shop Now" %}</span><i class="icon-long-arrow-right"></i></a>
@@ -483,10 +523,11 @@
                             </div><!-- End .deal -->
                         </div><!-- End .col-lg-6 -->
                         {% endfor %}
-                        <div class="col-lg-6">
+                        {% else %}
+                         <div class="col-lg-6">
                             <div class="products">
                                 <div class="row">
-                                    {% for clear in clearance %}
+                                    {% for clear in clearance1 %}
                                     <div class="col-6">
                                         <div class="product product-2">
                                             <figure class="product-media">
@@ -516,8 +557,71 @@
                                                 <h3 class="product-title"><a href="{{clear.get_url}}">{{clear.product_name}}</a></h3><!-- End .product-title -->
                                                 {% if clear.variants %}
                                                 <div class="product-price">
-                                                    <span class="new-price">{{clear.variants.0.clearance_price}} DA</span>
-                                                    <span class="old-price"> {{clear.variants.0.price}} DA</span>
+                                                    <span class="new-price">{{clear.variants.0.clearance_price}}</span>
+                                                    <span>{% trans 'DA' %}</span>
+                                                    <span class="old-price"> {{clear.variants.0.price}}</span>
+                                                    <span>{% trans 'DA' %}</span>
+                                                </div><!-- End .product-price -->
+                                                {% endif %}
+                                                <div class="ratings-container">
+                                                    <div class="rating-star">
+                                <span>
+                                    <i class="fa fa-star{% if clear.averageReview < 0.5 %}-o{% elif s.averageReview >= 0.5 and clear.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if clear.averageReview < 1.5 %}-o{% elif s.averageReview >= 1.5 and clear.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if clear.averageReview < 2.5 %}-o{% elif s.averageReview >= 2.5 and clear.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if clear.averageReview < 3.5 %}-o{% elif s.averageReview >= 3.5 and clear.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if clear.averageReview < 4.5 %}-o{% elif s.averageReview >= 4.5 and clear.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+    
+                                    </span>
+                            </div>
+                                            <span class="ratings-text">( {{clear.countReview}} Reviews )</span>
+                                                </div><!-- End .rating-container -->
+                                            </div><!-- End .product-body -->
+                                        </div><!-- End .product -->
+                                    </div><!-- End .col-sm-6 -->
+                                    {% endfor %}
+                                    
+                                    
+                                </div><!-- End .row -->
+                            </div><!-- End .products -->
+                        </div><!-- End .col-lg-6 -->
+                        {% endif %}
+                        <div class="col-lg-6">
+                            <div class="products">
+                                <div class="row">
+                                    {% for clear in clearance2 %}
+                                    <div class="col-6">
+                                        <div class="product product-2">
+                                            <figure class="product-media">
+                                                
+                                                <span class="product-label label-circle label-sale">{% trans "Sale" %}</span>
+                                                <a href="{{clear.get_url}}">
+                                                    {% thumbnail clear.images "280x280" crop="center" as d %}
+                                                    <img width="{{ d.width }}" height="{{d.height }}" src="{{d.url}}" class="product-image">
+                                                    {% endthumbnail %}
+                                                </a>
+                                                
+
+                                                <div class="product-action-vertical">
+                                                    <a href="{% url 'add_to_wishlist' clear.id %}" class="btn-product-icon btn-wishlist btn-expandable"><span>{% trans "add to wishlist" %}</span></a>
+                                                </div><!-- End .product-action -->
+
+                                                <div class="product-action product-action-dark">
+                                                    <a href="{% url 'add_cart' clear.id %}" class="btn-product btn-cart" title="Add to cart"><span>{% trans "add to cart" %}</span></a>
+                                                    <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
+                                                </div><!-- End .product-action -->
+                                            </figure><!-- End .product-media -->
+
+                                            <div class="product-body">
+                                                <div class="product-cat">
+                                                    <a href="#">{{clear.category}}</a>
+                                                </div><!-- End .product-cat -->
+                                                <h3 class="product-title"><a href="{{clear.get_url}}">{{clear.product_name}}</a></h3><!-- End .product-title -->
+                                                {% if clear.variants %}
+                                                <div class="product-price">
+                                                    <span class="new-price">{{clear.variants.0.clearance_price}}</span>
+                                                    <span>{% trans 'DA' %}</span>
+                                                    <span class="old-price"> {{clear.variants.0.price}}</span><span>{% trans 'DA' %}</span>
                                                 </div><!-- End .product-price -->
                                                 {% endif %}
                                                 <div class="ratings-container">
@@ -634,7 +738,7 @@
                         {% for ar in on_blog %}
                         <article class="entry entry-display">
                             <figure class="entry-media">
-                                <a href="single.html">
+                                <a href="{% url 'show_article' id=ar.id slug=ar.slug %}">
                                      {% thumbnail ar.image "376x250" crop="center" as bl %}
                                     <img width="{{ bl.width }}" height="{{bl.height }}" src="{{bl.url}}" alt="Image Desc">
                                     {% endthumbnail %}
@@ -677,7 +781,7 @@
 
             <div class="icon-boxes-container mt-2 mb-2 bg-transparent">
                 <div class="container">
-                    <div class="row">
+                    <div class="row supporter">
                         <div class="col-sm-6 col-lg-3">
                             <div class="icon-box icon-box-side">
                                 <span class="icon-box-icon text-dark">
@@ -764,7 +868,8 @@
                                         <div class="input-group">
                                             <input type="email" class="form-control" placeholder="Enter your Email Address" name="email" aria-label="Email Adress"  required>
                                             <div class="input-group-append">
-                                                <button class="btn btn-primary btn-rounded" type="submit"><i class="icon-long-arrow-right"></i>{% trans "Subscrib Now" %}</button>
+                                                <button style="display: block ruby;
+                                                width: auto;" class="btn btn-primary btn-rounded" type="submit"><i class="icon-long-arrow-right"></i>{% trans "Subscrib Now" %}</button>
                                             </div><!-- .End .input-group-append -->
                                         </div><!-- .End .input-group -->
                                     </form>
@@ -782,5 +887,5 @@
 
 <!-- for expiratin deals clock -->
 
-   
+ 
   {% endblock %} 

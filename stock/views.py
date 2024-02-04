@@ -9,13 +9,16 @@ from stock.models import StockHistory, Adjustment_StockHistory
 from django.utils import timezone
 from django.db.models import Avg, Sum
 from orders.models import OrderProduct
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+
+
 # Create your views here.
 def stock(request):
     products = Product.objects.filter(buyer=request.user, is_available=True).order_by('-id')[:3]
     total_products = Product.objects.filter(buyer=request.user, is_available=True).count()
 
     # Fetch low stock variations directly
-    low_stock_variations = Variation.objects.filter(product__buyer=request.user, quantity__lt=15)
+    low_stock_variations = Variation.objects.filter(product__buyer=request.user, quantity__lt=15).order_by('-id')[:4]
 
     # Calculate average stock quantity
     total_stock = Variation.objects.filter(product__in=products).aggregate(total_stock=Sum('quantity'))
@@ -34,11 +37,16 @@ def product_list_stock(request):
     products = Product.objects.filter(buyer = request.user, is_available = True)
     variation_list = Variation.objects.filter(product__in = products)
 
+    paginator = Paginator(variation_list, 10)
+    page = request.GET.get('page')
+    paged_products = paginator.get_page(page)
+    product_count = variation_list.count()
+
 
 
     context = {
 	'products': products,
-    'variation_list': variation_list,
+    'variation_list': paged_products,
 
     }
     return render(request, 'stock/product_list_stock.html', context)
@@ -49,9 +57,14 @@ def stock_adjust_page(request):
     products = Product.objects.filter(buyer = request.user, is_available = True)
     variation_list = Variation.objects.filter(product__in = products)
 
+    paginator = Paginator(variation_list, 10)
+    page = request.GET.get('page')
+    paged_products = paginator.get_page(page)
+    product_count = variation_list.count()
+
     context = {
 	'products': products,
-    'variation_list': variation_list,
+    'variation_list': paged_products,
 
     }
     return render(request, 'stock/stock_adjustment.html', context)
@@ -162,34 +175,5 @@ def stock_history(request):
     return render(request, 'stock/stock_history.html', context)
 
 
-from django.db.models import Sum, F, DecimalField
 
-def stock_sammary(request):
-    # Initial stock and price
-    initial_products = Product.objects.filter(buyer=request.user, is_available=True)
-    initial_variation_valuation = Variation.objects.filter(product__in=initial_products)
-    initial_total_valuation = sum(product.valuation() for product in initial_variation_valuation)
-
-    # Selling stock and price
-    order_products = OrderProduct.objects.filter(variations__in=initial_variation_valuation)
-    
-    # Calculate selling stock and price
-    selling_summary = order_products.values('variations__id').annotate(
-        selling_stock=Sum('quantity'),
-        selling_price=Sum(F('quantity') * F('product_price'), output_field=DecimalField())
-    )
-
-    # Get total selling stock and price
-    total_selling_stock = sum(item['selling_stock'] for item in selling_summary)
-    total_selling_price = sum(item['selling_price'] for item in selling_summary)
-
-    context = {
-        'initial_products': initial_products,
-        'initial_variation_valuation': initial_variation_valuation,
-        'initial_total_valuation': initial_total_valuation,
-        'selling_stock': total_selling_stock,
-        'selling_price': total_selling_price,
-    }
-
-    return render(request, 'stock/stock_sammary.html', context)
 

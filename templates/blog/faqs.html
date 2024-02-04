@@ -3,33 +3,61 @@
 
  
 
+{% load i18n %}
 {% block content %}
+{% if current_language == 'ar' %}
+    <style>
+        
+        .col-lg-6{
+            text-align: right;
+        }
+        input{
+            text-align: right;
+        }
+        nav{
+            direction: rtl;
+        }
+        textarea{
+            text-align: right;
+        }
+        .page-title{
+             font-family: 'Cairo', sans-serif !important;
+        }
+        .card{
+        	text-align: right;
+        }
+        .cta{
+        	text-align: right;
+        	direction: rtl;
+        }
+    </style>
+   {% endif %}
 
  <main class="main">
         	<div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
         		<div class="container">
-        			<h1 class="page-title">F.A.Q<span>Pages</span></h1>
+        			<h1 class="page-title">{% trans   'F.A.Q' %}<span>{% trans ' Pages' %}</span></h1>
         		</div><!-- End .container -->
         	</div><!-- End .page-header -->
             <nav aria-label="breadcrumb" class="breadcrumb-nav">
                 <div class="container">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">FAQ</li>
+                        <li class="breadcrumb-item"><a href="index.html">{% trans ' Home' %}</a></li>
+                        
+                        <li class="breadcrumb-item active" aria-current="page">{% trans  'FAQ' %}</li>
                     </ol>
                 </div><!-- End .container -->
             </nav><!-- End .breadcrumb-nav -->
 
             <div class="page-content">
                 <div class="container">
-                	<h2 class="title text-center mb-3">Shipping Information</h2><!-- End .title -->
+                	<h2 class="title text-center mb-3">{% trans   'Shipping Information' %}</h2><!-- End .title -->
         			<div class="accordion accordion-rounded" id="accordion-1">
 					    <div class="card card-box card-sm bg-light">
 					        <div class="card-header" id="heading-1">
 					            <h2 class="card-title">
 					                <a role="button" data-toggle="collapse" href="#collapse-1" aria-expanded="true" aria-controls="collapse-1">
-					                    How will my parcel be delivered?
+					                    {% trans   'How will my parcel be delivered?' %}
 					                </a>
 					            </h2>
 					        </div><!-- End .card-header -->
@@ -220,12 +248,12 @@ To find out more about the delivery of your specific parcel, you should refer to
                         <div class="col-md-10 col-lg-9 col-xl-7">
                             <div class="row no-gutters flex-column flex-sm-row align-items-sm-center">
                                 <div class="col">
-                                    <h3 class="cta-title text-white">If You Have More Questions</h3><!-- End .cta-title -->
-                                    <p class="cta-desc text-white">Quisque volutpat mattis eros</p><!-- End .cta-desc -->
+                                    <h3 class="cta-title text-white">{% trans ' If You Have More Questions' %}</h3><!-- End .cta-title -->
+                                    <p class="cta-desc text-white">{% trans ' Quisque volutpat mattis eros' %}</p><!-- End .cta-desc -->
                                 </div><!-- End .col -->
 
                                 <div class="col-auto">
-                                    <a href="{% url 'contact' %}" class="btn btn-outline-white"><span>CONTACT US</span><i class="icon-long-arrow-right"></i></a>
+                                    <a href="{% url 'contact' %}" class="btn btn-outline-white"><span>{% trans ' CONTACT US' %}</span><i class="icon-long-arrow-right"></i></a>
                                 </div><!-- End .col-auto -->
                             </div><!-- End .row no-gutters -->
                         </div><!-- End .col-md-10 col-lg-9 -->

@@ -3,20 +3,39 @@
 
  {% load thumbnail %}
 
+{% load i18n %}
+
 {% block content %}
+{% if current_language == 'ar' %}
+    <style>
+        .main {
+            direction: rtl;
+        }
+        tr{
+            text-align: center;
+        }
+        .row{
+            text-align: right;
+        }
+        .product-media{
+            margin-right: 0.2rem !important;
+            margin-left: 1em !important;
+        }
+    </style>
+   {% endif %}
 
 <main class="main">
         	<div class="page-header text-center" style="background-image: url({% static 'images/page-header-bg.jpg' %})">
         		<div class="container">
-        			<h1 class="page-title">Market<span>Shop</span></h1>
+        			<h1 class="page-title">{% trans 'Market' %}<span>{% trans 'Shop' %}</span></h1>
         		</div><!-- End .container -->
         	</div><!-- End .page-header -->
             <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
                 <div class="container">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Shop</a></li>
-                        <li class="breadcrumb-item"><a href="#">Clearance Products</a></li>
+                        <li class="breadcrumb-item"><a href="index.html">{% trans 'Home' %}</a></li>
+                        <li class="breadcrumb-item"><a href="#">{% trans 'Shop' %}</a></li>
+                        <li class="breadcrumb-item"><a href="#">{% trans 'Clearance Products' %}</a></li>
                         
                     </ol>
                 </div><!-- End .container -->
@@ -55,7 +74,7 @@
                             <div class="col-6 col-md-4 col-lg-4 col-xl-3">
                                 <div class="product">
                                     <figure class="product-media">
-                                        <span class="product-label label-sale">Sale</span>
+                                        <span class="product-label label-sale">{% trans 'Sale' %}</span>
                                         <a href="{{s.get_url}}">
                                             {% thumbnail s.images "275x275" crop="center" as ml %}
                                             <img width="{{ ml.width }}" height="{{ml.height }}" src="{{ml.url}}" class="product-image">
@@ -64,7 +83,7 @@
                                          
 
                                         <div class="product-action-vertical">
-                                            <a href="{% url 'add_to_wishlist' s.id %}" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+                                            <a href="{% url 'add_to_wishlist' s.id %}" class="btn-product-icon btn-wishlist btn-expandable"><span>{% trans 'add to wishlist' %}</span></a>
                                         </div><!-- End .product-action -->
 
                                         <div class="product-action action-icon-top">
@@ -114,7 +133,7 @@
                             {% endfor %}
                             {%else %}
                             <div>
-                                <h5 class="text-center text-info">No Products For Clearance...</h5>
+                                <h5 class="text-center text-info">{% trans 'No Products For Clearance' %}...</h5>
                             </div>
                             {% endif %}
 
@@ -127,13 +146,13 @@
                                     {% if clearance_products.has_previous %}
                                     <li class="page-item">
                                         <a class="page-link page-link-prev" href="?page={{clearance_products.previous_page_number}}" aria-label="Previous" tabindex="-1" aria-disabled="true">
-                                            <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>Prev
+                                            <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>{% trans 'Prev' %}
                                         </a>
                                     </li>
                                     {% else %}
                                     <li class="page-item disabled">
                                         <a class="page-link page-link-prev" href="#" aria-label="Previous" tabindex="-1" aria-disabled="true">
-                                            <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>Prev
+                                            <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>{% trans 'Prev' %}
                                         </a>
                                     </li>
                                     {%endif%}
@@ -143,19 +162,19 @@
                                     {% else %}
                                     <li class="page-item"><a class="page-link" href="?page={{i}}">2</a></li>
                                     
-                                    <li class="page-item-total">of All</li>
+                                    <li class="page-item-total">{% trans 'of All' %}</li>
                                     {% endif %}
                                     {% endfor %}
                                     {% if clearance_products.has_next %}
                                     <li class="page-item">
                                         <a class="page-link page-link-next" href="?page={{clearance_products.next_page_number}}" aria-label="Next">
-                                            Next <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
+                                            {% trans 'Next' %} <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
                                         </a>
                                     </li>
                                     {%else%}
                                     <li class="page-item disabled">
                                         <a class="page-link page-link-next" href="#" aria-label="Next">
-                                            Next <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
+                                            {% trans 'Next' %} <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
                                         </a>
                                     </li>
                                     {% endif %}

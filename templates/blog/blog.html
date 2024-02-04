@@ -2,20 +2,41 @@
 {% load static %}
 
 {% load thumbnail %} 
+{% load translation_tags %}
 
+{% load i18n %}
 {% block content %}
+{% if current_language == 'ar' %}
+    <style>
+        .main {
+            direction: rtl;
+        }
+        .entry-body{
+            text-align: right;
+        }
+        .widget{
+            text-align: right;
+        }
+        .banner-content{
+            text-align: center;
+        }
+        .page-header .page-title{
+            font-family: 'Cairo', sans-serif;
+        }
+    </style>
+   {% endif %}
 
  <main class="main">
             <div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
                 <div class="container">
-                    <h1 class="page-title">Blog Listing<span>Blog</span></h1>
+                    <h1 class="page-title">{% trans 'Blog Listing' %}<span>{% trans 'Blog' %}</span></h1>
                 </div><!-- End .container -->
             </div><!-- End .page-header -->
             <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
                 <div class="container">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Blog</a></li>
+                        <li class="breadcrumb-item"><a href="index.html">{% trans 'Home' %}</a></li>
+                        <li class="breadcrumb-item"><a href="#">{% trans 'Blog' %}</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Listing</li>
                     </ol>
                 </div><!-- End .container -->
@@ -30,7 +51,7 @@
 
                         <div class="toolbox-center">
                             <div class="toolbox-info">
-                                Showing <span> {{blog_count}}</span> Blogs
+                                {% trans 'Showing' %} <span> {{blog_count}}</span> {% trans 'Blogs' %}
                             </div><!-- End .toolbox-info -->
                         </div><!-- End .toolbox-center -->
 
@@ -62,7 +83,7 @@
                                         <div class="entry-body">
                                             <div class="entry-meta">
                                                 <span class="entry-author">
-                                                    by <a href="#">{{user.first_name}}</a>
+                                                    by <a href="#"><b>{{user.username}}</b></a>
                                                 </span>
                                                 <span class="meta-separator">|</span>
                                                 <a href="#">{{a.publish}}</a>
@@ -71,14 +92,14 @@
                                             </div><!-- End .entry-meta -->
 
                                             <h2 class="entry-title">
-                                                <a href="{% url 'show_article' id=a.id slug=a.slug %}">{{a.title}}</a>
+                                                <a href="{% url 'show_article' id=a.id slug=a.slug %}">{{a.title|translate_text}}</a>
                                             </h2><!-- End .entry-title -->
 
                                             
 
                                             <div class="entry-content">
                                                 <p>{{a.body|safe|linebreaks|truncatewords_html:35}}</p>
-                                                <a href="{% url 'show_article' id=a.id slug=a.slug %}" class="read-more">Continue Reading</a>
+                                                <a href="{% url 'show_article' id=a.id slug=a.slug %}" class="read-more">{% trans 'Continue Reading' %}</a>
                                             </div><!-- End .entry-content -->
                                         </div><!-- End .entry-body -->
                                     </div><!-- End .col-md-7 -->
@@ -89,27 +110,52 @@
                             
 
 
-                            <nav aria-label="Page navigation">
+                             <nav aria-label="Page navigation">
+                            {% if blog.has_other_pages %}
                                 <ul class="pagination">
+                                    {% if blog.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link page-link-prev" href="?page={{blog.previous_page_number}}" aria-label="Previous" tabindex="-1" aria-disabled="true">
+                                            <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>{% trans 'Prev' %}
+                                        </a>
+                                    </li>
+                                    {% else %}
                                     <li class="page-item disabled">
                                         <a class="page-link page-link-prev" href="#" aria-label="Previous" tabindex="-1" aria-disabled="true">
-                                            <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>Prev
+                                            <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>{% trans 'Prev' %}
                                         </a>
                                     </li>
-                                    <li class="page-item active" aria-current="page"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    {%endif%}
+                                    {% for i in blog.paginator.page_range %}
+                                    {% if blog.number == i %}
+                                    <li class="page-item active" aria-current="page"><a class="page-link" href="#">{{i}}</a></li>
+                                    {% else %}
+                                    <li class="page-item"><a class="page-link" href="?page={{i}}">2</a></li>
+                                    
+                                    <li class="page-item-total">{% trans 'of All' %}</li>
+                                    {% endif %}
+                                    {% endfor %}
+                                    {% if blog.has_next %}
                                     <li class="page-item">
-                                        <a class="page-link page-link-next" href="#" aria-label="Next">
-                                            Next <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
+                                        <a class="page-link page-link-next" href="?page={{blog.next_page_number}}" aria-label="Next">
+                                            {% trans 'Next' %} <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
                                         </a>
                                     </li>
+                                    {%else%}
+                                    <li class="page-item disabled">
+                                        <a class="page-link page-link-next" href="#" aria-label="Next">
+                                            {% trans 'Next' %} <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
+                                        </a>
+                                    </li>
+                                    {% endif %}
                                 </ul>
+                                {% endif %}
                             </nav>
                         </div><!-- End .col-lg-9 -->
                         {% else %}
                         <div class="col-lg-9">
                             <div>
-                                <h5 class="text-center text-info">No Rusalt Found it ... please try again</h5>
+                                <h5 class="text-center text-info">{% trans 'No Rusalt Found it ... please try again' %}</h5>
                             </div>
                         </div>
                         {% endif %}
@@ -117,34 +163,34 @@
                         <aside class="col-lg-3">
                             <div class="sidebar">
                                 <div class="widget widget-search">
-                                    <h3 class="widget-title">Search</h3><!-- End .widget-title -->
+                                    <h3 class="widget-title">{% trans 'Search' %}</h3><!-- End .widget-title -->
 
                                      <form action="{% url 'Blog_Search' %}" class="search" method='GET'>
-                                        <label for="ws" class="sr-only">Search in blog</label>
+                                        <label for="ws" class="sr-only">{% trans 'Search in blog' %}</label>
                                         <input type="search" class="form-control" name="keyword" id="ws" placeholder="Search in blog" required>
-                                        <button type="submit" class="btn"><i class="icon-search"></i><span class="sr-only">Search</span></button>
+                                        <button type="submit" class="btn"><i class="icon-search"></i><span class="sr-only">{% trans 'Search' %}</span></button>
                                     </form>
                                 </div><!-- End .widget -->
 
                                 <div class="widget widget-cats">
-                                    <h3 class="widget-title">Categories</h3><!-- End .widget-title -->
+                                    <h3 class="widget-title">{% trans 'Categories' %}</h3><!-- End .widget-title -->
 
                                     <ul>
                                         {% for category in categories %}
-                                        <li><a href="#">{{category.category_name}}<span>3</span></a></li>
+                                        <li><a href="">{{category.category_name}}</a></li>
                                         {% endfor %}
                                         
                                     </ul>
                                 </div><!-- End .widget -->
 
                                 <div class="widget">
-                                    <h3 class="widget-title">Popular Posts</h3><!-- End .widget-title -->
+                                    <h3 class="widget-title">{% trans 'Popular Posts' %}</h3><!-- End .widget-title -->
 
                                     <ul class="posts-list">
                                         {% for p in popular_posts %}
                                         <li>
                                             <figure>
-                                                <a href="#">
+                                                <a href="{% url 'show_article' id=p.id slug=p.slug %}">
                                                     {% thumbnail p.image "80x80" crop="center" as blogs_pic %}
                                                     <img width="{{ blogs_pic.width }}" height="{{blogs_pic.height }}" src="{{blogs_pic.url}}">
                                                     {% endthumbnail %}
@@ -153,7 +199,7 @@
 
                                             <div>
                                                 <span>{{p.posted_on}}</span>
-                                                <h4><a href="#">{{p.title}}.</a></h4>
+                                                <h4><a href="{% url 'show_article' id=p.id slug=p.slug %}">{{p.title}}.</a></h4>
                                             </div>
                                         </li>
                                         {% endfor %}
@@ -180,9 +226,9 @@
 
                                 <div class="banner-content">
                                     <h2 class="banner-subtitle text-dark">{{clr.product}}</h2><!-- End .banner-subtitle -->
-                                    <h3 class="banner-title text-dark">{{clr.big_title}}.<br> $ {{clr.price}}</h3><!-- End .banner-title -->
+                                    <h3 class="banner-title text-dark">{{clr.big_title}}.<br>  {{clr.price}} DA</h3><!-- End .banner-title -->
                                    
-                                    <a href="#" class="banner-link">Click here</a>
+                                   
                                 </div><!-- End .banner-content -->
                             </div><!-- End .banner -->
                        
@@ -193,10 +239,10 @@
                                 
 
                                 <div class="widget widget-text">
-                                    <h3 class="widget-title">About Blog</h3><!-- End .widget-title -->
+                                    <h3 class="widget-title">{% trans 'About Blog' %}</h3><!-- End .widget-title -->
 
                                     <div class="widget-text-content">
-                                        <p>Welcome to our store! We offer a wide selection of items for you to explore. From fashion to tech, we've got it all. Start shopping now and find your favorites!.</p>
+                                        <p>{% trans 'Welcome to our store! We offer a wide selection of items for you to explore. From fashion to tech, weve got it all. Start shopping now and find your favorites!' %}.</p>
                                     </div><!-- End .widget-text-content -->
                                 </div><!-- End .widget -->
                             </div><!-- End .sidebar -->

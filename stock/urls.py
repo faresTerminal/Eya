@@ -11,7 +11,7 @@ urlpatterns = [
      path('stock_valuation/', views.stock_valuation, name='stock_valuation'),
      path('stock-history/', views.stock_history, name='stock_history'),
      path('update-stock/<int:product_id>/', views.update_stock, name='update_stock'),
-     path('stock-sammary/', views.stock_sammary, name='stock_sammary'),
+     #path('stock-sammary/', views.stock_sammary, name='stock_sammary'),
     
      
     

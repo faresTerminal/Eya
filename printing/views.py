@@ -22,7 +22,13 @@ def order_detail(request, order_id):
     for i in ordered_products:
         subtotal += i.product_price * i.quantity
     # Calculate total shipping cost for ordered products
-    total_shipping_cost = sum(item.product.shipping for item in ordered_products)
+    num_cart_items = len(ordered_products)
+
+    if num_cart_items == 1:
+        total_shipping_cost = sum(item.product.shipping for item in ordered_products)
+
+    else:
+            total_shipping_cost = 600  # Set total_shipping_cost to 600 DA for more than one item
 
     
     context = {
@@ -54,7 +60,13 @@ def generate_and_save_pdf(request, order_id):
         for i in ordered_products:
             subtotal += i.product_price * i.quantity
         # Calculate total shipping cost for ordered products
-        total_shipping_cost = sum(item.product.shipping for item in ordered_products)
+        num_cart_items = len(ordered_products)
+
+        if num_cart_items == 1:
+           total_shipping_cost = sum(item.product.shipping for item in ordered_products)
+
+        else:
+           total_shipping_cost = 600  # Set total_shipping_cost to 600 DA for more than one item
 
         # Load your order detail template and render it
         template = get_template('printing/order_detail.html')

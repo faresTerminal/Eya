@@ -2,19 +2,36 @@
 {% load static %}
 
  {% load thumbnail %}
-
+{% load i18n %}
 {% block content %}
+{% if current_language == 'ar' %}
+    <style>
+        .main {
+            direction: rtl;
+        }
+        tr{
+            text-align: center;
+        }
+        .row{
+            text-align: right;
+        }
+        .product-media{
+            margin-right: 0.2rem !important;
+            margin-left: 1em !important;
+        }
+    </style>
+   {% endif %}
         <main class="main">
         	<div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
         		<div class="container">
-        			<h1 class="page-title">Market<span>Shop</span></h1>
+        			<h1 class="page-title">{% trans 'Market' %}<span>{% trans 'Shop' %}</span></h1>
         		</div><!-- End .container -->
         	</div><!-- End .page-header -->
             <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
                 <div class="container">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                        <li class="breadcrumb-item"><a href="index.html">{% trans 'Home' %}</a></li>
+                        <li class="breadcrumb-item"><a href="#">{% trans 'Shop' %}</a></li>
                         
                     </ol>
                 </div><!-- End .container -->
@@ -29,18 +46,18 @@
 
                         <div class="toolbox-center">
                             <div class="toolbox-info">
-                                Showing <span> {{product_count}}</span> Products
+                                {% trans 'Showing' %} <span> {{product_count}}</span> {% trans 'Products' %}
                             </div><!-- End .toolbox-info -->
                         </div><!-- End .toolbox-center -->
 
         				<div class="toolbox-right">
         					<div class="toolbox-sort">
-        						<label for="sortby">Sort by:</label>
+        						<label for="sortby">{% trans 'Sort by:' %}</label>
         						<div class="select-custom">
 									<select name="sortby" id="sortby" class="form-control">
-										<option value="popularity" selected="selected">Most Popular</option>
-										<option value="rating">Most Rated</option>
-										<option value="date">Date</option>
+										<option value="popularity" selected="selected">{% trans 'Most Popular' %}</option>
+										<option value="rating">{% trans 'Most Rated' %}</option>
+										<option value="date">{% trans 'Date' %}</option>
 									</select>
 								</div>
         					</div><!-- End .toolbox-sort -->
@@ -59,9 +76,11 @@
                                         {% if s.variants %}
 
                                         {% if s.variants.0.clearance_price > 0 %}
-                                        <span class="product-label label-sale">Sale</span>
+                                        <span class="product-label label-sale">{% trans 'Sale' %}</span>
                                         {% else%}
-                                        <span class="product-label label-new">New</span>
+                                        {% if s.is_new %}
+                                        <span class="product-label label-new">{% trans 'New' %}</span>
+                                        {% endif %}
                                         {% endif %}
                                         {% endif %}
                                         <a href="{{s.get_url}}">
@@ -72,21 +91,22 @@
                                        
 
                                         <div class="product-action-vertical">
-                                            <a href="{% url 'add_to_wishlist' s.id %}" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+                                            <a href="{% url 'add_to_wishlist' s.id %}" class="btn-product-icon btn-wishlist btn-expandable"><span>{% trans 'add to wishlist' %}</span></a>
                                         </div><!-- End .product-action -->
 
                                         <div class="product-action action-icon-top">
                                             <!-- 
                                             <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
                                              -->
-                                            <a href="{{s.get_url}}" class="btn-product btn-quickview" title="Quick view"><span>detail view</span></a>
-                                            <a href="#" class="btn-product btn-compare" title="Compare"><span>compare</span></a>
+                                            <a href="{{s.get_url}}" class="btn-product btn-quickview" title="Quick view"><span>{% trans 'detail view</span></a>
+                                            <a href="#" class="btn-product btn-compare" title="Compare"><span>{% trans 'compare' %}</span></a>
                                         </div><!-- End .product-action -->
                                     </figure><!-- End .product-media -->
 
                                     <div class="product-body">
                                         <div class="product-cat">
-                                            <a href="#">Women</a>
+                                            <a href="#">{{s.category}}</a><br>
+                                            <a href="#">{{s.subcategory}}</a>
                                         </div><!-- End .product-cat -->
                                         <h3 class="product-title"><a href="{{s.get_url}}">{{s.product_name}}</a></h3><!-- End .product-title -->
                                           {% if s.variants %}
@@ -133,7 +153,7 @@
 
                             {%else %}
                             <div>
-                                <h5 class="text-center text-info">No Rusalt Found it ... please try again</h5>
+                                <h5 class="text-center text-info">{% trans 'No Rusalt Found it ... please try again' %}</h5>
                             </div>
                             {% endif %}
 
@@ -146,13 +166,13 @@
                                     {% if products.has_previous %}
                                     <li class="page-item">
                                         <a class="page-link page-link-prev" href="?page={{products.previous_page_number}}" aria-label="Previous" tabindex="-1" aria-disabled="true">
-                                            <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>Prev
+                                            <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>{% trans 'Prev' %}
                                         </a>
                                     </li>
                                     {% else %}
                                     <li class="page-item disabled">
                                         <a class="page-link page-link-prev" href="#" aria-label="Previous" tabindex="-1" aria-disabled="true">
-                                            <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>Prev
+                                            <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>{% trans 'Prev' %}
                                         </a>
                                     </li>
                                     {%endif%}
@@ -162,19 +182,19 @@
                                     {% else %}
                                     <li class="page-item"><a class="page-link" href="?page={{i}}">2</a></li>
                                     
-                                    <li class="page-item-total">of All</li>
+                                    <li class="page-item-total">{% trans 'of All' %}</li>
                                     {% endif %}
                                     {% endfor %}
                                     {% if products.has_next %}
                                     <li class="page-item">
                                         <a class="page-link page-link-next" href="?page={{products.next_page_number}}" aria-label="Next">
-                                            Next <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
+                                            {% trans 'Next' %} <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
                                         </a>
                                     </li>
                                     {%else%}
                                     <li class="page-item disabled">
                                         <a class="page-link page-link-next" href="#" aria-label="Next">
-                                            Next <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
+                                            {% trans 'Next' } <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
                                         </a>
                                     </li>
                                     {% endif %}

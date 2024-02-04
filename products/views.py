@@ -3,7 +3,7 @@ from products.forms import ProductForm, VariantForm, GalleryImageForm, Variation
 from store.models import Product, Variation, ProductGallery, Descriptions
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 # Create your views here.
 
 
@@ -122,30 +122,39 @@ def list_clearance_products(request):
     user_products = Product.objects.filter(buyer=user)
     variation_clearance = Variation.objects.filter(product__in = user_products)
 
+    paginator = Paginator(variation_clearance, 10)
+    page = request.GET.get('page')
+    paged_products = paginator.get_page(page)
+    product_count = variation_clearance.count()
+
     context = {
         'user_products': user_products,
-        'variation_clearance': variation_clearance,
+        'variation_clearance': paged_products,
     }
 
     return render(request, 'products/clearance_products.html', context)
 
 
 def update_product(request, product_id):
-    product = Variation.objects.get(id=product_id)
-    
+    variation = Variation.objects.get(id=product_id)
 
     if request.method == 'POST':
-        form = VariationtUpdateForm(request.POST, instance=product)
+        form = VariationtUpdateForm(request.POST, instance=variation)
         if form.is_valid():
             form.save()
-            # Redirect to the product detail page or any other page as needed
+
+            # Update is_clearance field in the associated Product
+            variation.product.is_clearance = variation.is_active
+            variation.product.save()
+
+            # Redirect to the product list page or any other page as needed
             return redirect('list_clearance_products')
 
     else:
-        form = VariationtUpdateForm(instance=product)
+        form = VariationtUpdateForm(instance=variation)
 
     context = {
-        'product': product,
+        'product': variation,
         'form': form,
     }
 

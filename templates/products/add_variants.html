@@ -2,7 +2,26 @@
 {% extends 'homebase.html' %}
 {% load static %}
 {% load thumbnail %} 
+{% load i18n %}
+
 {% block content %}
+{% if current_language == 'ar' %}
+    <style>
+      .main {
+        direction: rtl;
+      }
+      tr{
+        text-align: center;
+      }
+      .row{
+        text-align: right;
+      }
+      .product-media{
+        margin-right: 0.2rem !important;
+        margin-left: 1em !important;
+      }
+    </style>
+   {% endif %}
 <style>
   .form-group {
     display: inline-block;
@@ -115,70 +134,91 @@ li {
 
   </style>
 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    // Attach a submit event handler to the form
+    $("form").submit(function(event) {
+        // Get the values of color and size
+        var colorValue = $("#color").val();
+        var sizeValue = $("#size").val();
+
+        // Check if both color and size are empty
+        if (colorValue === "" && sizeValue === "") {
+            // Display an alert or any other message to inform the user
+            alert("Color and size cannot be empty at the same time.");
+            
+            // Prevent the form from being submitted
+            event.preventDefault();
+        }
+    });
+});
+</script>
 
 <main class="main">
   <div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
     <div class="container">
-      <h1 class="page-title">Add Variant<span>Variant</span></h1>
+      <h1 class="page-title">{% trans 'Add Variant' %}<span>{% trans 'Variant' %}</span></h1>
     </div><!-- End .container -->
   </div><!-- End .page-header -->
   <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
     <div class="container">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item"><a href="index.html">{% trans 'Home' %}</a></li>
         <li class="breadcrumb-item"><a href="#">Add Product</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Create Variants</li>
+        <li class="breadcrumb-item active" aria-current="page">{% trans 'Create Variants' %}</li>
       </ol>
     </div><!-- End .container -->
   </nav><!-- End .breadcrumb-nav -->
-</main>
+
 
 <div class="container">
   <div class="row">
    {% include 'includes/management_center_sidebar.html' %}
     <div class="col-lg-5">
-      <h2 class="page-title">Add Variants</h2>
+      <h2 class="page-title">{% trans 'Add Variants' %}</h2>
       <div class="row">
         <div class="col-md-12 form-container">
           <!-- Display product information -->
           <div class="product-info">
             <h3 style="font-size: 24px; margin-bottom: 10px;">{{ product.product_name }}</h3>
-            <p style="font-size: 16px; margin-bottom: 10px;">Description: {{ product.description }}</p>
+            <p style="font-size: 16px; margin-bottom: 10px;">{% trans 'Description' %}: {{ product.description }}</p>
             <img src="{{ product.images.url }}" alt="{{ product.product_name }}" style="max-width: 100px; height: auto;">
            
           </div>
           <form method="post" enctype="multipart/form-data" action="{% url 'add_variants' product.id %}">
             {% csrf_token %}
            <div class="form-group">
-              <label for="color">Color</label>
+              <label for="color">{% trans 'Color' %}</label>
               <input type="text" name="color" id="color" class="form-input" >
             </div>
             <div class="form-group">
-              <label for="size">Size</label>
+              <label for="size">{% trans 'Size' %}</label>
               <input type="text" name="size" id="size" class="form-input" >
             </div>
             
             <div class="form-group">
-              <label for="price">Price</label>
+              <label for="price">{% trans 'Price' %}</label>
               <input type="text" name="price" id="price" class="form-input" required>
             </div>
             <div class="form-group">
-              <label for="quantity">Quantity</label>
+              <label for="quantity">{% trans 'Quantity' %}</label>
               <input type="text" name="quantity" id="quantity" class="form-input" required>
             </div>
             
             <br>
             <div class="form-group">
-              <label  for="is_active">Active</label>
+              <label  for="is_active">{% trans 'Active' %}</label>
               <input type="checkbox" name="is_active" id="is_active" class="form-checkbox" checked>
             </div>
             <br>
-            <button style="background-color: #fcb941;" type="submit" class="btn btn-save">Save Variant</button>
+            <button style="background-color: #fcb941;" type="submit" class="btn btn-save">{% trans 'Save Variant' %}</button>
           </form>
           <br>
-          <h5 style="font-size: 16px; margin-bottom: 10px;">Add Gallery Images for your Product <br>{{ product.product_name }}</h5>
+          <h5 style="font-size: 16px; margin-bottom: 10px;">{% trans 'Add Gallery Images for your Product' %} <br>{{ product.product_name }}</h5>
  
-          <a style="background-color: #fcb941;" class="btn btn-save" href="{% url 'add_gallery_images' product.id %}">Upload Images</a>
+          <a style="background-color: #fcb941;" class="btn btn-save" href="{% url 'add_gallery_images' product.id %}">{% trans 'Upload Images' %}</a>
         </div>
       </div>
     </div>
@@ -187,17 +227,17 @@ li {
   <!-- Display saved variants information -->
   <div class="variants-info">
     
-    <h2 class="page-title">Saved Variants Information</h2>
+    <h2 class="page-title">{% trans 'Saved Variants Information' %}</h2>
     <div class="variants-table">
       <div class="table-header">
-        <div style="background-color: #fcb941;" class="cell">Variation Table</div>
+        <div style="background-color: #fcb941;" class="cell">{% trans 'Variation Table' %}</div>
         
       </div>
       <ul>
         <li>
 
           <div class="cell">{{ product.product_name }}</div>
-          <div class="cell">  {{ product.price }} DA</div>
+          
           <div class="cell"> <img src="{{ product.images.url }}" alt="{{ product.product_name }}" style="max-width: 100px; height: auto;"></div>
         </li>
 
@@ -225,6 +265,6 @@ li {
 
   </div>
 </div>
-
+</main>
 
 {% endblock %}

@@ -3,7 +3,26 @@
 {% extends 'homebase.html' %}
 {% load static %}
 {% load thumbnail %} 
+{% load i18n %}
+
 {% block content %}
+{% if current_language == 'ar' %}
+    <style>
+      .main {
+        direction: rtl;
+      }
+      tr{
+        text-align: center;
+      }
+      .row{
+        text-align: right;
+      }
+      .product-media{
+        margin-right: 0.2rem !important;
+        margin-left: 1em !important;
+      }
+    </style>
+   {% endif %}
 <style>
   .form-group {
     display: inline-block;
@@ -120,61 +139,61 @@ li {
 <main class="main">
   <div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
     <div class="container">
-      <h1 class="page-title">Add Gallery<span>Imges</span></h1>
+      <h1 class="page-title">{% trans 'Add Gallery' %}<span>{% trans 'Images' %}</span></h1>
     </div><!-- End .container -->
   </div><!-- End .page-header -->
   <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
     <div class="container">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item"><a href="index.html">{% trans 'Home' %}</a></li>
         <li class="breadcrumb-item"><a href="#">Add Product</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Create Gallery</li>
+        <li class="breadcrumb-item active" aria-current="page">{% trans 'Create Gallery' %}</li>
       </ol>
     </div><!-- End .container -->
   </nav><!-- End .breadcrumb-nav -->
-</main>
+
 
 <div class="container">
   <div class="row">
      {% include 'includes/management_center_sidebar.html' %}
     <div class="col-lg-5">
-      <h2 class="page-title">Add Product Gallery</h2>
+      <h2 class="page-title">{% trans 'Add Product Gallery' %}</h2>
       <div class="row">
         <div class="col-md-12 form-container">
           <!-- Display product information -->
           <div class="product-info">
             <h3 style="font-size: 24px; margin-bottom: 10px;">{{ product.product_name }}</h3>
-            <p style="font-size: 16px; margin-bottom: 10px;">Description: {{ product.description }}</p>
+            <p style="font-size: 16px; margin-bottom: 10px;">{{ product.description }}</p>
             <img src="{{ product.images.url }}" alt="{{ product.product_name }}" style="max-width: 100px; height: auto;">
-            <p style="font-size: 18px; color: #2ecc71; font-weight: bold; margin-bottom: 20px;">Price: {{ product.price }} DA</p>
+           
           </div>
          
  <form method="post" enctype="multipart/form-data" action="{% url 'add_gallery_images' product.id %}">
     {% csrf_token %}
     <div class="form-group">
-            <label for="images">Add Images</label>
+            <label for="images">{% trans 'Add Images' %}</label>
             <input type="file" name="image" id="images" class="form-input">
           </div>
-    <button style="background-color: #fcb941;" class="btn btn-save" type="submit">Upload Image</button>
+    <button style="background-color: #fcb941;" class="btn btn-save" type="submit">{% trans 'Upload Image' %}</button>
   </form>
 
           <br>
           
  
-          <a style="background-color: #fcb941;" class="btn btn-save" href="{{product.get_url}}">Show your Product</a>
-          <a style="background-color: #fcb941;" class="btn btn-save" href="{% url 'add_description' product.id %}">Add Description</a>
+          <a style="background-color: #fcb941;" class="btn btn-save" href="{{product.get_url}}">{% trans 'Show your Product' %}</a>
+          <a style="background-color: #fcb941;" class="btn btn-save" href="{% url 'add_description' product.id %}">{% trans 'Add Description' %}</a>
         </div>
       </div>
     </div>
 
     <div class="col-lg-4">
 
-<h2  class="page-title">Information about your product</h2>
+<h2  class="page-title">{% trans 'Information about your product' %}</h2>
 <table class="table">
   <thead>
     <tr>
-      <th scope="col">img</th>
-      <th scope="col">product name</th>
+      <th scope="col">{% trans 'img' %}</th>
+      <th scope="col">{% trans 'product name' %}</th>
      
     </tr>
   </thead>
@@ -204,16 +223,16 @@ li {
 <table class="size-table">
         <thead>
           <tr>
-            <th>Size</th>
+            <th>{% trans 'Size' %}</th>
           </tr>
         </thead>
         <tbody>
           {% for variant in variants %}
-            {% if variant.variation_category == 'size' %}
+            
               <tr>
-                <td>{{ variant.variation_value }}</td>
+                <td>{{ variant.size }}</td>
               </tr>
-            {% endif %}
+            
           {% endfor %}
         </tbody>
       </table>
@@ -221,16 +240,16 @@ li {
       <table class="color-table">
         <thead>
           <tr>
-            <th>Color</th>
+            <th>{% trans 'Color' %}</th>
           </tr>
         </thead>
         <tbody>
           {% for variant in variants %}
-            {% if variant.variation_category == 'color' %}
+           
               <tr>
-                <td>{{ variant.variation_value }}</td>
+                <td>{{ variant.color }}</td>
               </tr>
-            {% endif %}
+            
           {% endfor %}
         </tbody>
       </table>
@@ -244,7 +263,7 @@ li {
 
   </div>
 </div>
-
+</main>
 <style>
   .product-table {
     width: 100%;

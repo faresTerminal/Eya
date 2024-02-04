@@ -2,36 +2,55 @@
 {% load static %}
 {% load thumbnail %}
 
+{% load i18n %}
+
 {% block content %}
+{% if current_language == 'ar' %}
+    <style>
+      .main {
+        direction: rtl;
+      }
+      tr{
+        text-align: center;
+      }
+      .row{
+        text-align: right;
+      }
+      .product-media{
+        margin-right: 0.2rem !important;
+        margin-left: 1em !important;
+      }
+    </style>
+   {% endif %}
 <main class="main">
     <div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
         <div class="container">
-            <h1 class="page-title">Add Product<span>products</span></h1>
+            <h1 class="page-title">{% trans 'Add Product' %}<span>{% trans 'products' %}</span></h1>
         </div><!-- End .container -->
     </div><!-- End .page-header -->
     <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
         <div class="container">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Add Product</a></li>
-                <li class="breadcrumb-item active" aria-current="page">create new product</li>
+                <li class="breadcrumb-item"><a href="index.html">{% trans 'Home' %}</a></li>
+                
+                <li class="breadcrumb-item active" aria-current="page">{% trans 'create new product' %}</li>
             </ol>
         </div><!-- End .container -->
     </nav><!-- End .breadcrumb-nav -->
-</main>
+
 
 <div class="container">
     <div class="row">
         {% include 'includes/management_center_sidebar.html' %}
         <div class="col-lg-5">
             <div class="containerer">
-                <h5><b>Add New Product</b></h5>
+                <h5><b>{% trans 'Add New Product' %}</b></h5>
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                    <div class="form-group">
-                      <label for="category">Category</label>
+                      <label for="category">{% trans 'Category' %}</label>
                       <select name="category" id="category" class="form-input">
-                          <option value="">Select Category</option>
+                          <option value="">{% trans 'Select Category' %}</option>
                          {% for category in categories %}
                          <option value="{{ category.id }}">{{ category.category_name }}</option>
                         {% endfor %}
@@ -39,9 +58,9 @@
                    </div>
 
                    <div class="form-group">
-                        <label for="subcategory">Subcategory</label>
+                        <label for="subcategory">{% trans 'Subcategory' %}</label>
                         <select name="subcategory" id="subcategory" class="form-input">
-                               <option value="">Select Subcategory</option>
+                               <option value="">{% trans 'Select Subcategory' %}</option>
                                {% for category, subcategories in category_dict.items %}
                               <option label="{{ category.name }}">
                                  {% for subcategory in subcategories %}
@@ -75,18 +94,18 @@
 </script>
 
                     <div class="form-group">
-                        <label for="product_name">Product Name</label>
+                        <label for="product_name">{% trans 'Product Name' %}</label>
                         <input type="text" name="product_name" id="product_name" class="form-input" required>
                     </div>
                     <div class="form-group">
-                        <label for="description">Description</label>
+                        <label for="description">{% trans 'Description' %}</label>
                         <textarea name="description" id="description" class="form-input" rows="4" required></textarea>
                     </div>
                     
                    <div class="form-group">
-              <label for="variation_category">Select Shipping:</label>
+              <label for="variation_category">{% trans 'Select Shipping' %}:</label>
               <select name="shipping" id="variation_category" class="form-input wide-input">
-                <option value="0">Free Shipping (0 DA)</option>
+                <option value="0">{% trans 'Free Shipping (0 DA)' %}</option>
                 <option value="200">200 DA</option>
                 <option value="300">300 DA</option>
                 <option value="400">400 DA</option>
@@ -97,38 +116,38 @@
             </div>
                     
                     <div class="form-group">
-                        <label for="images">Images</label>
+                        <label for="images">{% trans 'Images' %}</label>
                         <input type="file" name="images" id="images" class="form-input">
                     </div>
-                    <button style="background-color: #fcb941;" type="submit" class="btn btn-save">Save Product</button>
+                    <button style="background-color: #fcb941;" type="submit" class="btn btn-save">{% trans 'Save Product' %}</button>
                 </form>
             </div>
         </div>
         <div class="col-lg-4">
             <div class="page-content">
-                <h2 class="title text-center mb-3">Publishing Information</h2>
+                <h2 class="title text-center mb-3">{% trans 'Publishing Information' %}</h2>
                 <div class="accordion accordion-rounded" id="accordion-1">
                     <div class="card card-box card-sm bg-light">
                         <div class="card-header" id="heading-1">
                             <h2 class="card-title">
                                 <a role="button" data-toggle="collapse" href="#collapse-1" aria-expanded="true" aria-controls="collapse-1">
-                                    How to Chose Category and SubCategory?
+                                    {% trans 'How to Chose Category and SubCategory' %}?
                                 </a>
                             </h2>
                         </div>
                         <div id="collapse-1" class="collapse show" aria-labelledby="heading-1" data-parent="#accordion-1">
                             <div class="card-body">
-                               <p>Choosing the right category after selecting a subcategory is crucial for effective organization and navigation. Follow these simple steps:</p><br>
+                               <p>{% trans 'Choosing the right category after selecting a subcategory is crucial for effective organization and navigation. Follow these simple steps' %}:</p><br>
                                <p>
-                               	<strong>1 - Understand Your Subcategory:</strong> First, ensure you have a clear understanding of your subcategory. Know what it encompasses.
+                               	<strong>1 - {% trans 'Understand Your Subcategory' %}:</strong> {% trans 'First, ensure you have a clear understanding of your subcategory. Know what it encompasses' %}.
                                </p>
-                               <p><strong>2 - Consider Relevance:</strong> Think about the primary purpose of your item or content and how it relates to the subcategory.</p><br>
-                               <p><strong>3 - Explore Options:</strong> Look through available categories to find the one that best matches your item or content.</p><br>
-                                <p><strong>4 - Check for Precision:</strong> Select a category that precisely represents your item or content, avoiding vague or overly broad choices.</p><br>
-                                 <p><strong>5 - Think Like a User:</strong> Imagine how users would search for your item, and choose a category that aligns with their expectations.</p><br>
-                                  <p><strong>6 - Test the Waters:</strong> If uncertain, try posting in one category and see how it performs. Adjust if necessary.</p><br>
-                                   <p><strong>7 - Consult Guidelines:<strong> Refer to any platform-specific guidelines for category selection.</p><br>
-                                   <p><strong>8 - Review and Refine:</strong> Periodically review your choice to ensure it remains the best fit as your content or items evolve.</p>
+                               <p><strong>2 - {% trans 'Consider Relevance' %}:</strong> {% trans 'Think about the primary purpose of your item or content and how it relates to the subcategory' %}.</p><br>
+                               <p><strong>3 - {% trans 'Explore Options' %}:</strong> {% trans 'Look through available categories to find the one that best matches your item or content' %}.</p><br>
+                                <p><strong>4 - {% trans 'Check for Precision' %}:</strong> {% trans 'Select a category that precisely represents your item or content, avoiding vague or overly broad choices' %}.</p><br>
+                                 <p><strong>5 - {% trans 'Think Like a User' %}:</strong> {% trans 'Imagine how users would search for your item, and choose a category that aligns with their expectations' %}.</p><br>
+                                  <p><strong>6 - {% trans 'Test the Waters' %}:</strong> {% trans 'If uncertain, try posting in one category and see how it performs. Adjust if necessary' %}.</p><br>
+                                   <p><strong>7 - {% trans 'Consult Guidelines:<strong> Refer to any platform-specific guidelines for category selection' %}.</p><br>
+                                   <p><strong>8 - {% trans 'Review and Refine' %}:</strong> {% trans 'Periodically review your choice to ensure it remains the best fit as your content or items evolve '%}.</p>
                             </div>
                         </div>
                     </div>
@@ -136,16 +155,16 @@
                         <div class="card-header" id="heading-2">
                             <h2 class="card-title">
                                 <a class="collapsed" role,button" data-toggle="collapse" href="#collapse-2" aria-expanded="false" aria-controls="collapse-2">
-                                    how to Chose Product Name and Des and Price?
+                                    {% trans 'how to Chose Product Name and Des and Price' %}?
                                 </a>
                             </h2>
                         </div>
                         <div id="collapse-2" class="collapse" aria-labelledby="heading-2" data-parent="#accordion-1">
                             <div class="card-body">
-                                <p><strong>1 - Product Name:</strong> Choose a concise and descriptive name that highlights the product's key features and purpose, making it easy for customers to understand.</p>
-                                <p><strong>2 - Description:</strong> Craft a brief yet informative description, highlighting the product's benefits, key specifications, and unique selling points.</p>
-                                <p><strong>3 - Price:</strong> Research the market and competitors to set a competitive and profitable price. Consider factors like production costs, demand, and perceived value.</p>
-                                <p><strong>4 - Test and Adjust:</strong> Continuously monitor performance and customer feedback to refine your product name, description, and price for optimal results.</p>
+                                <p><strong>1 - {% trans 'Product Name' %}:</strong> {% trans ' Choose a concise and descriptive name that highlights the products key features and purpose, making it easy for customers to understand' %}.</p>
+                                <p><strong>2 - {% trans 'Description' %}:</strong> {% trans 'Craft a brief yet informative description, highlighting the products benefits, key specifications, and unique selling points' %}.</p>
+                                <p><strong>3 - {% trans 'Price' %}:</strong> {% trans 'Research the market and competitors to set a competitive and profitable price. Consider factors like production costs, demand, and perceived value' %}.</p>
+                                <p><strong>4 - {% trans 'Test and Adjust' %}:</strong> {% trans 'Continuously monitor performance and customer feedback to refine your product name, description, and price for optimal results' %}.</p>
                             </div>
                         </div>
                     </div>
@@ -153,14 +172,14 @@
                         <div class="card-header" id="heading-3">
                             <h2 class="card-title">
                                 <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-3" aria-expanded="false" aria-controls="collapse-3">
-                                    Select Shipping and Stock?
+                                    {% trans 'Select Shipping and Stock?' %}
                                 </a>
                             </h2>
                         </div>
                         <div id="collapse-3" class="collapse" aria-labelledby="heading-3" data-parent="#accordion-1">
                             <div class="card-body">
-                               <p><strong>1 - Shipping:</strong> Offer diverse shipping options, calculate competitive rates, and communicate tracking.</p>
-                               <p><strong>2 - Stock:</strong> Monitor inventory levels closely, adjust for seasons, and automate reordering for efficient stock management.</p>
+                               <p><strong>1 - {% trans 'Shipping' %}:</strong> {% trans 'Offer diverse shipping options, calculate competitive rates, and communicate tracking' %}.</p>
+                               <p><strong>2 - {% trans 'Stock' %}:</strong> {% trans 'Monitor inventory levels closely, adjust for seasons, and automate reordering for efficient stock management' %}.</p>
                             </div>
                         </div>
                     </div>
@@ -168,13 +187,13 @@
                         <div class="card-header" id="heading-4">
                             <h2 class="card-title">
                                 <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-4" aria-expanded="false" aria-controls="collapse-4">
-                                    My Image Product
+                                    {% trans 'My Image Product' %}
                                 </a>
                             </h2>
                         </div>
                         <div id="collapse-4" class="collapse" aria-labelledby="heading-4" data-parent="#accordion-1">
                             <div class="card-body">
-                               <p>When selecting a product image, opt for a clear, high-resolution photo that showcases the item from its best angle, emphasizing its key features and qualities.</p>
+                               <p>{% trans 'When selecting a product image, opt for a clear, high-resolution photo that showcases the item from its best angle, emphasizing its key features and qualities' %}.</p>
                             </div>
                         </div>
                     </div>
@@ -183,7 +202,7 @@
         </div>
     </div>
 </div>
-
+</main>
 <style>
     .page-title {
         font-size: 24px;

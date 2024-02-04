@@ -5,7 +5,7 @@ from django.contrib import messages
 from blog.models import Article, comment_put
 from django.db.models import Q
 from store.models import Signboard
-
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from .forms import ArticleForm
 
 # Create your views here.
@@ -21,13 +21,20 @@ def faqs(request):
 
 
 def blog(request):
-    blog = Article.objects.all().order_by('-id')[:10]
+    blog = Article.objects.all().order_by('-id')
     blog_count = Article.objects.count()
-    popular_posts = Article.objects.filter(featured = True).order_by('-id')[:4]
+    popular_posts = Article.objects.filter(featured = False).order_by('-id')[:4]
     signbord = Signboard.objects.all().order_by('-id')[:1]
+
+    paginator = Paginator(blog, 8)
+    page = request.GET.get('page')
+    paged_products = paginator.get_page(page)
+    product_count = blog.count()
+
+
     context = {
 
-         'blog': blog,
+         'blog': paged_products,
          'popular_posts': popular_posts,
          'blog_count': blog_count,
          'signbord': signbord,
@@ -50,7 +57,7 @@ def show_article(request, id, slug):
     art = Article.objects.get(pk = id, slug = slug)
     featured = Article.objects.filter(featured=True).order_by('-id')[:3]
     three = Article.objects.order_by('-id')[:4]
-    popular_posts = Article.objects.filter(featured = True).order_by('-id')[:4]
+    popular_posts = Article.objects.filter(featured = False).order_by('-id')[:4]
 
 
     previous_post = Article.objects.filter(publish__lt=post.publish).last()
@@ -95,6 +102,7 @@ def save_contact(request):
 def save_comment(request, id, slug):
    
     post = Article.objects.get(id = id, slug = slug)
+    
    
     
     if request.method == 'POST':
@@ -103,6 +111,7 @@ def save_comment(request, id, slug):
             c = f.save(commit = False)
            
             c.put_to_blog = post
+            c.user_comment = request.user
             
             c.save()
             messages.success(request, 'Your Comment Added.')
@@ -142,6 +151,8 @@ def create_article(request):
             article = form.save(commit=False)
             article.bloger = request.user  # Set the 'bloger' field to the currently logged-in user
             article.save()
+            messages.success(request, 'Article added successfully!')
+
             return redirect(article.get_absolute_url())  # Redirect to the article detail page
     else:
         form = ArticleForm()
@@ -158,3 +169,5 @@ def Terms_and_conditions(request):
 
 def Privacy(request):
   return render(request, 'blog/privacy.html')
+
+

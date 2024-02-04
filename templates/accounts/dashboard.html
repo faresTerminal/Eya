@@ -2,21 +2,42 @@
 {% load static %}
 
 {% load thumbnail %}
+{% load i18n %}
 
 {% block content %}
+{% if current_language == 'ar' %}
+    <style>
+      .main {
+        direction: rtl;
+      }
+      tr{
+        text-align: center;
+      }
+      .row{
+        text-align: right;
+      }
+      .product-media{
+        margin-right: 0.2rem !important;
+        margin-left: 1em !important;
+      }
+      .list-group-item b{
+        margin-left: 2em;
+      }
+    </style>
+   {% endif %}
  <main class="main">
         	<div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
         		<div class="container">
 
-        			<h1 class="page-title">My Account<span>{{user.full_name}}</span></h1>
+        			<h1 class="page-title">{% trans 'My Account' %}<span>{{user.full_name}}</span></h1>
         		</div><!-- End .container -->
         	</div><!-- End .page-header -->
             <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
                 <div class="container">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item"><a href="/">{% trans 'Home' %}</a></li>
                         
-                        <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                        <li class="breadcrumb-item active" aria-current="page">{% trans 'Dashboard' %}</li>
                     </ol>
                 </div><!-- End .container -->
             </nav><!-- End .breadcrumb-nav -->
@@ -28,12 +49,12 @@
 	                		{% include 'includes/dashboard_sidebar.html' %}
                         
 	                		<div class="col-md-8 col-lg-9">
-                        <p style="text-align: center;">Dashboard</p> <br>
+                        <p style="text-align: center;">{% trans 'Dashboard' %}</p> <br>
 	                			<div class="tab-content">
 								    <div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel" aria-labelledby="tab-dashboard-link">
-								    	<p>Hello <span class="font-weight-normal text-dark">{{user.first_name}}</span>  <a href="{% url 'logout' %}">Log out</a>) you have <b> {{ orders.count}} orders.</b> 
+								    	<p>{% trans ' Hello' %} <span class="font-weight-normal text-dark">{{user.first_name}}</span>  {% trans '  you have' %} <b> {{ orders.count}} {% trans '  orders' %}.</b> 
 								    	<br>
-								    	From your account dashboard you can view your <a href="{% url 'my_orders' %}" class="tab-trigger link-underline">recent orders</a>, manage your <a href="{% url 'edit_profile' %}" class="tab-trigger">edit your profile</a>, and <a href="{% url 'change_password' %}" class="tab-trigger">edit your password </a>.</p>
+								    	{% trans ' From your account dashboard you can view your' %} <a href="{% url 'my_orders' %}" class="tab-trigger link-underline">{% trans ' recent orders' %}</a>, {% trans ' manage your' %} <a href="{% url 'edit_profile' %}" class="tab-trigger">{% trans ' edit your profile' %}</a>, {% trans ' and' %} <a href="{% url 'change_password' %}" class="tab-trigger">{% trans ' edit your password' %} </a>.</p>
 								    	<div class="row">
 								    		<div class="col-lg-2">
 								    			{% thumbnail userprofile.profile_picture "120x120" crop="center" as profile_pic %}
@@ -41,22 +62,23 @@
                                                    border-radius: 1em !important;" width="{{ profile_pic.width }}" height="{{profile_pic.height }}" src="{{profile_pic.url}}" class="rounded float-end" alt="...">
                         {% endthumbnail %}
                         <br>
-                        <a href="{% url 'add_product' %}">Add Product</a><br>
-                        <a href="{% url 'list_clearance_products' %}">Clearance Price</a><br>
-                        <a href="{% url 'create_article' %}"> Add Article</a><br><br>
+                        <a href="{% url 'add_product' %}">{% trans 'Add Product' %}</a><br>
+                        <a href="{% url 'list_clearance_products' %}">{% trans 'Clearance Price' %}</a><br>
+                        <a href="{% url 'create_article' %}"> {% trans 'Add Article' %}</a><br><br>
 								    		</div>
 								    		<div class="col-lg-10">
 								    			<div class="card" >
                                                     <div class="card-header">
-                                                     Your Information
+                                                     {% trans 'Your Information' %}
                                                      </div>
+
                                                         <ul class="list-group list-group-flush">
-                                                           <li class="list-group-item"><b>Email:</b> {{user.email}}</li>
-                                                           <li class="list-group-item"><b>Full Name:</b> {{user.full_name}} </li>
-                                                           <li class="list-group-item"> <b>User Name:</b> {{user.username}}</li>
-                                                           <li class="list-group-item"><b>Phone Number:</b> {{user.phone_number}}</li>
-                                                           <li class="list-group-item"><b>Joined At:</b> {{user.date_joined}}</li>
-                                                           <li class="list-group-item"><b>Last Login:</b> {{user.last_login }}</li>
+                                                           <li class="list-group-item"><b>{% trans ' Email:' %}:</b> {{user.email}}</li>
+                                                           <li class="list-group-item"><b>{% trans ' Full Name' %}:</b> <span>{{user.full_name}}</span> </li>
+                                                           <li class="list-group-item"> <b>{% trans ' User Name' %}:</b> {{user.username}}</li>
+                                                           <li class="list-group-item"><b>{% trans ' Phone Number' %}:</b> {{user.phone_number}}</li>
+                                                           <li class="list-group-item"><b>{% trans ' Joined At' %}:</b> {{user.date_joined}}</li>
+                                                           <li class="list-group-item"><b>{% trans ' Last Login' %}:</b> {{user.last_login }}</li>
                                                         </ul>
                                                     </div>
 								    		</div>
@@ -71,11 +93,11 @@
 								    	<table class="table">
   <thead>
     <tr>
-      <th scope="col"><b>Order#</b></th>
-      <th scope="col"><b>Billing Name</b></th>
-      <th scope="col"><b>Phone</b></th>
-      <th scope="col"><b>Order Total</b></th>
-      <th scope="col"><b>Date</b></th>
+      <th scope="col"><b>{% trans 'Order' %}#</b></th>
+      <th scope="col"><b>{% trans 'Billing Name' %}</b></th>
+      <th scope="col"><b>{% trans 'Phone' %}</b></th>
+      <th scope="col"><b>{% trans 'Order Total' %}</b></th>
+      <th scope="col"><b>{% trans 'Date' %}</b></th>
     </tr>
   </thead>
   <tbody>
@@ -85,14 +107,14 @@
       <td>{{order.full_name}}</td>
       <td>{{order.phone}}</td>
       <td>{{order.order_total}} $ </td>
-      <td>{{order.created_at}}<br><a href="#">see your product info</a></td>
+      <td>{{order.created_at}}<br><a href="#">{% trans 'see your product info' %}</a></td>
     </tr>
     {% endfor %}
   
   </tbody>
 </table>
 {% else%}
-<p>No order has been made yet.</p>
+<p>{% trans 'No order has been made yet' %}.</p>
 {% endif %}
 								    	
 								    	

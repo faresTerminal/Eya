@@ -6,20 +6,39 @@
 
 {% load thumbnail %}
 
+{% load i18n %}
+
 {% block content %}
+{% if current_language == 'ar' %}
+    <style>
+      .main {
+        direction: rtl;
+      }
+      tr{
+        text-align: center;
+      }
+      .row{
+        text-align: right;
+      }
+      .product-media{
+        margin-right: 0.2rem !important;
+        margin-left: 1em !important;
+      }
+    </style>
+   {% endif %}
  <main class="main">
           <div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
             <div class="container">
 
-              <h1 class="page-title">My Account<span>{{user.full_name}}</span></h1>
+              <h1 class="page-title">{% trans 'My Account' %}<span>{{user.full_name}}</span></h1>
             </div><!-- End .container -->
           </div><!-- End .page-header -->
             <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
                 <div class="container">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item"><a href="/">{% trans 'Home' %}</a></li>
                         <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Account</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">My Confirmed Orders</li>
+                        <li class="breadcrumb-item active" aria-current="page">{% trans 'Add Clearance Price' %}</li>
                     </ol>
                 </div><!-- End .container -->
             </nav><!-- End .breadcrumb-nav -->
@@ -35,15 +54,15 @@
                         <div class="tab-content">
                     <div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel" aria-labelledby="tab-dashboard-link">
 {%if user_products %}
-<p style="text-align: center;">List of Products</p>                     
+<p style="text-align: center;">{% trans 'List of Products' %}</p>                     
 <!-- create table for orders -->
 <table class="table">
   <thead>
     <tr>
-      <th scope="col"><b>Image</b></th>
-      <th scope="col"><b>Product Name</b></th>
-      <th scope="col"><b>Price</b></th>
-      <th scope="col"><b>Edit</b></th>
+      <th scope="col"><b>{% trans 'Image' %}</b></th>
+      <th scope="col"><b>{% trans 'Product Name' %}</b></th>
+      <th scope="col"><b>{% trans 'Price' %}</b></th>
+      <th scope="col"><b>{% trans 'Edit' %}</b></th>
      
     </tr>
   </thead>
@@ -58,23 +77,64 @@
      </td>
       <td>{{p.product.product_name}}<br>{{p.color}}: {{p.size}}</td>
       {% if p.clearance_price %}
-      <td>{{p.clearance_price}} DA <br><small>Clear Price</small> </td>
+      <td>{{p.clearance_price}} DA <br><small>{% trans 'Clear Price' %}</small> </td>
       {% else%}
       <td>{{p.price}} DA</td>
       {% endif %}
       
      
-      <td style="text-align: center;"><a href="{% url 'update_product' p.id %}">Clear Price</a> </td>
+      <td style="text-align: center;"><a href="{% url 'update_product' p.id %}">{% trans 'Clear Price' %}</a> </td>
      
     {% endfor %}
   
   </tbody>
 </table>
+<nav aria-label="Page navigation">
+                            {% if variation_clearance.has_other_pages %}
+                                <ul class="pagination">
+                                    {% if variation_clearance.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link page-link-prev" href="?page={{variation_clearance.previous_page_number}}" aria-label="Previous" tabindex="-1" aria-disabled="true">
+                                            <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>{% trans 'Prev' %}
+                                        </a>
+                                    </li>
+                                    {% else %}
+                                    <li class="page-item disabled">
+                                        <a class="page-link page-link-prev" href="#" aria-label="Previous" tabindex="-1" aria-disabled="true">
+                                            <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>{% trans 'Prev' %}
+                                        </a>
+                                    </li>
+                                    {%endif%}
+                                    {% for i in variation_clearance.paginator.page_range %}
+                                    {% if variation_clearance.number == i %}
+                                    <li class="page-item active" aria-current="page"><a class="page-link" href="#">{{i}}</a></li>
+                                    {% else %}
+                                    <li class="page-item"><a class="page-link" href="?page={{i}}">2</a></li>
+                                    
+                                    <li class="page-item-total">{% trans 'of All' %}</li>
+                                    {% endif %}
+                                    {% endfor %}
+                                    {% if variation_clearance.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link page-link-next" href="?page={{variation_clearance.next_page_number}}" aria-label="Next">
+                                            {% trans 'Next' %} <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
+                                        </a>
+                                    </li>
+                                    {%else%}
+                                    <li class="page-item disabled">
+                                        <a class="page-link page-link-next" href="#" aria-label="Next">
+                                            {% trans 'Next' %} <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
+                                        </a>
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                                {% endif %}
+                            </nav>
 {% else%}
-<p>You have No Products to Make Clearance For It.</p>
+<p>{% trans 'You have No Products to Make Clearance For It' %}.</p>
 {% endif %}
                       <!-- end create table for orders -->
-                      <a href="{% url 'add_product' %}" class="btn btn-outline-primary-2"><span>Add Product</span><i class="icon-long-arrow-right"></i></a>
+                      <a href="{% url 'add_product' %}" class="btn btn-outline-primary-2"><span>{% trans 'Add Product' %}</span><i class="icon-long-arrow-right"></i></a>
                       
                     </div><!-- .End .tab-pane -->
 

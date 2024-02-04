@@ -3,20 +3,42 @@
 
  
 
+{% load i18n %}
+
 {% block content %}
+{% if current_language == 'ar' %}
+    <style>
+    	.main {
+    		direction: rtl;
+    	}
+    	tr{
+    		text-align: center;
+    	}
+    	.row{
+    		text-align: right;
+    	}
+    	.product-media{
+    		margin-right: 0.2rem !important;
+    		margin-left: 1em !important;
+    	}
+    	.icon-close{
+    		margin-right: 1em;
+    	}
+    </style>
+   {% endif %}
 
  <main class="main">
         	<div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
         		<div class="container">
-        			<h1 class="page-title">Wishlist<span>Shop</span></h1>
+        			<h1 class="page-title">{% trans 'Wishlist' %} <span>{% trans 'Shop' %}</span></h1>
         		</div><!-- End .container -->
         	</div><!-- End .page-header -->
             <nav aria-label="breadcrumb" class="breadcrumb-nav">
                 <div class="container">
                     <ol style=" " class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Shop</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Wishlist</li>
+                        <li class="breadcrumb-item"><a href="index.html">{% trans 'Home' %}</a></li>
+                        <li class="breadcrumb-item"><a href="#">{% trans 'Shop' %}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{% trans 'Wishlist' %}</li>
                     </ol >
                 </div><!-- End .container -->
             </nav><!-- End .breadcrumb-nav -->
@@ -27,9 +49,9 @@
 					<table class="table table-wishlist table-mobile">
 						<thead>
 							<tr>
-								<th>Product</th>
-								<th>Available since</th>
-								<th>Stock Status</th>
+								<th>{% trans 'Product' %}</th>
+								<th>{% trans 'Available since' %}</th>
+								<th>{% trans 'Stock Status' %}</th>
 								<th></th>
 								<th></th>
 							</tr>
@@ -49,6 +71,7 @@
 
 										<h3 class="product-title">
 											<a href="#">{{item.product.product_name}}</a>
+
 										</h3><!-- End .product-title -->
 									</div><!-- End .product -->
 								</td>
@@ -57,19 +80,19 @@
 								
 								{% if item.product.stock == 0 %}
 								
-							    <td class="stock-col"><span class="out-of-stock">Out of stock</span></td>
+							    <td class="stock-col"><span class="out-of-stock">{% trans 'Out of stock' %}</span></td>
 							    {% else %}
-                                 <td class="stock-col"><span class="in-stock">In stock</span>
+                                 <td class="stock-col"><span class="in-stock">{% trans 'In stock' %}</span>
 							    </td>
 							    {% endif %}
 							    {% if item.product.stock == 0 %}
 							    <td class="action-col">
-									<button class="btn btn-block btn-outline-primary-2 disabled">Out of Stock</button>
+									<button class="btn btn-block btn-outline-primary-2 disabled">{% trans 'Out of Stock' %}</button>
 								</td>
 								{% else %}
 								
 								<td class="action-col">
-									<a href="{% url 'add_cart' item.product.id %}" class="btn btn-block btn-outline-primary-2"><i class="icon-cart-plus"></i>Add to Cart</a>
+									<a href="{% url 'add_cart' item.product.id %}" class="btn btn-block btn-outline-primary-2"><i class="icon-cart-plus"></i>{% trans 'Add to Cart' %}</a>
 								</td>
 								
 								{% endif %}
@@ -82,7 +105,7 @@
 					</table><!-- End .table table-wishlist -->
 	            	<div class="wishlist-share">
 	            		<div class="social-icons social-icons-sm mb-2">
-	            			<label class="social-label">Share on:</label>
+	            			<label class="social-label">{% trans 'Share on:' %}</label>
 	    					<a href="#" class="social-icon" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
 	    					<a href="#" class="social-icon" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
 	    					<a href="#" class="social-icon" title="Instagram" target="_blank"><i class="icon-instagram"></i></a>
@@ -92,8 +115,8 @@
 	            	</div><!-- End .wishlist-share -->
 	            	{% else %}
                              <div class="text-center">
-	                	        <h5 class="text-center">Your Wishlist is Empty</h5>
-	                	        <a href="{% url 'store' %}" type="button" class="btn btn-light">Go to Store</a>
+	                	        <h5 class="text-center">{% trans 'Your Wishlist is Empty' %}</h5>
+	                	        <a href="{% url 'store' %}" type="button" class="btn btn-light">{% trans 'Go to Store' %}</a>
                              </div>
 							{% endif %}
             	</div><!-- End .container -->

@@ -3,19 +3,40 @@
 {% extends 'homebase.html' %}
 {% load static %}
 {% load thumbnail%}
+
+{% load i18n %}
+
 {% block content %}
+{% if current_language == 'ar' %}
+    <style>
+      .main {
+        direction: rtl;
+      }
+      tr{
+        text-align: center;
+      }
+      .row{
+        text-align: right;
+      }
+      .product-media{
+        margin-right: 0.2rem !important;
+        margin-left: 1em !important;
+      }
+    </style>
+   {% endif %}
+
 <main class="main">
     <div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
         <div class="container">
-            <h1 class="page-title">Inventory Overview<span>products</span></h1>
+            <h1 class="page-title">{% trans 'Inventory Overview' %}<span>{% trans 'products' %}</span></h1>
         </div><!-- End .container -->
     </div><!-- End .page-header -->
     <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
         <div class="container">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Add Product</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Inventory Overview</li>
+                <li class="breadcrumb-item"><a href="index.html">{% trans 'Home' %}</a></li>
+                <li class="breadcrumb-item"><a href="#">{% trans 'Stock Information '%}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{% trans 'Inventory Overview' %}</li>
             </ol>
         </div><!-- End .container -->
     </nav><!-- End .breadcrumb-nav -->
@@ -27,14 +48,14 @@
       
 
   <div class="inventory-container">
-    <h2>Inventory Overview</h2>
+    <h2>{% trans 'Inventory Overview' %}</h2>
 
     <div class="summary">
-      <h3>Summary:</h3>
+      <h3>{% trans 'Summary' %}:</h3>
 
       <ul>
-        <li>Total Number of Products: {{ total_products }}</li>
-        <li>Low-Stock Products:<br>
+        <li>{% trans 'Total Number of Products' %}: {{ total_products }}</li>
+        <li>{% trans 'Low-Stock Products' %}:<br>
           <ul>
             {% for p in low_stock_variations %}
             <div style="color: #c82f77;">
@@ -54,7 +75,7 @@
     </div>
 
     <div class="detailed-products">
-      <h3>Detailed Product Information:</h3>
+      <h3>{% trans 'Detailed Product Information' %}:</h3>
       <div class="row">
         {% for p in products %}
         <div class="col-lg-4">
@@ -89,15 +110,15 @@
         
       </div>
 
-     <a href="{% url 'product_list_stock' %}">See More</a>
+     <a href="{% url 'product_list_stock' %}">{% trans 'See More' %}</a>
     </div><br>
 
     <div class="other-metrics">
-      <h3>Other Relevant Metrics:</h3>
+      <h3>{% trans 'Other Relevant Metrics' %}:</h3>
 
       <!-- Add more metrics as needed -->
       <ul>
-        <li>Average Stock Quantity: {{average_stock}} %</li>
+        <li>{% trans 'Average Stock Quantity' %}: {{average_stock}} %</li>
         
         <!-- Add more metrics as needed -->
       </ul>

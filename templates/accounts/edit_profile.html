@@ -3,20 +3,42 @@
 
 {% load thumbnail %}
 
+{% load i18n %}
+
 {% block content %}
+{% if current_language == 'ar' %}
+    <style>
+      .main {
+        direction: rtl;
+      }
+      tr{
+        text-align: center;
+      }
+      .row{
+        text-align: right;
+      }
+      .product-media{
+        margin-right: 0.2rem !important;
+        margin-left: 1em !important;
+      }
+      .list-group-item b{
+        margin-left: 2em;
+      }
+    </style>
+   {% endif %}
  <main class="main">
         	<div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
         		<div class="container">
 
-        			<h1 class="page-title">My Account<span>{{user.full_name}}</span></h1>
+        			<h1 class="page-title">{% trans 'My Account' %}<span>{{user.full_name}}</span></h1>
         		</div><!-- End .container -->
         	</div><!-- End .page-header -->
             <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
                 <div class="container">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Account</a>
-                        <li class="breadcrumb-item active" aria-current="page">Edit Profie</li>
+                        <li class="breadcrumb-item"><a href="/">{% trans 'Home' %}</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">{% trans 'Account' %}</a>
+                        <li class="breadcrumb-item active" aria-current="page">{% trans 'Edit Profie' %}</li>
                     </ol>
                 </div><!-- End .container -->
             </nav><!-- End .breadcrumb-nav -->
@@ -28,7 +50,7 @@
 	                		{% include 'includes/dashboard_sidebar.html' %}
 
 	                		<div class="col-md-8 col-lg-9">
-	                			<p style="text-align: center;">Edit Profile</p> 
+	                			<p style="text-align: center;">{% trans 'Edit Profile' %}</p> 
 	                			<div class="tab-content">
 								    <div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel" aria-labelledby="tab-dashboard-link">
 								    	<div class="text-right">
@@ -41,24 +63,24 @@
 			                				<div class="row">
 			                					{% csrf_token %}
 			                					<div class="col-sm-6">
-			                						<label>First Name *</label>
+			                						<label>{% trans 'First Name' %} *</label>
 			                						{{user_form.first_name}}
 			                					</div><!-- End .col-sm-6 -->
 
 			                					<div class="col-sm-6">
-			                						<label>Last Name *</label>
+			                						<label>{% trans 'Last Name' %} *</label>
 			                						{{user_form.last_name}}
 			                					</div><!-- End .col-sm-6 -->
 			                				</div><!-- End .row -->
 
 		            						<div class="row">
 			                					<div class="col-sm-6">
-			                						<label>Phone *</label>
+			                						<label>{% trans 'Phone' %} *</label>
 			                						{{user_form.phone_number}}
 			                					</div><!-- End .col-sm-6 -->
 
 			                					<div class="col-sm-6">
-			                						<label>Profile Picture *</label>
+			                						<label>{% trans 'Profile Picture' %} *</label>
 			                						{{profile_form.profile_picture}}
 
 			                					</div><!-- End .col-sm-6 -->
@@ -71,22 +93,22 @@
 		            						<div class="row">
 			                					
 			                					<div class="col-sm-4">
-			                						<label>City * Comun</label>
+			                						<label>{% trans 'City * Comun' %}</label>
 			                						{{profile_form.city}}
 			                					</div><!-- End .col-sm-6 -->
 
 			                					<div class="col-sm-4">
-			                						<label>State * Wilaya</label>
+			                						<label>{% trans 'State * Wilaya' %}</label>
 			                						{{profile_form.state}}
 
 			                					</div><!-- End .col-sm-6 -->
 			                				</div><!-- End .row -->
 
-			                				<label>adress line 1 *</label>
+			                				<label>{% trans 'adress line 1' %} *</label>
 		        							{{profile_form.address_line1}}
 
 		                					<button type="submit" class="btn btn-outline-primary-2">
-			                					<span>SAVE CHANGES</span>
+			                					<span>{% trans 'SAVE CHANGES' %}</span>
 			            						<i class="icon-long-arrow-right"></i>
 			                				</button>
 			                			</form>

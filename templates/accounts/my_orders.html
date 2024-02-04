@@ -3,20 +3,42 @@
 
 
 
+{% load i18n %}
+
 {% block content %}
+{% if current_language == 'ar' %}
+    <style>
+      .main {
+        direction: rtl;
+      }
+      tr{
+        text-align: center;
+      }
+      .row{
+        text-align: right;
+      }
+      .product-media{
+        margin-right: 0.2rem !important;
+        margin-left: 1em !important;
+      }
+      .list-group-item b{
+        margin-left: 2em;
+      }
+    </style>
+   {% endif %}
  <main class="main">
         	<div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
         		<div class="container">
 
-        			<h1 class="page-title">My Account<span>{{user.full_name}}</span></h1>
+        			<h1 class="page-title">{% trans 'My Account' %}<span>{{user.full_name}}</span></h1>
         		</div><!-- End .container -->
         	</div><!-- End .page-header -->
             <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
                 <div class="container">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Account</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">My orders</li>
+                        <li class="breadcrumb-item"><a href="/">{% trans 'Home' %}</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">{% trans 'Account' %}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{% trans 'My orders' %}</li>
                     </ol>
                 </div><!-- End .container -->
             </nav><!-- End .breadcrumb-nav -->
@@ -32,16 +54,16 @@
 	                			<div class="tab-content">
 								    <div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel" aria-labelledby="tab-dashboard-link">
 {%if orders %}
-<p style="text-align: center;">List of Buyer Products</p> <br>								    	
+<p style="text-align: center;">{% trans 'List of Buyer Products' %}</p> <br>								    	
 <!-- create table for orders -->
 <table class="table">
   <thead>
     <tr>
-      <th scope="col"><b>Order#</b></th>
-      <th scope="col"><b>Billing Name</b></th>
-      <th scope="col"><b>Phone</b></th>
-      <th scope="col"><b>Order Total</b></th>
-      <th scope="col"><b>Info</b></th>
+      <th scope="col"><b>{% trans 'Order' %}#</b></th>
+      <th scope="col"><b>{% trans 'Billing Name' %}</b></th>
+      <th scope="col"><b>{% trans 'Phone' %}</b></th>
+      <th scope="col"><b>{% trans 'Order Total' %}</b></th>
+      <th scope="col"><b>{% trans 'Info' %}</b></th>
     </tr>
   </thead>
   <tbody>
@@ -50,18 +72,59 @@
       <td > #{{order.order_number}}</td>
       <td>{{order.full_name}}</td>
       <td>{{order.phone}}</td>
-      <td>{{order.order_total}} DA </td>
-      <td><a href="{% url 'order_detail' order.order_number %}"> order info</a></td>
+      <td> {% trans 'Da' %} {{order.order_total}}  </td>
+      <td><a href="{% url 'order_detail' order.order_number %}"> {% trans 'order info' %}</a></td>
     </tr>
     {% endfor %}
   
   </tbody>
 </table>
+<nav aria-label="Page navigation">
+                            {% if orders.has_other_pages %}
+                                <ul class="pagination">
+                                    {% if orders.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link page-link-prev" href="?page={{orders.previous_page_number}}" aria-label="Previous" tabindex="-1" aria-disabled="true">
+                                            <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>{% trans 'Prev' %}
+                                        </a>
+                                    </li>
+                                    {% else %}
+                                    <li class="page-item disabled">
+                                        <a class="page-link page-link-prev" href="#" aria-label="Previous" tabindex="-1" aria-disabled="true">
+                                            <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>{% trans 'Prev' %}
+                                        </a>
+                                    </li>
+                                    {%endif%}
+                                    {% for i in orders.paginator.page_range %}
+                                    {% if orders.number == i %}
+                                    <li class="page-item active" aria-current="page"><a class="page-link" href="#">{{i}}</a></li>
+                                    {% else %}
+                                    <li class="page-item"><a class="page-link" href="?page={{i}}">2</a></li>
+                                    
+                                    <li class="page-item-total">{% trans 'of All' %}</li>
+                                    {% endif %}
+                                    {% endfor %}
+                                    {% if orders.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link page-link-next" href="?page={{orders.next_page_number}}" aria-label="Next">
+                                            {% trans 'Next' %} <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
+                                        </a>
+                                    </li>
+                                    {%else%}
+                                    <li class="page-item disabled">
+                                        <a class="page-link page-link-next" href="#" aria-label="Next">
+                                            {% trans 'Next' %} <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
+                                        </a>
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                                {% endif %}
+                            </nav>
 {% else%}
-<p>No order has been made yet.</p>
+<p>{% trans 'No order has been made yet' %}.</p>
 {% endif %}
 								    	<!-- end create table for orders -->
-								    	<a href="{% url 'store' %}" class="btn btn-outline-primary-2"><span>More SHOPING</span><i class="icon-long-arrow-right"></i></a>
+								    	<a href="{% url 'store' %}" class="btn btn-outline-primary-2"><span>{% trans 'More SHOPING' %}</span><i class="icon-long-arrow-right"></i></a>
 								    	
 								    </div><!-- .End .tab-pane -->
 

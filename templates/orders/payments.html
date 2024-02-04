@@ -1,6 +1,6 @@
 {% extends 'homebase.html' %}
 {% load static %}
-
+ {% load i18n %}
 {% block content %}
 
 
@@ -8,12 +8,12 @@
 	<div class="container">
 
 		<!-- ============================ COMPONENT 1 ================================= -->
-		<h4 class="text-center mb-20">Review Your Order and Make Payment</h4>
+		<h4 class="text-center mb-20">{% trans 'Review Your Order and Make Payment' %}</h4>
 		<div class="row">
 
 			<aside class="col-lg-8">
 				<div class="card">
-					<h5 class="card-header">Billing Address</h5>
+					<h5 class="card-header">{% trans 'Billing Address' %}</h5>
 					<div class="card-body">
 						<p class="card-text mb-0">{{order.full_name}}</p>
 						<p class="card-text mb-0">{{order.full_address}}</p>
@@ -22,28 +22,28 @@
 						<p class="card-text mb-0">{{order.email}}</p>
 						<p class="card-text mb-0">{{order.phone}}</p>
 						{% if order.order_note %}
-						<b>Order Note: </b> {{order.order_note}}
+						<b>{% trans 'Order Note' %}: </b> {{order.order_note}}
 						{% endif %}
 
 
 					</div>
 				</div>
 				<div class="card">
-					<h5 class="card-header">Payment Method</h5>
+					<h5 class="card-header">{% trans 'Payment Method' %}</h5>
 					<div class="card-body">
-						<p class="card-text">Cash On Delivery</p>
+						<p class="card-text">{% trans 'Cash On Delivery' %}</p>
 
 					</div>
 				</div>
 				<div class="card">
-					<h5 class="card-header">Review Products</h5>
+					<h5 class="card-header">{% trans 'Review Products' %}</h5>
 					<div class="card-body">
 						<table class="table table-borderless table-shopping-cart">
 							<thead class="text-muted">
 								<tr class="small text-uppercase">
-									<th scope="col">Product</th>
-									<th scope="col" width="120">Quantity</th>
-									<th scope="col" width="120">Price</th>
+									<th scope="col">{% trans 'Product' %}</th>
+									<th scope="col" width="120">{% trans 'Quantity' %}</th>
+									<th scope="col" width="120">{% trans 'Price' %}</th>
 
 								</tr>
 							</thead>
@@ -106,16 +106,16 @@
 					<div class="card-body">
                         
 						<dl class="dlist-align">
-							<dt>Total price:</dt>
+							<dt>{% trans 'Total price' %}:</dt>
 							<dd class="text-right">{{total}} DA</dd>
 						</dl>
 						<dl class="dlist-align">
-							<dt>Shipping:</dt>
+							<dt>{% trans 'Shipping' %}:</dt>
 							<dd class="text-right"> {{ total_shipping_cost }} DA</dd>
 						</dl>
 						
 						<dl class="dlist-align">
-							<dt>Grand Total:</dt>
+							<dt>{% trans 'Grand Total' %}:</dt>
 							<dd class="text-right text-dark b"><strong>{{grand_total}} DA</strong></dd>
 						</dl>
 						<hr>
@@ -124,8 +124,8 @@
 						<div id="paypal-button-container">
 							<!-- PayPal Button Will Load -->
 							<div class="btn-wrap">
-		                		<span>cash on delivery</span>
-		                		<a href="{% url 'order_complete' order.order_number %}" class="btn btn-primary btn-round"><span>Confirm Command</span><i class="icon-long-arrow-right"></i></a>
+		                		<span>{% trans 'cash on delivery' %}</span>
+		                		<a href="{% url 'order_complete' order.order_number %}" class="btn btn-primary btn-round"><span>{% trans 'Confirm Command' %}</span><i class="icon-long-arrow-right"></i></a>
 		                	</div><!-- End .btn-wrap -->
 						</div>
 

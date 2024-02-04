@@ -30,7 +30,7 @@ urlpatterns = [
     path('clearance_products/', views.Clearance_Products, name='Clearance_Products'),
 
     path('create-signboard/', views.create_signboard, name='create_signboard'),
-    
+   
    
 
 

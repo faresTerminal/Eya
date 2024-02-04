@@ -17,6 +17,7 @@ class CartItem(models.Model):
     user = models.ForeignKey(Account, on_delete=models.CASCADE, null=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     variations = models.ManyToManyField(Variation, blank=True)
+    variation_id = models.IntegerField(blank=True, null=True)
     cart    = models.ForeignKey(Cart, on_delete=models.CASCADE, null=True)
     quantity = models.IntegerField()
     dis_coupon = models.FloatField(blank=True, default=0)
@@ -24,19 +25,25 @@ class CartItem(models.Model):
     is_active = models.BooleanField(default=True)
 
     def sub_total(self):
-       
+        variation = self.variations.first()
 
-        if self.variations.first().clearance_price and self.variations.first().clearance_price > 0:
-            return self.variations.first().clearance_price * self.quantity
+        if variation and variation.clearance_price and variation.clearance_price > 0:
+            base_price = variation.clearance_price
+        elif variation and variation.price:
+            base_price = variation.price
         else:
-            return self.variations.first().price * self.quantity
+            # Handle the case when neither clearance_price nor price is available
+            base_price = 0
 
-         # Apply discount as a percentage if dis_coupon is greater than zero
+        total = base_price * self.quantity
+
+        # Apply discount as a percentage if dis_coupon is greater than zero
         if self.dis_coupon and self.dis_coupon > 0:
-            discount = (self.dis_coupon / 100) * sub_total
-            sub_total -= discount
+            discount = (self.dis_coupon / 100) * total
+            total -= discount
 
-        return max(sub_total, 0)
+        return max(total, 0)
+
 
     def save(self, *args, **kwargs):
         # Call the parent class's save method to save the CartItem

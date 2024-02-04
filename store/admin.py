@@ -8,7 +8,6 @@ import admin_thumbnails
 
 
 
-
 @admin_thumbnails.thumbnail('image')
 class ProductGalleryInline(admin.TabularInline):
     model = ProductGallery
@@ -25,6 +24,8 @@ class VariationAdmin(admin.ModelAdmin):
     list_editable = ('is_active',)
     # filter as product name in admin page
     list_filter = ('product', 'color', 'size', 'price')
+
+
 
 
     

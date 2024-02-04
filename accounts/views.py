@@ -18,7 +18,8 @@ from carts.views import _cart_id
 from carts.models import Cart, CartItem
 import requests
 from django.http import Http404
-
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.http import HttpResponseBadRequest
 
 def register(request):
     if request.method == 'POST':
@@ -267,10 +268,20 @@ def edit_profile(request):
 @login_required(login_url='login')
 def my_orders(request):
     orders = Order.objects.filter(user=request.user, is_ordered=True).order_by('-created_at')
+
+    paginator = Paginator(orders, 10)
+    page = request.GET.get('page')
+    paged_products = paginator.get_page(page)
+    product_count = orders.count()
+    
     context = {
-        'orders': orders,
+        'orders': paged_products,
     }
     return render(request, 'accounts/my_orders.html', context)
+
+
+
+
 
 
 @login_required(login_url='login')
@@ -332,8 +343,14 @@ def register_confirme_link(request):
 def printing(request):
       current_user = request.user
       complete_orders = Order.objects.filter(product__buyer=current_user, status = 'Completed').order_by('-id')
+
+      paginator = Paginator(complete_orders, 10)
+      page = request.GET.get('page')
+      paged_products = paginator.get_page(page)
+      product_count = complete_orders.count()
+
       context = {
-      'complete_orders': complete_orders,
+      'complete_orders': paged_products,
       } 
       return render(request, 'accounts/printing.html', context)
 
@@ -354,8 +371,13 @@ def User_Products(request):
     current_user = request.user
     products = Product.objects.filter(buyer = current_user, is_available = True)
 
+    paginator = Paginator(products, 10)
+    page = request.GET.get('page')
+    paged_products = paginator.get_page(page)
+    product_count = products.count()
+
     context = {
-     'products': products,
+     'products': paged_products,
     }
     return render(request, 'accounts/edit_products.html', context)
 

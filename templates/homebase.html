@@ -10,21 +10,37 @@
 
 <!-- molla/index-3.html  22 Nov 2019 09:55:42 GMT -->
 <head>
+   
+
     <meta charset="UTF-8">
     {% if current_language == 'ar' %}
     <style>
         /* Add your RTL CSS styles here */
+        @font-face {
+        font-family: 'Cairo';
+        src: url('{% static "fonts/Cairo-Regular.ttf" %}') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+        }
         body {
-          font-family: 'Cairo', sans-serif !important;
+          font-family: 'Cairo', sans-serif;
+        }
+        body a{
+            font-family: 'Cairo', sans-serif !important;
+        }
+         body p{
+            font-family: 'Cairo', sans-serif !important;
         }
         .linker {
             direction: rtl;
             margin-left: 2em;
            
         }
-        .linker a {
-             font-size: 1.7rem !important;
+        #q{
+            text-align: right;
+            direction: rtl;
         }
+       
         .header-center a {
             
             margin-left: 2em;
@@ -33,10 +49,7 @@
             direction: rtl;
         }
         
-        body{
-        font-family: 'Your Arabic Font', Arial, sans-serif;
-        
-        }
+       
         footer{
             direction: rtl;
             text-align: justify;
@@ -45,6 +58,53 @@
             direction: rtl;
             
         }
+        .icon-box-content{
+            text-align: right;
+        }
+        .supporter{
+            direction: rtl;
+        }
+        .product-body{
+            direction: rtl;
+        }
+        .new-price{
+            margin-right: .1rem;
+        }
+        .old-price{
+            margin-right: 0.5em;
+        }
+        .signboard{
+            direction: rtl;
+        }
+        .cta-text{
+            text-align: right;
+        }
+        .cta-content a{
+            margin-right: 1em;
+        }
+        .page-header .page-title{
+            font-family: 'Cairo', sans-serif;
+        }
+        .menu li{
+            text-align: right;
+        }
+        .header-menu{
+            width: 260%;
+        }
+    </style>
+    <style>
+        /* Default light mode styles */
+body {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/* Dark mode styles */
+body.dark-mode {
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
     </style>
     
      {% endif %}
@@ -110,7 +170,7 @@
 
                         <ul class="top-menu">
                             <li>
-                                <a href="#">Profile</a>
+                                <a href="#">{% trans 'Profile' %}</a>
                                 <ul>
                                   {% if user.is_staff %}
                                     
@@ -123,6 +183,7 @@
                                         </div>
                                     </li>
                                     {% endif %}
+                                   
                                     <li>
                                         <div class="">
                                             <a href="">DZA (DA)</a>
@@ -131,26 +192,27 @@
                                     </li>
                                     <li>
                                         <div class="header-dropdown">
-                                            <a href="/en/">English</a>
-                                            <div class="header-menu">
-                                                <ul>
-                                                    <li><a href="/en/">English</a></li>
-                                                    <li><a href="/fr/">French</a></li>
-                                                    <li><a href="/ar/">Arabic</a></li>
-                                                </ul>
-                                            </div><!-- End .header-menu -->
+                                             <a href="/{% get_current_language as language_code %}/">{% trans "Language" %}</a>
+                                             <div class="header-menu">
+                                                  <ul>
+                                                     <li><a href="/en/">{% trans "English" %}</a></li>
+                                                     <li><a href="/fr/">{% trans "French" %}</a></li>
+                                                     <li><a href="/ar/">{% trans "Arabic" %}</a></li>
+                                                  </ul>
+                                             </div><!-- End .header-menu -->
                                         </div>
+
                                     </li>
                                     {% if user.id is None %}
                                    
                                     
                                     <li>
                                         <div class="header-dropdown">
-                                            <a href="#">Make an Account</a>
+                                            <a href="#">{% trans 'Make an Account' %}</a>
                                             <div class="header-menu">
                                                 <ul>
-                                                    <li><a href="{% url 'login' %}">Login</a></li>
-                                                    <li><a href="{% url 'register' %}">Register</a></li>
+                                                    <li><a href="{% url 'login' %}">{% trans 'Login' %}</a></li>
+                                                    <li><a href="{% url 'register' %}">{% trans 'Register' %}</a></li>
                                                     
                                                     
                                                 </ul>
@@ -160,7 +222,7 @@
                                     {%else%}
                                      <li>
                                         <div class="header-dropdown">
-                                            <a href="#">Profile</a>
+                                            <a href="#">{% trans 'Profile' %}</a>
                                             <div class="header-menu">
                                                 <ul>
                                                     {% if user_profile_picture %}
@@ -184,16 +246,17 @@
                                                     {% endif %}
                                                      
                                                     <li><a href="{% url 'dashboard' %}">{{user.username}}</a></li>
-                                                    <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
-                                                    <li><a href="{% url 'stock' %}">Stock</a></li>
+                                                    <li><a href="{% url 'logout'%}">{% trans 'Log Out' %}</a></li><br>
+                                                    <li><a href="{% url 'dashboard' %}">{% trans 'Dashboard' %}</a></li>
+                                                    <li><a href="{% url 'stock' %}">{% trans 'Stock' %}</a></li>
                                                     {% if user.is_staff %}
-                                                    <li><a href="{% url 'stock_sammary' %}">Sammary</a></li>
-                                                    <li><a href="{% url 'Management_Center' %}">Management Center</a></li>
+                                                   
+                                                    <li><a href="{% url 'Management_Center' %}">{% trans 'Management Center' %}</a></li>
                                                    
                                                     
                                                     
                                                     {% endif %}
-                                                    <li><a href="{% url 'logout'%}">Log Out</a></li>
+                                                    
                                                     
                                                 </ul>
                                             </div><!-- End .header-menu -->
@@ -216,7 +279,7 @@
                             <i class="icon-bars"></i>
                         </button>
                         
-                        <a href="/" class="logo">
+                        <a href="{% url 'home' %}" class="logo">
                             <img src="{% static 'images/demos/demo-3/logoo.png' %}" alt="Molla Logo" width="105" height="25">
                         </a>
                     </div><!-- End .header-left -->
@@ -226,9 +289,9 @@
                             <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
                             <form action="{% url 'search' %}" class="search" method='GET'>
                                 <div class="header-search-wrapper search-wrapper-wide">
-                                    <label for="q" class="sr-only">Search</label>
+                                    <label for="q" class="sr-only">{% trans 'Search' %}</label>
                                     <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
-                                    <input type="search" class="form-control" name="keyword" id="q" placeholder="Search product ..." required>
+                                    <input type="search" class="form-control" name="keyword" id="q" placeholder="{% trans 'Search product' %} ..." required>
                                 </div><!-- End .header-search-wrapper -->
                             </form>
                         </div><!-- End .header-search -->
@@ -249,7 +312,7 @@
                                     <i class="la la-lightbulb-o"></i>
                                     <span class="wishlist-count badge">{{seller_order_count}}</span>
                                 </div>
-                                <p>Orders</p>
+                                <p>{% trans 'Orders' %}</p>
                             </a>
                         </div><!-- End .compare-dropdown -->
                         {% endif %}
@@ -260,9 +323,10 @@
                                     <i class="icon-heart-o"></i>
                                     <span class="wishlist-count badge">{{ wishlist_items_count }}</span>
                                 </div>
-                                <p>Wishlist</p>
+                                <p>{% trans 'Wishlist' %}</p>
                             </a>
                         </div><!-- End .compare-dropdown -->
+                        
 
                         <div class="dropdown cart-dropdown">
                             <a href="{% url 'cart' %}" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
@@ -270,7 +334,7 @@
                                     <i class="icon-shopping-cart"></i>
                                     <span class="cart-count">{{cart_count}}</span>
                                 </div>
-                                <p>Cart</p>
+                                <p>{% trans 'Cart' %}</p>
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right">
@@ -308,8 +372,8 @@
                                 
 
                                 <div class="dropdown-cart-action">
-                                    <a href="{% url 'cart'%}" class="btn btn-primary">View Cart</a>
-                                    <a href="{% url 'checkout' %}" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
+                                    <a href="{% url 'cart'%}" class="btn btn-primary">{% trans 'View Cart' %}</a>
+                                    <a href="{% url 'checkout' %}" class="btn btn-outline-primary-2"><span>{% trans 'Checkout' %}</span><i class="icon-long-arrow-right"></i></a>
                                 </div><!-- End .dropdown-cart-total -->
                             </div><!-- End .dropdown-menu -->
                         </div><!-- End .cart-dropdown -->
@@ -322,13 +386,13 @@
                     <div class="header-left">
                         <div class="dropdown category-dropdown">
                             <a href="{% url 'show_category' %}" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static" title="Browse Categories">
-                                Browse Categories <i class="icon-angle-down"></i>
+                                {% trans 'Browse Categories' %} <i class="icon-angle-down"></i>
                             </a>
 
                             <div class="dropdown-menu">
                                 <nav class="side-nav">
                                     <ul class="menu-vertical sf-arrows">
-    <li class="item-lead"><a href="{% url 'show_category' %}">All Products</a></li>
+    <li class="item-lead"><a href="{% url 'show_category' %}">{% trans 'All Products' %}</a></li>
     {% for category in categories %}
     <li class="item-lead">
         <a href="{% url 'products_by_category' category.slug %}">{{ category.category_name }}</a>
@@ -350,12 +414,13 @@
                             </div><!-- End .dropdown-menu -->
                         </div><!-- End .category-dropdown -->
                     </div><!-- End .header-left -->
-
+                    
                     <div class="header-center linker">
                         <nav class="main-nav">
                             <ul class="menu sf-arrows">
                                 <li class="megamenu-container active">
-                                    <a href="/" class="">{% trans 'Home' %}</a>
+                                    <a href="{% url 'home' %}" class="">{% trans 'Home' %}</a>
+
 
                                 </li>
                                 <li>
@@ -395,7 +460,7 @@
                     </div><!-- End .header-center -->
 
                     <div class="header-right">
-                        <i class="la la-lightbulb-o"></i><p><a class="" href="{% url 'Clearance_Products' %}"> Clearance</a><span class="highlight">&nbsp;Up to 30% Off</span></p>
+                        <i class="la la-lightbulb-o"></i><p><a class="" href="{% url 'Clearance_Products' %}">{% trans 'Clearance' %}</a><span class="highlight">&nbsp;{% trans 'Up to 30 percent Off' %}</span></p>
                     </div>
                 </div><!-- End .container -->
             </div><!-- End .header-bottom -->
@@ -411,11 +476,11 @@
 	            		<div class="col-sm-6 col-lg-3">
 	            			<div class="widget widget-about">
 	            				<img src="{% static 'images/demos/demo-3/vb.png' %}" class="footer-logo" alt="Footer Logo" width="105" height="25">
-	            				<p>Eco-dz Shopping is your one-stop destination for eco-conscious living.  </p>
+	            				<p>{% trans 'Eco-dz Shopping is your one-stop destination for eco-conscious living.' %}'  </p>
 
 	            				<div class="widget-call">
                                     <i class="icon-phone"></i>
-                                    Got Question? Call us 24/7
+                                    {% trans 'Got Question? Call us 24/7' %}
                                     <a href="tel:#">+213 697 564 253</a>         
                                 </div><!-- End .widget-call -->
 	            			</div><!-- End .widget about-widget -->
@@ -423,41 +488,43 @@
 
 	            		<div class="col-sm-6 col-lg-3">
 	            			<div class="widget">
-	            				<h4 class="widget-title">Useful Links</h4><!-- End .widget-title -->
+	            				<h4 class="widget-title">{% trans ' Useful Links' %}</h4><!-- End .widget-title -->
 
 	            				<ul class="widget-list">
-	            					<li><a href="{% url 'about' %}">About Eco dz</a></li>
+	            					<li><a href="{% url 'about' %}">{% trans 'About' %} Eco dz</a></li>
                                     
-	            					<li><a href="{% url 'faqs' %}">FAQ</a></li>
-	            					<li><a href="{% url 'contact' %}">Contact us</a></li>
+	            					<li><a href="{% url 'faqs' %}">{% trans 'FAQ' %}</a></li>
+	            					<li><a href="{% url 'contact' %}">{% trans 'Contact us' %}</a></li>
 	            				</ul><!-- End .widget-list -->
 	            			</div><!-- End .widget -->
 	            		</div><!-- End .col-sm-6 col-lg-3 -->
 
 	            		<div class="col-sm-6 col-lg-3">
 	            			<div class="widget">
-	            				<h4 class="widget-title">Customer Service</h4><!-- End .widget-title -->
+	            				<h4 class="widget-title">{% trans 'Customer Service' %}</h4><!-- End .widget-title -->
 
 	            				<ul class="widget-list">
 	            					
-	            					<li><a href="#">Returns</a></li>
-	            					<li><a href="{% url 'store' %}">Shipping</a></li>
-	            					<li><a href="{% url 'Terms_and_conditions' %}">Terms and conditions</a></li>
-	            					<li><a href="{% url 'Privacy' %}">Privacy Policy</a></li>
+	            					<li><a href="#">{% trans 'Returns' %}</a></li>
+	            					<li><a href="{% url 'store' %}">{% trans 'Shipping' %}</a></li>
+	            					<li><a href="{% url 'Terms_and_conditions' %}">{% trans 'Terms and conditions' %}</a></li>
+	            					<li><a href="{% url 'Privacy' %}">{% trans 'Privacy Policy' %}</a></li>
 	            				</ul><!-- End .widget-list -->
 	            			</div><!-- End .widget -->
 	            		</div><!-- End .col-sm-6 col-lg-3 -->
 
 	            		<div class="col-sm-6 col-lg-3">
 	            			<div class="widget">
-	            				<h4 class="widget-title">My Account</h4><!-- End .widget-title -->
+	            				<h4 class="widget-title">{% trans 'My Account' %}</h4><!-- End .widget-title -->
 
 	            				<ul class="widget-list">
-	            					<li><a href="{% url 'login' %}">Sign In</a></li>
-	            					<li><a href="{% url 'cart' %}">View Cart</a></li>
-	            					<li><a href="{% url 'wishlist' %}">My Wishlist</a></li>
+                                    {% if not user.is_staff %}
+	            					<li><a href="{% url 'login' %}">{% trans 'Sign In' %}</a></li>
+                                    {% endif %}
+	            					<li><a href="{% url 'cart' %}">{% trans 'View Cart' %}</a></li>
+	            					<li><a href="{% url 'wishlist' %}">{% trans 'My Wishlist' %}</a></li>
 	            					
-	            					<li><a href="{% url 'contact' %}">Help</a></li>
+	            					<li><a href="{% url 'contact' %}">{% trans 'Help' %}</a></li>
 	            				</ul><!-- End .widget-list -->
 	            			</div><!-- End .widget -->
 	            		</div><!-- End .col-sm-6 col-lg-3 -->
@@ -467,7 +534,7 @@
 
 	        <div class="footer-bottom">
 	        	<div class="container">
-	        		<p class="footer-copyright">Copyright © 2026 Eco-dz Shopping. All Rights Reserved.</p><!-- End .footer-copyright -->
+	        		<p class="footer-copyright">{% trans 'Copyright © 2026 Eco-dz Shopping. All Rights Reserved.' %}</p><!-- End .footer-copyright -->
 	        		<figure class="footer-payments">
 	        			<img src="{% static 'images/payments.png' %}" alt="Payment methods" width="272" height="20">
 	        		</figure><!-- End .footer-payments -->
@@ -709,5 +776,6 @@
     <script src="{% static 'js/main4.js' %}"></script>
     <script src="{% static 'js/demos/demo-3.js' %}"></script>
     <!--<script src="https://www.paypal.com/sdk/js?client-id=AVBSMqNtoZ1IUO6lrSe6-vm9AIV1ZKN8CgXu_nINRs80xELRs650mh3yR62groIUg-GCe59Od_EFOG6O&currency=USD"></script>-->
+
 
 </html>

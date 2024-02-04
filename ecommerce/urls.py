@@ -35,18 +35,9 @@ urlpatterns = [
     # ... your non-translatable URLs ...
 
     path('admin/', admin.site.urls),
-    path('', views.home, name='home'),
     
-    path('cart/', include('carts.urls')),
-    path('accounts/', include('accounts.urls')),
-    path('orders/', include('orders.urls')),
-    path('category/', include('category.urls')),
-    path('social/', include('social.urls')),
-    path('auth/', include('social_django.urls', namespace='social')),
-    path('newsletter/', include('newsletter.urls')),
-    path('products/', include('products.urls')),
-    path('printing/', include('printing.urls')),
-    path('stock/', include('stock.urls')),
+    
+    
    
 
     
@@ -61,6 +52,17 @@ urlpatterns += i18n_patterns(
     path('', views.home, name='home'),
     path('store/', include('store.urls')),
     path('blog/', include('blog.urls')),
+    path('cart/', include('carts.urls')),
+    path('accounts/', include('accounts.urls')),
+    path('orders/', include('orders.urls')),
+    path('category/', include('category.urls')),
+    path('social/', include('social.urls')),
+    path('auth/', include('social_django.urls', namespace='social')),
+    path('newsletter/', include('newsletter.urls')),
+    path('products/', include('products.urls')),
+    path('printing/', include('printing.urls')),
+    path('stock/', include('stock.urls')),
+    
 
 
 

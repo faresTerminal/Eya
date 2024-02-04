@@ -2,19 +2,38 @@
 {% load static %}
 {% load thumbnail %}
 
+{% load i18n %}
+
 {% block content %}
+{% if current_language == 'ar' %}
+    <style>
+      .main {
+        direction: rtl;
+      }
+      tr{
+        text-align: center;
+      }
+      .row{
+        text-align: right;
+      }
+      .product-media{
+        margin-right: 0.2rem !important;
+        margin-left: 1em !important;
+      }
+    </style>
+   {% endif %}
 <main class="main">
     <div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
         <div class="container">
-            <h1 class="page-title">Stock Summary<span></span></h1>
+            <h1 class="page-title">{% trans 'Stock Summary' %}<span></span></h1>
         </div><!-- End .container -->
     </div><!-- End .page-header -->
     <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
         <div class="container">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Add Product</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Stock Summary</li>
+                <li class="breadcrumb-item"><a href="index.html">{% trans 'Home' %}</a></li>
+                <li class="breadcrumb-item"><a href="#">{% trans 'Low Stock information' %}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{% trans 'Stock Summary' %}</li>
             </ol>
         </div><!-- End .container -->
     </nav><!-- End .breadcrumb-nav -->
@@ -23,17 +42,17 @@
         <div class="row">
             <div class="col-lg-9">
                 <div class="inventory-container">
-                    <h3>Stock Valuation</h3>
+                    <h3>{% trans 'Stock Valuation' %}</h3>
                     <table class="table">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Product Name</th>
-                                <th scope="col">Initial Stock</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Initial Valuation</th>
-                                <th scope="col">Selling Stock</th>
-                                <th scope="col">Selling Price</th>
+                                <th scope="col">{% trans 'Product Name' %}</th>
+                                <th scope="col">{% trans 'Initial Stock' %}</th>
+                                <th scope="col">{% trans 'Price' }</th>
+                                <th scope="col">{% trans 'Initial Valuation' %}</th>
+                                <th scope="col">{% trans 'Selling Stock' %}</th>
+                                <th scope="col">{% trans 'Selling Price' %}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -54,7 +73,7 @@
                             {% endfor %}
                         </tbody>
                     </table>
-                    <p>Total Stock Valuation: <b>{{ initial_total_valuation|floatformat:2 }} DA</b></p>
+                    <p>{% trans 'Total Stock Valuation' %}: <b>{{ initial_total_valuation|floatformat:2 }} DA</b></p>
                 </div>
             </div>
         </div>

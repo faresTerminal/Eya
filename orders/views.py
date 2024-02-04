@@ -23,7 +23,7 @@ def place_order(request, total = 0, quantity = 0):
     if cart_count <= 0:
         return redirect('store')
 
-    grand_total = 0
+    grand_total = 00
     
 
     # Check if cart_items is not empty
@@ -44,8 +44,15 @@ def place_order(request, total = 0, quantity = 0):
 
     
 
-    total_shipping_cost = sum(cart_item.product.shipping for cart_item in cart_items)
-    grand_total += total_shipping_cost
+    # Calculate shipping cost based on the number of cart items
+    num_cart_items = len(cart_items)
+    if num_cart_items == 1:
+        total_shipping_cost = sum(cart_item.product.shipping for cart_item in cart_items)
+        grand_total = total + total_shipping_cost
+    else:
+        total_shipping_cost = 600  # Set total_shipping_cost to 600 DA for more than one item
+
+        grand_total = total + total_shipping_cost
 
     if request.method == 'POST':
         form = OrderForm(request.POST)
@@ -144,7 +151,13 @@ def order_complete(request, order_number):
         cart_items = CartItem.objects.filter(user=current_user)
         for item in cart_items:
          
-          total_shipping_cost = sum(item.product.shipping for item in cart_items)
+         
+          num_cart_items = len(cart_items)
+
+          if num_cart_items == 1:
+            total_shipping_cost = sum(item.product.shipping for item in cart_items)
+          else:
+            total_shipping_cost = 600  # Set total_shipping_cost to 600 DA for more than one item
 
          
 

@@ -4,19 +4,39 @@
 {% extends 'homebase.html' %}
 {% load static %}
 {% load thumbnail%}
+{% load i18n %}
+
 {% block content %}
+{% if current_language == 'ar' %}
+    <style>
+      .main {
+        direction: rtl;
+      }
+      tr{
+        text-align: center;
+      }
+      .row{
+        text-align: right;
+      }
+      .product-media{
+        margin-right: 0.2rem !important;
+        margin-left: 1em !important;
+      }
+    </style>
+{% endif %}
 <main class="main">
     <div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
         <div class="container">
-            <h1 class="page-title">Stock History<span>products</span></h1>
+            <h1 class="page-title">{% trans 'Stock History' %}<span>{% trans 'products' %}</span></h1>
         </div><!-- End .container -->
     </div><!-- End .page-header -->
     <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
         <div class="container">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">Add Product</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Stock History</li>
+                <li class="breadcrumb-item"><a href="index.html">{% trans 'Home' %}</a></li>
+                <li class="breadcrumb-item"><a href="#">{% trans 'Low Stock information' %}</a></li>
+                
+                <li class="breadcrumb-item active" aria-current="page">{% trans 'Stock History' %}</li>
             </ol>
         </div><!-- End .container -->
     </nav><!-- End .breadcrumb-nav -->
@@ -28,18 +48,18 @@
       
 
          <div class="inventory-container">
-          <h5>Stock History</h5>
+          <h5>{% trans 'Stock History' %}</h5>
           
   <table class="table">
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Prodcut Name</th>
-      <th scope="col">Q.B.Change</th>
-      <th scope="col">Q.A.Change</th>
-      <th scope="col">Unit Change</th>
-      <th scope="col">Reason</th>
-      <th scope="col">Change date</th>
+      <th scope="col">{% trans 'Prodcut Name' %}</th>
+      <th scope="col">{% trans 'Q.B.Change' %}</th>
+      <th scope="col">{% trans 'Q.A.Change' %}</th>
+      <th scope="col">{% trans 'Unit Change' %}</th>
+      <th scope="col">{% trans 'Reason' %}</th>
+      <th scope="col">{% trans 'Change date' %}</th>
      
 
      
@@ -74,17 +94,17 @@
     
   </tbody>
 </table>
-<h5>Ajustment Stock History</h5>
+<h5>{% trans 'Ajustment Stock History' %}</h5>
 <table class="table">
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Prodcut Name</th>
-      <th scope="col">Adjustment Type</th>
-      <th scope="col">Q</th>
+      <th scope="col">{% trans 'Prodcut Name' %}</th>
+      <th scope="col">{% trans 'Adjustment Type' %}</th>
+      <th scope="col">{% trans 'Qty' %}</th>
      
-      <th scope="col">Reason</th>
-      <th scope="col">Adjustment date</th>
+      <th scope="col">{% trans 'Reason' %}</th>
+      <th scope="col">{% trans 'Adjustment date' %}</th>
      
 
      

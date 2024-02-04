@@ -66,10 +66,9 @@ class Article(models.Model):
 class comment_put(models.Model):
 
     put_to_blog = models.ForeignKey(Article, on_delete = models.CASCADE)
-    name = models.CharField(max_length = 50, blank = True, null = True)
-    email = models.EmailField(max_length=100, unique=True)
+    user_comment = models.ForeignKey(Account, on_delete = models.CASCADE)
     comment = models.TextField(max_length = 500)
     date = models.DateTimeField(auto_now=False, auto_now_add=True)
    
     def __str__(self):
-        return self.name
+        return self.comment
