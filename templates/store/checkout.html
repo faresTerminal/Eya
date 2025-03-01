@@ -1,0 +1,323 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+{% if current_language == 'ar' %}
+    <style>
+        .main {
+            direction: rtl;
+        }
+        tr {
+            text-align: center;
+        }
+        .row {
+            text-align: right;
+        }
+        .product-media {
+            margin-right: 0.2rem !important;
+            margin-left: 1em !important;
+        }
+    </style>
+{% endif %}
+{% include 'includes/alerts.html' %}
+<main class="main">
+    <!-- Include the ads template -->
+                {% include 'partials/ads.html' %}
+    <nav aria-label="breadcrumb" class="breadcrumb-nav">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">{% trans 'Home' %}</a></li>
+                <li class="breadcrumb-item"><a href="#">{% trans 'Shop' %}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{% trans 'Checkout' %}</li>
+            </ol>
+        </div>
+    </nav>
+    <div class="page-content">
+        <div class="checkout">
+            <div class="container">
+                {% if cart_items %}
+                    <form method="POST" action="{% url 'orders:place_order' %}">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h2 class="checkout-title">{% trans 'Billing Details' %}</h2>
+
+                                <!-- Shipping Method Dropdown -->
+                                <div>
+                                    <label for="shipping_method">{% trans 'Shipping Method' %}</label>
+                                    <select name="shipping_method" id="shipping_method" class="form-control">
+                                        <option value="home" {% if order.shipping_method == 'home' %}selected{% endif %}>{% trans 'Home Delivery' %}</option>
+                                        <option value="pickup" {% if order.shipping_method == 'pickup' %}selected{% endif %}>{% trans 'Pick Up from Delivery Bureau' %}</option>
+                                    </select>
+                                </div>
+
+                                <!-- Pickup Location (if pickup is selected) -->
+                                <div id="pickup-location" style="display: {% if order.shipping_method == 'pickup' %}block{% else %}none{% endif %};">
+                                    <label for="pickup_location">{% trans 'Pick Up Location' %}</label>
+                                    <select name="pickup_location" class="form-control">
+                                        <option value="yalidine" {% if order.pickup_location == 'yalidine' %}selected{% endif %}>{% trans 'Yali Dine' %}</option>
+                                        <option value="KaziTour" {% if order.pickup_location == 'KaziTour' %}selected{% endif %}>{% trans 'Kazi Tour' %}</option>
+                                         <option value="turktour" {% if order.pickup_location == 'turktour' %}selected{% endif %}>{% trans 'Turk Tour' %}</option>
+                                          <option value="expres" {% if order.pickup_location == 'expres' %}selected{% endif %}>{% trans 'Expres' %}</option>
+                                           <option value="rapidtour" {% if order.pickup_location == 'rapidtour' %}selected{% endif %}>{% trans 'Rapid Tour' %}</option>
+                                    </select>
+                                </div>
+
+                                <!-- Customer Name -->
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label>{% trans 'First Name' %} *</label>
+                                        <input name="first_name" type="text" class="form-control" value="{{ order.first_name }}" required>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label>{% trans 'Last Name' %} *</label>
+                                        <input name="last_name" type="text" class="form-control" value="{{ order.last_name }}" required>
+                                    </div>
+                                </div>
+
+                                <!-- State and City Selection -->
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label>{% trans 'State / Wilaya' %} *</label>
+                                        <select name="state" id="state" class="form-control" required>
+                                            <option value="">{% trans 'Select State' %}</option>
+                                            {% for state in states %}
+                                                <option value="{{ state.id }}" {% if order.state == state.id %}selected{% endif %}>{{ state.name }} - {{ state.code }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label>{% trans 'City / Commune' %} *</label>
+                                        <select name="city" id="city" class="form-control" required>
+                                            <option value="">{% trans 'Select City' %}</option>
+                                            {% for city in cities %}
+                                                <option value="{{ city.id }}" {% if order.city == city.id %}selected{% endif %}>{{ city.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Address Line 1 -->
+                                <label>{% trans 'Address Line 1' %} *</label>
+                                <input name="address_line_1" type="text" class="form-control" value="{{ order.address_line_1 }}" required>
+
+                                <!-- Phone -->
+                               <div class="row">
+                                    <div class="col-sm-6">
+                                        <label>{% trans 'Phone' %} *</label>
+                                        <input id="phone" name="phone" type="tel" class="form-control" value="{{ order.phone }}" required>
+                                    </div>
+                                </div>
+                                
+                                <!-- Order Notes -->
+                                <label>{% trans 'Order Notes (Optional)' %}</label>
+                                <textarea name="order_note" class="form-control" cols="30" rows="4" placeholder="{% trans 'Notes about your order, e.g. special notes for delivery' %}">{{ order.order_note }}</textarea>
+                            </div>
+
+                            <aside class="col-lg-6">
+                                <div class="summary">
+                                    <h3 class="summary-title">{% trans 'Your Order' %}</h3>
+                                    <table class="table table-summary">
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align: center;">{% trans 'Product' %}</th>
+                                                <th style="text-align: center;">{% trans 'Quantity' %}</th>
+                                                <th style="text-align: center;">{% trans 'Total' %}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for cart_item in cart_items %}
+                                            <tr>
+                                                <td class="product-col">
+                                                    <div class="product" style="background: no-repeat;">
+                                                        <figure class="product-media">
+                                                            <a href="#">
+                                                                <img src="{{ cart_item.product.images.url }}" alt="Product image">
+                                                            </a>
+                                                        </figure>
+                                                        <h3 class="product-title">
+                                                            <a href="#">{{ cart_item.product.product_name }}</a>
+                                                            <p class="text-muted small">
+                                                            {% if cart_item.variations.exists %}
+                                                                {% for item in cart_item.variations.all %}
+                                                                    {% if item.color %}
+                                                                        {{ item.color|capfirst }}{% if item.size %} : {% endif %}
+                                                                    {% endif %}
+                                                                    {% if item.size %}
+                                                                        {{ item.size|capfirst }}
+                                                                    {% endif %}
+                                                                    <br>
+                                                                {% endfor %}
+                                                            {% endif %}
+                                                        </p>
+                                                        </h3>
+                                                    </div>
+                                                </td>
+                                                <td style="text-align: center;">{{ cart_item.quantity }}</td>
+                                                <td style="text-align: center;">{{ cart_item.sub_total }} DA</td>
+                                            </tr>
+                                            {% endfor %}
+                                            <tr class="summary-subtotal">
+                                                <td>{% trans 'Subtotal' %}:</td>
+                                                <td>{{ total }} DA</td>
+                                            </tr>
+                                            <tr>
+                                                <td>{% trans 'Shipping Cost' %}:</td>
+                                                <td>{{ total_shipping_cost }} DA</td>
+                                            </tr>
+                                            {% if discount_amount > 0 %}
+                                            <tr>
+                                                <td>{% trans 'Coupon Discount' %}:</td>
+                                                <td>-{{ discount_amount }} DA</td>
+                                            </tr>
+                                            {% endif %}
+                                            {% if promotion_discount > 0 %}
+                                            <tr>
+                                                <td>{% trans 'Promotion Discount' %}:</td>
+                                                <td>-{{ promotion_discount }} DA</td>
+                                            </tr>
+                                            {% endif %}
+                                            <tr class="summary-total">
+                                                <td>{% trans 'Total' %}:</td>
+                                                <td>{{ grand_total }} DA</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <div class="accordion-summary" id="accordion-payment">
+        <!-- Credit Bank Card (CIB) Option -->
+        <div class="card">
+            <div class="card-header" id="heading-1">
+                <h2 class="card-title">
+                    <input type="radio" name="payment_method" value="cib" id="payment_method_cib" required>
+                    <label for="payment_method_cib">
+                        Credit Bank Card (CIB)
+                        
+                    </label>
+                    <img style="width: 10%;" src="{% static 'images/Credit_Cart/cib.jpg' %}" >
+                </h2>
+            </div><!-- End .card-header -->
+            <div class="card-body">
+                Please make your payment directly to the CIB bank account. Use the Order ID as the payment reference. Your order will be processed once the funds are confirmed in our account.
+            </div><!-- End .card-body -->
+        </div><!-- End .card -->
+
+        <!-- Card Manitique Option -->
+        <div class="card">
+            <div class="card-header" id="heading-2">
+                <h2 class="card-title">
+                    <input type="radio" name="payment_method" value="edahabia" id="payment_method_manitique" required>
+                    <label for="payment_method_manitique">
+                        Card Manitique
+                       
+                    </label>
+                     <img style="width: 10%;" src="{% static 'images/Credit_Cart/manitique.jpg' %}" >
+                </h2>
+            </div><!-- End .card-header -->
+            <div class="card-body">
+                Please make your payment directly to the Algeria postal account. Use the Order ID as the payment reference. Your order will be processed once the funds are confirmed in our account.
+            </div><!-- End .card-body -->
+        </div><!-- End .card -->
+
+        <!-- Cash on Delivery Option -->
+        <div class="card">
+            <div class="card-header" id="heading-3">
+                <h2 class="card-title">
+                    <input type="radio" name="payment_method" value="cod" id="payment_method_cod" required>
+                    <label for="payment_method_cod">
+                        Cash on delivery
+                    </label>
+                </h2>
+            </div><!-- End .card-header -->
+            <div class="card-body">
+                Please prepare the exact amount for payment upon delivery. Your order will be confirmed once the payment is received by the delivery agent.
+            </div><!-- End .card-body -->
+        </div><!-- End .card -->
+    </div><!-- End .accordion -->
+
+                                    <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
+                                        <span class="btn-text">{% trans 'Place Order' %}</span>
+                                        <span class="btn-hover-text">{% trans 'Proceed to Checkout' %}</span>
+                                    </button>
+                                </div>
+                            </aside>
+                        </div>
+                    </form>
+                {% else %}
+                    <div class="text-center">
+                        <h5 class="text-center">{% trans 'You have no item in cart' %}</h5>
+                        <a href="{% url 'store' %}" type="button" class="btn btn-light">{% trans 'Go to Store' %}</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    document.getElementById('shipping_method').addEventListener('change', function() {
+        var shippingMethod = this.value;
+        var pickupLocationDiv = document.getElementById('pickup-location');
+        if (shippingMethod === 'pickup') {
+            pickupLocationDiv.style.display = 'block';
+        } else {
+            pickupLocationDiv.style.display = 'none';
+        }
+    });
+</script>
+<script>
+    document.getElementById('state').addEventListener('change', function() {
+    var stateId = this.value;  // Get the selected state ID
+
+    if (stateId) {
+        // Make an AJAX request to the get_cities URL in the carts app
+        fetch(`/store/get_cities/?state_id=${stateId}`)
+            .then(response => response.json())
+            .then(data => {
+                var citySelect = document.getElementById('city');
+                citySelect.innerHTML = '<option value="">{% trans "Select City" %}</option>';  // Clear current options
+
+                data.forEach(function(city) {
+                    var option = document.createElement('option');
+                    option.value = city.id;
+                    option.textContent = city.name;
+                    citySelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching cities:', error);  // Log any errors
+            });
+    } else {
+        document.getElementById('city').innerHTML = '<option value="">{% trans "Select City" %}</option>';
+    }
+});
+
+</script>
+
+<!-- Include the intl-tel-input CSS -->
+<!-- Include the intl-tel-input CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
+
+<!-- Include the intl-tel-input JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+
+<!-- Include utils.js for phone number formatting -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"></script>
+
+<script>
+    // Initialize intl-tel-input on the phone number input
+    var phoneInput = document.querySelector("#phone");
+    var iti = window.intlTelInput(phoneInput, {
+        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js", 
+        initialCountry: "dz",  // Set Algeria (dz) as the default country
+        preferredCountries: ['dz'],  // Limit the list of countries to only Algeria
+        nationalMode: false,    // Force international format
+        separateDialCode: true  // Separate country code from the number input
+    });
+</script>
+
+
+{% endblock %}
+
+

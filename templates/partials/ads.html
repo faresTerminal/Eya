@@ -1,0 +1,77 @@
+{% load thumbnail %} 
+<div class="container">
+     
+    <div class="row" style="width: 1263px; height: 250px;">
+        <div class="col-9">
+            <!-- Slide Ad Section -->
+            {% for ad in slide_ads %}
+                <div class="slide-ad" style="display: none;">
+                    <a href="{{ ad.link }}" target="_blank">
+                    {% thumbnail ad.image "919x250" crop="center" as P %}
+                        <img width="{{ P.width }}" height="{{ P.height }}" src="{{ P.url }}" alt="{{ P.title }}" class="ad-image">
+                    {% endthumbnail %}
+                    </a>
+                   
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="col-3">
+            <!-- Show Ad Section -->
+            {% for ad in show_ads %}
+                <div class="show-ad" style="display: none;">
+                    <a href="{{ ad.link }}" target="_blank">
+                    {% thumbnail ad.image "250x250" crop="center" as Ps %}
+                        <img width="{{ Ps.width }}" height="{{ Ps.height }}" src="{{ Ps.url }}" alt="{{ Ps.title }}" class="ad-image">
+                    {% endthumbnail %}
+                    </a>
+                  
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript to handle changing ads every 3 seconds -->
+<script>
+    // Select all slide ads and show ads
+    let slideAds = document.querySelectorAll('.slide-ad');
+    let showAds = document.querySelectorAll('.show-ad');
+    
+    let currentSlideIndex = 0;
+    let currentShowIndex = 0;
+
+    // Function to show the next slide ad
+    function showNextSlide() {
+        // Hide current slide ad
+        slideAds[currentSlideIndex].style.display = 'none';
+        // Increment slide ad index and loop back to the first one if necessary
+        currentSlideIndex = (currentSlideIndex + 1) % slideAds.length;
+        // Show next slide ad
+        slideAds[currentSlideIndex].style.display = 'block';
+    }
+
+    // Function to show the next show ad
+    function showNextShow() {
+        // Hide current show ad
+        showAds[currentShowIndex].style.display = 'none';
+        // Increment show ad index and loop back to the first one if necessary
+        currentShowIndex = (currentShowIndex + 1) % showAds.length;
+        // Show next show ad
+        showAds[currentShowIndex].style.display = 'block';
+    }
+
+    // Initialize the display by showing the first slide ad and the first show ad
+    slideAds.forEach((ad, index) => {
+        ad.style.display = index === 0 ? 'block' : 'none';
+    });
+    showAds.forEach((ad, index) => {
+        ad.style.display = index === 0 ? 'block' : 'none';
+    });
+
+    // Change slide ad every 3 seconds
+    setInterval(showNextSlide, 3000);
+
+    // Change show ad every 3 seconds after each slide ad change
+    setInterval(showNextShow, 5000);
+</script>

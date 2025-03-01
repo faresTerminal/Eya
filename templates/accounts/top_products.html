@@ -1,0 +1,136 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load thumbnail %}
+{% load i18n %}
+{% load custom_filters1 %}
+{% block content %}
+<main class="main">
+  <!-- Include the ads template -->
+            {% include 'partials/ads.html' %}
+
+    <div class="page-content">
+        <div class="container">
+            <div class="row">
+                <!-- Sidebar -->
+               
+                    {% include 'includes/poster_sidebar.html' %}
+                
+
+                <!-- Top Rated Products Section -->
+                <div class="col-lg-8">
+                    <h5 style="margin-top: 1em;" class="mb-4">{% trans 'Top Rated Products by' %} <span class="text-primary">{{ user.username }}</span></h5>
+                    <div class="products">
+                        {% if top_seller_products %}
+                        <div class="row">
+                            {% for s in top_seller_products %}
+                            <div class="col-6 col-md-4 col-lg-4 col-xl-3">
+                                <div class="product">
+                                    <figure class="product-media">
+                                      
+                                        <a href="{{s.get_url}}">
+                                            {% thumbnail s.images "275x275" crop="center" as ml %}
+                                            <img width="{{ ml.width }}" height="{{ml.height }}" src="{{ml.url}}" class="product-image">
+                                            {% endthumbnail %}
+                                        </a>
+                                         
+
+                                        <div class="product-action-vertical">
+                                            <a href="{% url 'add_to_wishlist' s.id %}" class="btn-product-icon btn-wishlist btn-expandable"><span>{% trans 'add to wishlist' %}</span></a>
+                                        </div><!-- End .product-action -->
+
+                                        
+                                    </figure><!-- End .product-media -->
+
+                                    <div class="product-body">
+                                        <div class="product-cat">
+                                            <a href="#">{{s.category}}</a>
+                                        </div><!-- End .product-cat -->
+                                        <h3 class="product-title"><a href="{{s.get_url}}">{{s.product_name|truncate_title:8}}</a></h3><!-- End .product-title
+
+                                         -->
+
+                                        
+                                          {% if s.variants %}  
+                                        <div class="product-price">
+                                                    {{s.variants.0.price}} DA
+                                                   
+                                                    <span style="margin-left: 5px;" class="old-price text-success"> {{s.variants.0.clearance_price}} DA</span>
+                                        </div><!-- End .product-price -->
+                                        {% endif %}
+                                        <div class="ratings-container">
+                                             <div class="rating-star">
+                                <span>
+                                    <i class="fa fa-star{% if s.averageReview < 0.5 %}-o{% elif s.averageReview >= 0.5 and s.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if s.averageReview < 1.5 %}-o{% elif s.averageReview >= 1.5 and s.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if s.averageReview < 2.5 %}-o{% elif s.averageReview >= 2.5 and s.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if s.averageReview < 3.5 %}-o{% elif s.averageReview >= 3.5 and s.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if s.averageReview < 4.5 %}-o{% elif s.averageReview >= 4.5 and s.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+    
+                                    </span>
+                            </div>
+                                            <span class="ratings-text">( {{s.countReview}} Reviews )</span>
+                                        </div><!-- End .rating-container -->
+
+                                        
+                                    </div><!-- End .product-body -->
+                                </div><!-- End .product -->
+
+                            </div><!-- End .col-sm-6 col-lg-4 col-xl-3 -->
+                            {% endfor %}
+                            {%else %}
+                            <div>
+                                <h5 class="text-center text-info">{% trans 'No Products For Clearance' %}...</h5>
+                            </div>
+                            {% endif %}
+
+
+                        </div><!-- End .row -->
+
+                        <nav aria-label="Page navigation">
+                            {% if top_seller_products.has_other_pages %}
+                                <ul class="pagination">
+                                    {% if top_seller_products.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link page-link-prev" href="?page={{top_seller_products.previous_page_number}}" aria-label="Previous" tabindex="-1" aria-disabled="true">
+                                            <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>{% trans 'Prev' %}
+                                        </a>
+                                    </li>
+                                    {% else %}
+                                    <li class="page-item disabled">
+                                        <a class="page-link page-link-prev" href="#" aria-label="Previous" tabindex="-1" aria-disabled="true">
+                                            <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>{% trans 'Prev' %}
+                                        </a>
+                                    </li>
+                                    {%endif%}
+                                    {% for i in top_seller_products.paginator.page_range %}
+                                    {% if top_seller_products.number == i %}
+                                    <li class="page-item active" aria-current="page"><a class="page-link" href="#">{{i}}</a></li>
+                                    {% else %}
+                                    <li class="page-item"><a class="page-link" href="?page={{i}}">2</a></li>
+                                    
+                                    <li class="page-item-total">{% trans 'of All' %}</li>
+                                    {% endif %}
+                                    {% endfor %}
+                                    {% if top_seller_products.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link page-link-next" href="?page={{top_seller_products.next_page_number}}" aria-label="Next">
+                                            {% trans 'Next' %} <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
+                                        </a>
+                                    </li>
+                                    {%else%}
+                                    <li class="page-item disabled">
+                                        <a class="page-link page-link-next" href="#" aria-label="Next">
+                                            {% trans 'Next' %} <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
+                                        </a>
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                                {% endif %}
+                            </nav>
+                    </div><!-- End .products -->
+                </div><!-- End .col-lg-9 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .page-content -->
+</main><!-- End .main -->
+{% endblock %}

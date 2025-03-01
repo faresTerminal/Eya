@@ -1,0 +1,45 @@
+{% extends 'homebase.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Manage Your Facebook Pixels</h2>
+    <div class="row">
+        <!-- Form Column -->
+        <div class="col-md-6">
+            <form method="post" class="mb-4">
+                {% csrf_token %}
+                <div class="mb-3">
+                    {{ form.name.label_tag }}
+                    {{ form.name }}
+                    {% if form.name.errors %}
+                        <div class="text-danger">{{ form.name.errors }}</div>
+                    {% endif %}
+                </div>
+                <div class="mb-3">
+                    {{ form.pixel_id.label_tag }}
+                    {{ form.pixel_id }}
+                    {% if form.pixel_id.errors %}
+                        <div class="text-danger">{{ form.pixel_id.errors }}</div>
+                    {% endif %}
+                </div>
+                <button type="submit" class="btn btn-primary ">Add Pixel</button>
+            </form>
+        </div>
+
+        <!-- Pixel List Column -->
+        <div class="col-md-6">
+            <h3>Your Pixels</h3>
+            <ul class="list-group">
+                {% for pixel in user_pixels %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{ pixel.name }} ({{ pixel.pixel_id }})
+                        <a href="{% url 'delete_pixel' pixel.id %}" class="btn btn-danger btn-sm">Delete</a>
+                    </li>
+                {% endfor %}
+                {% if not user_pixels %}
+                    <li class="list-group-item text-muted text-center">No pixels added yet.</li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

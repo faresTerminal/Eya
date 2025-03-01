@@ -1,0 +1,210 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load thumbnail %}
+{% load i18n %}
+
+{% block content %}
+{% if current_language == 'ar' %}
+    <style>
+        .main {
+            direction: rtl;
+        }
+        tr {
+            text-align: center;
+        }
+        .row {
+            text-align: right;
+        }
+        .product-media {
+            margin-right: 0.2rem !important;
+            margin-left: 1em !important;
+        }
+    </style>
+{% endif %}
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+$(document).ready(function () {
+    // Filter customers by username or email
+    $('#filterByName').on('input', function () {
+        var filterValue = $(this).val().toLowerCase();
+
+        // Loop through each row in the table body
+        $('.customer-table tbody tr').each(function () {
+            var customerName = $(this).find('td:nth-child(2)').text().toLowerCase();
+            var customerEmail = $(this).find('td:nth-child(3)').text().toLowerCase();
+
+            // Show or hide the row based on the filter value
+            if (customerName.indexOf(filterValue) > -1 || customerEmail.indexOf(filterValue) > -1) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    });
+});
+</script>
+
+<main class="main">
+    <!-- Include the ads template -->
+            {% include 'partials/ads.html' %}
+    
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">{% trans 'Home' %}</a></li>
+                <li class="breadcrumb-item"><a href="#">{% trans 'Analytics' %}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{% trans 'Customers Sales' %}</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+  
+    <div class="container">
+        <div class="row">
+            {% include 'includes/analytics_sidebar.html' %}
+            <div class="col-lg-9">
+                <div class="toolbox">
+                    <div class="toolbox-left">
+                        <label for="filterByName">{% trans 'Filter by Name or Email' %}:</label>
+                        <input type="text" id="filterByName" class="form-control" placeholder="{% trans 'Enter customer name or email' %}">
+                    </div><!-- End .toolbox-filter -->
+                </div><!-- End .toolbox -->
+
+                <!-- Customer Data Table -->
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped customer-table">
+                        <div class="card-header">
+                            <b>{% trans 'Customers Sales for Product' %} "{{ product.name }}"</b>
+                        </div>
+                        <thead>
+                            <tr>
+                                <th>{% trans 'Profile Picture' %}</th>
+                                <th>{% trans 'Username' %}</th>
+                                <th>{% trans 'Email' %}</th>
+                                <th>{% trans 'Total Sales' %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for customer in costumer %}
+                                <tr>
+                                    <td>
+                                        {% if customer.profile_picture %}
+                                            <img src="{{ customer.profile_picture }}" alt="{{ customer.username }}" width="50" height="50">
+                                        {% else %}
+                                            <img src="{% static 'images/default-profile.png' %}" alt="{{ customer.username }}" width="50" height="50">
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ customer.username }}</td>
+                                    <td>{{ customer.email }}</td>
+                                    <td>{{ customer.total_spent|floatformat:2 }} DA</td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="4">{% trans 'No customers found for this product.' %}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div><!-- End .table-responsive -->
+            </div><!-- End .col-lg-9 -->
+        </div><!-- End .row -->
+    </div><!-- End .container -->
+</main>
+
+<style type="text/css">
+    /* Global Styles */
+    body {
+        font-family: 'Arial', sans-serif;
+    }
+
+    /* Page Header */
+    .page-header {
+        background-color: #f7f8fa;
+        padding: 50px 0;
+        color: #fff;
+        text-align: center;
+        background-size: cover;
+    }
+
+    /* Cards */
+    .card {
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+
+    .card-header {
+        background-color: #f0f0f0;
+        padding: 15px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    /* Tables */
+    .table {
+        margin-top: 20px;
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .table th, .table td {
+        padding: 15px;
+        text-align: left;
+    }
+
+    .table-bordered {
+        border: 1px solid #ddd;
+    }
+
+    .table-striped tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+    }
+
+    /* Misc */
+    .text-center {
+        text-align: center;
+    }
+
+    .text-success {
+        color: #28a745;
+    }
+
+    .font-weight-normal {
+        font-weight: normal;
+    }
+
+    /* Styles for Customer Sales Table */
+    .table th, .table td {
+        padding: 15px;
+        vertical-align: middle;
+    }
+
+    .table img {
+        border-radius: 4px;
+        object-fit: cover;
+    }
+
+    .table-bordered {
+        border: 1px solid #ddd;
+    }
+
+    .table-striped tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .table-responsive {
+        overflow-x: auto;
+        margin-top: 20px;
+    }
+</style>
+
+{% endblock %}

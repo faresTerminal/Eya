@@ -1,0 +1,153 @@
+
+
+
+{% extends 'homebase.html' %}
+{% load static %}
+{% load thumbnail%}
+{% load i18n %}
+
+{% block content %}
+{% if current_language == 'ar' %}
+    <style>
+      .main {
+        direction: rtl;
+      }
+      tr{
+        text-align: center;
+      }
+      .row{
+        text-align: right;
+      }
+      .product-media{
+        margin-right: 0.2rem !important;
+        margin-left: 1em !important;
+      }
+    </style>
+{% endif %}
+<main class="main">
+     <!-- Include the ads template -->
+                {% include 'partials/ads.html' %}
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">{% trans 'Home' %}</a></li>
+                <li class="breadcrumb-item"><a href="#">{% trans 'Low Stock information' %}</a></li>
+                
+                <li class="breadcrumb-item active" aria-current="page">{% trans 'Stock History' %}</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+  
+<div class="container">
+  <div class="row">
+{% include 'includes/stock_sidebar.html' %}
+    <div class="col-lg-9">
+      
+
+         <div class="inventory-container">
+          <h5>{% trans 'Stock History' %}</h5>
+          
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">{% trans 'Prodcut Name' %}</th>
+      <th scope="col">{% trans 'Q.B.Change' %}</th>
+      <th scope="col">{% trans 'Q.A.Change' %}</th>
+      <th scope="col">{% trans 'Unit Change' %}</th>
+      <th scope="col">{% trans 'Reason' %}</th>
+      <th scope="col">{% trans 'Change date' %}</th>
+     
+
+     
+    </tr>
+  </thead>
+  <tbody>
+    
+    {% for p in stock_history %}
+    <tr class="{% if p.is_low_stock %}low-stock{% endif %}">
+      <td>
+         {% thumbnail p.product.product.images "50x50" crop="center" as p_pic %}                                                          
+          <img width="{{ p_pic.width }}" height="{{p_pic.height }}" src="{{p_pic.url}}">
+          {% endthumbnail %}
+      </td style='text-align: center;'>
+      <td>{{p.product.product.product_name}}<br>{{p.product.color}}: {{p.product.size}}</td>
+      <td>{{p.quantity_before_change}}</td>
+      <td>{{p.quantity_after_change}}</td>
+      {% if p.unit_change > 0%}
+      <td style="color: green;">(+ {{p.unit_change}})</td>
+      {% else %}
+      <td style="color: red;"> ({{p.unit_change}})</td>
+      {% endif %}
+
+      <td>{{p.reason_for_change}}</td>
+      <td>{{p.change_date}}</td>
+     
+      
+
+     
+    </tr>
+    {% endfor %}
+    
+  </tbody>
+</table>
+<h5>{% trans 'Ajustment Stock History' %}</h5>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">{% trans 'Prodcut Name' %}</th>
+      <th scope="col">{% trans 'Adjustment Type' %}</th>
+      <th scope="col">{% trans 'Qty' %}</th>
+     
+      <th scope="col">{% trans 'Reason' %}</th>
+      <th scope="col">{% trans 'Adjustment date' %}</th>
+     
+
+     
+    </tr>
+  </thead>
+  <tbody>
+    
+    {% for p in adjustment_stock_history %}
+    <tr class="{% if p.is_low_stock %}low-stock{% endif %}">
+      <td>
+         {% thumbnail p.product.product.images "50x50" crop="center" as p_pic %}                                                          
+          <img width="{{ p_pic.width }}" height="{{p_pic.height }}" src="{{p_pic.url}}">
+          {% endthumbnail %}
+      </td style='text-align: center;'>
+      <td>{{p.product.product.product_name}}<br>{{p.product.color}}: {{p.product.size}}</td>
+      <td>{{p.adjustment_type}}</td>
+      {% if p.adjustment_type == 'add'%}
+      <td style="color: green;"> (+ {{p.quantity}})</td>
+      {%else%}
+      <td style="color: red;"> (- {{p.quantity}})</td>
+      {% endif %}
+      
+      
+
+      <td>{{p.reason}}</td>
+      <td>{{p.timestamp}}</td>
+     
+      
+
+     
+    </tr>
+    {% endfor %}
+    
+  </tbody>
+</table>
+
+   
+         </div>
+    
+    </div>
+  
+  </div>
+</div>
+</main>
+{% endblock %}
+
+
+
+

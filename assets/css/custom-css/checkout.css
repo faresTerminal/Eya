@@ -1,0 +1,31 @@
+
+@media (max-width: 561px) {
+        .checkout-mobile, .checkout-summary {
+            padding: 10px;
+        }
+        .checkout-title, .summary-title {
+            font-size: 18px;
+        }
+        .form-control {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .table-summary {
+            font-size: 14px;
+        }
+        .btn-order {
+            padding: 10px 15px;
+            font-size: 16px;
+        }
+        .summary {
+            display: inline list-item;
+            background: none;
+            border: none;
+        }
+        tbody {
+            margin-top: 1em;
+        }
+        .footer {
+            text-align: center;
+        }
+}

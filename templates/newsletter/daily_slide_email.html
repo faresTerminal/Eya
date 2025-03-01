@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Slide Update</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 20px; border-radius: 8px; }
+        h1 { color: #444; }
+        p { line-height: 1.5; }
+        .btn { display: inline-block; margin-top: 20px; padding: 10px 20px; color: white; background-color: #007BFF; text-decoration: none; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Check Out Today's Daily Slide</h1>
+        <h2>{{ daily_slide.sub_title }}</h2>
+        <p><strong>Product:</strong> {{ daily_slide.product.product_name }}</p>
+        <p>{{ daily_slide.description|linebreaks }}</p>
+        <img src="{{ daily_slide.product.product_name.url }}">
+        <p>Don't miss out! Click the link below to see more details on our website:</p>
+        <a href="{{ daily_slide.product.get_url }}" class="btn">View Product</a>
+        <p style="font-size: 0.9em; color: #666; margin-top: 20px;">If you wish to unsubscribe from these emails, click <a href="{% url 'newsletter:unsubscribe' %}?email={{ email }}" style="color: #007BFF;">here</a>.</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,490 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<style>
+    /* General Styles */
+
+    /* Dashboard Header */
+    .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .dashboard-header h1 {
+        font-size: 2rem;
+        color: #007bff;
+    }
+
+    .share-link-button {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: background-color 0.3s ease;
+    }
+
+    .share-link-button:hover {
+        background-color: #0056b3;
+    }
+
+    /* Affiliate Information Section */
+    .affiliate-info {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+    }
+
+    .affiliate-info h2 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        color: #007bff;
+    }
+
+    .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .info-item {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 10px;
+        border: 1px solid #e9ecef;
+    }
+
+    .info-item strong {
+        color: #495057;
+    }
+
+    .affiliate-code {
+        background-color: #28a745;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-weight: 600;
+    }
+
+    .affiliate-link {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .affiliate-link:hover {
+        text-decoration: underline;
+    }
+
+    .total-earnings {
+        color: #28a745;
+        font-weight: 600;
+    }
+
+    .total-referrals {
+        color: #17a2b8;
+        font-weight: 600;
+    }
+
+    /* Referrals and Commissions Sections */
+    .referrals-section, .commissions-section {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+    }
+
+    .referrals-section h2, .commissions-section h2 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        color: #007bff;
+    }
+
+    .referrals-table, .commissions-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    .referrals-table th, .commissions-table th {
+        background-color: #f8f9fa;
+        padding: 15px;
+        text-align: left;
+        border-bottom: 2px solid #dee2e6;
+        color: #495057;
+    }
+
+    .referrals-table td, .commissions-table td {
+        padding: 15px;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+    .referrals-table tr:hover, .commissions-table tr:hover {
+        background-color: #f8f9fa;
+    }
+
+    .status-badge {
+        background-color: #28a745;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+    }
+
+    .commission-amount {
+        color: #28a745;
+        font-weight: 600;
+    }
+    .commission-paid {
+        color: #28a745;
+        font-weight: 600;
+    }
+    .commission-unpaid {
+        color: red;
+        font-weight: 600;
+    }
+
+    /* Empty State Styles */
+    .empty-state {
+        text-align: center;
+        padding: 40px 0;
+    }
+
+    .empty-state i {
+        font-size: 3rem;
+        color: #6c757d;
+        margin-bottom: 15px;
+    }
+
+    .empty-state p {
+        color: #6c757d;
+        font-size: 1.2rem;
+    }
+
+    /* Call to Action Section */
+    .cta-section {
+        text-align: center;
+        background-color: white;
+        padding: 40px 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .cta-section h2 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        color: #007bff;
+    }
+
+    .cta-section p {
+        font-size: 1.1rem;
+        color: #6c757d;
+        margin-bottom: 30px;
+    }
+
+    .cta-button {
+        background-color: #007bff;
+        color: white;
+        padding: 15px 30px;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: background-color 0.3s ease;
+    }
+
+    .cta-button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<!-- Main Content -->
+<main class="main">
+    <!-- Include the ads template -->
+            {% include 'partials/ads.html' %}
+
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-4">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">{% trans 'Home' %}</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">{% trans 'Affiliate' %}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{% trans 'Dashboard' %}</li>
+            </ol>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar -->
+            {% include 'includes/dashboard_sidebar.html' %}
+
+            <!-- Main Dashboard Content -->
+            <div class="col-md-8 col-lg-10">
+                <!-- Dashboard Header -->
+                <header class="dashboard-header">
+                    <h1>{% trans 'Affiliate Dashboard' %}</h1>
+                    <a href="{% url 'affiliate_analytics' %}" class="share-link-button">
+                        {% trans 'Analytics' %}
+                    </a>
+                </header>
+
+                <!-- Affiliate Information Section -->
+                <!-- Affiliate Information Section -->
+<section class="affiliate-info">
+    <h5>{% trans 'Your Affiliate Information' %}</h5>
+    <div class="info-grid">
+        <div class="info-item">
+            <strong>{% trans 'Affiliate Code:' %}</strong>
+            <span class="affiliate-code">{{ affiliate.affiliate_code }}</span>
+        </div>
+        <div class="info-item">
+            <strong>{% trans 'Affiliate Link:' %}</strong>
+            <a href="https://yourwebsite.com/ref/{{ affiliate.affiliate_code }}" class="affiliate-link">
+                https://7b66-105-235-133-156.ngrok-free.app/en/affiliate/ref/{{ affiliate.affiliate_code }}
+            </a>
+        </div>
+        <div class="info-item">
+            <strong>{% trans 'Total Earnings:' %}</strong>
+            <span class="total-earnings">{{ total_earnings }} DA</span>
+        </div>
+        <div class="info-item">
+            <strong>{% trans 'Total Referrals:' %}</strong>
+            <span class="total-referrals">{{ total_referrals }}</span>
+        </div>
+
+        <!-- Pending Commissions -->
+        <div class="info-item">
+            <strong>{% trans 'Pending Commissions' %}</strong>
+            <p class="text-warning fw-bold">{{ affiliate.pending_commissions }} DA</p>
+        </div>
+
+        <!-- Withdrawn Commissions -->
+        <div class="card shadow-sm p-3">
+            <strong>{% trans 'Withdrawn Commissions' %}</strong>
+            <p class="text-danger fw-bold">{{ affiliate.withdrawn_commissions }}DA</p>
+        </div>
+    </div>
+</section>
+
+
+                <!-- Referrals Section -->
+                <section class="referrals-section">
+                    <h5>{% trans 'Your Referrals'%} ({{ total_referrals }})</h5>
+                    {% if referrals %}
+                        <table class="referrals-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>{% trans 'Referred User' %}</th>
+                                    <th>{% trans 'Referral Date' %}</th>
+                                    <th>{% trans 'Status' %}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for referral in referrals %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ referral.referred_user.email }}</td>
+                                        <td>{{ referral.referral_date|date:"F d, Y" }}</td>
+                                        <td><span class="status-badge active">{% trans 'Active' %}</span></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <div class="empty-state">
+                            <p>{% trans 'No referrals yet. Start sharing your affiliate link!' %}</p>
+                        </div>
+                    {% endif %}
+                </section>
+
+                <!-- Commissions Section -->
+<!-- Commissions Section -->
+<section class="commissions-section">
+    <h5>{% trans 'Your Commissions' %}</h5>
+    {% if commissions %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>{% trans 'Order ID' %}</th>
+                    <th>{% trans 'Order Number' %}</th>
+                    <th>{% trans 'Order' %}</th>
+                    <th>{% trans 'Order Buyer' %}</th>
+                    <th>{% trans 'Commission Amount' %}</th>
+                    <th>{% trans 'Status' %}</th>
+                    <th>{% trans 'Date' %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for commission in commissions %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ commission.order_id }}</td>
+                        <td>{{ commission.order.order_number }}</td>
+                        <td>{{ commission.order.product.product_name }}</td>
+                        <td>{{ commission.order.user.email }}</td>
+
+                        {% if commission.is_paid == True %}
+                        <td class="text-success">{{ commission.commission_amount }} DA</td>
+                        {% else %}
+                         <td class="text-warning">{{ commission.commission_amount }} DA</td>
+                         {% endif %}
+
+                        {% if commission.is_paid == True %}
+                        <td class="text-success">{% trans 'Paid' %}</td>
+                        {% else %}
+                         <td class="text-danger">{% trans 'Unpaid' %}</td>
+                        {% endif %}
+                        <td>{{ commission.created_at|date:"F d, Y" }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Beautiful Pagination -->
+        <div class="pagination-wrapper d-flex justify-content-center align-items-center mt-4">
+            <!-- Previous Page -->
+            {% if commissions.has_previous %}
+                <a href="?page=1" class="btn btn-paginator btn-sm">&laquo; First</a>
+                <a href="?page={{ commissions.previous_page_number }}" class="btn btn-paginator btn-sm">Previous</a>
+            {% else %}
+                <span class="btn btn-paginator disabled btn-sm">&laquo; First</span>
+                <span class="btn btn-paginator disabled btn-sm">Previous</span>
+            {% endif %}
+
+            <!-- Page Numbers -->
+            <nav>
+                <ul class="pagination pagination-sm m-0">
+                    {% for page_num in commissions.paginator.page_range %}
+                        {% if commissions.number == page_num %}
+                            <li class="page-item active">
+                                <span class="page-link">{{ page_num }}</span>
+                            </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a href="?page={{ page_num }}" class="page-link">{{ page_num }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </nav>
+
+            <!-- Next Page -->
+            {% if commissions.has_next %}
+                <a href="?page={{ commissions.next_page_number }}" class="btn btn-paginator btn-sm">Next</a>
+                <a href="?page={{ commissions.paginator.num_pages }}" class="btn btn-paginator btn-sm">Last &raquo;</a>
+            {% else %}
+                <span class="btn btn-paginator disabled btn-sm">Next</span>
+                <span class="btn btn-paginator disabled btn-sm">Last &raquo;</span>
+            {% endif %}
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <p>{% trans 'No commissions yet. Keep referring users to earn!' %}</p>
+        </div>
+    {% endif %}
+</section>
+<style type="text/css">
+    /* Beautiful Paginator Styles */
+.pagination-wrapper {
+    font-family: 'Arial', sans-serif;  /* Elegant font */
+    margin-top: 20px;
+}
+
+/* Paginator Button Styles */
+.btn-paginator {
+    background-color: #007bff;
+    color: white;
+    border-radius: 50px; /* Rounded edges for a modern look */
+    font-weight: 600;
+    transition: all 0.3s ease;
+    padding: 8px 20px;
+    text-decoration: none;
+}
+
+.btn-paginator:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-paginator.disabled {
+    background-color: #e9ecef;
+    color: #6c757d;
+    pointer-events: none;
+}
+
+/* Pagination Numbers */
+.pagination .page-link {
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    color: #007bff;
+    border-radius: 50px;
+    padding: 8px 15px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #28a745; /* Active page with green color */
+    color: white;
+    border-color: #28a745;
+}
+
+.pagination .page-item .page-link:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+/* Hover state for the paginator numbers */
+.pagination .page-item .page-link:hover {
+    background-color: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.pagination .page-item.disabled .page-link {
+    background-color: #f8f9fa;
+    color: #6c757d;
+}
+
+/* Custom styling for the page number buttons */
+.pagination .page-item {
+    margin: 0 5px;
+}
+
+.pagination .page-item .page-link {
+    padding: 8px 12px;
+}
+
+/* Optional: Add a subtle shadow effect when hovering over paginator buttons */
+.pagination .page-link {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Add spacing between the previous and next buttons */
+.pagination-wrapper a {
+    margin: 0 10px;
+}
+
+</style>
+
+
+
+                <!-- Call to Action Section -->
+                <section class="cta-section">
+                    <h2>{% trans 'Want to earn more?' %}</h2>
+                    <p>{% trans 'Share your affiliate link and start earning commissions on every successful referral.' %}</p>
+                    <a href="#" class="cta-button">{% trans 'Get Started' %}</a>
+                </section>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

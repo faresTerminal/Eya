@@ -1,0 +1,17 @@
+<h1>Payment History</h1>
+<table>
+    <tr>
+        <th>Transaction ID</th>
+        <th>Plan</th>
+        <th>Amount</th>
+        <th>Date</th>
+    </tr>
+    {% for payment in payments %}
+    <tr>
+        <td>{{ payment.transaction_id }}</td>
+        <td>{{ payment.plan.name }}</td>
+        <td>{{ payment.amount }}</td>
+        <td>{{ payment.payment_date }}</td>
+    </tr>
+    {% endfor %}
+</table>

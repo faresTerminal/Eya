@@ -1,0 +1,15 @@
+<!-- marketing/templates/marketing/promotions.html -->
+{% extends "homebase.html" %}
+
+{% block content %}
+<h2>Promotions</h2>
+<ul>
+    {% for promotion in promotions %}
+        <li>
+            <strong>{{ promotion.title }}</strong> - {{ promotion.discount_percentage }}% off
+            <p>{{ promotion.description }}</p>
+            <p>Valid from {{ promotion.start_date }} to {{ promotion.end_date }}</p>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

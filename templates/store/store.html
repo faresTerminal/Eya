@@ -1,0 +1,595 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load custom_filters1 %}
+{% load thumbnail %}
+{% load i18n %}
+{% block content %}
+{% if current_language == 'ar' %}
+    <style>
+        .main {
+            direction: rtl;
+        }
+        tr{
+            text-align: center;
+        }
+        .row{
+            text-align: right;
+        }
+        .product-media{
+            margin-right: 0.2rem !important;
+            margin-left: 1em !important;
+        }
+    </style>
+   {% endif %}
+        <main class="main">
+             <!-- Include the ads template -->
+             {% include 'partials/ads.html' %}
+
+            <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">{% trans 'Home' %}</a></li>
+                        <li class="breadcrumb-item"><a href="#">{% trans 'Shop' %}</a></li>
+                        
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+
+
+            <div class="container">
+    <div class="active-ads">
+        <h2 class="title">Active Advertisements</h2>
+        <div class="advertisement-container">
+            <div class="advertisement-wrapper">
+                <!-- Loop to display advertisements -->
+                {% for ad in active_ads %}
+                    <div class="col-lg-4 col-md-6 col-sm-12 advertisement">
+                        <a href="{{ ad.link }}" class="ad-link">
+                            <h6 class="ad-title">{{ ad.title }}</h6>
+                        </a>
+
+                        {% if ad.ad_type == 'image' %}
+                            <!-- Image Ad -->
+                            <a href="{{ ad.link }}" target="_blank" class="ad-link">
+                                {% thumbnail ad.image "250x250" crop="center" as ads %}
+                                <img src="{{ ads.url }}" alt="{{ ad.title }}" class="ad-image">
+                                {% endthumbnail %}
+                            </a>
+                        {% elif ad.ad_type == 'video' %}
+                            <!-- Video Ad -->
+                            <div class="ad-video-container" onclick="openVideoModal('{{ ad.youtube_link|youtube_id }}', {{ ad.id }})">
+                                {% if ad.youtube_link %}
+                                    <!-- Video Thumbnail -->
+                                    <img src="https://img.youtube.com/vi/{{ ad.youtube_link|youtube_id }}/0.jpg" alt="{{ ad.title }}" class="video-thumbnail">
+                                {% else %}
+                                    <p class="no-video">No video available.</p>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                <!-- Duplicate the same ads again for seamless scrolling -->
+                {% for ad in active_ads %}
+                    <div class="col-lg-4 col-md-6 col-sm-12 advertisement">
+                        <a href="{{ ad.link }}" class="ad-link">
+                            <h6 class="ad-title">{{ ad.title }}</h6>
+                        </a>
+
+                        {% if ad.ad_type == 'image' %}
+                            <!-- Image Ad -->
+                            <a href="{{ ad.link }}" target="_blank" class="ad-link">
+                                {% thumbnail ad.image "250x250" crop="center" as ads %}
+                                <img src="{{ ads.url }}" alt="{{ ad.title }}" class="ad-image">
+                                {% endthumbnail %}
+                            </a>
+                        {% elif ad.ad_type == 'video' %}
+                            <!-- Video Ad -->
+                            <div class="ad-video-container" onclick="openVideoModal('{{ ad.youtube_link|youtube_id }}', {{ ad.id }})">
+                                {% if ad.youtube_link %}
+                                    <!-- Video Thumbnail -->
+                                    <img src="https://img.youtube.com/vi/{{ ad.youtube_link|youtube_id }}/0.jpg" alt="{{ ad.title }}" class="video-thumbnail">
+                                {% else %}
+                                    <p class="no-video">No video available.</p>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {% if not active_ads %}
+        <div class="no-advertisement text-center">
+            <p>No active advertisements available at the moment.</p>
+        </div>
+    {% endif %}
+</div>
+
+<!-- Modal -->
+<div id="videoModal" class="video-modal" style="display:none;">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <iframe id="videoIframe" width="100%" height="100%" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+</div>
+
+<style type="text/css">
+  /* Base Styles */
+  .text-center {
+    text-align: center;
+  }
+
+  .advertisement-container {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+  }
+
+  .advertisement-wrapper {
+    display: flex;
+    animation: scrollAds 20s linear infinite;
+  }
+
+  .advertisement {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+    background: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin-right: 20px;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    width: 250px;
+  }
+
+  .advertisement:hover {
+    transform: translateY(-5px);
+  }
+
+  .ad-link {
+    display: block;
+    margin-bottom: 10px;
+    color: #333;
+    text-decoration: none;
+  }
+
+  .ad-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+  }
+
+  .ad-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .video-thumbnail {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .ad-video-container {
+    cursor: pointer;
+  }
+
+  .ad-video-container p {
+    color: #888;
+    font-size: 1rem;
+    margin-top: 10px;
+  }
+
+  .video-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 999;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-content {
+    position: relative;
+    width: 80%;
+    height: 80%;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #fff;
+    font-size: 30px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  .no-video {
+    font-size: 1rem;
+    color: #888;
+    text-align: center;
+    margin-top: 15px;
+  }
+
+  .no-advertisement p {
+    font-size: 1rem;
+    color: #888;
+    margin-top: 30px;
+  }
+
+  /* Animation for Ad Movement */
+  @keyframes scrollAds {
+    0% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(-50%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  /* Responsive Layout */
+  @media (max-width: 1199px) {
+    .col-lg-4 {
+      flex: 0 0 33.33%;
+      max-width: 33.33%;
+    }
+  }
+
+  @media (max-width: 991px) {
+    .col-md-6 {
+      flex: 0 0 50%;
+      max-width: 50%;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .col-sm-12 {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+
+    .ad-title {
+      font-size: 1rem;
+    }
+
+    .ad-image {
+      max-width: 90%;
+    }
+  }
+</style>
+
+<script type="text/javascript">
+  // Function to open the video modal
+  function openVideoModal(videoId, adId) {
+    const modal = document.getElementById('videoModal');
+    const iframe = document.getElementById('videoIframe');
+    
+    modal.style.display = 'flex';
+    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=10`; // Embed YouTube video
+  }
+
+  // Function to close the video modal
+  function closeModal() {
+    const modal = document.getElementById('videoModal');
+    const iframe = document.getElementById('videoIframe');
+
+    modal.style.display = 'none';
+    iframe.src = ''; // Stop the video
+  }
+
+  // JavaScript to trigger the animation once the page is loaded
+  document.addEventListener('DOMContentLoaded', function() {
+    const adWrapper = document.querySelector('.advertisement-wrapper');
+    adWrapper.style.animationPlayState = 'running'; // Start animation when the page loads
+  });
+</script>
+
+
+            <div class="page-content">
+                <div class="container">
+        			<div class="toolbox">
+        				<div class="toolbox-left">
+                            <a href="#" class="sidebar-toggler"><i class="icon-bars"></i>Filters</a>
+        				</div><!-- End .toolbox-left -->
+
+                        <div class="toolbox-center">
+                            <div class="toolbox-info">
+                                {% trans 'Showing' %} <span> {{product_count}}</span> {% trans 'Products' %}
+                            </div><!-- End .toolbox-info -->
+                        </div><!-- End .toolbox-center -->
+
+        				<div class="toolbox-right">
+        					<div class="toolbox-sort">
+        						<label for="sortby">{% trans 'Sort by:' %}</label>
+        						<div class="select-custom">
+									<select name="sortby" id="sortby" class="form-control">
+										<option value="popularity" selected="selected">{% trans 'Most Popular' %}</option>
+										<option value="rating">{% trans 'Most Rated' %}</option>
+										<option value="date">{% trans 'Date' %}</option>
+									</select>
+								</div>
+        					</div><!-- End .toolbox-sort -->
+        				</div><!-- End .toolbox-right -->
+        			</div><!-- End .toolbox -->
+                    {% if products %}
+                    <div class="products">
+                        <div class="row">
+                            {% for s in products %}
+
+                          
+                            
+                            <div class="col-6 col-md-4 col-lg-4 col-xl-3">
+                                <div class="product">
+                                    <figure class="product-media">
+                                        {% if s.has_more_than_20_reviews %}
+                                     <span class="product-label label-circle label-top">Top</span>
+                                {% endif %}
+                                {% if s.is_clearance_product %}
+                                     <span class="product-label label-circle label-sale">Sale</span>
+                                {% endif %}
+                                {% if s.is_new_product %}
+                                    <span class="product-label label-circle label-new">New</span>
+                                {% endif %}
+                                        <a href="{{s.get_url}}">
+                                            {% thumbnail s.images "275x275" crop="center" as azer %}
+                                            <img width="{{ azer.width }}" height="{{azer.height }}" src="{{azer.url}}" class="product-image">
+                                            {% endthumbnail %}
+                                        </a>
+                                       
+
+                                        <div class="product-action-vertical">
+                                            <a href="{% url 'add_to_wishlist' s.id %}" class="btn-product-icon btn-wishlist btn-expandable"><span>{% trans 'add to wishlist' %}</span></a>
+                                        </div><!-- End .product-action -->
+
+                                        <div class="product-action action-icon-top">
+                                            <!-- 
+                                            <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                                             -->
+                                            <a href="{{s.get_url}}" class="btn-product btn-quickview" title="Quick view"><span>{% trans 'detail view' %}</span></a>
+                                            <a href="#" class="btn-product btn-compare" title="Compare"><span>{% trans 'compare' %}</span></a>
+                                        </div><!-- End .product-action -->
+                                    </figure><!-- End .product-media -->
+
+                                    <div class="product-body">
+                                        <div class="product-cat">
+                                            <a href="#">{{s.category}}</a><br>
+                                            <a href="#">{{s.subcategory}}</a>
+                                        </div><!-- End .product-cat -->
+                                        <h3 class="product-title"><a href="{{s.get_url}}">{{s.product_name|truncate_title:8}}</a></h3><!-- End .product-title -->
+                                          {% if s.variants %}
+                                         <div class="product-price">
+                                            <span>
+                                                {{ s.variants.0.price }} DA
+                                            </span>
+                                            
+
+                                            {% if s.variants.0.clearance_price > 0 %}
+                                                    
+                                            
+                                                   
+                                                    <span style="margin-left: 5px;" class="old-price text-success"> {{s.variants.0.clearance_price}} DA</span>
+
+                                            {% endif %}
+
+                                          
+                                        </div><!-- End .product-price -->
+                                        {% endif %}
+                                        <div class="ratings-container">
+                                             <div class="rating-star">
+                                <span>
+                                    <i class="fa fa-star{% if s.averageReview < 0.5 %}-o{% elif s.averageReview >= 0.5 and s.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if s.averageReview < 1.5 %}-o{% elif s.averageReview >= 1.5 and s.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if s.averageReview < 2.5 %}-o{% elif s.averageReview >= 2.5 and s.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if s.averageReview < 3.5 %}-o{% elif s.averageReview >= 3.5 and s.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if s.averageReview < 4.5 %}-o{% elif s.averageReview >= 4.5 and s.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+    
+                                    </span>
+                            </div>
+                                            <span class="ratings-text">( {{s.countReview}} Reviews )</span>
+                                        </div><!-- End .rating-container -->
+                                        <!-- Product Variations (Colors) -->
+                            <div class="product-nav product-nav-dots">
+                                {% for variation in s.variations.all %}
+                                    {% if variation.color %}
+                                        <a href="#" class="active" style="background: {{ variation.color }}"><span class="sr-only">{{ variation.name }}</span></a>
+                                    {% endif %}
+                                {% endfor %}
+                            </div><!-- End .product-nav -->
+
+                                        
+                                    </div><!-- End .product-body -->
+                                </div><!-- End .product -->
+
+                            </div><!-- End .col-sm-6 col-lg-4 col-xl-3 -->
+                            
+                            {% endfor %}
+                            
+                            
+
+                            {%else %}
+                            <div>
+                                <h5 class="text-center text-info">{% trans 'No Rusalt Found it ... please try again' %}</h5>
+                            </div>
+                            {% endif %}
+
+
+                        </div><!-- End .row -->
+
+                        <nav aria-label="Page navigation">
+                            {% if products.has_other_pages %}
+                                <ul class="pagination">
+                                    {% if products.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link page-link-prev" href="?page={{products.previous_page_number}}" aria-label="Previous" tabindex="-1" aria-disabled="true">
+                                            <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>{% trans 'Prev' %}
+                                        </a>
+                                    </li>
+                                    {% else %}
+                                    <li class="page-item disabled">
+                                        <a class="page-link page-link-prev" href="#" aria-label="Previous" tabindex="-1" aria-disabled="true">
+                                            <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>{% trans 'Prev' %}
+                                        </a>
+                                    </li>
+                                    {%endif%}
+                                    {% for i in products.paginator.page_range %}
+                                    {% if products.number == i %}
+                                    <li class="page-item active" aria-current="page"><a class="page-link" href="#">{{i}}</a></li>
+                                    {% else %}
+                                    <li class="page-item"><a class="page-link" href="?page={{i}}">2</a></li>
+                                    
+                                    <li class="page-item-total">{% trans 'of All' %}</li>
+                                    {% endif %}
+                                    {% endfor %}
+                                    {% if products.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link page-link-next" href="?page={{products.next_page_number}}" aria-label="Next">
+                                            {% trans 'Next' %} <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
+                                        </a>
+                                    </li>
+                                    {%else%}
+                                    <li class="page-item disabled">
+                                        <a class="page-link page-link-next" href="#" aria-label="Next">
+                                            {% trans 'Next' } <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
+                                        </a>
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                                {% endif %}
+                            </nav>
+                    </div><!-- End .products -->
+
+                    <div class="sidebar-filter-overlay"></div><!-- End .sidebar-filter-overlay -->
+                    <aside class="sidebar-shop sidebar-filter">
+                        <div class="sidebar-filter-wrapper">
+                            <div class="widget widget-clean">
+                                <label><i class="icon-close"></i>Filters</label>
+                                <a href="#" class="sidebar-filter-clear">Clean All</a>
+                            </div><!-- End .widget -->
+                            <form method="GET" action="{% url 'product_list' %}">
+    <!-- Category Filter -->
+    <div class="widget widget-collapsible">
+        <h3 class="widget-title">
+            <a data-toggle="collapse" href="#widget-1" role="button" aria-expanded="true" aria-controls="widget-1">
+                Category
+            </a>
+        </h3>
+        <div class="collapse show" id="widget-1">
+            <div class="widget-body">
+                <div class="filter-items">
+                    {% for category in categories %}
+                        <div class="filter-item">
+                            <div class="custom-control custom-checkbox">
+                                <input  type="checkbox" name="category" value="{{ category.slug }}" id="cat-{{ category.id }}" 
+                                    {% if category.slug in request.GET.category %}checked{% endif %}>
+                                <label  >{{ category.category_name }}</label>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
+                          
+
+                          
+
+
+
+                            
+
+                            <div class="widget widget-collapsible">
+    <h3 class="widget-title">
+        <a data-toggle="collapse" href="#widget-5" role="button" aria-expanded="true" aria-controls="widget-5">
+            Price
+        </a>
+    </h3><!-- End .widget-title -->
+
+    <div class="collapse show" id="widget-5">
+    <div class="widget-body">
+        <div class="filter-price">
+            <div class="filter-price-text">
+                Price Range: <span id="filter-price-range"></span>
+            </div><!-- End .filter-price-text -->
+
+            <!-- Range Slider -->
+            <input type="range" id="price-slider" min="0" max="100000" value="500" step="50" />
+            
+            <!-- Minimum Price Input -->
+            <div class="price-inputs">
+                <input type="number" id="min-price" name="min_price" value="0" min="0" max="100000" step="50" placeholder="Min Price" />
+                <span>to</span>
+                <!-- Maximum Price Input -->
+                <input type="number" id="max-price" name="max_price" value="10000000" min="0" max="10000000" step="50" placeholder="Max Price" />
+            </div><!-- End .price-inputs -->
+        </div><!-- End .filter-price -->
+    </div><!-- End .widget-body -->
+</div><!-- End .collapse -->
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+    const priceSlider = document.getElementById('price-slider');
+    const minPriceInput = document.getElementById('min-price');
+    const maxPriceInput = document.getElementById('max-price');
+    const priceRangeText = document.getElementById('filter-price-range');
+
+    // Update the price text and hidden input values when the slider is changed
+    priceSlider.addEventListener('input', function() {
+        // The value of the slider will represent the max price
+        const sliderValue = priceSlider.value;
+        priceRangeText.textContent = "0 DA - DA" + sliderValue;
+        maxPriceInput.value = sliderValue;
+    });
+
+    // Update the slider value when the min/max price inputs are manually modified
+    minPriceInput.addEventListener('input', function() {
+        const minValue = parseInt(minPriceInput.value) || 0;
+        priceSlider.value = minValue;
+        priceRangeText.textContent = "DA" + minValue + " - DA" + maxPriceInput.value;
+    });
+
+    maxPriceInput.addEventListener('input', function() {
+        const maxValue = parseInt(maxPriceInput.value) || 10000000;
+        priceSlider.value = maxValue;
+        priceRangeText.textContent = "DA" + minPriceInput.value + " - DA" + maxValue;
+    });
+
+    // Initialize the price range text based on the default values
+    priceRangeText.textContent = "DA" + minPriceInput.value + " - DA" + maxPriceInput.value;
+});
+
+</script>
+<!-- Add other filters like Size, Color, etc., in a similar way -->
+    <button class="btn btn-light" type="submit">Apply Filters</button>
+</form>
+                        </div><!-- End .sidebar-filter-wrapper -->
+                    </aside><!-- End .sidebar-filter -->
+                </div><!-- End .container -->
+            </div><!-- End .page-content -->
+        </main><!-- End .main -->
+
+        {% endblock %}

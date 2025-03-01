@@ -1,0 +1,108 @@
+
+  /* Page Header Styling */
+.page-header {
+    background-size: cover;
+    background-position: center;
+    padding: 50px 0;
+}
+
+.page-title {
+    color: #fff;
+    font-size: 2rem;
+    text-transform: uppercase;
+}
+
+/* Breadcrumb */
+.breadcrumb-nav {
+    margin-bottom: 20px;
+}
+
+.breadcrumb-item a {
+    text-decoration: none;
+    color: #333;
+}
+
+.breadcrumb-item.active {
+    font-weight: bold;
+}
+
+/* Inventory Summary and Detailed Product Styles */
+.summary, .detailed-products, .other-metrics {
+    margin-bottom: 30px;
+}
+
+.section-title {
+    font-size: 2rem;
+    color: #333;
+}
+
+.section-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #fcb941;
+}
+
+.summary-list, .metrics-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.summary-list li, .metrics-list li {
+    margin: 10px 0;
+}
+
+.low-stock-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.product-info {
+    display: flex;
+    align-items: center;
+}
+
+.product-image {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.product-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.product-card strong {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.variation-list {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 10px;
+}
+
+.variation-list li {
+    margin: 5px 0;
+}
+
+.product-media img {
+    border-radius: 4px;
+}
+
+/* See More Link */
+.see-more-link {
+    color: #007bff;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.see-more-link:hover {
+    text-decoration: underline;
+}

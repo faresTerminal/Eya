@@ -1,0 +1,112 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load thumbnail %}
+{% load i18n %}
+
+{% block content %}
+{% if current_language == 'ar' %}
+    <style>
+      .main {
+        direction: rtl;
+      }
+      tr {
+        text-align: center;
+      }
+      .row {
+        text-align: right;
+      }
+      .product-media {
+        margin-right: 0.2rem !important;
+        margin-left: 1em !important;
+      }
+    </style>
+{% endif %}
+
+<main class="main">
+   <!-- Include the ads template -->
+            {% include 'partials/ads.html' %}
+
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">{% trans 'Home' %}</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Account</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{% trans 'Add Coupon' %}</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+
+    <div class="page-content">
+        <div class="dashboard">
+            <div class="container">
+                <div class="row">
+                    {% include 'includes/management_center_sidebar.html' %}
+
+                    <div class="col-md-6 col-lg-6">
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel" aria-labelledby="tab-dashboard-link">
+                                <h3>{% trans 'Create New Coupon' %}</h3>
+                               
+                                  {% if messages %}
+                                    <div class="alert alert-info mt-3">
+                                        <ul>
+                                            {% for message in messages %}
+                                                <li>{{ message }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+
+
+                                <form method="POST" action="{% url 'add_coupon' %}">
+                                    {% csrf_token %}
+                                    
+                                    <div class="form-group">
+                                        <label for="code">{% trans 'Coupon Code' %}</label>
+                                        <input type="text" name="code" id="code" class="form-control" placeholder="{% trans 'Enter coupon code' %}" required>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="discount_amount">{% trans 'Discount Amount' %}</label>
+                                        <input type="text" name="discount_amount" id="discount_amount" class="form-control" placeholder="{% trans 'Enter discount amount' %}" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="minimum_purchase">{% trans 'Minimum Purchase Amount (Optional)' %}</label>
+                                        <input type="text" name="minimum_purchase" id="minimum_purchase" class="form-control" placeholder="{% trans 'Enter minimum purchase amount' %}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="expiration_date">{% trans 'Expiration Date' %}</label>
+                                        <input type="datetime-local" name="expiration_date" id="expiration_date" class="form-control" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="max_uses">{% trans 'Maximum Uses' %}</label>
+                                        <input type="text" name="max_uses" id="max_uses" class="form-control" placeholder="{% trans 'Enter maximum uses' %}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="is_active">{% trans 'Activate Coupon' %}</label>
+                                        <input style="margin-left: 1em;" type="checkbox" name="is_active" id="is_active" class="form-check-input" checked>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="is_active">{% trans 'used_count' %}</label>
+                                        <input type="text" name="used_count" id="used_count" class="form-control" placeholder="{% trans 'Enter Used Count' %}">
+                                    </div>
+
+
+                                    <button type="submit" class="btn btn-primary">{% trans 'Create Coupon' %}</button>
+                                </form>
+
+                                
+                            </div><!-- End .tab-pane -->
+                        </div><!-- End .tab-content -->
+                    </div><!-- End .col-lg-9 -->
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+        </div><!-- End .dashboard -->
+    </div><!-- End .page-content -->
+</main><!-- End .main -->
+
+{% endblock %}

@@ -1,0 +1,22 @@
+{% load i18n %}
+<aside class="col-md-4 col-lg-2">
+    <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link {% if '/analytics/' == request.path %}active{% endif %}" href="{% url 'DashboardAnalytics' %}" >{% trans "Dashboard" %}</a>
+        </li>
+         <li class="nav-item">
+            <a class="nav-link {% if '/product-viewer/' in request.path %}active{% endif %}" href="{% url 'Product_Viewer' %}" >{% trans "Product Viewer" %}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if '/product_profits/' in request.path %}active{% endif %}" href="{% url 'Product_Profits' %}" >{% trans "Product Profits" %}</a>
+        </li>
+         <li class="nav-item">
+            <a class="nav-link {% if '/costumer-sales/' in request.path %}active{% endif %}" href="{% url 'Costumer_Sales' %}" >{% trans "Costumer Sales" %}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if '/state-sales/' in request.path %}active{% endif %}" href="{% url 'State_Sales' %}" >{% trans "State Sales" %}</a>
+        </li>
+
+      
+    </ul>
+</aside>

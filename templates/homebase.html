@@ -1,0 +1,1566 @@
+{% load i18n %}
+{% load static %}
+{% load custom_filters1 %}
+{% load custom_filters %}
+<!DOCTYPE html>
+<html lang="{% get_current_language as current_language %}">
+
+
+
+
+<!-- molla/index-3.html  22 Nov 2019 09:55:42 GMT -->
+<head>
+   
+
+    <meta charset="UTF-8">
+    {% if current_language == 'ar' %}
+    <style>
+        /* Add your RTL CSS styles here */
+        @font-face {
+        font-family: 'Cairo';
+        src: url('{% static "fonts/Cairo-Regular.ttf" %}') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+        }
+        body {
+          font-family: 'Cairo', sans-serif;
+        }
+        body a{
+            font-family: 'Cairo', sans-serif !important;
+        }
+         body p{
+            font-family: 'Cairo', sans-serif !important;
+        }
+        .linker {
+            direction: rtl;
+            margin-left: 2em;
+           
+        }
+        #q{
+            text-align: right;
+            direction: rtl;
+        }
+       
+        .header-center a {
+            
+            margin-left: 2em;
+        }
+        .deal{
+            direction: rtl;
+        }
+        
+       
+        footer{
+            direction: rtl;
+            text-align: justify;
+        }
+        .widget-list{
+            direction: rtl;
+            
+        }
+        .icon-box-content{
+            text-align: right;
+        }
+        .supporter{
+            direction: rtl;
+        }
+        .product-body{
+            direction: rtl;
+        }
+        .new-price{
+            margin-right: .1rem;
+        }
+        .old-price{
+            margin-right: 0.5em;
+        }
+        .signboard{
+            direction: rtl;
+        }
+        .cta-text{
+            text-align: right;
+        }
+        .cta-content a{
+            margin-right: 1em;
+        }
+        .page-header .page-title{
+            font-family: 'Cairo', sans-serif;
+        }
+        .menu li{
+            text-align: right;
+        }
+        .header-menu{
+            width: 260%;
+        }
+    </style>
+    <style>
+        /* Default light mode styles */
+body {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/* Dark mode styles */
+body.dark-mode {
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
+    </style>
+    
+     {% endif %}
+  
+ <!-- Add these Open Graph tags in the <head> section of your template -->
+
+      <!-- Other meta tags and links -->
+
+ {% if facebook_pixels %}
+    {% for pixel in facebook_pixels %}
+        <!-- Facebook Pixel Code -->
+        <script>
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '{{ pixel.pixel_id }}');
+            fbq('track', 'PageView');
+        </script>
+        <noscript>
+            <img height="1" width="1" style="display:none" 
+                 src="https://www.facebook.com/tr?id={{ pixel.pixel_id }}&ev=PageView&noscript=1"/>
+        </noscript>
+        <!-- End Facebook Pixel Code -->
+    {% endfor %}
+{% endif %}
+
+   
+     
+    <meta name="google-site-verification" content="6x64Ap4UdtM3297wDfQkWwLonzB0lWq8QIm2QnOo9Uc" />
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Eco-dz Shopping </title>
+    <!-- Default Open Graph Meta Tags -->
+    {% block og_tags %}
+        <meta property="og:title" content="Eco-dz Shopping" />
+        <meta property="og:description" content="Welcome to Eco-dz Shopping" />
+        <meta property="og:image" content="{% static 'images/default-og-image.jpg' %}" />
+        <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Eco-dz Shopping" />
+    {% endblock %}
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/icons/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/icons/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/icons/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'images/icons/site.html' %}">
+    <link rel="mask-icon" href="{% static 'images/icons/safari-pinned-tab.svg' %}" color="#666666">
+    <link rel="shortcut icon" href="{% static 'images/icons/favicon.ico' %}">
+    <meta name="apple-mobile-web-app-title" content="Molla">
+    <meta name="application-name" content="Molla">
+    <meta name="msapplication-TileColor" content="#cc9966">
+    <meta name="msapplication-config" content="{% static 'images/icons/browserconfig.xml' %}">
+    
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="{% static 'vendor/line-awesome/line-awesome/line-awesome/css/line-awesome.min.css' %}">
+    <!-- Plugins CSS File -->
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/plugins/owl-carousel/owl.carousel.css' %}">
+    <link rel="stylesheet" href="{% static 'css/plugins/magnific-popup/magnific-popup.css' %}">
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}" type="text/javascript"></script>
+    <link rel="stylesheet" href="{% static 'css/plugins/jquery.countdown.css' %}">
+    <!-- custom style -->
+    
+    <link href="{% static 'css/ui.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'css/responsive.css' %}" rel="stylesheet" media="only screen and (max-width: 1200px)" />
+
+    <link href="{% static 'css/custom.css' %}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+     <!-- Dropzone CSS For Upload More Then 1 image-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.0/min/dropzone.min.css" />
+
+    
+   
+    
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/skins/skin-demo-3.css' %}">
+    <!--
+    <link rel="stylesheet" href="{% static 'css/demos/demo-3.css' %}">
+    -->
+    <link rel="stylesheet" href="{% static 'css/mobile.css' %}">
+     <link rel="stylesheet" href="{% static 'css/skins/skin-demo-4.css' %}">
+    <link rel="stylesheet" href="{% static 'css/demos/demo-4.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styi.css' %}">
+    <!-- arabic font -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/arabic-font.css' %}">
+    <!-- PayPal Script -->
+
+    <!-- Include CSS and JS for intl-tel-input for Flag Regions to phone Number -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
+    <!-- Remix Icon CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+
+
+    <meta property="og:title" content="{{ metadata.title }}">
+    <meta property="og:description" content="{{ metadata.description }}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:image" content="{{ product.image.url }}">
+
+    <!-- costum css -->
+    <link rel="stylesheet" href="{% static 'css/costum-css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/costum-css/checkout.css' %}">
+    <link rel="stylesheet" href="{% static 'css/costum-css/product-detail.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/costum-css/stock.css' %}">
+    <link rel="stylesheet" href="{% static 'css/costum-css/stock_update_adjesment.css' %}">
+    <link rel="stylesheet" href="{% static 'css/costum-css/update-stock.css' %}">
+
+
+
+    <!-- end costum css -->
+
+
+
+    
+   
+</head>
+
+<body>
+	
+<div class="page-wrapper">
+<header class="header header-intro-clearance header-3">
+            <div class="header-top">
+                <div class="container">
+                    <div class="header-left">
+                        <a href="tel:#"><i class="icon-phone"></i>Call: +213 0697 56 42 53</a>
+                    </div><!-- End .header-left -->
+
+                    <div class="header-right" >
+
+                        <ul class="top-menu" >
+                            <li >
+                                
+                                <ul >
+                                  {% if user.is_active %}
+                                    
+                                     
+                                     <li style="margin-left: 0.8em;">
+                                        <div class="header-dropdown">
+                                             <a href="/{% get_current_language as language_code %}/">{% trans "Profile" %}</a>
+                                             <div class="header-menu">
+                                                  <ul>
+                                                     {% if user_profile_picture %}
+                                                    <li><dir class="text-right">
+                                                        
+                                                        <img style="width: 60px;
+                                                        border-radius: 50%;
+                                                     height: 60px;" src="{{ user_profile_picture.url }}">
+                                                     
+                                                    </dir>
+                                                    </li>
+                                                    {% else %}
+                                                     <li><dir class="text-right">
+                                                        
+                                                        <img style="width: 30px;
+                                                        border-radius: 50%;
+                                                     height: 30px;" src="#">
+                                                     
+                                                    </dir>
+                                                    </li><br>
+                                                    {% endif %}
+                                                     
+                                                    <li><a href="{% url 'dashboard' %}">{{user.username}}</a></li>
+                                                    <li><a href="{% url 'logout'%}">{% trans 'Log Out' %}</a></li><br>
+                                                    <li><a href="{% url 'dashboard' %}">{% trans 'Dashboard' %}</a></li>
+                                                    <li><a href="{% url 'stock' %}">{% trans 'Stock' %}</a></li>
+                                                    <li><a href="{% url 'DashboardAnalytics'  %}">{% trans 'Analytics' %}</a></li>
+                                                    
+
+                                                    {% if user.is_active %}
+                                                   
+                                                    <li><a href="{% url 'Management_Center' %}">{% trans 'Management Center' %}</a></li>
+                                                   
+                                                    
+                                                    
+                                                    {% endif %}
+                                                  </ul>
+                                             </div><!-- End .header-menu -->
+                                        </div>
+
+                                    </li>
+                                    
+                                     <li>
+                                        <div class="">
+                                            <a href="{% url 'newsletter:send_daily_slide_email' %}">{% trans "NewsLettre Send Updates" %}</a>
+                                            
+                                        </div>
+                                    </li>
+                                    {% endif %}
+{% load humanize %}
+<li class="header-dropdown">
+
+    <a href="#" class="notification-icon">
+        
+        {% trans "Notifications" %}
+        {% if unread_notifications_count > 0 %}
+        
+        <div class="icon">
+        
+         <span style="
+                   background-color: #fbb841;
+                   border-radius: 50%;
+
+                   color: #1a1919;
+                   font-family: initial; " 
+  class="wishlist-count badge">{{ unread_notifications_count }}</span>
+        </div>
+    
+        {% endif %}
+
+    </a>
+    <div class="header-menu" style="max-height: 300px; overflow-y: auto;">
+        <div class="notification-header">
+            <span style="color: #eea30b;">{% trans "Notifications" %}</span>
+        </div>
+        <ul class="notifications-list">
+            {% if unread_notifications %}
+                {% for notification in unread_notifications %}
+                <li class="notification-item {% if not notification.read %}unread{% endif %}">
+                    <a href="{% url 'notification:mark_notification_as_read' notification.id %}" class="notification-link">
+                        <div class="notification-content">
+                            <div class="notification-image">
+                                <img src="{{ notification.profile_picture_url }}" 
+                                     alt="{{ notification.sender.full_name }}'s profile picture" class="profile-picture">
+                            </div>
+                            <div class="notification-text" style="flex-grow: 1;">
+                                <strong>{{ notification.sender.full_name }}</strong> <br>
+                                {{ notification.message|safe}}
+                                <br>
+                                <small class="notification-time">{{ notification.created_at|naturaltime }}</small>
+                            </div>
+                        </div>
+                    </a>
+                    <hr style="width: 30%; height: 1px; border: none; background-color: #ccc; margin: 1px auto;">
+                </li>
+                {% endfor %}
+            {% else %}
+                <li class="no-notifications">
+                    <a href="#">{% trans "No notifications" %}</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div><!-- End .header-menu -->
+</li>
+
+<style type="text/css">
+    .header-dropdown {
+        position: relative;
+    }
+
+    .header-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: white;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        z-index: 2000;
+    }
+
+.notification-content {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.notification-image {
+    margin-right: 10px;
+    width: 40px; /* Set width */
+    height: 40px; /* Set height */
+    display: flex; /* Flex for centering if needed */
+    overflow: hidden; /* Prevent overflow */
+}
+
+.notification-image img {
+    width: 100%; /* Full width of the image container */
+    height: 100%; /* Full height of the image container */
+    border-radius: 50%; /* Make image circular */
+    object-fit: cover; /* Cover the area properly */
+}
+
+    .notification-header {
+        padding: 10px;
+        font-weight: bold;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .notifications-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .notification-item {
+        padding: 10px;
+        transition: background-color 0.3s;
+    }
+
+    .notification-item:hover {
+        background-color: #f0f0f0;
+    }
+
+    .no-notifications {
+        text-align: center;
+        padding: 10px;
+    }
+    .top-menu span {
+  color: #f4f3f1;
+}
+
+</style>
+
+
+
+
+                                    <li style="margin-left: 0.8em;">
+                                        <div class="header-dropdown">
+                                             <a href="/{% get_current_language as language_code %}/">{% trans "Language" %}</a>
+                                             <div class="header-menu">
+                                                  <ul>
+                                                     <li><a href="/en/">{% trans "English" %}</a></li>
+                                                     <li><a href="/fr/">{% trans "French" %}</a></li>
+                                                     <li><a href="/ar/">{% trans "Arabic" %}</a></li>
+                                                  </ul>
+                                             </div><!-- End .header-menu -->
+                                        </div>
+
+                                    </li>
+                                    {% if user.id is None %}
+                                   
+                                    
+                                    <li>
+                                        <div class="header-dropdown">
+                                            <a href="#">{% trans 'Make an Account' %}</a>
+                                            <div class="header-menu">
+                                                <ul>
+                                                    <li><a href="{% url 'login' %}">{% trans 'Login' %}</a></li>
+                                                    <li><a href="{% url 'register' %}">{% trans 'Register' %}</a></li>
+                                                    
+                                                    
+                                                </ul>
+                                            </div><!-- End .header-menu -->
+                                        </div>
+                                    </li>
+                                    {%else%}
+                                    <li>
+                                        <div class="header-dropdown">
+                                             <a href="">{% trans "E-Commerce Tools" %}</a>
+                                             <div class="header-menu">
+                                                  <ul>
+                                                     <li><a href="">{% trans "Pixel Facebook" %}</a></li>
+                                                     <li><a href="">{% trans "Google Sheets" %}</a></li>
+                                                     <li><a href="">{% trans "Delivery Company" %}</a></li>
+                                                  </ul>
+                                             </div><!-- End .header-menu -->
+                                        </div>
+
+                                    </li>
+                                     
+                                    {% endif %}
+                                </ul>
+                            </li>
+                        </ul><!-- End .top-menu -->
+                    </div><!-- End .header-right -->
+
+                </div><!-- End .container -->
+            </div><!-- End .header-top -->
+
+            <div class="header-middle">
+                <div class="container">
+                    <div class="header-left">
+                        <button class="mobile-menu-toggler">
+                            <span class="sr-only">Toggle mobile menu</span>
+                            <i class="icon-bars"></i>
+                        </button>
+                        
+                        <a href="{% url 'home' %}" class="logo">
+                            <img src="{% static 'images/demos/demo-3/logoo.png' %}" alt="Molla Logo" width="105" height="25">
+                        </a>
+                    </div><!-- End .header-left -->
+
+                    <div class="header-center">
+                        <div class="header-search header-search-extended header-search-visible d-none d-lg-block">
+                            <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
+                            <form action="{% url 'search' %}" class="search" method='GET'>
+                                <div class="header-search-wrapper search-wrapper-wide">
+                                    <label for="q" class="sr-only">{% trans 'Search' %}</label>
+                                    <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+                                    <input type="search" class="form-control" name="keyword" id="q" placeholder="{% trans 'Search product' %} ..." required>
+                                </div><!-- End .header-search-wrapper -->
+                            </form>
+                        </div><!-- End .header-search -->
+                    </div>
+
+                    <div class="header-right">
+                        <div class="dropdown compare-dropdown">
+                           
+                               
+
+                               
+                            </div><!-- End .dropdown-menu -->
+                        </div><!-- End .compare-dropdown -->
+                         {% if user.is_active %}
+                         <div class="wishlist">
+                            <a href="{% url 'printing' %}" title="Orders">
+                                <div class="icon">
+                                    <i class="la la-lightbulb-o"></i>
+                                    <span class="wishlist-count badge">{{seller_order_count}}</span>
+                                </div>
+                                <p>{% trans 'Orders' %}</p>
+                            </a>
+                        </div><!-- End .compare-dropdown -->
+                        {% endif %}
+
+                        <div class="wishlist">
+                            <a href="{% url 'wishlist' %}" title="Wishlist">
+                                <div class="icon">
+                                    <i class="icon-heart-o"></i>
+                                    <span class="wishlist-count badge">{{ wishlist_items_count }}</span>
+                                </div>
+                                <p>{% trans 'Wishlist' %}</p>
+                            </a>
+                        </div><!-- End .compare-dropdown -->
+
+                      
+                        
+
+                        <div class="dropdown cart-dropdown">
+                            <a href="{% url 'cart' %}" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                                <div class="icon">
+                                    <i class="icon-shopping-cart"></i>
+                                    <span class="cart-count">{{cart_count}}</span>
+                                </div>
+                                <p>{% trans 'Cart' %}</p>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <div class="dropdown-cart-products">
+      {% for c in item %}
+<div class="product">
+    <div class="product-cart-details">
+        <h4 class="product-title">
+            <a href="">{{ c.product.product_name }}</a>
+        </h4>
+
+        <span class="cart-product-info">
+            <span class="cart-product-qty">{{ c.quantity }}</span>
+            x
+            {% if c.variations.exists %}
+                {% for variation in c.variations.all %}
+                    {% if variation.clearance_price %}
+                        {{ variation.clearance_price }} DA
+                    {% else %}
+                        {{ variation.price }} DA
+                    {% endif %}
+                    {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            {% else %}
+                {% if c.product.clearance_price %}
+                    {{ c.product.clearance_price }} DA
+                {% else %}
+                    {{ c.product.price }} DA
+                {% endif %}
+            {% endif %}
+        </span>
+    </div><!-- End .product-cart-details -->
+
+    <figure class="product-image-container">
+        <a href="product.html" class="product-image">
+            <img src="{{ c.product.images.url }}">
+        </a>
+    </figure>
+     
+
+</div><!-- End .product -->
+
+{% endfor %}
+   <div class="dropdown-cart-total">
+                                    <span>{% trans "Total" %}</span>
+
+                                    <span class="cart-total-price">{{total_price}} DA</span>
+                                </div><!-- End .dropdown-cart-total -->
+
+                                   
+
+                                
+
+                                <div class="dropdown-cart-action">
+                                    <a href="{% url 'cart'%}" class="btn btn-primary">{% trans 'View Cart' %}</a>
+                                    <a href="{% url 'checkout' %}" class="btn btn-outline-primary-2"><span>{% trans 'Checkout' %}</span><i class="icon-long-arrow-right"></i></a>
+                                </div><!-- End .dropdown-cart-total -->
+                            </div><!-- End .dropdown-menu -->
+                        </div><!-- End .cart-dropdown -->
+                    </div><!-- End .header-right -->
+                </div><!-- End .container -->
+            </div><!-- End .header-middle -->
+
+            <div class="header-bottom sticky-header">
+                <div class="container">
+                    <div class="header-left">
+                        <div class="dropdown category-dropdown">
+                            <a href="{% url 'show_category' %}" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static" title="Browse Categories">
+                                {% trans 'Browse Categories' %} <i class="icon-angle-down"></i>
+                            </a>
+
+                            <div class="dropdown-menu">
+    <nav class="side-nav">
+        <ul class="menu-vertical sf-arrows">
+            <li class="item-lead"><a href="{% url 'show_category' %}">{% trans 'All Products' %}</a></li>
+            {% for category in categories %}
+            <li class="item-lead">
+                <a href="{% url 'products_by_category' category.slug %}">{{ category.category_name }}</a>
+                {% if category_dict|get:category %}
+                <ul class="menu-vertical sf-arrows">
+                    {% for subcategory in category_dict|get:category %}
+                    <li class="item-lead">
+                        <a href="{% url 'products_by_category' category.slug subcategory.slug %}">{{ subcategory.name }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </nav>
+</div>
+
+                        </div><!-- End .category-dropdown -->
+                    </div><!-- End .header-left -->
+                    
+                    <div class="header-center linker">
+                        <nav class="main-nav">
+                            <ul class="menu sf-arrows">
+                                <li class="megamenu-container active">
+                                    <a href="{% url 'home' %}" class="">{% trans 'Home' %}</a>
+
+
+                                </li>
+                                <li>
+                                    <a href="{% url 'store' %}" class="">{% trans 'Shop' %}</a>
+
+                                   
+                                </li>
+                                
+                                <li>
+                                    <a href="#" class="sf-with-ul">{% trans 'Pages' %}</a>
+
+                                    <ul>
+                                        <li>
+                                            <a href="{% url 'about' %}" class="">{% trans 'About' %}</a>
+
+                                           
+                                        </li>
+                                        <li>
+                                   <a href="{% url 'contact' %}" class="">{% trans 'Contact' %}</a>
+
+                                           
+                                        </li>
+                                        
+                                        <li><a href="{% url 'faqs' %}">{% trans 'FAQs' %}</a></li>
+                                        
+                                        
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="{% url 'blog' %}" class="">{% trans 'Blog' %}</a>
+
+                                    
+                                </li>
+                                
+                            </ul><!-- End .menu -->
+                        </nav><!-- End .main-nav -->
+                    </div><!-- End .header-center -->
+
+                    <div class="header-right">
+                        <i class="la la-lightbulb-o"></i><p><a class="" href="{% url 'Clearance_Products' %}">{% trans 'Clearance' %}</a><span class="highlight">&nbsp;{% trans 'Up to 10 % Off' %}</span></p>
+                    </div>
+                </div><!-- End .container -->
+            </div><!-- End .header-bottom -->
+        </header><!-- End .header -->
+      
+  
+{% block content %}
+
+{% endblock %}
+<style>
+    #cookie-banner {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 500px;
+        background: #222;
+        color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        font-family: Arial, sans-serif;
+        display: none;
+        z-index: 1000;
+    }
+
+    #cookie-banner p {
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+
+    .cookie-btn {
+        border: none;
+        padding: 10px 20px;
+        font-size: 14px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s ease-in-out;
+    }
+
+    .accept-btn {
+        background-color: #28a745;
+        color: white;
+        margin-right: 10px;
+    }
+
+    .reject-btn {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .cookie-btn:hover {
+        opacity: 0.8;
+    }
+</style>
+
+<style>
+    #cookie-banner {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 500px;
+        background: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+        color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        font-family: Arial, sans-serif;
+        display: none;
+        z-index: 1000;
+        backdrop-filter: blur(10px); /* Glassmorphism effect */
+    }
+
+    #cookie-banner p {
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+
+    .cookie-btn {
+        border: none;
+        padding: 10px 20px;
+        font-size: 14px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s ease-in-out;
+    }
+
+    .accept-btn {
+        background-color: #28a745;
+        color: white;
+        margin-right: 10px;
+    }
+
+    .reject-btn {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .cookie-btn:hover {
+        opacity: 0.8;
+    }
+</style>
+
+
+
+
+
+<div id="cookie-banner">
+    <p>By clicking “Accept All Cookies”, you agree to the storing of cookies on your device to enhance site navigation, analyze site usage, and assist in our marketing efforts.</p>
+    <button class="cookie-btn accept-btn" onclick="acceptCookies()">Accept All Cookies</button>
+    <button class="cookie-btn reject-btn" onclick="rejectCookies()">Reject</button>
+</div>
+
+<script>
+    function getCookie(name) {
+        let cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            let cookie = cookies[i].trim();
+            if (cookie.startsWith(name + "=")) {
+                return cookie.substring(name.length + 1);
+            }
+        }
+        return "";
+    }
+
+    function acceptCookies() {
+        document.cookie = "cookies_accepted=true; path=/; max-age=" + (60 * 60 * 24 * 365);
+        document.getElementById("cookie-banner").style.display = "none";
+    }
+
+    function rejectCookies() {
+        document.cookie = "cookies_accepted=false; path=/; max-age=" + (60 * 60 * 24 * 365);
+        document.getElementById("cookie-banner").style.display = "none";
+    }
+
+    // Show banner if user hasn't accepted/rejected cookies
+    if (!getCookie("cookies_accepted")) {
+        document.getElementById("cookie-banner").style.display = "block";
+    }
+</script>
+
+<script>
+    if (getCookie("cookies_accepted") === "true") {
+        // Load Google Analytics or Ads
+        (function() {
+            let script = document.createElement("script");
+            script.src = "https://www.googletagmanager.com/gtag/js?id=YOUR_GA_ID";
+            script.async = true;
+            document.head.appendChild(script);
+        })();
+    }
+</script>
+
+<footer class="footer">
+        	<div class="footer-middle">
+	            <div class="container">
+	            	<div class="row">
+	            		<div class="col-sm-6 col-lg-3">
+	            			<div class="widget widget-about">
+	            				<img src="{% static 'images/demos/demo-3/vb.png' %}" class="footer-logo" alt="Footer Logo" width="105" height="25">
+	            				<p>{% trans 'Eco-dz Shopping is your one-stop destination for eco-conscious living.' %}'  </p>
+
+	            				
+                               <div class="social-icons">
+    {% if social_links %}
+        {% if social_links.facebook %}
+            <a href="{{ social_links.facebook }}" class="social-icon" target="_blank" title="Facebook">
+                <i class="icon-facebook-f"></i>
+            </a>
+        {% endif %}
+
+        {% if social_links.twiter %}
+            <a href="{{ social_links.twiter }}" class="social-icon" target="_blank" title="Twitter">
+                <i class="icon-twitter"></i>
+            </a>
+        {% endif %}
+
+        {% if social_links.instagram %}
+            <a href="{{ social_links.instagram }}" class="social-icon" target="_blank" title="Instagram">
+                <i class="icon-instagram"></i>
+            </a>
+        {% endif %}
+
+        {% if social_links.youtube %}
+            <a href="{{ social_links.youtube }}" class="social-icon" target="_blank" title="YouTube">
+                <i class="icon-youtube"></i>
+            </a>
+        {% endif %}
+
+        {% if social_links.pinterest %}
+            <a href="{{ social_links.pinterest }}" class="social-icon" target="_blank" title="Pinterest">
+                <i class="icon-pinterest"></i>
+            </a>
+        {% endif %}
+
+        
+    {% endif %}
+</div><!-- End .social-icons -->
+
+	            			</div><!-- End .widget about-widget -->
+	            		</div><!-- End .col-sm-6 col-lg-3 -->
+
+	            		<div class="col-sm-6 col-lg-3">
+	            			<div class="widget">
+	            				<h4 class="widget-title">{% trans ' Useful Links' %}</h4><!-- End .widget-title -->
+
+	            				<ul class="widget-list">
+	            					<li><a href="{% url 'about' %}">{% trans 'About' %} Eco dz</a></li>
+                                    
+	            					<li><a href="{% url 'faqs' %}">{% trans 'FAQ' %}</a></li>
+	            					<li><a href="{% url 'contact' %}">{% trans 'Contact us' %}</a></li>
+	            				</ul><!-- End .widget-list -->
+	            			</div><!-- End .widget -->
+	            		</div><!-- End .col-sm-6 col-lg-3 -->
+
+	            		<div class="col-sm-6 col-lg-3">
+	            			<div class="widget">
+	            				<h4 class="widget-title">{% trans 'Customer Service' %}</h4><!-- End .widget-title -->
+
+	            				<ul class="widget-list">
+	            					
+	            					<li><a href="#">{% trans 'Returns' %}</a></li>
+	            					<li><a href="{% url 'store' %}">{% trans 'Shipping' %}</a></li>
+	            					<li><a href="{% url 'Terms_and_conditions' %}">{% trans 'Terms and conditions' %}</a></li>
+	            					<li><a href="{% url 'Privacy' %}">{% trans 'Privacy Policy' %}</a></li>
+	            				</ul><!-- End .widget-list -->
+	            			</div><!-- End .widget -->
+	            		</div><!-- End .col-sm-6 col-lg-3 -->
+
+	            		<div class="col-sm-6 col-lg-3">
+	            			<div class="widget">
+	            				<h4 class="widget-title">{% trans 'My Account' %}</h4><!-- End .widget-title -->
+
+	            				<ul class="widget-list">
+                                    {% if not user.is_active %}
+	            					<li><a href="{% url 'login' %}">{% trans 'Sign In' %}</a></li>
+                                    {% endif %}
+	            					<li><a href="{% url 'cart' %}">{% trans 'View Cart' %}</a></li>
+	            					<li><a href="{% url 'wishlist' %}">{% trans 'My Wishlist' %}</a></li>
+	            					
+	            					<li><a href="{% url 'contact' %}">{% trans 'Help' %}</a></li>
+	            				</ul><!-- End .widget-list -->
+	            			</div><!-- End .widget -->
+	            		</div><!-- End .col-sm-6 col-lg-3 -->
+	            	</div><!-- End .row -->
+	            </div><!-- End .container -->
+	        </div><!-- End .footer-middle -->
+
+	        <div class="footer-bottom">
+    <div class="container">
+        <p class="footer-copyright">
+            {% trans 'Copyright © 2026 Eco-dz Shopping. All Rights Reserved.' %}
+        </p>
+        <!-- End .footer-copyright -->
+
+        <figure class="footer-payments">
+            <div class="payment-item">
+                <img src="{% static 'images/Credit_Cart/cod.jpg' %}" alt="CIB" width="40" height="10">
+                <p class="payment-title">COD</p>
+            </div>
+            <div class="payment-item">
+                <img src="{% static 'images/Credit_Cart/manitique.jpg' %}" alt="CIB" width="40" height="10">
+                <p class="payment-title">DHAHABIA</p>
+            </div>
+            <div class="payment-item">
+                <img src="{% static 'images/Credit_Cart/cib.jpg' %}" alt="DHAHABIA" width="40" height="10">
+                <p class="payment-title">CIB</p>
+            </div>
+        </figure>
+        <!-- End .footer-payments -->
+    </div>
+    <!-- End .container -->
+</div>
+<!-- End .footer-bottom -->
+<style type="text/css">
+    .footer-payments {
+    display: flex; /* Arrange items in a row */
+    justify-content: center; /* Center the payment items horizontally */
+    align-items: center; /* Align items vertically */
+    gap: 20px; /* Add space between each payment item */
+    margin-top: 10px; /* Add space above the payment section */
+}
+
+.payment-item {
+    display: flex;
+    flex-direction: column; /* Stack the image and title vertically */
+    align-items: center; /* Center align the image and title */
+    text-align: center;
+}
+
+.payment-item img {
+    width: 50px; /* Adjust the width of the payment icons */
+    height: auto; /* Maintain the aspect ratio */
+    object-fit: contain; /* Ensure the image fits properly */
+}
+
+.payment-title {
+    font-size: 12px; /* Small font size for the title */
+    color: #555; /* Gray color for the text */
+    margin-top: 5px; /* Space between the image and the title */
+}
+
+</style>
+        </footer><!-- End .footer -->
+    </div><!-- End .wrapper -->
+
+     <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu-overlay" ></div><!-- End .mobil-menu-overlay -->
+
+    <div class="mobile-menu-container">
+        <div class="mobile-menu-wrapper">
+            <span class="mobile-menu-close"><i class="icon-close"></i></span>
+            <div style="text-align: center;">
+                        <a href="tel:#"><i class="icon-phone"></i>Call: +213 0697 56 42 53</a>
+             </div><!-- End .header-left -->
+            <form action="{% url 'search' %}" method="get" class="mobile-search">
+                <label for="mobile-search" class="sr-only">Search</label>
+                <input type="search" class="form-control" name="keyword" id="q" placeholder="Search in..." required>
+                <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+                 
+            </form>
+
+            <ul class="nav nav-pills-mobile nav-border-anim" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="mobile-menu-link" data-toggle="tab" href="#mobile-menu-tab" role="tab" aria-controls="mobile-menu-tab" aria-selected="true">Menu</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="mobile-cats-link" data-toggle="tab" href="#mobile-cats-tab" role="tab" aria-controls="mobile-cats-tab" aria-selected="false">Categories</a>
+                </li>
+                 <li class="nav-item">
+                <a class="nav-link" id="mobile-profile-link" data-toggle="tab" href="#mobile-profile-tab" role="tab" aria-controls="mobile-profile-tab" aria-selected="false">Profile</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link notifications-link" id="mobile-notification-link" data-toggle="tab" href="#mobile-notification-tab" role="tab" aria-controls="mobile-notification-tab" aria-selected="false">Notifications
+                 {% if unread_notifications_count > 0 %}
+                <div class="icon">
+                     <span class="notification-count badge">{{ unread_notifications_count }}</span>
+                </div>
+               {% endif %}</a>
+                </li>
+
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="mobile-menu-tab" role="tabpanel" aria-labelledby="mobile-menu-link">
+                    <nav class="mobile-nav">
+                        <ul class="mobile-menu">
+                            <li class="active">
+                                <a href="{% url 'home' %}">Home</a>
+
+                                
+                            </li>
+                            <li>
+                                <a href="{% url 'store' %}">Shop</a>
+                               
+                            </li>
+                           
+                            <li>
+                                <a href="#">Pages</a>
+                                <ul>
+                                    <li>
+                                        <a href="{% url 'about' %}">About</a>
+
+                                       
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'contact' %}">Contact</a>
+
+                                       
+                                    </li>
+                                   
+                                    <li><a href="{% url 'faqs' %}">FAQs</a></li>
+                                    
+                                   
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="{% url 'blog' %}">Blog</a>
+
+                                
+                            </li>
+                           
+                        </ul>
+                    </nav><!-- End .mobile-nav -->
+                </div><!-- .End .tab-pane -->
+                <div class="tab-pane fade" id="mobile-cats-tab" role="tabpanel" aria-labelledby="mobile-cats-link">
+    <nav class="mobile-cats-nav">
+        <ul class="mobile-cats-menu">
+            {% for category in categories %}
+            <li class="category-item">
+                <a class="mobile-cats-lead" href="{% url 'products_by_category' category.slug %}">{{ category.category_name }}</a>
+
+                {% if category_dict|get:category %}
+                <ul class="subcategory-list" style="display: none;">
+                    {% for subcategory in category_dict|get:category %}
+                    <li>
+                        <a href="{% url 'products_by_category' category.slug subcategory.slug %}">{{ subcategory.name }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul><!-- End .mobile-cats-menu -->
+    </nav><!-- End .mobile-cats-nav -->
+</div><!-- End .tab-pane -->
+
+<!-- JavaScript for Toggle functionality  for show subcategory just when i select category-->
+<script>
+    // Add event listener to each category item
+    document.querySelectorAll('.category-item').forEach(function(item) {
+        item.querySelector('.mobile-cats-lead').addEventListener('click', function(e) {
+            // Prevent default link click behavior
+            e.preventDefault();
+            
+            // Find the subcategory list associated with the clicked category
+            var subcategoryList = item.querySelector('.subcategory-list');
+            
+            // Toggle the display of the subcategory list
+            if (subcategoryList) {
+                subcategoryList.style.display = subcategoryList.style.display === 'none' ? 'block' : 'none';
+            }
+        });
+    });
+</script>
+
+
+                <!-- New Profile Tab Content -->
+            <div class="tab-pane fade" id="mobile-profile-tab" role="tabpanel" aria-labelledby="mobile-profile-link">
+                <nav class="mobile-cats-nav">
+                    <ul class="mobile-menu">
+                        {% if user.id is None %}
+                                   
+                                    
+                                    <li>
+                                        
+                                            <a href="#">{% trans 'Make an Account' %}</a>
+                                            
+                                                <ul>
+                                                    <li><a href="{% url 'login' %}">{% trans 'Login' %}</a></li>
+                                                    <li><a href="{% url 'register' %}">{% trans 'Register' %}</a></li>
+                                                    
+                                                    
+                                                </ul>
+                                           
+                                    </li>
+                                    {%else%}
+                                    <li>
+                                        
+                                            <a href="#">{% trans 'Profile' %}</a>
+                                           
+                                                <ul>
+                                                    {% if user_profile_picture %}
+                                                    <li><dir class="text-right">
+                                                        
+                                                        <img style="width: 60px;
+                                                        border-radius: 50%;
+                                                     height: 60px;" src="{{ user_profile_picture.url }}">
+                                                     
+                                                    </dir>
+                                                    </li>
+                                                    {% else %}
+                                                     <li><dir class="text-right">
+                                                        
+                                                        <img style="width: 30px;
+                                                        border-radius: 50%;
+                                                     height: 30px;" src="#">
+                                                     
+                                                    </dir>
+                                                    </li><br>
+                                                    {% endif %}
+                                                     
+                                                    <li><a href="{% url 'dashboard' %}">{{user.username}}</a></li>
+                                                    <li><a href="{% url 'logout'%}">{% trans 'Log Out' %}</a></li><br>
+                                                    <li><a href="{% url 'dashboard' %}">{% trans 'Dashboard' %}</a></li>
+                                                    <li><a href="{% url 'stock' %}">{% trans 'Stock' %}</a></li>
+                                                    <li><a href="{% url 'DashboardAnalytics' %}">{% trans 'Analytics' %}</a></li>
+                                                    {% if user.is_active %}
+                                                   
+                                                    <li><a href="{% url 'Management_Center' %}">{% trans 'Management Center' %}</a></li>
+                                                   
+                                                    
+                                                    
+                                                    {% endif %}
+                                                    
+                                                    
+                                                </ul>
+                                          
+                                    </li>
+                                    <li>
+                                        
+                                             <a href="">{% trans "E-Commerce Tools" %}</a>
+                                             
+                                                  <ul>
+                                                     <li><a href="">{% trans "Pixel Facebook" %}</a></li>
+                                                     <li><a href="">{% trans "Google Sheets" %}</a></li>
+                                                     <li><a href="">{% trans "Delivery Company" %}</a></li>
+                                                  </ul>
+                                             
+
+                                    </li>
+                                     
+                                    {% endif %}
+                        
+                        <li>
+                               <a href="/{% get_current_language as language_code %}/">{% trans "Language" %}</a>       
+                            <ul>
+                                <li><a href="/en/">{% trans "English" %}</a></li>
+                                <li><a href="/fr/">{% trans "French" %}</a></li>
+                                <li><a href="/ar/">{% trans "Arabic" %}</a></li>
+                            </ul>
+                                   
+                        </li>
+                        <li><a href="{% url 'newsletter:send_daily_slide_email' %}">NewsLettre Send Updates</a></li>
+                                   
+                    </ul>
+                </nav><!-- End .mobile-profile-nav -->
+            </div><!-- .End .tab-pane -->
+
+            <!-- Notification Tab Content -->
+            <div class="tab-pane fade" id="mobile-notification-tab" role="tabpanel" aria-labelledby="mobile-notification-link">
+                <nav class="mobile-notification-nav">
+                    <ul class="mobile-menu">
+                        {% load humanize %}
+<li >
+    <a href="#" class="notifications-link">
+    {% trans "Notifications" %}
+    
+</a>
+<style type="text/css">
+    .notifications-link {
+    display: inline-flex;         /* Aligns items in a row */
+    align-items: center;          /* Vertically centers the content (text and icon) */
+    gap: 8px;                     /* Adds a small gap between the text and the icon */
+}
+
+.icon {
+    display: inline-flex;         /* Ensures the icon is inline with text */
+    align-items: center;          /* Vertically centers the icon */
+    justify-content: center;      /* Centers the badge inside the icon */
+}
+
+.notification-count {
+    background-color: #fcb941;       /* Example background color */
+    color: #fff;                  /* White text for the count */
+    border-radius: 50%;           /* Circular shape */
+    padding: 0.3em 0.6em;         /* Adjust size of the badge */
+    font-size: 12px;              /* Font size for the count */
+}
+
+</style>
+    
+        <div class="notification-header">
+            <span>{% trans "Notifications" %}</span>
+        </div>
+        <ul >
+            {% if unread_notifications %}
+                {% for notification in unread_notifications %}
+                <li class="notification-item {% if not notification.read %}unread{% endif %}">
+    <a href="{% url 'notification:mark_notification_as_read' notification.id %}" class="notification-link">
+        <div class="notification-content">
+            <div class="notification-image">
+                <img src="{{ notification.profile_picture_url }}" 
+                     alt="{{ notification.sender.full_name }}'s profile picture" class="profile-picture">
+            </div>
+            <div class="notification-text">
+                <strong>{{ notification.sender.full_name }}</strong> <br>
+                <span>{{ notification.message|safe|linebreaksbr }}</span>
+                <br>
+                <small class="notification-time">{{ notification.created_at }}</small>
+            </div>
+        </div>
+    </a>
+</li>
+
+<style type="text/css">
+  /* Base notification styling */
+.notification-item {
+    display: flex;
+    align-items: center; /* Align items horizontally */
+    padding: 8px 12px;    /* Compact padding */
+    border-bottom: 1px solid #eee; /* Light border for separation */
+    margin: 0;  /* Remove margin to make notifications stick together */
+    font-size: 14px;  /* Small font size for compact design */
+}
+
+.notification-item a {
+    text-decoration: none; /* Remove underline from links */
+    color: inherit; /* Inherit text color */
+    width: 100%; /* Make the link take up full width */
+}
+
+.notification-content {
+    display: flex;
+    align-items: center; /* Align image and text horizontally */
+    width: 100%; /* Ensure it uses the full width */
+    padding: 0;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.notification-image {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.profile-picture {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover; /* Maintain aspect ratio */
+}
+
+.notification-text {
+    display: flex;
+    flex-direction: column; /* Stack text vertically */
+    justify-content: center;
+    font-size: 13px; /* Smaller text */
+}
+
+.notification-text strong {
+    font-weight: 600; /* Make sender's name bold */
+    font-size: 14px;
+}
+
+.notification-text span {
+    color: #333; /* Message text color */
+    line-height: 1.2;
+}
+
+.notification-time {
+    font-size: 11px;
+    color: #888;
+}
+
+/* For unread notifications */
+.notification-item.unread {
+    background-color: #f5f5f5; /* Subtle background for unread */
+    border-left: 3px solid #007bff; /* Blue left border for unread notifications */
+}
+
+.notification-item.unread .notification-link {
+    font-weight: 600; /* Make unread notifications bold */
+}
+
+/* Remove horizontal dividers for a cleaner look */
+.notification-divider {
+    display: none; /* Hide divider */
+}
+
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .notification-item {
+        padding: 6px 10px; /* Less padding for mobile */
+    }
+
+    .notification-image {
+        width: 25px;  /* Smaller image size on mobile */
+        height: 25px;
+    }
+
+    .notification-text {
+        font-size: 12px; /* Slightly smaller font on mobile */
+    }
+
+    .notification-text strong {
+        font-size: 13px; /* Slightly larger name on mobile */
+    }
+
+    .notification-time {
+        font-size: 10px; /* Smaller timestamp on mobile */
+    }
+    .notification-item.unread {
+  background-color: #2c2c2c;
+  border-left: 3px solid #c39137;
+}
+.notification-text span {
+  color: #fff;
+  line-height: 1.2;
+}
+.top-menu {
+        display: none;
+    }
+
+
+.header-top {
+    display: none;
+}
+
+}
+
+
+
+</style>
+                {% endfor %}
+            {% else %}
+                <li class="no-notifications">
+                    <a href="#">{% trans "No notifications" %}</a>
+                </li>
+            {% endif %}
+        </ul>
+    
+</li>
+                        
+                    </ul>
+                </nav><!-- End .mobile-profile-nav -->
+            </div><!-- .End .tab-pane -->
+            </div><!-- End .tab-content -->
+
+            <div class="social-icons">
+                <a href="#" class="social-icon" target="_blank" title="Facebook"><i class="icon-facebook-f"></i></a>
+                <a href="#" class="social-icon" target="_blank" title="Twitter"><i class="icon-twitter"></i></a>
+                <a href="#" class="social-icon" target="_blank" title="Instagram"><i class="icon-instagram"></i></a>
+                <a href="#" class="social-icon" target="_blank" title="Youtube"><i class="icon-youtube"></i></a>
+            </div><!-- End .social-icons -->
+        </div><!-- End .mobile-menu-wrapper -->
+    </div><!-- End .mobile-menu-container -->
+
+    <!-- Sign in / Register Modal -->
+    <div class="modal fade" id="signin-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="icon-close"></i></span>
+                    </button>
+
+                    <div class="form-box">
+                        <div class="form-tab">
+                            <ul class="nav nav-pills nav-fill nav-border-anim" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="signin-tab" data-toggle="tab" href="#signin" role="tab" aria-controls="signin" aria-selected="true">Sign In</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="register-tab" data-toggle="tab" href="#register" role="tab" aria-controls="register" aria-selected="false">Register</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="tab-content-5">
+                                <div class="tab-pane fade show active" id="signin" role="tabpanel" aria-labelledby="signin-tab">
+                                    <form action="#">
+                                        <div class="form-group">
+                                            <label for="singin-email">Username or email address *</label>
+                                            <input type="text" class="form-control" id="singin-email" name="singin-email" required>
+                                        </div><!-- End .form-group -->
+
+                                        <div class="form-group">
+                                            <label for="singin-password">Password *</label>
+                                            <input type="password" class="form-control" id="singin-password" name="singin-password" required>
+                                        </div><!-- End .form-group -->
+
+                                        <div class="form-footer">
+                                            <button type="submit" class="btn btn-outline-primary-2">
+                                                <span>LOG IN</span>
+                                                <i class="icon-long-arrow-right"></i>
+                                            </button>
+
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="signin-remember">
+                                                <label class="custom-control-label" for="signin-remember">Remember Me</label>
+                                            </div><!-- End .custom-checkbox -->
+
+                                            <a href="#" class="forgot-link">Forgot Your Password?</a>
+                                        </div><!-- End .form-footer -->
+                                    </form>
+                                    <div class="form-choice">
+                                        <p class="text-center">or sign in with</p>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <a href="#" class="btn btn-login btn-g">
+                                                    <i class="icon-google"></i>
+                                                    Login With Google
+                                                </a>
+                                            </div><!-- End .col-6 -->
+                                            <div class="col-sm-6">
+                                                <a href="#" class="btn btn-login btn-f">
+                                                    <i class="icon-facebook-f"></i>
+                                                    Login With Facebook
+                                                </a>
+                                            </div><!-- End .col-6 -->
+                                        </div><!-- End .row -->
+                                    </div><!-- End .form-choice -->
+                                </div><!-- .End .tab-pane -->
+                                <div class="tab-pane fade" id="register" role="tabpanel" aria-labelledby="register-tab">
+                                    <form action="#">
+                                        <div class="form-group">
+                                            <label for="register-email">Your email address *</label>
+                                            <input type="email" class="form-control" id="register-email" name="register-email" required>
+                                        </div><!-- End .form-group -->
+
+                                        <div class="form-group">
+                                            <label for="register-password">Password *</label>
+                                            <input type="password" class="form-control" id="register-password" name="register-password" required>
+                                        </div><!-- End .form-group -->
+
+                                        <div class="form-footer">
+                                            <button type="submit" class="btn btn-outline-primary-2">
+                                                <span>SIGN UP</span>
+                                                <i class="icon-long-arrow-right"></i>
+                                            </button>
+
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="register-policy" required>
+                                                <label class="custom-control-label" for="register-policy">I agree to the <a href="#">privacy policy</a> *</label>
+                                            </div><!-- End .custom-checkbox -->
+                                        </div><!-- End .form-footer -->
+                                    </form>
+                                    <div class="form-choice">
+                                        <p class="text-center">or sign in with</p>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <a href="#" class="btn btn-login btn-g">
+                                                    <i class="icon-google"></i>
+                                                    Login With Google
+                                                </a>
+                                            </div><!-- End .col-6 -->
+                                            <div class="col-sm-6">
+                                                <a href="#" class="btn btn-login  btn-f">
+                                                    <i class="icon-facebook-f"></i>
+                                                    Login With Facebook
+                                                </a>
+                                            </div><!-- End .col-6 -->
+                                        </div><!-- End .row -->
+                                    </div><!-- End .form-choice -->
+                                </div><!-- .End .tab-pane -->
+                            </div><!-- End .tab-content -->
+                        </div><!-- End .form-tab -->
+                    </div><!-- End .form-box -->
+                </div><!-- End .modal-body -->
+            </div><!-- End .modal-content -->
+        </div><!-- End .modal-dialog -->
+    </div><!-- End .modal -->
+
+    
+</body>
+ <!-- Plugins JS File -->
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/jquery-2.2.4.min.js' %}"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'js/jquery.hoverIntent.min.js' %}"></script>
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'js/superfish.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap-input-spinner.js' %}"></script>
+    <script src="{% static 'js/jquery.plugin.min.js' %}"></script>
+    <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'js/jquery.countdown.min.js' %}"></script>
+    <!-- Main JS File -->
+    <script src="{% static 'js/main4.js' %}"></script>
+    <script src="{% static 'js/demos/demo-3.js' %}"></script>
+    <!-- Add this for Flag Regions -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+     
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+     <!-- Dropzone JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.0/min/dropzone.min.js"></script>
+
+
+
+    <!--<script src="https://www.paypal.com/sdk/js?client-id=AVBSMqNtoZ1IUO6lrSe6-vm9AIV1ZKN8CgXu_nINRs80xELRs650mh3yR62groIUg-GCe59Od_EFOG6O&currency=USD"></script>-->
+
+
+</html>

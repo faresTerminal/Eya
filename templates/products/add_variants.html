@@ -1,0 +1,301 @@
+
+{% extends 'homebase.html' %}
+{% load static %}
+{% load thumbnail %} 
+{% load i18n %}
+
+{% block content %}
+{% if current_language == 'ar' %}
+    <style>
+      .main {
+        direction: rtl;
+      }
+      tr{
+        text-align: center;
+      }
+      .row{
+        text-align: right;
+      }
+      .product-media{
+        margin-right: 0.2rem !important;
+        margin-left: 1em !important;
+      }
+    </style>
+{% endif %}
+<style>
+  .form-group {
+    display: inline-block;
+    margin-right: 20px; /* Add spacing between fields */
+  }
+
+  /* Rest of your existing styles */
+  .slider {
+    width: 100%;
+    height: 15px;
+    background-color: #ccc;
+    position: relative;
+  }
+
+  .slider-handle {
+    background-color: #007bff;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+  }
+
+  #price-value {
+    display: block;
+    margin-top: 10px;
+  }
+</style>
+
+<style>
+    .page-title {
+      font-size: 24px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    .form-container {
+      background-color: #fff;
+      padding: 20px;
+      border: 1px solid #e1e1e1;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .form-checkbox {
+      margin-right: 5px;
+    }
+
+    .form-label {
+      font-weight: normal;
+    }
+
+    .btn-save {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .btn-save:hover {
+      background-color: #0056b3;
+    }
+</style>
+
+<style type="text/css">
+    .variants-table {
+      display: table;
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .table-header {
+      display: table-row;
+      background-color: #007bff;
+      color: #fff;
+    }
+
+    .cell {
+      display: table-cell;
+      padding: 8px 10px;
+      border: 1px solid #ccc;
+      font-weight: bold;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      display: table-row;
+    }
+</style>
+
+<main class="main">
+   <!-- Include the ads template -->
+                {% include 'partials/ads.html' %}
+  <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">{% trans 'Home' %}</a></li>
+        <li class="breadcrumb-item"><a href="#">Add Product</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{% trans 'Create Variants' %}</li>
+      </ol>
+    </div><!-- End .container -->
+  </nav><!-- End .breadcrumb-nav -->
+
+<div class="container">
+  <div class="row">
+   {% include 'includes/management_center_sidebar.html' %}
+    <div class="col-lg-5">
+      <h2 class="page-title">{% trans 'Add Variants' %}</h2>
+      <div class="row">
+        <div class="col-md-12 form-container">
+          <!-- Display product information -->
+          <div class="product-info">
+            <h3 style="font-size: 24px; margin-bottom: 10px;">{{ product.product_name }}</h3>
+            <p style="font-size: 16px; margin-bottom: 10px;">{% trans 'Description' %}: {{ product.description|safe }}</p>
+            <img src="{{ product.images.url }}" alt="{{ product.product_name }}" style="max-width: 100px; height: auto;">
+          </div>
+         <form method="post" enctype="multipart/form-data" action="{% url 'add_variants' product.id %}">
+    {% csrf_token %}
+    
+    <div class="form-group">
+        <label for="variant_type">{% trans 'Variant Type' %}</label>
+        <select name="variant_type" id="variant_type" class="form-input" required onchange="toggleFields()">
+            <option value="" disabled selected>{% trans 'Select Variant Type' %}</option>
+            <option value="no_variant">{% trans 'No Variant' %}</option>
+            <option value="color">{% trans 'Color Only' %}</option>
+            <option value="size">{% trans 'Size Only' %}</option>
+            <option value="size_and_color">{% trans 'Size and Color' %}</option>
+        </select>
+    </div>
+    
+   <div class="form-group" id="colorGroup" style="display: none;">
+    <label for="color">{% trans 'Color' %}</label>
+    <select name="color" id="color" class="form-input">
+        <option value="" disabled selected>{% trans 'Select Color' %}</option>
+        {% for color in colors %}
+            <option style="background-color: {{ color.hex_code }};" value="{{ color.id }}">{{ color.name }}</option>
+
+
+        {% endfor %}
+    </select>
+</div>
+
+ 
+    
+    <div class="form-group" id="sizeGroup" style="display: none;">
+        <label for="size">{% trans 'Size' %}</label>
+        <input type="text" name="size" id="size" class="form-input">
+    </div>
+    
+    <div class="form-group">
+        <label for="price">{% trans 'Price' %}</label>
+        <input type="text" name="price" id="price" class="form-input"> .00 DA
+    </div>
+    
+    <div class="form-group">
+        <label for="quantity">{% trans 'Quantity' %}</label>
+        <input type="text" name="quantity" id="quantity" class="form-input" required>
+    </div>
+    
+    <br>
+    <div class="form-group">
+        <label for="is_active">{% trans 'Active' %}</label>
+        <input type="checkbox" name="is_active" id="is_active" class="form-checkbox" checked>
+    </div>
+    <br>
+    <button style="background-color: #fcb941;" type="submit" class="btn btn-save">{% trans 'Save Variant' %}</button>
+</form>
+
+<script>
+   function toggleFields() {
+    var variantType = document.getElementById("variant_type").value;
+    var colorGroup = document.getElementById("colorGroup");
+    var sizeGroup = document.getElementById("sizeGroup");
+
+    // Reset visibility
+    colorGroup.style.display = "none";
+    sizeGroup.style.display = "none";
+
+    // Show fields based on the selected variant type
+    if (variantType === "color") {
+        colorGroup.style.display = "block";
+        sizeGroup.style.display = "none"; // Hide size if only color
+    } else if (variantType === "size") {
+        sizeGroup.style.display = "block";
+        colorGroup.style.display = "none"; // Hide color if only size
+    } else if (variantType === "size_and_color") {
+        colorGroup.style.display = "block";
+        sizeGroup.style.display = "block"; // Show both
+    }
+    // If "no_variant" is selected, both fields remain hidden (default behavior)
+}
+
+</script>
+
+
+          <br>
+          <h5 style="font-size: 16px; margin-bottom: 10px;">{% trans 'Add Gallery Images for your Product' %} <br>{{ product.product_name }}</h5>
+          <a style="background-color: #fcb941;" class="btn btn-save" href="{% url 'add_gallery_images' product.id %}">{% trans 'Upload Images' %}</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+  <!-- Display saved variants information -->
+  <div class="variants-info" style="background-color: #fff; border-radius: 10px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); padding: 20px; margin-bottom: 30px;">
+    <h2 class="page-title" >{% trans 'Saved Variants Information' %}</h2>
+    
+    <div class="variants-table">
+      <div class="table-header" style="background-color: #fcb941; color: #fff; font-size: 20px; border-radius: 8px; font-weight: bold; text-align: center;">
+        {% trans 'Variation Table' %}
+      </div>
+
+      <!-- List group for variants -->
+      <ul class="list-group mt-3">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <div>
+            <strong>{{ product.product_name }}</strong>
+          </div>
+          <div>
+            <img src="{{ product.images.url }}" alt="{{ product.product_name }}" style="max-width: 80px; height: auto; border-radius: 8px;">
+          </div>
+        </li>
+
+        {% for variant in variants %}
+          <li class="list-group-item d-flex justify-content-between align-items-start">
+            <div>
+              <strong>{{ variant.id }}</strong>
+            </div>
+            <div class="d-flex flex-column">
+              <!-- Variant Details -->
+              <span><strong>{% trans 'Color' %}:</strong> {{ variant.color }} <span class="badge text-bg-primary rounded-pill" style="background-color: {{variant.color}}">.</span></span>
+
+
+
+              <span><strong>{% trans 'Size' %}:</strong> {{ variant.size }}</span>
+              <span><strong>{% trans 'Variant Type' %}:</strong> {{ variant.variant_type }}</span>
+              <span><strong>{% trans 'Price' %}:</strong> {{ variant.price }} DA</span>
+              <span><strong>{% trans 'Quantity' %}:</strong> {{ variant.quantity }}</span>
+
+              <!-- Remove Variant Form -->
+              <form method="post" action="{% url 'remove_variant' product.id variant.id %}" style="margin-top: 10px;">
+                {% csrf_token %}
+                <button class="btn btn-danger btn-sm" type="submit" style="font-size: 14px;">{% trans 'Remove' %}</button>
+              </form>
+            </div>
+          </li>
+        {% empty %}
+          <li class="list-group-item text-center text-muted">
+            {% trans 'No variants available.' %}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+
+  </div>
+</div>
+</main>
+
+{% endblock %}

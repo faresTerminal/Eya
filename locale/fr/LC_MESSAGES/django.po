@@ -1,0 +1,3515 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-31 19:51+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: .\ecommerce\settings.py:187 .\templates\homebase.html:198
+msgid "English"
+msgstr "Anglaise"
+
+#: .\ecommerce\settings.py:188 .\templates\homebase.html:200
+msgid "Arabic"
+msgstr "arabe"
+
+#: .\ecommerce\settings.py:189 .\templates\homebase.html:199
+msgid "French"
+msgstr "Français"
+
+#: .\env\Lib\site-packages\django\contrib\messages\apps.py:7
+msgid "Messages"
+msgstr "Messages"
+
+#: .\env\Lib\site-packages\django\contrib\sitemaps\apps.py:7
+msgid "Site Maps"
+msgstr "Plans des sites"
+
+#: .\env\Lib\site-packages\django\contrib\staticfiles\apps.py:9
+msgid "Static Files"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\contrib\syndication\apps.py:7
+msgid "Syndication"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\core\paginator.py:48
+msgid "That page number is not an integer"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\core\paginator.py:50
+msgid "That page number is less than 1"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\core\paginator.py:55
+msgid "That page contains no results"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\core\validators.py:20
+msgid "Enter a valid value."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\core\validators.py:91
+#: .\env\Lib\site-packages\django\forms\fields.py:671
+msgid "Enter a valid URL."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\core\validators.py:145
+msgid "Enter a valid integer."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\core\validators.py:156
+msgid "Enter a valid email address."
+msgstr "Entrez une adresse e-mail valide."
+
+#. Translators: "letters" means latin letters: a-z and A-Z.
+#: .\env\Lib\site-packages\django\core\validators.py:230
+msgid ""
+"Enter a valid “slug” consisting of letters, numbers, underscores or hyphens."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\core\validators.py:237
+msgid ""
+"Enter a valid “slug” consisting of Unicode letters, numbers, underscores, or "
+"hyphens."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\core\validators.py:246
+#: .\env\Lib\site-packages\django\core\validators.py:266
+msgid "Enter a valid IPv4 address."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\core\validators.py:251
+#: .\env\Lib\site-packages\django\core\validators.py:267
+msgid "Enter a valid IPv6 address."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\core\validators.py:261
+#: .\env\Lib\site-packages\django\core\validators.py:265
+msgid "Enter a valid IPv4 or IPv6 address."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\core\validators.py:295
+msgid "Enter only digits separated by commas."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\core\validators.py:301
+#, python-format
+msgid "Ensure this value is %(limit_value)s (it is %(show_value)s)."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\core\validators.py:334
+#, python-format
+msgid "Ensure this value is less than or equal to %(limit_value)s."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\core\validators.py:343
+#, python-format
+msgid "Ensure this value is greater than or equal to %(limit_value)s."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\core\validators.py:353
+#, python-format
+msgid ""
+"Ensure this value has at least %(limit_value)d character (it has "
+"%(show_value)d)."
+msgid_plural ""
+"Ensure this value has at least %(limit_value)d characters (it has "
+"%(show_value)d)."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\env\Lib\site-packages\django\core\validators.py:368
+#, python-format
+msgid ""
+"Ensure this value has at most %(limit_value)d character (it has "
+"%(show_value)d)."
+msgid_plural ""
+"Ensure this value has at most %(limit_value)d characters (it has "
+"%(show_value)d)."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\env\Lib\site-packages\django\core\validators.py:387
+#: .\env\Lib\site-packages\django\forms\fields.py:292
+#: .\env\Lib\site-packages\django\forms\fields.py:327
+msgid "Enter a number."
+msgstr "Entrez un numéro."
+
+#: .\env\Lib\site-packages\django\core\validators.py:389
+#, python-format
+msgid "Ensure that there are no more than %(max)s digit in total."
+msgid_plural "Ensure that there are no more than %(max)s digits in total."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\env\Lib\site-packages\django\core\validators.py:394
+#, python-format
+msgid "Ensure that there are no more than %(max)s decimal place."
+msgid_plural "Ensure that there are no more than %(max)s decimal places."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\env\Lib\site-packages\django\core\validators.py:399
+#, python-format
+msgid ""
+"Ensure that there are no more than %(max)s digit before the decimal point."
+msgid_plural ""
+"Ensure that there are no more than %(max)s digits before the decimal point."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\env\Lib\site-packages\django\core\validators.py:461
+#, python-format
+msgid ""
+"File extension “%(extension)s” is not allowed. Allowed extensions are: "
+"%(allowed_extensions)s."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\core\validators.py:513
+msgid "Null characters are not allowed."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\base.py:1187
+#: .\env\Lib\site-packages\django\forms\models.py:760 .\templates\home.html:863
+msgid "and"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\base.py:1189
+#, python-format
+msgid "%(model_name)s with this %(field_labels)s already exists."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:100
+#, python-format
+msgid "Value %(value)r is not a valid choice."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:101
+msgid "This field cannot be null."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:102
+msgid "This field cannot be blank."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:103
+#, python-format
+msgid "%(model_name)s with this %(field_label)s already exists."
+msgstr ""
+
+#. Translators: The 'lookup_type' is one of 'date', 'year' or 'month'.
+#. Eg: "Title must be unique for pub_date year"
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:107
+#, python-format
+msgid ""
+"%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:126
+#, python-format
+msgid "Field of type: %(field_type)s"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:939
+#, python-format
+msgid "“%(value)s” value must be either True or False."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:940
+#, python-format
+msgid "“%(value)s” value must be either True, False, or None."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:942
+msgid "Boolean (Either True or False)"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:983
+#, python-format
+msgid "String (up to %(max_length)s)"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:1047
+msgid "Comma-separated integers"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:1096
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid date format. It must be in YYYY-MM-DD "
+"format."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:1098
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:1241
+#, python-format
+msgid ""
+"“%(value)s” value has the correct format (YYYY-MM-DD) but it is an invalid "
+"date."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:1101
+msgid "Date (without time)"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:1239
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid format. It must be in YYYY-MM-DD HH:MM[:ss[."
+"uuuuuu]][TZ] format."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:1243
+#, python-format
+msgid ""
+"“%(value)s” value has the correct format (YYYY-MM-DD HH:MM[:ss[.uuuuuu]]"
+"[TZ]) but it is an invalid date/time."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:1247
+msgid "Date (with time)"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:1395
+#, python-format
+msgid "“%(value)s” value must be a decimal number."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:1397
+msgid "Decimal number"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:1536
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid format. It must be in [DD] [[HH:]MM:]ss[."
+"uuuuuu] format."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:1539
+msgid "Duration"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:1589
+msgid "Email address"
+msgstr "Adresse e-mail"
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:1612
+msgid "File path"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:1678
+#, python-format
+msgid "“%(value)s” value must be a float."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:1680
+msgid "Floating point number"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:1718
+#, python-format
+msgid "“%(value)s” value must be an integer."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:1720
+msgid "Integer"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:1803
+msgid "Big (8 byte) integer"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:1819
+msgid "IPv4 address"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:1850
+msgid "IP address"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:1930
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:1931
+#, python-format
+msgid "“%(value)s” value must be either None, True or False."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:1933
+msgid "Boolean (Either True, False or None)"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:1976
+msgid "Positive big integer"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:1989
+msgid "Positive integer"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:2002
+msgid "Positive small integer"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:2016
+#, python-format
+msgid "Slug (up to %(max_length)s)"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:2048
+msgid "Small integer"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:2055
+msgid "Text"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:2083
+#, python-format
+msgid ""
+"“%(value)s” value has an invalid format. It must be in HH:MM[:ss[.uuuuuu]] "
+"format."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:2085
+#, python-format
+msgid ""
+"“%(value)s” value has the correct format (HH:MM[:ss[.uuuuuu]]) but it is an "
+"invalid time."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:2088
+msgid "Time"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:2214
+msgid "URL"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:2236
+msgid "Raw binary data"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:2301
+#, python-format
+msgid "“%(value)s” is not a valid UUID."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\__init__.py:2303
+msgid "Universally unique identifier"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\files.py:231
+msgid "File"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\files.py:377
+#: .\templates\accounts\edit_products.html:62
+#: .\templates\products\clearance_products.html:62
+msgid "Image"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\json.py:18
+msgid "A JSON object"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\json.py:20
+msgid "Value must be valid JSON."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\related.py:790
+#, python-format
+msgid "%(model)s instance with %(field)s %(value)r does not exist."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\related.py:792
+msgid "Foreign Key (type determined by related field)"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\related.py:1045
+msgid "One-to-one relationship"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\related.py:1099
+#, python-format
+msgid "%(from)s-%(to)s relationship"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\related.py:1100
+#, python-format
+msgid "%(from)s-%(to)s relationships"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\db\models\fields\related.py:1142
+msgid "Many-to-many relationship"
+msgstr ""
+
+#. Translators: If found as last label character, these punctuation
+#. characters will prevent the default label_suffix to be appended to the label
+#: .\env\Lib\site-packages\django\forms\boundfield.py:150
+msgid ":?.!"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\fields.py:54
+msgid "This field is required."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\fields.py:247
+msgid "Enter a whole number."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\fields.py:398
+#: .\env\Lib\site-packages\django\forms\fields.py:1139
+msgid "Enter a valid date."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\fields.py:422
+#: .\env\Lib\site-packages\django\forms\fields.py:1140
+msgid "Enter a valid time."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\fields.py:450
+msgid "Enter a valid date/time."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\fields.py:484
+msgid "Enter a valid duration."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\fields.py:485
+#, python-brace-format
+msgid "The number of days must be between {min_days} and {max_days}."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\fields.py:545
+msgid "No file was submitted. Check the encoding type on the form."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\fields.py:546
+msgid "No file was submitted."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\fields.py:547
+msgid "The submitted file is empty."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\fields.py:549
+#, python-format
+msgid "Ensure this filename has at most %(max)d character (it has %(length)d)."
+msgid_plural ""
+"Ensure this filename has at most %(max)d characters (it has %(length)d)."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\env\Lib\site-packages\django\forms\fields.py:552
+msgid "Please either submit a file or check the clear checkbox, not both."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\fields.py:613
+#: .\env\Lib\site-packages\sorl\thumbnail\fields.py:43
+msgid ""
+"Upload a valid image. The file you uploaded was either not an image or a "
+"corrupted image."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\fields.py:775
+#: .\env\Lib\site-packages\django\forms\fields.py:865
+#: .\env\Lib\site-packages\django\forms\models.py:1296
+#, python-format
+msgid "Select a valid choice. %(value)s is not one of the available choices."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\fields.py:866
+#: .\env\Lib\site-packages\django\forms\fields.py:981
+#: .\env\Lib\site-packages\django\forms\models.py:1295
+msgid "Enter a list of values."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\fields.py:982
+msgid "Enter a complete value."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\fields.py:1198
+msgid "Enter a valid UUID."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\fields.py:1228
+msgid "Enter a valid JSON."
+msgstr ""
+
+#. Translators: This is the default suffix added to form field labels
+#: .\env\Lib\site-packages\django\forms\forms.py:78
+msgid ":"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\forms.py:205
+#, python-format
+msgid "(Hidden field %(name)s) %(error)s"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\formsets.py:93
+msgid "ManagementForm data is missing or has been tampered with"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\formsets.py:345
+#, python-format
+msgid "Please submit %d or fewer forms."
+msgid_plural "Please submit %d or fewer forms."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\env\Lib\site-packages\django\forms\formsets.py:352
+#, python-format
+msgid "Please submit %d or more forms."
+msgid_plural "Please submit %d or more forms."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\env\Lib\site-packages\django\forms\formsets.py:379
+#: .\env\Lib\site-packages\django\forms\formsets.py:386
+#: .\templates\accounts\dashboard.html:96
+#: .\templates\accounts\my_orders.html:62
+#: .\templates\orders\order_complete.html:49
+msgid "Order"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\formsets.py:391
+msgid "Delete"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\models.py:755
+#, python-format
+msgid "Please correct the duplicate data for %(field)s."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\models.py:759
+#, python-format
+msgid "Please correct the duplicate data for %(field)s, which must be unique."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\models.py:765
+#, python-format
+msgid ""
+"Please correct the duplicate data for %(field_name)s which must be unique "
+"for the %(lookup)s in %(date_field)s."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\models.py:774
+msgid "Please correct the duplicate values below."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\models.py:1096
+msgid "The inline value did not match the parent instance."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\models.py:1180
+msgid "Select a valid choice. That choice is not one of the available choices."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\models.py:1298
+#, python-format
+msgid "“%(pk)s” is not a valid value."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\utils.py:167
+#, python-format
+msgid ""
+"%(datetime)s couldn’t be interpreted in time zone %(current_timezone)s; it "
+"may be ambiguous or it may not exist."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\widgets.py:398
+msgid "Clear"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\widgets.py:399
+msgid "Currently"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\widgets.py:400
+msgid "Change"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\widgets.py:709
+msgid "Unknown"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\widgets.py:710
+msgid "Yes"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\forms\widgets.py:711
+msgid "No"
+msgstr ""
+
+#. Translators: Please do not add spaces around commas.
+#: .\env\Lib\site-packages\django\template\defaultfilters.py:790
+msgid "yes,no,maybe"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\template\defaultfilters.py:819
+#: .\env\Lib\site-packages\django\template\defaultfilters.py:836
+#, python-format
+msgid "%(size)d byte"
+msgid_plural "%(size)d bytes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\env\Lib\site-packages\django\template\defaultfilters.py:838
+#, python-format
+msgid "%s KB"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\template\defaultfilters.py:840
+#, python-format
+msgid "%s MB"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\template\defaultfilters.py:842
+#, python-format
+msgid "%s GB"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\template\defaultfilters.py:844
+#, python-format
+msgid "%s TB"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\template\defaultfilters.py:846
+#, python-format
+msgid "%s PB"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dateformat.py:65
+msgid "p.m."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dateformat.py:66
+msgid "a.m."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dateformat.py:71
+msgid "PM"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dateformat.py:72
+msgid "AM"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dateformat.py:149
+msgid "midnight"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dateformat.py:151
+msgid "noon"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:6
+msgid "Monday"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:6
+msgid "Tuesday"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:6
+msgid "Wednesday"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:6
+msgid "Thursday"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:6
+msgid "Friday"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:7
+msgid "Saturday"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:7
+#: .\templates\blog\contact.html:87
+msgid "Sunday"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:10
+msgid "Mon"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:10
+msgid "Tue"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:10
+msgid "Wed"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:10
+msgid "Thu"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:10
+msgid "Fri"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:11
+msgid "Sat"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:11
+msgid "Sun"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:14
+msgid "January"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:14
+msgid "February"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:14
+msgid "March"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:14
+msgid "April"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:14
+msgid "May"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:14
+msgid "June"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:15
+msgid "July"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:15
+msgid "August"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:15
+msgid "September"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:15
+msgid "October"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:15
+msgid "November"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:16
+msgid "December"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:19
+msgid "jan"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:19
+msgid "feb"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:19
+msgid "mar"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:19
+msgid "apr"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:19
+msgid "may"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:19
+msgid "jun"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:20
+msgid "jul"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:20
+msgid "aug"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:20
+msgid "sep"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:20
+msgid "oct"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:20
+msgid "nov"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:20
+msgid "dec"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:23
+msgctxt "abbrev. month"
+msgid "Jan."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:24
+msgctxt "abbrev. month"
+msgid "Feb."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:25
+msgctxt "abbrev. month"
+msgid "March"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:26
+msgctxt "abbrev. month"
+msgid "April"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:27
+msgctxt "abbrev. month"
+msgid "May"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:28
+msgctxt "abbrev. month"
+msgid "June"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:29
+msgctxt "abbrev. month"
+msgid "July"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:30
+msgctxt "abbrev. month"
+msgid "Aug."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:31
+msgctxt "abbrev. month"
+msgid "Sept."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:32
+msgctxt "abbrev. month"
+msgid "Oct."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:33
+msgctxt "abbrev. month"
+msgid "Nov."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:34
+msgctxt "abbrev. month"
+msgid "Dec."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:37
+msgctxt "alt. month"
+msgid "January"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:38
+msgctxt "alt. month"
+msgid "February"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:39
+msgctxt "alt. month"
+msgid "March"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:40
+msgctxt "alt. month"
+msgid "April"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:41
+msgctxt "alt. month"
+msgid "May"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:42
+msgctxt "alt. month"
+msgid "June"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:43
+msgctxt "alt. month"
+msgid "July"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:44
+msgctxt "alt. month"
+msgid "August"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:45
+msgctxt "alt. month"
+msgid "September"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:46
+msgctxt "alt. month"
+msgid "October"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:47
+msgctxt "alt. month"
+msgid "November"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\dates.py:48
+msgctxt "alt. month"
+msgid "December"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\ipv6.py:8
+msgid "This is not a valid IPv6 address."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\text.py:70
+#, python-format
+msgctxt "String to return when truncating text"
+msgid "%(truncated_text)s…"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\text.py:236
+msgid "or"
+msgstr ""
+
+#. Translators: This string is used as a separator between list elements
+#: .\env\Lib\site-packages\django\utils\text.py:255
+#: .\env\Lib\site-packages\django\utils\timesince.py:83
+msgid ", "
+msgstr ""
+
+#: .\env\Lib\site-packages\django\utils\timesince.py:9
+#, python-format
+msgid "%d year"
+msgid_plural "%d years"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\env\Lib\site-packages\django\utils\timesince.py:10
+#, python-format
+msgid "%d month"
+msgid_plural "%d months"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\env\Lib\site-packages\django\utils\timesince.py:11
+#, python-format
+msgid "%d week"
+msgid_plural "%d weeks"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\env\Lib\site-packages\django\utils\timesince.py:12
+#, python-format
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\env\Lib\site-packages\django\utils\timesince.py:13
+#, python-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\env\Lib\site-packages\django\utils\timesince.py:14
+#, python-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\env\Lib\site-packages\django\views\csrf.py:110
+msgid "Forbidden"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\views\csrf.py:111
+msgid "CSRF verification failed. Request aborted."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\views\csrf.py:115
+msgid ""
+"You are seeing this message because this HTTPS site requires a “Referer "
+"header” to be sent by your Web browser, but none was sent. This header is "
+"required for security reasons, to ensure that your browser is not being "
+"hijacked by third parties."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\views\csrf.py:120
+msgid ""
+"If you have configured your browser to disable “Referer” headers, please re-"
+"enable them, at least for this site, or for HTTPS connections, or for “same-"
+"origin” requests."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\views\csrf.py:124
+msgid ""
+"If you are using the <meta name=\"referrer\" content=\"no-referrer\"> tag or "
+"including the “Referrer-Policy: no-referrer” header, please remove them. The "
+"CSRF protection requires the “Referer” header to do strict referer checking. "
+"If you’re concerned about privacy, use alternatives like <a rel=\"noreferrer"
+"\" …> for links to third-party sites."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\views\csrf.py:132
+msgid ""
+"You are seeing this message because this site requires a CSRF cookie when "
+"submitting forms. This cookie is required for security reasons, to ensure "
+"that your browser is not being hijacked by third parties."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\views\csrf.py:137
+msgid ""
+"If you have configured your browser to disable cookies, please re-enable "
+"them, at least for this site, or for “same-origin” requests."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\views\csrf.py:142
+msgid "More information is available with DEBUG=True."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\views\generic\dates.py:41
+msgid "No year specified"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\views\generic\dates.py:61
+#: .\env\Lib\site-packages\django\views\generic\dates.py:111
+#: .\env\Lib\site-packages\django\views\generic\dates.py:208
+msgid "Date out of range"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\views\generic\dates.py:90
+msgid "No month specified"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\views\generic\dates.py:142
+msgid "No day specified"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\views\generic\dates.py:188
+msgid "No week specified"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\views\generic\dates.py:338
+#: .\env\Lib\site-packages\django\views\generic\dates.py:367
+#, python-format
+msgid "No %(verbose_name_plural)s available"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\views\generic\dates.py:589
+#, python-format
+msgid ""
+"Future %(verbose_name_plural)s not available because %(class_name)s."
+"allow_future is False."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\views\generic\dates.py:623
+#, python-format
+msgid "Invalid date string “%(datestr)s” given format “%(format)s”"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\views\generic\detail.py:54
+#, python-format
+msgid "No %(verbose_name)s found matching the query"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\views\generic\list.py:67
+msgid "Page is not “last”, nor can it be converted to an int."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\views\generic\list.py:72
+#, python-format
+msgid "Invalid page (%(page_number)s): %(message)s"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\views\generic\list.py:154
+#, python-format
+msgid "Empty list and “%(class_name)s.allow_empty” is False."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\views\static.py:40
+msgid "Directory indexes are not allowed here."
+msgstr ""
+
+#: .\env\Lib\site-packages\django\views\static.py:42
+#, python-format
+msgid "“%(path)s” does not exist"
+msgstr ""
+
+#: .\env\Lib\site-packages\django\views\static.py:80
+#, python-format
+msgid "Index of %(directory)s"
+msgstr ""
+
+#: .\templates\accounts\500.html:28
+#: .\templates\accounts\change_password.html:33
+#: .\templates\accounts\dashboard.html:38
+#: .\templates\accounts\edit_products.html:39
+#: .\templates\accounts\edit_profile.html:39
+#: .\templates\accounts\my_orders.html:39
+#: .\templates\accounts\user_message.html:39 .\templates\blog\about.html:28
+#: .\templates\blog\add_article.html:44 .\templates\blog\blog.html:38
+#: .\templates\blog\blog_detail.html:60 .\templates\blog\contact.html:35
+#: .\templates\category\category_list.html:34 .\templates\homebase.html:422
+#: .\templates\products\add_gallery.html:148
+#: .\templates\products\add_products.html:34
+#: .\templates\products\add_signboard.html:34
+#: .\templates\products\add_variants.html:168
+#: .\templates\products\clearance_products.html:39
+#: .\templates\products\management_center.html:36
+#: .\templates\products\update_product.html:87 .\templates\stock\index.html:37
+#: .\templates\stock\low_stock.html:35
+#: .\templates\stock\product_list_stock.html:59
+#: .\templates\stock\stock_adjustment.html:35
+#: .\templates\stock\stock_history.html:36
+#: .\templates\stock\stock_sammary.html:34
+#: .\templates\stock\stock_update_adjust.html:112
+#: .\templates\stock\stock_valuation.html:35
+#: .\templates\stock\update_stock.html:115 .\templates\store\cart.html:27
+#: .\templates\store\checkout.html:33
+#: .\templates\store\clearance_products.html:36
+#: .\templates\store\featured_products.html:36
+#: .\templates\store\product_chat.html:26
+#: .\templates\store\product_detail.html:40 .\templates\store\store.html:33
+#: .\templates\store\top_products.html:36 .\templates\store\wishlist.html:39
+msgid "Home"
+msgstr "Accueil"
+
+#: .\templates\accounts\500.html:29 .\templates\blog\about.html:22
+#: .\templates\blog\about.html:29 .\templates\blog\contact.html:36
+#: .\templates\homebase.html:433
+msgid "Pages"
+msgstr ""
+
+#: .\templates\accounts\500.html:30
+msgid "Service Error 500"
+msgstr ""
+
+#: .\templates\accounts\500.html:37
+msgid "Server Error (500)"
+msgstr ""
+
+#: .\templates\accounts\500.html:40
+msgid "BACK TO HOMEPAGE"
+msgstr ""
+
+#: .\templates\accounts\change_password.html:27
+#: .\templates\accounts\dashboard.html:32
+#: .\templates\accounts\edit_profile.html:33
+#: .\templates\accounts\my_orders.html:33
+#: .\templates\accounts\user_message.html:33 .\templates\homebase.html:518
+#: .\templates\products\clearance_products.html:33
+msgid "My Account"
+msgstr "Mon compte"
+
+#: .\templates\accounts\change_password.html:34
+#: .\templates\accounts\edit_products.html:40
+#: .\templates\accounts\edit_profile.html:40
+#: .\templates\accounts\my_orders.html:40
+#: .\templates\accounts\user_message.html:40
+#, fuzzy
+#| msgid "My Account"
+msgid "Account"
+msgstr "Mon compte"
+
+#: .\templates\accounts\change_password.html:35
+#: .\templates\accounts\change_password.html:47
+#: .\templates\includes\dashboard_sidebar.html:22
+msgid "Change Password"
+msgstr ""
+
+#: .\templates\accounts\change_password.html:53
+msgid "Current password (leave blank to leave unchanged)"
+msgstr ""
+
+#: .\templates\accounts\change_password.html:56
+msgid "New password (leave blank to leave unchanged)"
+msgstr ""
+
+#: .\templates\accounts\change_password.html:59
+msgid "Confirm new password"
+msgstr ""
+
+#: .\templates\accounts\change_password.html:63
+#: .\templates\accounts\edit_profile.html:111
+msgid "SAVE CHANGES"
+msgstr ""
+
+#: .\templates\accounts\chat_room_messages.html:55
+#, fuzzy
+#| msgid "Blog Detail"
+msgid "Message Detail"
+msgstr "Détail du blog"
+
+#: .\templates\accounts\chat_room_messages.html:56
+#: .\templates\accounts\user_message.html:63
+msgid "Sender"
+msgstr ""
+
+#: .\templates\accounts\chat_room_messages.html:57
+#: .\templates\blog\contact.html:125 .\templates\blog\contact.html:126
+msgid "Message"
+msgstr ""
+
+#: .\templates\accounts\chat_room_messages.html:62
+msgid "Conversation"
+msgstr ""
+
+#: .\templates\accounts\chat_room_messages.html:79
+#, fuzzy
+#| msgid "Reply"
+msgid "Your Reply:"
+msgstr "Répondre"
+
+#: .\templates\accounts\chat_room_messages.html:81
+#, fuzzy
+#| msgid "Reply"
+msgid "Send Reply"
+msgstr "Répondre"
+
+#: .\templates\accounts\dashboard.html:40
+#: .\templates\accounts\dashboard.html:52 .\templates\homebase.html:250
+#: .\templates\includes\dashboard_sidebar.html:5
+#: .\templates\includes\management_center_sidebar.html:25
+msgid "Dashboard"
+msgstr ""
+
+#: .\templates\accounts\dashboard.html:55
+msgid " Hello"
+msgstr ""
+
+#: .\templates\accounts\dashboard.html:55
+msgid "  you have"
+msgstr ""
+
+#: .\templates\accounts\dashboard.html:55
+#, fuzzy
+#| msgid "Orders"
+msgid "  orders"
+msgstr "Ordres"
+
+#: .\templates\accounts\dashboard.html:57
+msgid " From your account dashboard you can view your"
+msgstr ""
+
+#: .\templates\accounts\dashboard.html:57
+msgid " recent orders"
+msgstr ""
+
+#: .\templates\accounts\dashboard.html:57
+msgid " manage your"
+msgstr ""
+
+#: .\templates\accounts\dashboard.html:57
+msgid " edit your profile"
+msgstr ""
+
+#: .\templates\accounts\dashboard.html:57
+msgid " and"
+msgstr ""
+
+#: .\templates\accounts\dashboard.html:57
+msgid " edit your password"
+msgstr ""
+
+#: .\templates\accounts\dashboard.html:65
+#: .\templates\accounts\edit_products.html:138
+#: .\templates\includes\management_center_sidebar.html:8
+#: .\templates\products\add_products.html:28
+#: .\templates\products\add_signboard.html:35
+#: .\templates\products\clearance_products.html:137
+#, fuzzy
+#| msgid "All Products"
+msgid "Add Product"
+msgstr "Tous les produits"
+
+#: .\templates\accounts\dashboard.html:66
+#: .\templates\includes\management_center_sidebar.html:13
+#: .\templates\products\management_center.html:65
+#: .\templates\products\update_product.html:115
+#, fuzzy
+#| msgid "Clearance"
+msgid "Clearance Price"
+msgstr "Liquidation"
+
+#: .\templates\accounts\dashboard.html:67 .\templates\blog\add_article.html:38
+#: .\templates\blog\add_article.html:66
+#: .\templates\includes\management_center_sidebar.html:19
+msgid "Add Article"
+msgstr ""
+
+#: .\templates\accounts\dashboard.html:72
+msgid "Your Information"
+msgstr ""
+
+#: .\templates\accounts\dashboard.html:76
+msgid " Email:"
+msgstr ""
+
+#: .\templates\accounts\dashboard.html:77
+#, fuzzy
+#| msgid "First Name"
+msgid " Full Name"
+msgstr "Prénom"
+
+#: .\templates\accounts\dashboard.html:78
+#, fuzzy
+#| msgid "Last Name"
+msgid " User Name"
+msgstr "Nom"
+
+#: .\templates\accounts\dashboard.html:79
+msgid " Phone Number"
+msgstr ""
+
+#: .\templates\accounts\dashboard.html:80
+msgid " Joined At"
+msgstr ""
+
+#: .\templates\accounts\dashboard.html:81
+msgid " Last Login"
+msgstr ""
+
+#: .\templates\accounts\dashboard.html:97
+#: .\templates\accounts\my_orders.html:63
+#, fuzzy
+#| msgid "Billing Address"
+msgid "Billing Name"
+msgstr "adresse de facturation"
+
+#: .\templates\accounts\dashboard.html:98
+#: .\templates\accounts\edit_profile.html:78
+#: .\templates\accounts\my_orders.html:64 .\templates\blog\contact.html:114
+#: .\templates\blog\contact.html:115 .\templates\store\checkout.html:88
+msgid "Phone"
+msgstr "Téléphone"
+
+#: .\templates\accounts\dashboard.html:99
+#: .\templates\accounts\my_orders.html:65
+#, fuzzy
+#| msgid "Order Note"
+msgid "Order Total"
+msgstr "Remarque sur la commande"
+
+#: .\templates\accounts\dashboard.html:100
+#: .\templates\accounts\user_message.html:64 .\templates\store\store.html:60
+msgid "Date"
+msgstr ""
+
+#: .\templates\accounts\dashboard.html:110
+msgid "see your product info"
+msgstr ""
+
+#: .\templates\accounts\dashboard.html:117
+#: .\templates\accounts\my_orders.html:124
+msgid "No order has been made yet"
+msgstr ""
+
+#: .\templates\accounts\edit_products.html:33
+#: .\templates\accounts\printing.html:30
+#, fuzzy
+#| msgid "My Account"
+msgid " My Account"
+msgstr "Mon compte"
+
+#: .\templates\accounts\edit_products.html:41
+msgid "My Confirmed Orders"
+msgstr ""
+
+#: .\templates\accounts\edit_products.html:57
+#: .\templates\products\clearance_products.html:57
+#, fuzzy
+#| msgid "Top Product"
+msgid "List of Products"
+msgstr "Meilleur produit"
+
+#: .\templates\accounts\edit_products.html:63
+#: .\templates\accounts\user_message.html:62
+#: .\templates\products\add_products.html:97
+#: .\templates\products\add_products.html:164
+#: .\templates\products\clearance_products.html:63
+#: .\templates\stock\product_list_stock.html:93
+#: .\templates\stock\stock_sammary.html:50
+#, fuzzy
+#| msgid "Product"
+msgid "Product Name"
+msgstr "Produit"
+
+#: .\templates\accounts\edit_products.html:65
+#: .\templates\accounts\edit_products.html:80
+#: .\templates\products\clearance_products.html:65
+msgid "Edit"
+msgstr ""
+
+#: .\templates\accounts\edit_products.html:66
+#: .\templates\accounts\edit_products.html:85
+msgid "Remove"
+msgstr ""
+
+#: .\templates\accounts\edit_products.html:99
+#: .\templates\accounts\edit_products.html:105
+#: .\templates\accounts\my_orders.html:88
+#: .\templates\accounts\my_orders.html:94 .\templates\blog\blog.html:119
+#: .\templates\blog\blog.html:125
+#: .\templates\products\clearance_products.html:98
+#: .\templates\products\clearance_products.html:104
+#: .\templates\stock\product_list_stock.html:142
+#: .\templates\stock\product_list_stock.html:148
+#: .\templates\stock\stock_adjustment.html:103
+#: .\templates\stock\stock_adjustment.html:109
+#: .\templates\store\clearance_products.html:149
+#: .\templates\store\clearance_products.html:155
+#: .\templates\store\featured_products.html:158
+#: .\templates\store\featured_products.html:164
+#: .\templates\store\product_detail.html:50 .\templates\store\store.html:169
+#: .\templates\store\store.html:175 .\templates\store\top_products.html:160
+#: .\templates\store\top_products.html:166
+msgid "Prev"
+msgstr "Préc"
+
+#: .\templates\accounts\edit_products.html:115
+#: .\templates\accounts\my_orders.html:104 .\templates\blog\blog.html:135
+#: .\templates\products\clearance_products.html:114
+#: .\templates\stock\product_list_stock.html:158
+#: .\templates\stock\stock_adjustment.html:119
+#: .\templates\store\clearance_products.html:165
+#: .\templates\store\featured_products.html:174
+#: .\templates\store\store.html:185 .\templates\store\top_products.html:176
+msgid "of All"
+msgstr "de tout"
+
+#: .\templates\accounts\edit_products.html:121
+#: .\templates\accounts\edit_products.html:127
+#: .\templates\accounts\my_orders.html:110
+#: .\templates\accounts\my_orders.html:116 .\templates\blog\blog.html:141
+#: .\templates\blog\blog.html:147
+#: .\templates\products\clearance_products.html:120
+#: .\templates\products\clearance_products.html:126
+#: .\templates\stock\product_list_stock.html:164
+#: .\templates\stock\product_list_stock.html:170
+#: .\templates\stock\stock_adjustment.html:125
+#: .\templates\stock\stock_adjustment.html:131
+#: .\templates\store\clearance_products.html:171
+#: .\templates\store\clearance_products.html:177
+#: .\templates\store\featured_products.html:180
+#: .\templates\store\featured_products.html:186
+#: .\templates\store\product_detail.html:55 .\templates\store\store.html:191
+#: .\templates\store\top_products.html:182
+#: .\templates\store\top_products.html:188
+msgid "Next"
+msgstr "Suivant"
+
+#: .\templates\accounts\edit_products.html:135
+msgid "You have No Products to Selle It"
+msgstr ""
+
+#: .\templates\accounts\edit_profile.html:41
+msgid "Edit Profie"
+msgstr ""
+
+#: .\templates\accounts\edit_profile.html:53
+#: .\templates\includes\dashboard_sidebar.html:16
+msgid "Edit Profile"
+msgstr ""
+
+#: .\templates\accounts\edit_profile.html:66 .\templates\store\checkout.html:51
+msgid "First Name"
+msgstr "Prénom"
+
+#: .\templates\accounts\edit_profile.html:71 .\templates\store\checkout.html:56
+msgid "Last Name"
+msgstr "Nom"
+
+#: .\templates\accounts\edit_profile.html:83
+msgid "Profile Picture"
+msgstr ""
+
+#: .\templates\accounts\edit_profile.html:96
+#, fuzzy
+#| msgid "city / Comun"
+msgid "City * Comun"
+msgstr "commune"
+
+#: .\templates\accounts\edit_profile.html:101
+#, fuzzy
+#| msgid "State / Wilaya"
+msgid "State * Wilaya"
+msgstr "Wilaya"
+
+#: .\templates\accounts\edit_profile.html:107
+#, fuzzy
+#| msgid "address line 1"
+msgid "adress line 1"
+msgstr "Adresse Ligne 1"
+
+#: .\templates\accounts\my_orders.html:41
+#: .\templates\accounts\user_message.html:41
+#, fuzzy
+#| msgid "Orders"
+msgid "My orders"
+msgstr "Ordres"
+
+#: .\templates\accounts\my_orders.html:57
+msgid "List of Buyer Products"
+msgstr ""
+
+#: .\templates\accounts\my_orders.html:66
+msgid "Info"
+msgstr ""
+
+#: .\templates\accounts\my_orders.html:75
+msgid "Da"
+msgstr ""
+
+#: .\templates\accounts\my_orders.html:76
+#, fuzzy
+#| msgid "Order Note"
+msgid "order info"
+msgstr "Remarque sur la commande"
+
+#: .\templates\accounts\my_orders.html:127
+#: .\templates\accounts\user_message.html:87
+msgid "More SHOPING"
+msgstr ""
+
+#: .\templates\accounts\printing.html:37 .\templates\blog\faqs.html:45
+#, fuzzy
+#| msgid "Home"
+msgid " Home"
+msgstr "Accueil"
+
+#: .\templates\accounts\printing.html:38
+#, fuzzy
+#| msgid "My Account"
+msgid " Account"
+msgstr "Mon compte"
+
+#: .\templates\accounts\printing.html:39
+msgid " My Confirmed Orders"
+msgstr ""
+
+#: .\templates\accounts\printing.html:51
+#, fuzzy
+#| msgid "Command Confirmed"
+msgid " Orders Confirmed"
+msgstr "Commande confirmée"
+
+#: .\templates\accounts\printing.html:60
+#, fuzzy
+#| msgid "Orders"
+msgid " Order"
+msgstr "Ordres"
+
+#: .\templates\accounts\printing.html:61
+#, fuzzy
+#| msgid "Billing Address"
+msgid " Billing Name"
+msgstr "adresse de facturation"
+
+#: .\templates\accounts\printing.html:62
+#, fuzzy
+#| msgid "Phone"
+msgid " Phone"
+msgstr "Téléphone"
+
+#: .\templates\accounts\printing.html:63
+#, fuzzy
+#| msgid "Order Note"
+msgid " Order Total"
+msgstr "Remarque sur la commande"
+
+#: .\templates\accounts\printing.html:64
+msgid " Print"
+msgstr ""
+
+#: .\templates\accounts\printing.html:73
+#, fuzzy
+#| msgid "DA"
+msgid " DA"
+msgstr "DA"
+
+#: .\templates\accounts\printing.html:74
+msgid " order info"
+msgstr ""
+
+#: .\templates\accounts\printing.html:92 .\templates\accounts\printing.html:99
+#, fuzzy
+#| msgid "Prev"
+msgid " Prev"
+msgstr "Préc"
+
+#: .\templates\accounts\printing.html:109
+#, fuzzy
+#| msgid "of All"
+msgid " of All"
+msgstr "de tout"
+
+#: .\templates\accounts\printing.html:116
+#: .\templates\accounts\printing.html:122
+#, fuzzy
+#| msgid "Next"
+msgid " Next"
+msgstr "Suivant"
+
+#: .\templates\accounts\printing.html:130
+msgid " No Confirmed Orders have been made yet"
+msgstr ""
+
+#: .\templates\accounts\user_message.html:57
+msgid "List of Messages Products"
+msgstr ""
+
+#: .\templates\accounts\user_message.html:75
+#, fuzzy
+#| msgid "Messages"
+msgid "see message"
+msgstr "Messages"
+
+#: .\templates\accounts\user_message.html:84
+msgid "No messages has been made yet"
+msgstr ""
+
+#: .\templates\blog\about.html:22 .\templates\blog\about.html:30
+msgid "About us"
+msgstr "À propos de nous"
+
+#: .\templates\blog\about.html:40
+msgid "Who We Are"
+msgstr "Qui nous sommes"
+
+#: .\templates\blog\about.html:42
+msgid "Eco-dz Shopping: Your Sustainable Lifestyle Companion"
+msgstr "Eco-dz Shopping : votre compagnon de mode de vie durable"
+
+#: .\templates\blog\about.html:65
+msgid "Design Quality"
+msgstr "Qualité de conception"
+
+#: .\templates\blog\about.html:77
+msgid "Professional Support"
+msgstr "Assistance professionnelle"
+
+#: .\templates\blog\about.html:78
+msgid "Praesent dapibus, neque id cursus faucibus"
+msgstr ""
+
+#: .\templates\blog\about.html:89
+msgid "Made With Love"
+msgstr "Fait avec amour"
+
+#: .\templates\blog\about.html:90
+msgid "Pellentesque a diam sit amet mi ullamcorper"
+msgstr ""
+
+#: .\templates\blog\about.html:90
+msgid "vehicula. Nullam quis massa sit amet"
+msgstr ""
+
+#: .\templates\blog\about.html:90
+msgid "nibh viverra malesuada."
+msgstr ""
+
+#: .\templates\blog\about.html:103
+msgid "Meet Our Team"
+msgstr "Rencontrez notre équipe"
+
+#: .\templates\blog\about.html:261
+msgid "LETS START WORK"
+msgstr "COMMENÇONS LE TRAVAIL"
+
+#: .\templates\blog\about.html:272
+msgid "The worlds premium design brands in one destination."
+msgstr ""
+"Les marques de design haut de gamme au monde réunies en une seule "
+"destination."
+
+#: .\templates\blog\about.html:273
+msgid ""
+"Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, "
+"aliquet vel, dapibus id, mattis vel, nis"
+msgstr ""
+
+#: .\templates\blog\add_article.html:38 .\templates\blog\add_article.html:45
+#: .\templates\blog\blog.html:32 .\templates\blog\blog.html:39
+#: .\templates\blog\blog_detail.html:61 .\templates\homebase.html:453
+msgid "Blog"
+msgstr ""
+
+#: .\templates\blog\add_article.html:46
+msgid "Create a Article"
+msgstr ""
+
+#: .\templates\blog\add_article.html:62
+msgid "Hello"
+msgstr ""
+
+#: .\templates\blog\add_article.html:64
+msgid "To post an article on our Django website"
+msgstr ""
+
+#: .\templates\blog\add_article.html:66
+msgid "When Click on"
+msgstr ""
+
+#: .\templates\blog\add_article.html:67
+msgid ""
+"Input a compelling title, upload an image, and create a article after share "
+"your content"
+msgstr ""
+
+#: .\templates\blog\add_article.html:68
+msgid ""
+"Hit Post Article to instantly publish your article with title, image, and "
+"paragraph"
+msgstr ""
+
+#: .\templates\blog\add_article.html:72
+msgid "Title"
+msgstr ""
+
+#: .\templates\blog\add_article.html:74 .\templates\blog\add_article.html:80
+#: .\templates\blog\add_article.html:86
+msgid ""
+"This will be how your name will be displayed in the account section and in "
+"reviews"
+msgstr ""
+
+#: .\templates\blog\add_article.html:78
+msgid "Add Image"
+msgstr ""
+
+#: .\templates\blog\add_article.html:84
+msgid "Body"
+msgstr ""
+
+#: .\templates\blog\add_article.html:91
+msgid "Post Article"
+msgstr ""
+
+#: .\templates\blog\blog.html:32
+msgid "Blog Listing"
+msgstr "Liste des blogs"
+
+#: .\templates\blog\blog.html:54 .\templates\store\store.html:49
+msgid "Showing"
+msgstr "Affichage"
+
+#: .\templates\blog\blog.html:54
+msgid "Blogs"
+msgstr "Blogs"
+
+#: .\templates\blog\blog.html:102 .\templates\home.html:759
+msgid "Continue Reading"
+msgstr "Continuer la lecture"
+
+#: .\templates\blog\blog.html:158 .\templates\store\featured_products.html:145
+#: .\templates\store\store.html:156 .\templates\store\top_products.html:147
+msgid "No Rusalt Found it ... please try again"
+msgstr "Aucun résultat Je l'ai trouvé... veuillez réessayer"
+
+#: .\templates\blog\blog.html:166 .\templates\blog\blog.html:171
+#: .\templates\blog\blog_detail.html:258 .\templates\blog\blog_detail.html:263
+#: .\templates\homebase.html:292
+msgid "Search"
+msgstr "Recherche"
+
+#: .\templates\blog\blog.html:169 .\templates\blog\blog_detail.html:261
+msgid "Search in blog"
+msgstr "Rechercher dans le blog"
+
+#: .\templates\blog\blog.html:176 .\templates\category\category_list.html:46
+msgid "Categories"
+msgstr "Catégories"
+
+#: .\templates\blog\blog.html:187 .\templates\blog\blog_detail.html:270
+msgid "Popular Posts"
+msgstr "Articles populaires"
+
+#: .\templates\blog\blog.html:242 .\templates\blog\blog_detail.html:317
+msgid "About Blog"
+msgstr "À propos du blog"
+
+#: .\templates\blog\blog.html:245 .\templates\blog\blog_detail.html:320
+msgid ""
+"Welcome to our store! We offer a wide selection of items for you to explore. "
+"From fashion to tech, weve got it all. Start shopping now and find your "
+"favorites!"
+msgstr ""
+"Bienvenue dans notre magasin! Nous vous proposons une large sélection "
+"d'articles à découvrir. De la mode à la technologie, nous avons tout. "
+"Commencez à magasiner maintenant et trouvez votrefavoris!"
+
+#: .\templates\blog\blog_detail.html:51
+msgid "Blog Detail"
+msgstr "Détail du blog"
+
+#: .\templates\blog\blog_detail.html:53
+msgid "created by"
+msgstr "créé par"
+
+#: .\templates\blog\blog_detail.html:81
+msgid "by"
+msgstr "par"
+
+#: .\templates\blog\blog_detail.html:111
+msgid "Share this post"
+msgstr "Partager cette publication"
+
+#: .\templates\blog\blog_detail.html:127
+msgid "Previous Post"
+msgstr "Post précédent"
+
+#: .\templates\blog\blog_detail.html:133
+msgid "Next Post"
+msgstr "Prochain article"
+
+#: .\templates\blog\blog_detail.html:140
+msgid "Related Posts"
+msgstr "Articles Similaires"
+
+#: .\templates\blog\blog_detail.html:174 .\templates\blog\blog_detail.html:191
+msgid "Comments"
+msgstr "commentaires"
+
+#: .\templates\blog\blog_detail.html:205
+msgid "Reply"
+msgstr "Répondre"
+
+#: .\templates\blog\blog_detail.html:226
+msgid "Leave A Reply"
+msgstr "Laisser une réponse"
+
+#: .\templates\blog\blog_detail.html:232
+msgid "Comment"
+msgstr "Commentaire"
+
+#: .\templates\blog\blog_detail.html:237 .\templates\blog\contact.html:102
+#: .\templates\blog\contact.html:103
+msgid "Name"
+msgstr "Nom"
+
+#: .\templates\blog\blog_detail.html:242 .\templates\blog\contact.html:107
+#: .\templates\blog\contact.html:108
+msgid "Email"
+msgstr ""
+
+#: .\templates\blog\blog_detail.html:248
+msgid "POST COMMENT"
+msgstr "POSTER UN COMMENTAIRE"
+
+#: .\templates\blog\blog_detail.html:304
+msgid "Products Tags"
+msgstr "Étiquettes de produits"
+
+#: .\templates\blog\contact.html:37
+#, fuzzy
+#| msgid "Contact us"
+msgid " Contact us "
+msgstr "Contactez-nous"
+
+#: .\templates\blog\contact.html:44
+#, fuzzy
+#| msgid "Contact us"
+msgid " Contact us"
+msgstr "Contactez-nous"
+
+#: .\templates\blog\contact.html:44
+msgid "keep in touch with us"
+msgstr ""
+
+#: .\templates\blog\contact.html:52
+msgid "Contact Information"
+msgstr ""
+
+#: .\templates\blog\contact.html:53
+msgid ""
+"Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu "
+"pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum "
+"et, dapibus sed, urna"
+msgstr ""
+
+#: .\templates\blog\contact.html:57 .\templates\blog\contact.html:78
+msgid "The Office"
+msgstr "Le bureau"
+
+#: .\templates\blog\contact.html:62
+msgid "40 sidi rached Est Tipaza, N 10012, Algeria"
+msgstr "40 sidi rached Est Tipaza, N 10012, Algeria"
+
+#: .\templates\blog\contact.html:83
+msgid "Monday-Saturday"
+msgstr "Lundi samedi"
+
+#: .\templates\blog\contact.html:95
+#, fuzzy
+#| msgid "Got Any Questions?"
+msgid " Got Any Questions?"
+msgstr "Vous avez des questions ?"
+
+#: .\templates\blog\contact.html:96
+#, fuzzy
+#| msgid "Use the form below to get in touch with the sales team"
+msgid " Use the form below to get in touch with the sales team"
+msgstr ""
+"Utilisez le formulaire ci-dessous pour entrer en contact avec l'équipe "
+"commerciale"
+
+#: .\templates\blog\contact.html:119 .\templates\blog\contact.html:120
+msgid "Subject"
+msgstr ""
+
+#: .\templates\blog\contact.html:129
+msgid "SUBMIT"
+msgstr "SOUMETTRE"
+
+#: .\templates\blog\faqs.html:39
+msgid "F.A.Q"
+msgstr ""
+
+#: .\templates\blog\faqs.html:39
+msgid " Pages"
+msgstr ""
+
+#: .\templates\blog\faqs.html:47 .\templates\homebase.html:496
+msgid "FAQ"
+msgstr ""
+
+#: .\templates\blog\faqs.html:54
+#, fuzzy
+#| msgid "Shopping Cart"
+msgid "Shipping Information"
+msgstr "Panier"
+
+#: .\templates\blog\faqs.html:60
+msgid "How will my parcel be delivered?"
+msgstr ""
+
+#: .\templates\blog\faqs.html:251
+msgid " If You Have More Questions"
+msgstr ""
+
+#: .\templates\blog\faqs.html:252
+msgid " Quisque volutpat mattis eros"
+msgstr ""
+
+#: .\templates\blog\faqs.html:256
+msgid " CONTACT US"
+msgstr ""
+
+#: .\templates\category\category_list.html:28
+#, fuzzy
+#| msgid "Products Tags"
+msgid "Product By Category"
+msgstr "Étiquettes de produits"
+
+#: .\templates\category\category_list.html:35
+#, fuzzy
+#| msgid "Categories"
+msgid "Show Category"
+msgstr "Catégories"
+
+#: .\templates\home.html:84
+msgid "Today:"
+msgstr "Aujourd'hui:"
+
+#: .\templates\home.html:88 .\templates\home.html:236 .\templates\home.html:241
+#: .\templates\home.html:325 .\templates\home.html:331
+#: .\templates\home.html:414 .\templates\home.html:419
+#: .\templates\home.html:464 .\templates\home.html:495
+#: .\templates\home.html:496 .\templates\home.html:561
+#: .\templates\home.html:563 .\templates\home.html:623
+#: .\templates\home.html:624 .\templates\products\update_product.html:104
+#: .\templates\store\product_detail.html:474
+msgid "DA"
+msgstr "DA"
+
+#: .\templates\home.html:92
+msgid "Click Here"
+msgstr "Cliquez ici"
+
+#: .\templates\home.html:119
+msgid "Top Product"
+msgstr "Meilleur produit"
+
+#: .\templates\home.html:133 .\templates\homebase.html:463
+#: .\templates\products\update_product.html:88
+msgid "Clearance"
+msgstr "Liquidation"
+
+#: .\templates\home.html:149 .\templates\home.html:165
+msgid "Featured"
+msgstr "En vedette"
+
+#: .\templates\home.html:168
+msgid "On Sale"
+msgstr "En soldes"
+
+#: .\templates\home.html:171
+msgid "Top Rated"
+msgstr "Les mieux notés"
+
+#: .\templates\home.html:204 .\templates\home.html:292
+#: .\templates\home.html:383 .\templates\home.html:535
+#: .\templates\home.html:597 .\templates\store\clearance_products.html:77
+#: .\templates\store\store.html:79 .\templates\store\top_products.html:79
+msgid "Sale"
+msgstr "Vente"
+
+#: .\templates\home.html:207 .\templates\home.html:295
+#: .\templates\home.html:386 .\templates\store\featured_products.html:82
+#: .\templates\store\store.html:82 .\templates\store\top_products.html:82
+msgid "New"
+msgstr "Nouvelle"
+
+#: .\templates\home.html:219 .\templates\home.html:308
+#: .\templates\home.html:398 .\templates\home.html:544
+#: .\templates\home.html:606 .\templates\store\clearance_products.html:86
+#: .\templates\store\featured_products.html:93
+#: .\templates\store\product_detail.html:667 .\templates\store\store.html:94
+#: .\templates\store\top_products.html:94
+msgid "add to wishlist"
+msgstr "ajouter à la liste de souhaits"
+
+#: .\templates\home.html:223 .\templates\home.html:312
+#: .\templates\home.html:402 .\templates\home.html:548
+#: .\templates\home.html:610 .\templates\store\product_detail.html:378
+#: .\templates\store\product_detail.html:672
+msgid "add to cart"
+msgstr "Ajouter au panier"
+
+#: .\templates\home.html:457
+msgid "New Deals"
+msgstr "Nouvelles offres"
+
+#: .\templates\home.html:464
+msgid "Shop Now with"
+msgstr "Achetez maintenant avec"
+
+#: .\templates\home.html:477
+msgid "Deals & Outlet"
+msgstr "Offres et points de vente"
+
+#: .\templates\home.html:478
+msgid "Today’s deal and more"
+msgstr "L'offre d'aujourd'hui et plus encore"
+
+#: .\templates\home.html:499
+msgid "Shop Now"
+msgstr "Achetez maintenant"
+
+#: .\templates\home.html:652
+msgid "Shop more Outlet deals"
+msgstr "Découvrez plus d’offres Outlet"
+
+#: .\templates\home.html:717
+msgid "From Our Blog"
+msgstr "De notre blog"
+
+#: .\templates\home.html:771
+msgid "View more articles"
+msgstr "Voir plus d'articles"
+
+#: .\templates\home.html:791
+msgid "Free Shipping"
+msgstr "Livraison gratuite"
+
+#: .\templates\home.html:792
+msgid "Orders 30000 DA or more"
+msgstr "Commandes 30000 DA ou plus"
+
+#: .\templates\home.html:804
+msgid "Free Returns"
+msgstr "Retours sans frais"
+
+#: .\templates\home.html:805
+msgid "Within 30 days"
+msgstr "Dans les 30 jours"
+
+#: .\templates\home.html:817
+#, python-format
+msgid "Get 20%% Off 1 Item"
+msgstr "Obtenez 20%% de réduction sur 1 article"
+
+#: .\templates\home.html:818
+msgid "when you sign up"
+msgstr "quand tu t'inscris"
+
+#: .\templates\home.html:830
+msgid "We Support"
+msgstr "Nous soutenons"
+
+#: .\templates\home.html:831
+msgid "24/7 amazing services"
+msgstr "Des services incroyables 24h/24 et 7j/7"
+
+#: .\templates\home.html:862
+msgid "Get the Latest Deals"
+msgstr "Obtenez les dernières offres"
+
+#: .\templates\home.html:863
+msgid "receive"
+msgstr "recevoir"
+
+#: .\templates\home.html:863
+msgid "2000 DA coupon"
+msgstr "Coupon de 2000 DA"
+
+#: .\templates\home.html:863
+msgid "for first shopping"
+msgstr "pour les premiers achats"
+
+#: .\templates\home.html:872
+msgid "Subscrib Now"
+msgstr "Abonnez-vous"
+
+#: .\templates\homebase.html:173 .\templates\homebase.html:225
+msgid "Profile"
+msgstr ""
+
+#: .\templates\homebase.html:195
+msgid "Language"
+msgstr ""
+
+#: .\templates\homebase.html:211
+#, fuzzy
+#| msgid "My Account"
+msgid "Make an Account"
+msgstr "Mon compte"
+
+#: .\templates\homebase.html:214
+msgid "Login"
+msgstr ""
+
+#: .\templates\homebase.html:215
+msgid "Register"
+msgstr ""
+
+#: .\templates\homebase.html:249
+msgid "Log Out"
+msgstr "Se déconnecter"
+
+#: .\templates\homebase.html:251 .\templates\includes\stock_sidebar.html:5
+#: .\templates\products\add_products.html:182
+#: .\templates\stock\stock_valuation.html:56
+msgid "Stock"
+msgstr ""
+
+#: .\templates\homebase.html:254
+#: .\templates\includes\management_center_sidebar.html:5
+#: .\templates\products\management_center.html:30
+#: .\templates\products\management_center.html:38
+msgid "Management Center"
+msgstr "Centre de gestion"
+
+#: .\templates\homebase.html:294
+#, fuzzy
+#| msgid "Search"
+msgid "Search product"
+msgstr "Recherche"
+
+#: .\templates\homebase.html:315 .\templates\includes\dashboard_sidebar.html:12
+msgid "Orders"
+msgstr "Ordres"
+
+#: .\templates\homebase.html:326 .\templates\store\wishlist.html:33
+#: .\templates\store\wishlist.html:41
+msgid "Wishlist"
+msgstr "favorite"
+
+#: .\templates\homebase.html:337
+msgid "Cart"
+msgstr "Panier"
+
+#: .\templates\homebase.html:375 .\templates\homebase.html:524
+msgid "View Cart"
+msgstr "Voir le panier"
+
+#: .\templates\homebase.html:376 .\templates\store\checkout.html:27
+#: .\templates\store\checkout.html:35
+msgid "Checkout"
+msgstr "Vérifier"
+
+#: .\templates\homebase.html:389
+msgid "Browse Categories"
+msgstr "Parcourir les catégories"
+
+#: .\templates\homebase.html:395
+msgid "All Products"
+msgstr "Tous les produits"
+
+#: .\templates\homebase.html:427 .\templates\store\cart.html:21
+#: .\templates\store\cart.html:28 .\templates\store\checkout.html:27
+#: .\templates\store\checkout.html:34
+#: .\templates\store\clearance_products.html:30
+#: .\templates\store\clearance_products.html:37
+#: .\templates\store\featured_products.html:30
+#: .\templates\store\featured_products.html:37
+#: .\templates\store\product_chat.html:20
+#: .\templates\store\product_chat.html:27 .\templates\store\store.html:27
+#: .\templates\store\store.html:34 .\templates\store\top_products.html:30
+#: .\templates\store\top_products.html:37 .\templates\store\wishlist.html:33
+#: .\templates\store\wishlist.html:40
+msgid "Shop"
+msgstr "Boutique"
+
+#: .\templates\homebase.html:437 .\templates\homebase.html:494
+msgid "About"
+msgstr "À propos"
+
+#: .\templates\homebase.html:442
+msgid "Contact"
+msgstr ""
+
+#: .\templates\homebase.html:447
+msgid "FAQs"
+msgstr ""
+
+#: .\templates\homebase.html:463
+#, fuzzy
+#| msgid "Up to 30% Off"
+msgid "Up to 30 percent Off"
+msgstr "jusqu'à 30 % de réduction"
+
+#: .\templates\homebase.html:479
+msgid "Eco-dz Shopping is your one-stop destination for eco-conscious living."
+msgstr ""
+"Eco-dz Shopping est votre destination unique pour une vie respectueuse de "
+"l'environnement."
+
+#: .\templates\homebase.html:483
+msgid "Got Question? Call us 24/7"
+msgstr "Vous avez des questions ? Appelez-nous 24h/24 et 7j/7"
+
+#: .\templates\homebase.html:491
+#, fuzzy
+#| msgid "Useful Links"
+msgid " Useful Links"
+msgstr "Liens utiles"
+
+#: .\templates\homebase.html:497
+msgid "Contact us"
+msgstr "Contactez-nous"
+
+#: .\templates\homebase.html:504
+msgid "Customer Service"
+msgstr "Service client"
+
+#: .\templates\homebase.html:508
+msgid "Returns"
+msgstr "Retour"
+
+#: .\templates\homebase.html:509 .\templates\orders\order_complete.html:94
+#: .\templates\orders\payments.html:113
+#: .\templates\products\add_products.html:181 .\templates\store\cart.html:140
+#: .\templates\store\checkout.html:157
+msgid "Shipping"
+msgstr "Expédition"
+
+#: .\templates\homebase.html:510
+msgid "Terms and conditions"
+msgstr "Termes et conditions"
+
+#: .\templates\homebase.html:511
+msgid "Privacy Policy"
+msgstr "politique de confidentialité"
+
+#: .\templates\homebase.html:522
+msgid "Sign In"
+msgstr "Se connecter"
+
+#: .\templates\homebase.html:525
+msgid "My Wishlist"
+msgstr "Ma liste d'envies"
+
+#: .\templates\homebase.html:527
+msgid "Help"
+msgstr "Aide"
+
+#: .\templates\homebase.html:537
+msgid "Copyright © 2026 Eco-dz Shopping. All Rights Reserved."
+msgstr "Copyright © 2026 Eco-dz Shopping. Tous droits réservés."
+
+#: .\templates\includes\dashboard_sidebar.html:8
+#, fuzzy
+#| msgid "Product"
+msgid "Edit Product"
+msgstr "Produit"
+
+#: .\templates\includes\dashboard_sidebar.html:19
+#, fuzzy
+#| msgid "Command Confirmed"
+msgid "Orders Confirmed"
+msgstr "Commande confirmée"
+
+#: .\templates\includes\dashboard_sidebar.html:25
+#: .\templates\includes\stock_sidebar.html:27
+#, fuzzy
+#| msgid "Sign In"
+msgid "Sign Out"
+msgstr "Se connecter"
+
+#: .\templates\includes\management_center_sidebar.html:16
+msgid "Add Signboards"
+msgstr ""
+
+#: .\templates\includes\stock_sidebar.html:8
+#, fuzzy
+#| msgid "Products"
+msgid "Product List"
+msgstr "Produits"
+
+#: .\templates\includes\stock_sidebar.html:13
+#: .\templates\stock\stock_adjustment.html:29
+#: .\templates\stock\stock_update_adjust.html:114
+msgid "Stock Adjustment"
+msgstr ""
+
+#: .\templates\includes\stock_sidebar.html:16
+#: .\templates\stock\low_stock.html:29
+msgid "Low Stock"
+msgstr ""
+
+#: .\templates\includes\stock_sidebar.html:19
+#: .\templates\stock\stock_sammary.html:45
+#: .\templates\stock\stock_valuation.html:29
+#: .\templates\stock\stock_valuation.html:37
+#: .\templates\stock\stock_valuation.html:49
+msgid "Stock Valuation"
+msgstr ""
+
+#: .\templates\includes\stock_sidebar.html:22
+#: .\templates\stock\stock_history.html:30
+#: .\templates\stock\stock_history.html:39
+#: .\templates\stock\stock_history.html:51
+msgid "Stock History"
+msgstr ""
+
+#: .\templates\orders\order_complete.html:9
+msgid "Command Confirmed"
+msgstr "Commande confirmée"
+
+#: .\templates\orders\order_complete.html:12
+msgid "Shop more"
+msgstr "Achetez plus"
+
+#: .\templates\orders\order_complete.html:34
+msgid "Invoiced To"
+msgstr "Facturé à"
+
+#: .\templates\orders\order_complete.html:51
+msgid "Order Date"
+msgstr "Date de commande"
+
+#: .\templates\orders\order_complete.html:62
+#: .\templates\store\product_detail.html:41 .\templates\store\store.html:49
+msgid "Products"
+msgstr "Produits"
+
+#: .\templates\orders\order_complete.html:63
+#: .\templates\stock\stock_history.html:104
+msgid "Qty"
+msgstr ""
+
+#: .\templates\orders\order_complete.html:64 .\templates\store\cart.html:53
+#: .\templates\store\cart.html:147 .\templates\store\checkout.html:109
+#: .\templates\store\checkout.html:164
+msgid "Total"
+msgstr ""
+
+#: .\templates\orders\order_complete.html:90
+msgid "Sub Total"
+msgstr ""
+
+#: .\templates\orders\order_complete.html:101
+#: .\templates\orders\payments.html:118
+msgid "Grand Total"
+msgstr "Grande Total"
+
+#: .\templates\orders\order_complete.html:109
+msgid "Thank you for shopping with us!"
+msgstr "Merci d'avoir fait du shopping avec nous!"
+
+#: .\templates\orders\payments.html:11
+msgid "Review Your Order and Make Payment"
+msgstr "Vérifiez votre commande et effectuez le paiement"
+
+#: .\templates\orders\payments.html:16
+msgid "Billing Address"
+msgstr "adresse de facturation"
+
+#: .\templates\orders\payments.html:25
+msgid "Order Note"
+msgstr "Remarque sur la commande"
+
+#: .\templates\orders\payments.html:32
+msgid "Payment Method"
+msgstr "Mode de paiement"
+
+#: .\templates\orders\payments.html:34
+msgid "Cash On Delivery"
+msgstr "Paiement à la livraison"
+
+#: .\templates\orders\payments.html:39
+msgid "Review Products"
+msgstr "Examiner les produits"
+
+#: .\templates\orders\payments.html:44
+#: .\templates\products\add_signboard.html:51
+#: .\templates\store\checkout.html:107 .\templates\store\wishlist.html:52
+msgid "Product"
+msgstr "Produit"
+
+#: .\templates\orders\payments.html:45
+#: .\templates\products\add_variants.html:206
+#: .\templates\stock\stock_update_adjust.html:145
+#: .\templates\store\cart.html:52 .\templates\store\checkout.html:108
+msgid "Quantity"
+msgstr "Quantité"
+
+#: .\templates\orders\payments.html:46
+#: .\templates\products\add_products.html:166
+#: .\templates\products\add_signboard.html:74
+#: .\templates\products\add_variants.html:202
+#: .\templates\products\clearance_products.html:64
+#: .\templates\products\update_product.html:81
+#: .\templates\stock\stock_valuation.html:57 .\templates\store\cart.html:51
+msgid "Price"
+msgstr "Prix"
+
+#: .\templates\orders\payments.html:109
+msgid "Total price"
+msgstr "Prix ​​total"
+
+#: .\templates\orders\payments.html:127
+msgid "cash on delivery"
+msgstr "paiement à la livraison"
+
+#: .\templates\orders\payments.html:128
+msgid "Confirm Command"
+msgstr "Confirmer la commande"
+
+#: .\templates\products\add_gallery.html:142
+msgid "Add Gallery"
+msgstr ""
+
+#: .\templates\products\add_gallery.html:142
+#: .\templates\products\add_products.html:119
+#: .\templates\products\add_signboard.html:84
+msgid "Images"
+msgstr ""
+
+#: .\templates\products\add_gallery.html:150
+msgid "Create Gallery"
+msgstr ""
+
+#: .\templates\products\add_gallery.html:160
+msgid "Add Product Gallery"
+msgstr ""
+
+#: .\templates\products\add_gallery.html:174
+msgid "Add Images"
+msgstr ""
+
+#: .\templates\products\add_gallery.html:177
+msgid "Upload Image"
+msgstr ""
+
+#: .\templates\products\add_gallery.html:183
+#, fuzzy
+#| msgid "Top Product"
+msgid "Show your Product"
+msgstr "Meilleur produit"
+
+#: .\templates\products\add_gallery.html:184
+msgid "Add Description"
+msgstr ""
+
+#: .\templates\products\add_gallery.html:191
+msgid "Information about your product"
+msgstr ""
+
+#: .\templates\products\add_gallery.html:195
+msgid "img"
+msgstr ""
+
+#: .\templates\products\add_gallery.html:196
+#, fuzzy
+#| msgid "Products Tags"
+msgid "product name"
+msgstr "Étiquettes de produits"
+
+#: .\templates\products\add_gallery.html:226
+#: .\templates\products\add_variants.html:197
+msgid "Size"
+msgstr ""
+
+#: .\templates\products\add_gallery.html:243
+#: .\templates\products\add_variants.html:193
+msgid "Color"
+msgstr ""
+
+#: .\templates\products\add_products.html:28
+#: .\templates\products\add_signboard.html:28 .\templates\stock\index.html:31
+#: .\templates\stock\low_stock.html:29
+#: .\templates\stock\stock_adjustment.html:29
+#: .\templates\stock\stock_history.html:30
+#: .\templates\stock\stock_update_adjust.html:106
+#: .\templates\stock\stock_valuation.html:29
+#: .\templates\stock\update_stock.html:109
+#, fuzzy
+#| msgid "Products"
+msgid "products"
+msgstr "Produits"
+
+#: .\templates\products\add_products.html:36
+#, fuzzy
+#| msgid "Review Products"
+msgid "create new product"
+msgstr "Examiner les produits"
+
+#: .\templates\products\add_products.html:47
+#, fuzzy
+#| msgid "Review Products"
+msgid "Add New Product"
+msgstr "Examiner les produits"
+
+#: .\templates\products\add_products.html:51
+#, fuzzy
+#| msgid "Categories"
+msgid "Category"
+msgstr "Catégories"
+
+#: .\templates\products\add_products.html:53
+#, fuzzy
+#| msgid "Categories"
+msgid "Select Category"
+msgstr "Catégories"
+
+#: .\templates\products\add_products.html:61
+#, fuzzy
+#| msgid "Categories"
+msgid "Subcategory"
+msgstr "Catégories"
+
+#: .\templates\products\add_products.html:63
+msgid "Select Subcategory"
+msgstr ""
+
+#: .\templates\products\add_products.html:101
+#: .\templates\products\add_products.html:165
+#: .\templates\products\add_variants.html:186
+#: .\templates\store\product_detail.html:505
+msgid "Description"
+msgstr ""
+
+#: .\templates\products\add_products.html:106
+#, fuzzy
+#| msgid "Free Shipping"
+msgid "Select Shipping"
+msgstr "Livraison gratuite"
+
+#: .\templates\products\add_products.html:108
+#, fuzzy
+#| msgid "Free Shipping"
+msgid "Free Shipping (0 DA)"
+msgstr "Livraison gratuite"
+
+#: .\templates\products\add_products.html:122
+#: .\templates\products\add_signboard.html:87
+#, fuzzy
+#| msgid "Review Products"
+msgid "Save Product"
+msgstr "Examiner les produits"
+
+#: .\templates\products\add_products.html:128
+#: .\templates\products\add_signboard.html:93
+msgid "Publishing Information"
+msgstr ""
+
+#: .\templates\products\add_products.html:134
+msgid "How to Chose Category and SubCategory"
+msgstr ""
+
+#: .\templates\products\add_products.html:140
+#: .\templates\products\add_signboard.html:105
+msgid ""
+"Choosing the right category after selecting a subcategory is crucial for "
+"effective organization and navigation. Follow these simple steps"
+msgstr ""
+
+#: .\templates\products\add_products.html:142
+#: .\templates\products\add_signboard.html:107
+msgid "Understand Your Subcategory"
+msgstr ""
+
+#: .\templates\products\add_products.html:142
+#: .\templates\products\add_signboard.html:107
+msgid ""
+"First, ensure you have a clear understanding of your subcategory. Know what "
+"it encompasses"
+msgstr ""
+
+#: .\templates\products\add_products.html:144
+#: .\templates\products\add_signboard.html:109
+msgid "Consider Relevance"
+msgstr ""
+
+#: .\templates\products\add_products.html:144
+#: .\templates\products\add_signboard.html:109
+msgid ""
+"Think about the primary purpose of your item or content and how it relates "
+"to the subcategory"
+msgstr ""
+
+#: .\templates\products\add_products.html:145
+#: .\templates\products\add_signboard.html:110
+msgid "Explore Options"
+msgstr ""
+
+#: .\templates\products\add_products.html:145
+#: .\templates\products\add_signboard.html:110
+msgid ""
+"Look through available categories to find the one that best matches your "
+"item or content"
+msgstr ""
+
+#: .\templates\products\add_products.html:146
+#: .\templates\products\add_signboard.html:111
+msgid "Check for Precision"
+msgstr ""
+
+#: .\templates\products\add_products.html:146
+#: .\templates\products\add_signboard.html:111
+msgid ""
+"Select a category that precisely represents your item or content, avoiding "
+"vague or overly broad choices"
+msgstr ""
+
+#: .\templates\products\add_products.html:147
+#: .\templates\products\add_signboard.html:112
+msgid "Think Like a User"
+msgstr ""
+
+#: .\templates\products\add_products.html:147
+#: .\templates\products\add_signboard.html:112
+msgid ""
+"Imagine how users would search for your item, and choose a category that "
+"aligns with their expectations"
+msgstr ""
+
+#: .\templates\products\add_products.html:148
+#, fuzzy
+#| msgid "Get the Latest Deals"
+msgid "Test the Waters"
+msgstr "Obtenez les dernières offres"
+
+#: .\templates\products\add_products.html:148
+msgid ""
+"If uncertain, try posting in one category and see how it performs. Adjust if "
+"necessary"
+msgstr ""
+
+#: .\templates\products\add_products.html:149
+msgid ""
+"Consult Guidelines:<strong> Refer to any platform-specific guidelines for "
+"category selection"
+msgstr ""
+
+#: .\templates\products\add_products.html:150
+msgid "Review and Refine"
+msgstr ""
+
+#: .\templates\products\add_products.html:150
+msgid ""
+"Periodically review your choice to ensure it remains the best fit as your "
+"content or items evolve "
+msgstr ""
+
+#: .\templates\products\add_products.html:158
+msgid "how to Chose Product Name and Des and Price"
+msgstr ""
+
+#: .\templates\products\add_products.html:164
+msgid ""
+" Choose a concise and descriptive name that highlights the products key "
+"features and purpose, making it easy for customers to understand"
+msgstr ""
+
+#: .\templates\products\add_products.html:165
+msgid ""
+"Craft a brief yet informative description, highlighting the products "
+"benefits, key specifications, and unique selling points"
+msgstr ""
+
+#: .\templates\products\add_products.html:166
+msgid ""
+"Research the market and competitors to set a competitive and profitable "
+"price. Consider factors like production costs, demand, and perceived value"
+msgstr ""
+
+#: .\templates\products\add_products.html:167
+msgid "Test and Adjust"
+msgstr ""
+
+#: .\templates\products\add_products.html:167
+msgid ""
+"Continuously monitor performance and customer feedback to refine your "
+"product name, description, and price for optimal results"
+msgstr ""
+
+#: .\templates\products\add_products.html:175
+msgid "Select Shipping and Stock?"
+msgstr ""
+
+#: .\templates\products\add_products.html:181
+msgid ""
+"Offer diverse shipping options, calculate competitive rates, and communicate "
+"tracking"
+msgstr ""
+
+#: .\templates\products\add_products.html:182
+msgid ""
+"Monitor inventory levels closely, adjust for seasons, and automate "
+"reordering for efficient stock management"
+msgstr ""
+
+#: .\templates\products\add_products.html:190
+#, fuzzy
+#| msgid "Product"
+msgid "My Image Product"
+msgstr "Produit"
+
+#: .\templates\products\add_products.html:196
+msgid ""
+"When selecting a product image, opt for a clear, high-resolution photo that "
+"showcases the item from its best angle, emphasizing its key features and "
+"qualities"
+msgstr ""
+
+#: .\templates\products\add_signboard.html:28
+msgid "Add Signboard"
+msgstr ""
+
+#: .\templates\products\add_signboard.html:36
+msgid "add a signboard"
+msgstr ""
+
+#: .\templates\products\add_signboard.html:47
+msgid "Add New Signboard"
+msgstr ""
+
+#: .\templates\products\add_signboard.html:53
+#, fuzzy
+#| msgid "All Products"
+msgid "Select Product"
+msgstr "Tous les produits"
+
+#: .\templates\products\add_signboard.html:65
+msgid "Sub Title"
+msgstr ""
+
+#: .\templates\products\add_signboard.html:69
+msgid "Big Title"
+msgstr ""
+
+#: .\templates\products\add_signboard.html:78
+#: .\templates\products\clearance_products.html:80
+#: .\templates\products\clearance_products.html:86
+#, fuzzy
+#| msgid "Clearance"
+msgid "Clear Price"
+msgstr "Liquidation"
+
+#: .\templates\products\add_signboard.html:99
+msgid "How to Chose Category and SubCategory?"
+msgstr ""
+
+#: .\templates\products\add_signboard.html:121
+msgid "how to Chose Product Name and Des and Price?"
+msgstr ""
+
+#: .\templates\products\add_variants.html:162
+msgid "Add Variant"
+msgstr ""
+
+#: .\templates\products\add_variants.html:162
+msgid "Variant"
+msgstr ""
+
+#: .\templates\products\add_variants.html:170
+msgid "Create Variants"
+msgstr ""
+
+#: .\templates\products\add_variants.html:180
+msgid "Add Variants"
+msgstr ""
+
+#: .\templates\products\add_variants.html:212
+#: .\templates\products\update_product.html:121
+msgid "Active"
+msgstr ""
+
+#: .\templates\products\add_variants.html:216
+msgid "Save Variant"
+msgstr ""
+
+#: .\templates\products\add_variants.html:219
+msgid "Add Gallery Images for your Product"
+msgstr ""
+
+#: .\templates\products\add_variants.html:221
+msgid "Upload Images"
+msgstr ""
+
+#: .\templates\products\add_variants.html:230
+msgid "Saved Variants Information"
+msgstr ""
+
+#: .\templates\products\add_variants.html:233
+msgid "Variation Table"
+msgstr ""
+
+#: .\templates\products\clearance_products.html:41
+#: .\templates\products\update_product.html:89
+#: .\templates\products\update_product.html:100
+#, fuzzy
+#| msgid "Clearance"
+msgid "Add Clearance Price"
+msgstr "Liquidation"
+
+#: .\templates\products\clearance_products.html:134
+msgid "You have No Products to Make Clearance For It"
+msgstr ""
+
+#: .\templates\products\management_center.html:62
+#, fuzzy
+#| msgid "All Products"
+msgid "Add Products"
+msgstr "Tous les produits"
+
+#: .\templates\products\management_center.html:68
+msgid "Add SignBoards"
+msgstr ""
+
+#: .\templates\products\management_center.html:71
+msgid "Add Articles"
+msgstr ""
+
+#: .\templates\products\management_center.html:76
+msgid ""
+"This feature allows administrators or sellers to add new products to the "
+"online store. It typically involves entering details such as product name, "
+"description, images, pricing, and other relevant information"
+msgstr ""
+
+#: .\templates\products\management_center.html:77
+msgid ""
+"Product management may also include options for organizing products into "
+"categories and specifying inventory levels"
+msgstr ""
+
+#: .\templates\products\management_center.html:80
+msgid ""
+"The clearance price feature likely enables users to set discounted prices "
+"for products during a clearance sale or promotional period"
+msgstr ""
+
+#: .\templates\products\management_center.html:81
+msgid ""
+"Administrators may be able to specify the original price and the discounted "
+"clearance price for selected products"
+msgstr ""
+
+#: .\templates\products\management_center.html:84
+msgid ""
+"The add signboards feature suggests the ability to include visual elements "
+"or promotional banners on the website"
+msgstr ""
+
+#: .\templates\products\management_center.html:85
+msgid ""
+"This feature may allow administrators to create and upload graphical "
+"signboards or banners for promotional purposes, showcasing deals or special "
+"offers"
+msgstr ""
+
+#: .\templates\products\management_center.html:88
+msgid ""
+"Adding articles is a content management feature that enables administrators "
+"to publish informational or promotional articles on the website"
+msgstr ""
+
+#: .\templates\products\management_center.html:89
+msgid ""
+"This could be used for blog posts, news updates, or any other content "
+"relevant to the websites audience"
+msgstr ""
+
+#: .\templates\products\update_product.html:81
+#, fuzzy
+#| msgid "Clearance"
+msgid "Add Clearance"
+msgstr "Liquidation"
+
+#: .\templates\products\update_product.html:104
+#, fuzzy
+#| msgid "Product"
+msgid "Product Price"
+msgstr "Produit"
+
+#: .\templates\products\update_product.html:116
+msgid "Add New Clearance Price"
+msgstr ""
+
+#: .\templates\products\update_product.html:124
+msgid "Update  Price"
+msgstr ""
+
+#: .\templates\stock\index.html:31 .\templates\stock\index.html:39
+#: .\templates\stock\index.html:51 .\templates\stock\low_stock.html:37
+#: .\templates\stock\product_list_stock.html:61
+#: .\templates\stock\stock_adjustment.html:37
+#: .\templates\stock\update_stock.html:117
+msgid "Inventory Overview"
+msgstr ""
+
+#: .\templates\stock\index.html:38 .\templates\stock\product_list_stock.html:60
+msgid "Stock Information "
+msgstr ""
+
+#: .\templates\stock\index.html:54
+msgid "Summary"
+msgstr ""
+
+#: .\templates\stock\index.html:57
+msgid "Total Number of Products"
+msgstr ""
+
+#: .\templates\stock\index.html:58
+#, fuzzy
+#| msgid "Top Product"
+msgid "Low-Stock Products"
+msgstr "Meilleur produit"
+
+#: .\templates\stock\index.html:78
+msgid "Detailed Product Information"
+msgstr ""
+
+#: .\templates\stock\index.html:113
+msgid "See More"
+msgstr ""
+
+#: .\templates\stock\index.html:117
+msgid "Other Relevant Metrics"
+msgstr ""
+
+#: .\templates\stock\index.html:121
+msgid "Average Stock Quantity"
+msgstr ""
+
+#: .\templates\stock\low_stock.html:36 .\templates\stock\stock_history.html:37
+#: .\templates\stock\stock_sammary.html:35
+#: .\templates\stock\stock_update_adjust.html:113
+#: .\templates\stock\stock_valuation.html:36
+#: .\templates\stock\update_stock.html:116
+msgid "Low Stock information"
+msgstr "Informations sur les stocks faibles"
+
+#: .\templates\stock\low_stock.html:49
+msgid "Product List with Low Stock"
+msgstr "Liste de produits avec un stock faible"
+
+#: .\templates\stock\low_stock.html:54
+#: .\templates\stock\stock_adjustment.html:54
+#: .\templates\stock\stock_history.html:57
+#: .\templates\stock\stock_history.html:102
+#: .\templates\stock\stock_valuation.html:54
+
+msgid "Prodcut Name"
+msgstr "Nom du produit"
+
+#: .\templates\stock\low_stock.html:55
+#: .\templates\stock\product_list_stock.html:94
+#: .\templates\stock\stock_adjustment.html:55
+#: .\templates\stock\stock_sammary.html:51
+msgid "Initial Stock"
+msgstr "Stock initial"
+
+#: .\templates\stock\low_stock.html:56
+#: .\templates\stock\product_list_stock.html:95
+#: .\templates\stock\stock_adjustment.html:56
+msgid "Sell Stock"
+msgstr "Vendre En Stock"
+
+#: .\templates\stock\low_stock.html:57
+#: .\templates\stock\product_list_stock.html:96
+#: .\templates\stock\stock_adjustment.html:57
+msgid "Rest Stock"
+msgstr "Reste des stocks"
+
+#: .\templates\stock\low_stock.html:58
+#: .\templates\stock\product_list_stock.html:97
+#: .\templates\stock\stock_adjustment.html:58
+
+msgid "Reorder Point"
+msgstr "Remarque sur la commande"
+
+#: .\templates\stock\low_stock.html:81
+#: .\templates\stock\product_list_stock.html:121
+#: .\templates\stock\stock_adjustment.html:81
+msgid "low-stock"
+msgstr "faible stock"
+
+#: .\templates\stock\product_list_stock.html:53
+msgid "Stock Information"
+msgstr "Informations boursières"
+
+#: .\templates\stock\product_list_stock.html:77
+
+msgid "Filter by Name"
+msgstr "Filtrer par nom"
+
+#: .\templates\stock\product_list_stock.html:78
+msgid "Enter product name or Variations"
+msgstr "Entrez le nom du produit ou les variantes"
+
+#: .\templates\stock\product_list_stock.html:88
+msgid "Products List And Stock Details"
+msgstr "Liste des produits et détails des stocks"
+
+#: .\templates\stock\product_list_stock.html:98
+msgid "Update"
+msgstr "Mise à jour"
+
+#: .\templates\stock\product_list_stock.html:127
+#: .\templates\stock\update_stock.html:109
+#: .\templates\stock\update_stock.html:127
+#: .\templates\stock\update_stock.html:157
+msgid "Update Stock"
+msgstr "Mettre à jour les stocks"
+
+#: .\templates\stock\stock_adjustment.html:36
+msgid "stock adjustment"
+msgstr "Ajustement des stocks"
+
+#: .\templates\stock\stock_adjustment.html:49
+msgid "Product List And Information du Stock"
+msgstr "Liste des produits et informations du stock"
+
+#: .\templates\stock\stock_adjustment.html:59
+msgid "Adjust "
+msgstr "Ajuster"
+
+#: .\templates\stock\stock_adjustment.html:88
+#: .\templates\stock\stock_update_adjust.html:154
+msgid "Adjust Stock"
+msgstr "Ajuster le stock"
+
+#: .\templates\stock\stock_history.html:58
+msgid "Q.B.Change"
+msgstr "Q.B.Changement"
+
+#: .\templates\stock\stock_history.html:59
+msgid "Q.A.Change"
+msgstr "Q.A.Changement"
+
+#: .\templates\stock\stock_history.html:60
+msgid "Unit Change"
+msgstr "Changement d'unité"
+
+#: .\templates\stock\stock_history.html:61
+#: .\templates\stock\stock_history.html:106
+#: .\templates\stock\stock_update_adjust.html:150
+msgid "Reason"
+msgstr "Raison"
+
+#: .\templates\stock\stock_history.html:62
+msgid "Change date"
+msgstr "Date de modification"
+
+#: .\templates\stock\stock_history.html:97
+msgid "Ajustment Stock History"
+msgstr "Historique des stocks d’ajustement"
+
+#: .\templates\stock\stock_history.html:103
+#: .\templates\stock\stock_update_adjust.html:134
+msgid "Adjustment Type"
+msgstr "Type de réglage"
+
+#: .\templates\stock\stock_history.html:107
+msgid "Adjustment date"
+msgstr "Date d'ajustement"
+
+#: .\templates\stock\stock_sammary.html:28
+#: .\templates\stock\stock_sammary.html:36
+msgid "Stock Summary"
+msgstr "Résumé des actions"
+
+#: .\templates\stock\stock_sammary.html:53
+msgid "Initial Valuation"
+msgstr "Évaluation initiale"
+
+#: .\templates\stock\stock_sammary.html:54
+msgid "Selling Stock"
+msgstr "Vendre des actions"
+
+#: .\templates\stock\stock_sammary.html:55
+msgid "Selling Price"
+msgstr "Prix ​​de vente"
+
+#: .\templates\stock\stock_sammary.html:76
+#: .\templates\stock\stock_valuation.html:94
+msgid "Total Stock Valuation"
+msgstr "Valorisation totale des stocks"
+
+#: .\templates\stock\stock_update_adjust.html:106
+msgid "Stock Update Adjustment"
+msgstr "Ajustement de la mise à jour des stocks"
+
+#: .\templates\stock\stock_update_adjust.html:124
+msgid "Stock Adjustment for"
+msgstr "Ajustement des stocks pour"
+
+#: .\templates\stock\stock_update_adjust.html:137
+msgid "add"
+msgstr "ajouter"
+
+#: .\templates\stock\stock_update_adjust.html:138
+msgid "subtract"
+msgstr "soustraire"
+
+#: .\templates\stock\stock_valuation.html:58
+msgid "Valuation"
+msgstr "Évaluation"
+
+#: .\templates\stock\update_stock.html:139
+
+msgid "New Stock Quantity"
+msgstr "Nouvelle quantité de stock"
+
+#: .\templates\stock\update_stock.html:153
+msgid "Reason for Change"
+msgstr "Raison du changement"
+
+#: .\templates\store\cart.html:21 .\templates\store\cart.html:29
+#: .\templates\store\product_chat.html:28
+msgid "Shopping Cart"
+msgstr "Panier"
+
+#: .\templates\store\cart.html:41
+#, fuzzy
+#| msgid "Shopping Cart"
+msgid "Your Shopping Cart is Empty"
+msgstr "Panier"
+
+#: .\templates\store\cart.html:42 .\templates\store\checkout.html:205
+#: .\templates\store\wishlist.html:119
+msgid "Go to Store"
+msgstr "Aller au magasin"
+
+#: .\templates\store\cart.html:50
+#, fuzzy
+#| msgid "Product"
+msgid " Product"
+msgstr "Produit"
+
+#: .\templates\store\cart.html:124
+msgid "UPDATE CART"
+msgstr "MISE À JOUR PANIER"
+
+#: .\templates\store\cart.html:129
+msgid "Cart Total"
+msgstr "Total du panier"
+
+#: .\templates\store\cart.html:135 .\templates\store\checkout.html:153
+msgid "Subtotal"
+msgstr "Total"
+
+#: .\templates\store\cart.html:153
+msgid "PROCEED TO CHECKOUT"
+msgstr "PASSER À LA CAISSE"
+
+#: .\templates\store\cart.html:156
+msgid "CONTINUE SHOPPING"
+msgstr "CONTINUER VOS ACHATS"
+
+#: .\templates\store\checkout.html:48
+msgid "Billing Details"
+msgstr ""
+
+#: .\templates\store\checkout.html:63
+msgid "address line 1"
+msgstr "Adresse Ligne 1"
+
+#: .\templates\store\checkout.html:69
+msgid "State / Wilaya"
+msgstr "Wilaya"
+
+#: .\templates\store\checkout.html:73
+msgid "city / Comun"
+msgstr "commune"
+
+#: .\templates\store\checkout.html:97
+msgid "Order notes (optional)"
+msgstr "Notes de commande (facultatif)"
+
+#: .\templates\store\checkout.html:102
+msgid "Your Order"
+msgstr "Votre commande"
+
+#: .\templates\store\checkout.html:179
+msgid "Cash on delivery"
+msgstr "Paiement à la livraison"
+
+#: .\templates\store\checkout.html:184
+msgid ""
+"With Cash on Delivery (CoD), you can pay for your order in cash when it is "
+"delivered to your doorstep. CoD provides convenience and trust for customers "
+"who may prefer not to use electronic payment methods or want to inspect the "
+"product before payment."
+msgstr ""
+"Avec le paiement à la livraison (CoD), vous pouvez payer votre commande en "
+"espèces lorsqu'elle est livré à votre porte. CoD offre commodité et "
+"confiance aux clientsqui peuvent préférer ne pas utiliser les moyens de "
+"paiement électroniques ou vouloir inspecter le produit avant paiement."
+
+#: .\templates\store\checkout.html:195
+msgid "Place Order"
+msgstr "Passer la commande"
+
+#: .\templates\store\checkout.html:196
+msgid "Proceed to Checkout"
+msgstr "Passer à la caisse"
+
+#: .\templates\store\checkout.html:204
+msgid "You have no item in cart"
+msgstr "Vous n'avez aucun article dans le panier"
+
+#: .\templates\store\clearance_products.html:30
+#: .\templates\store\featured_products.html:30 .\templates\store\store.html:27
+#: .\templates\store\top_products.html:30
+msgid "Market"
+msgstr "Marché"
+
+#: .\templates\store\clearance_products.html:38
+
+msgid "Clearance Products"
+msgstr "Produits en liquidation"
+
+#: .\templates\store\clearance_products.html:136
+msgid "No Products For Clearance"
+msgstr "Aucun produit en liquidation"
+
+#: .\templates\store\featured_products.html:38
+
+msgid "Featured Products"
+msgstr "Produits populaires"
+
+#: .\templates\store\product_chat.html:20
+msgid "Chat"
+msgstr ""
+
+#: .\templates\store\product_detail.html:114
+#: .\templates\store\product_detail.html:710
+
+msgid "Reviews"
+msgstr "Avis"
+
+#: .\templates\store\product_detail.html:149
+msgid "Color:"
+msgstr "Couleur:"
+
+#: .\templates\store\product_detail.html:170
+msgid "Please select a (Color)"
+msgstr "Veuillez sélectionner une (couleur)"
+
+#: .\templates\store\product_detail.html:174
+msgid "Please select a (Size)"
+msgstr "Veuillez choisir une taille)"
+
+#: .\templates\store\product_detail.html:179
+msgid "Size:"
+msgstr "Taille:"
+
+#: .\templates\store\product_detail.html:193
+msgid "size guide"
+msgstr "guide des tailles"
+
+#: .\templates\store\product_detail.html:364
+msgid "Out Of Stock"
+msgstr "En rupture de stock"
+
+#: .\templates\store\product_detail.html:366
+msgid "Qty:"
+msgstr "Quantité"
+
+#: .\templates\store\product_detail.html:464
+
+msgid "Add to Wishlist"
+msgstr "ajouter à la liste de souhaits"
+
+#: .\templates\store\product_detail.html:472
+
+msgid "Shipping:"
+msgstr "Expédition"
+
+#: .\templates\store\product_detail.html:481
+
+msgid "Category:"
+msgstr "Catégorie:"
+
+#: .\templates\store\product_detail.html:488
+msgid "Share:"
+msgstr "Partager:"
+
+#: .\templates\store\product_detail.html:508
+msgid "Additional information"
+msgstr "Informations Complémentaires"
+
+#: .\templates\store\product_detail.html:511
+
+msgid "Shipping & Returns"
+msgstr "Expédition & retours"
+
+#: .\templates\store\product_detail.html:514
+#: .\templates\store\product_detail.html:545
+msgid "Reviews (2)"
+msgstr "Avis (2)"
+
+#: .\templates\store\product_detail.html:522
+msgid "Product Information"
+msgstr "Information produit"
+
+#: .\templates\store\product_detail.html:528
+msgid "Information"
+msgstr ""
+
+#: .\templates\store\product_detail.html:534
+
+msgid "Delivery & returns"
+msgstr "Livraison & retours"
+
+#: .\templates\store\product_detail.html:572
+msgid "Helpful (2)"
+msgstr ""
+
+#: .\templates\store\product_detail.html:573
+msgid "Unhelpful (0)"
+msgstr ""
+
+#: .\templates\store\product_detail.html:579
+msgid "Write Your Review"
+msgstr "Donnez votre avis"
+
+#: .\templates\store\product_detail.html:583
+msgid "How do you rate this product?"
+msgstr "Comment notez vous ce produit?"
+
+#: .\templates\store\product_detail.html:598
+msgid "Review Title:"
+msgstr "Titre de la revue :"
+
+#: .\templates\store\product_detail.html:601
+msgid "Review:"
+msgstr "Revoir:"
+
+#: .\templates\store\product_detail.html:609
+msgid "You must be logged in to post a review."
+msgstr "Vous devez être connecté pour publier un avis."
+
+#: .\templates\store\product_detail.html:609
+msgid "Login now"
+msgstr "Connecte-toi maintenant"
+
+#: .\templates\store\product_detail.html:624
+msgid "You May Also Like"
+msgstr "Tu pourrais aussi aimer"
+
+#: .\templates\store\store.html:55
+msgid "Sort by:"
+msgstr "Trier par:"
+
+#: .\templates\store\store.html:58
+msgid "Most Popular"
+msgstr "Le plus populaire"
+
+#: .\templates\store\store.html:59
+#, fuzzy
+#| msgid "Top Rated"
+msgid "Most Rated"
+msgstr "Les mieux notés"
+
+#: .\templates\store\store.html:102
+msgid "compare"
+msgstr ""
+
+#: .\templates\store\top_products.html:38
+
+msgid "Top Products"
+msgstr "Meilleur produit"
+
+#: .\templates\store\wishlist.html:53
+msgid "Available since"
+msgstr "Disponible depuis"
+
+#: .\templates\store\wishlist.html:54
+msgid "Stock Status"
+msgstr "État des stocks"
+
+#: .\templates\store\wishlist.html:83
+msgid "Out of stock"
+msgstr "En rupture de stock"
+
+#: .\templates\store\wishlist.html:85
+msgid "In stock"
+msgstr "En stock"
+
+#: .\templates\store\wishlist.html:90
+msgid "Out of Stock"
+msgstr "En rupture de stock"
+
+#: .\templates\store\wishlist.html:95
+
+msgid "Add to Cart"
+msgstr "Ajouter au panier"
+
+#: .\templates\store\wishlist.html:108
+msgid "Share on:"
+msgstr "Partager sur:"
+
+#: .\templates\store\wishlist.html:118
+msgid "Your Wishlist is Empty"
+msgstr "Votre liste de souhaits est vide"

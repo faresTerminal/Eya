@@ -1,0 +1,133 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+<div class="container mt-4">
+    <h2 class="text-center text-primary">Conversation between {{ conversation.seller.username }} and {{ conversation.buyer.username }}</h2>
+
+    <div class="card chat-card shadow-lg mt-5 border-0">
+        <div class="card-body chat-body" id="chatBody">
+            <!-- Messages -->
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="message {% if message.sender == request.user %}sent-message{% else %}received-message{% endif %} mb-3 p-3">
+                        <div class="message-sender d-flex justify-content-between">
+                            <strong>{{ message.sender.username }}</strong>
+                            <span class="message-time text-muted small">{{ message.timestamp|date:"H:i, d M Y" }}</span>
+                        </div>
+                        <div class="message-content mt-2">
+                            {{ message.content }}
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="text-muted text-center">No messages yet. Start the conversation!</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="card-footer bg-white border-top-0">
+            <form method="POST" class="d-flex">
+                {% csrf_token %}
+                <input type="text" name="content" class="form-control me-3 shadow-sm" placeholder="Type a message..." required>
+                <button class="btn btn-primary px-4" type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Container Styling */
+    .container {
+        max-width: 900px;
+        margin: auto;
+    }
+
+    /* Chat card */
+    .chat-card {
+        background-color: #fff;
+        border-radius: 10px;
+    }
+
+    .chat-body {
+        max-height: 500px;
+        overflow-y: auto;
+        padding: 20px;
+        background-color: #f7f9fc;
+        border-radius: 10px;
+    }
+
+    /* Messages */
+    .message {
+        padding: 15px;
+        border-radius: 20px;
+        max-width: 75%;
+        position: relative;
+    }
+
+    .sent-message {
+        background-color: #007bff;
+        color: #fff;
+        text-align: right;
+        margin-left: auto;
+    }
+
+    .received-message {
+        background-color: #e9ecef;
+        color: #000;
+        margin-right: auto;
+    }
+
+    /* Message sender info */
+    .message-sender {
+        font-size: 0.9rem;
+    }
+
+    .message-time {
+        font-size: 0.8rem;
+    }
+
+    /* Form styling */
+    form input {
+        border-radius: 30px;
+        padding: 15px;
+    }
+
+    /* Auto-scroll to latest message */
+    #chatBody {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+
+    /* Scrollbar styling */
+    .chat-body::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .chat-body::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    .chat-body::-webkit-scrollbar-thumb {
+        background: #888;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+        .message {
+            max-width: 90%;
+        }
+    }
+</style>
+
+<script>
+    // Scroll to the bottom of the chat body on load
+    document.addEventListener('DOMContentLoaded', function() {
+        var chatBody = document.getElementById('chatBody');
+        chatBody.scrollTop = chatBody.scrollHeight;
+    });
+</script>
+
+
+{% endblock %}

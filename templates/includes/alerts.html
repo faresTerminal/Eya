@@ -1,0 +1,22 @@
+{% if messages %}
+    {% for message in messages %}
+        <div id="message" class="alert text-center">
+            <div {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %} role="alert">
+                <button type="button" class="close" data-dismiss="alert">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} {% endif %}
+                {{ message }}
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        setTimeout(function() {
+            $('#message').fadeOut('slow');
+        }, 3000); // 3000 milliseconds = 3 seconds
+    });
+</script>

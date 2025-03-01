@@ -1,0 +1,166 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<section class="section-content padding-y bg">
+    <div class="container">
+        <h4 class="text-center mb-20">{% trans 'Review Your Order and Make Payment' %}</h4>
+        <hr>
+        <div class="row">
+
+            <!-- Billing Details -->
+            <aside class="col-lg-8">
+                <div class="card">
+                    <h5 style="text-align: center" class="card-header">{% trans 'Billing Address' %}</h5>
+                    <div class="card-body">
+                        <p class="card-text mb-0">{{ order.first_name }} {{ order.last_name }}</p>
+                        <p class="card-text mb-0">{{ order.address_line_1 }}</p>
+                        <p class="card-text mb-0">{{ order.city }}, {{ order.state }}</p>
+                        <p class="card-text mb-0">{{ order.country }}</p>
+                        <p class="card-text mb-0">{{ order.email }}</p>
+                        <p class="card-text mb-0"><strong>+213 </strong>{{ order.phone }}</p>
+                        {% if order.order_note %}
+                            <b>{% trans 'Order Note' %}: </b> {{ order.order_note }}
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Payment Method -->
+                <div class="card">
+                    <h5 style="text-align: center" class="card-header">{% trans 'Payment Method' %}</h5>
+                    <div class="card-body">
+                        <p class="card-text">
+                            {% if order.payment_method == 'cib' %}
+                                {% trans 'Credit Bank Card (CIB)' %}
+                            {% elif order.payment_method == 'edahabia' %}
+                                {% trans 'Card Manitique' %}
+                            {% elif order.payment_method == 'cod' %}
+                                {% trans 'Cash on Delivery' %}
+                            {% else %}
+                                {% trans 'No payment method selected' %}
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Review Products -->
+                <div class="card">
+                    <h5 style="text-align: center" class="card-header">{% trans 'Review Products' %}</h5>
+                    <div class="card-body">
+                        <table class="table table-borderless table-shopping-cart">
+                            <thead class="text-muted">
+                                <tr class="small text-uppercase">
+                                    <th scope="col">{% trans 'Product' %}</th>
+                                    <th scope="col" width="120">{% trans 'Quantity' %}</th>
+                                    <th scope="col" width="120">{% trans 'Price' %}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for cart_item in cart_items %}
+                                <tr>
+                                    <td>
+                                        <figure class="itemside align-items-center">
+                                            <div class="aside"><img src="{{ cart_item.product.images.url }}" class="img-sm"></div>
+                                            <figcaption class="info">
+                                                <a style="font-size: 20px;" href="{{ cart_item.product.get_url }}" class="title text-dark">{{ cart_item.product.product_name }}</a>
+                                                {% if cart_item.variations.exists %}
+                                                    {% for item in cart_item.variations.all %}
+                                                        <p class="text-muted small">
+                                                            <b>
+                                                                {% if item.color %}{{ item.color|capfirst }}{% endif %}
+                                                                {% if item.color and item.size %} : {% endif %}
+                                                                {% if item.size %}{{ item.size|capfirst }}{% endif %}
+                                                            </b><br>
+                                                        </p>
+                                                    {% endfor %}
+                                               
+                                                {% endif %}
+                                            </figcaption>
+                                        </figure>
+                                    </td>
+                                    <td>
+                                        <label><b>{{ cart_item.quantity }}</b></label>
+                                    </td>
+                                    <td>
+                                        <div class="price-wrap">
+                                            <var class="price">{{ cart_item.sub_total }} DA</var>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Summary Section -->
+            <aside class="col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <dl class="dlist-align">
+                            <dt>{% trans 'Total price' %}:</dt>
+                            <dd class="text-right">{{ total }} DA</dd>
+                        </dl>
+                        <dl class="dlist-align">
+                            <dt>{% trans 'Shipping' %}:</dt>
+                            <dd class="text-right">{{ total_shipping_cost }} DA</dd>
+                        </dl>
+                        <dl class="dlist-align">
+                            <dt>{% trans 'Promotion' %}:</dt>
+                            <dd class="text-right">- {{ promotion_discount }} DA</dd>
+                        </dl>
+                        <dl class="dlist-align">
+                            <dt>{% trans 'Discount Coupon' %}:</dt>
+                            <dd class="text-right">- {{ discount_amount }} DA</dd>
+                        </dl>
+                        <dl class="dlist-align">
+                            <dt>{% trans 'Grand Total' %}:</dt>
+                            <dd class="text-right text-dark b"><strong>{{ grand_total }} DA</strong></dd>
+                        </dl>
+                        <hr>
+
+                        <!-- Shipping Method -->
+                        <dl class="dlist-align">
+                            <dt>{% trans 'Shipping Method' %}:</dt>
+                            <dd class="text-right">
+                                <strong>
+                                    {% if order.shipping_method == 'home' %}
+                                        {% trans 'Home Delivery' %}
+                                    {% elif order.shipping_method == 'pickup' %}
+                                        {% trans 'Pick Up from Delivery Bureau' %}
+                                    {% endif %}
+                                </strong>
+                            </dd>
+                        </dl>
+
+                        <!-- Pickup Location -->
+                        <dl class="dlist-align">
+                            <dt>{% trans 'Pickup Location' %}:</dt>
+                            <dd class="text-right">
+                                <strong>
+                                    {% if order.shipping_method == 'home' %}
+                                        {% trans 'Home' %}
+                                    {% else %}
+                                        {{ order.pickup_location }}
+                                    {% endif %}
+                                </strong>
+                            </dd>
+                        </dl>
+                        <hr>
+                        <!-- Confirm Button -->
+                        <div id="paypal-button-container">
+                            <div class="btn-wrap">
+                                <a href="{% url 'orders:order_complete' order.order_number %}" class="btn btn-primary btn-round">
+                                    <span>{% trans 'Confirm Command' %}</span><i class="icon-long-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,1714 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load thumbnail %}
+{% load i18n %}
+{% load custom_filters1 %}
+{% load custom_filters %}
+{% load translation_tags %}
+
+{% block content %}
+
+    {% include 'includes/alerts.html' %}
+
+    <main class="main">
+        <!-- Intro Slider Section -->
+        <div class="intro-slider-container mb-5">
+            <div class="intro-slider owl-carousel owl-theme owl-nav-inside owl-light" data-toggle="owl" 
+                data-owl-options='{
+                    "dots": true,
+                    "nav": false,
+                    "responsive": {
+                        "1200": {
+                            "nav": true,
+                            "dots": false
+                        }
+                    }
+                }'>
+                
+                {% for products in daily_slide %}
+                    <div class="intro-slide" style="background-image: url('{{ products.image_slide.url }}');">
+                        <div class="container intro-content">
+                            <div class="row justify-content-end">
+                                <div class="col-auto col-sm-7 col-md-6 col-lg-5">
+                                    <!-- Subtitle -->
+                                    <h3 class="intro-subtitle text-third">{% trans "Deals and Promotions" %}</h3>
+                                    
+                                    <!-- Category and Title -->
+                                    <h1 class="intro-title">{{ products.product.category }}</h1>
+                                    <h1 class="intro-title">{{ products.product.subcategory }}</h1> <!-- Static Text (can be replaced if needed) -->
+                                    <h1 class="intro-title">{{ products.sub_title }}</h1>
+                                    <!-- Price Section -->
+                                  
+                                    {% if products.product.variations.all %}
+                        {% with first_variation=products.product.variations.first %}
+                            {% if first_variation.clearance_price > 0 %}
+                               
+                                <div class="intro-price">
+                                    
+                                    <sup style="text-decoration: line-through;" class="intro-old-price">
+                                        {{ first_variation.price|floatformat:2 }} DA
+                                    </sup>
+                                    <span class="text-third" >{{ first_variation.clearance_price|floatformat:2 }} DA</span>
+                                </div><!-- End .intro-price -->
+                            {% else %}
+                            <div class="intro-price">
+                                <span class="text-third" >{{ first_variation.price|floatformat:2 }} DA</span>
+                            </div>
+                            {% endif %}
+                        {% endwith %}
+                   
+                    {% endif %}
+
+                                    <!-- Shop More Button -->
+                                    <a href="{{ products.product.get_url }}" class="btn btn-primary btn-round">
+                                        <span>{% trans "Shop More" %}</span>
+                                        <i class="icon-long-arrow-right"></i>
+                                    </a>
+                                </div> <!-- End .col-lg-11 offset-lg-1 -->
+                            </div> <!-- End .row -->
+                        </div> <!-- End .intro-content -->
+                    </div> <!-- End .intro-slide -->
+                {% endfor %}
+                
+            </div> <!-- End .intro-slider owl-carousel owl-theme -->
+            
+            <span class="slider-loader"></span> <!-- End .slider-loader -->
+        </div> <!-- End .intro-slider-container -->
+
+        <div class="container">
+                <h2 class="title text-center mb-4">{% trans "Explore Popular Categories" %}</h2><!-- End .title text-center -->
+                
+                <div class="cat-blocks-container">
+                    <div class="row">
+                        {% for c in category %}
+                        <div class="col-6 col-sm-4 col-lg-2">
+                            <a href="{% url 'products_by_category' c.slug %}" class="cat-block">
+                                <figure>
+                                    
+                                    
+                                    <span>
+                                        {% thumbnail c.cat_image "124x86" crop="center" as kiy %}
+                                        <img width="{{ kiy.width }}" height="{{ kiy.height }}" src="{{ kiy.url }}" alt="{{ category|title }}">
+                                        {% endthumbnail %}
+
+                                        
+
+                                    </span>
+                                </figure>
+
+                                <h3 class="cat-block-title">{{ c.category_name }}</h3><!-- End .cat-block-title -->
+                            </a>
+                        </div><!-- End .col-sm-4 col-lg-2 -->
+                        {% endfor %}
+
+                        
+                    </div><!-- End .row -->
+                </div><!-- End .cat-blocks-container -->
+            </div><!-- End .container -->
+
+            <div class="mb-4"></div><!-- End .mb-4 -->
+
+            <div class="container">
+                <div class="row justify-content-center">
+                    {% for top in top_products %}
+                    <div class="col-md-6 col-lg-4">
+                        <div class="banner banner-overlay banner-overlay-light">
+                            <a href="#">
+                                <img src="{% static 'images/demos/demo-4/banners/banner-1.png' %}" alt="Banner">
+                            </a>
+
+                            <div class="banner-content">
+                                <h4 class="banner-subtitle"><a href="#">{% trans "Smart Offer" %}</a></h4><!-- End .banner-subtitle -->
+                                {% if top.variants %}
+                                <h3 class="banner-title">
+                                    <a href="{{ top.get_url }}">{% trans "Save" %} {{ top.variants.0.discount_price|floatformat:2 }} DA<br> <strong>{{ top.product_name|truncate_words:3 }}</strong></a>
+                                </h3><!-- End .banner-title -->
+                                {% endif %}
+                                
+                                <a href="{{ top.get_url }}" class="banner-link">{% trans "Shop Now" %}<i class="icon-long-arrow-right"></i></a>
+                            </div><!-- End .banner-content -->
+                        </div><!-- End .banner -->
+                    </div><!-- End .col-md-4 -->
+                    {% endfor %}
+
+
+                    {% for cl in clearance_products %}
+                  
+                    <div class="col-md-6 col-lg-4">
+                        <div class="banner banner-overlay banner-overlay-light">
+                            <a href="{{ cl.get_url }}">
+                                <img src="{% static 'images/demos/demo-4/banners/banner-2.jpg' %}" alt="Banner">
+                            </a>
+
+                            <div class="banner-content">
+                                <h4 class="banner-subtitle"><a href="{% url 'Clearance_Products' %}">{% trans "Clearance" %}</a></h4><!-- End .banner-subtitle -->
+                                <h3 class="banner-title"><a href="{{ cl.get_url }}"><strong>
+                                {{cl.product_name|truncate_words:3}}</strong>
+
+                                {% if cl.variants %}
+                                 <br>Save {{ cl.variants.0.discount_price|floatformat:2 }} DA</a></h3><!-- End .banner-title -->
+
+                                 {% endif %}
+                                <a href="{{ cl.get_url }}" class="banner-link">{% trans "Shop Now" %}<i class="icon-long-arrow-right"></i></a>
+                            </div><!-- End .banner-content -->
+                        </div><!-- End .banner -->
+                    </div><!-- End .col-md-4 -->
+                    {% endfor %}
+
+                    {% for f in featured_banner %}
+
+                    <div class="col-md-6 col-lg-4">
+                        <div class="banner banner-overlay banner-overlay-light">
+                            <a href="{% url 'Featured_Products' %}">
+                                <img src="{% static 'images/demos/demo-4/banners/banner-3.png' %}" alt="Banner">
+                            </a>
+
+                            <div class="banner-content">
+                                <h4 class="banner-subtitle"><a href="{% url 'Featured_Products' %}">{% trans "Featured" %}</a></h4><!-- End .banner-subtitle -->
+                                <h3 class="banner-title"><a href="{{ f.get_url }}"><strong>{{f.product_name|truncate_words:3}}</strong> <br>{{f.category.category_name}}</a></h3><!-- End .banner-title -->
+                                <a href="{{ f.get_url }}" class="banner-link">{% trans "Shop Now" %}<i class="icon-long-arrow-right"></i></a>
+                            </div><!-- End .banner-content -->
+                        </div><!-- End .banner -->
+                    </div><!-- End .col-lg-4 -->
+                    {% endfor %}
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+
+<div class="mb-4"></div><!-- End .mb-4 -->
+
+ <div class="container top">
+    <div class="heading heading-flex mb-3">
+        <div class="heading-left">
+            <h2 class="title">{% trans "Top Selling Products" %}</h2><!-- End .title -->
+        </div><!-- End .heading-left -->
+
+        <div class="heading-right">
+            <ul class="nav nav-pills nav-border-anim justify-content-center" role="tablist">
+                {% for category, products in categorys.items %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if forloop.first %}active{% endif %}" 
+                           id="top-{{ category }}-link" data-toggle="tab" 
+                           href="#top-{{ category }}-tab" role="tab" 
+                           aria-controls="top-{{ category }}-tab" 
+                           aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">
+                            {{ category|title }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div><!-- End .heading-right -->
+    </div><!-- End .heading -->
+
+    <div class="tab-content tab-content-carousel just-action-icons-sm">
+        {% for category, products in categorys.items %}
+            <div class="tab-pane p-0 fade {% if forloop.first %}show active{% endif %}" 
+                 id="top-{{ category }}-tab" role="tabpanel" 
+                 aria-labelledby="top-{{ category }}-link">
+                <div class="owl-carousel owl-full carousel-equal-height carousel-with-shadow" data-toggle="owl" 
+                     data-owl-options='{
+                         "nav": true, 
+                         "dots": false,
+                         "margin": 20,
+                         "loop": false,
+                         "responsive": {
+                             "0": {
+                                 "items": 2
+                             },
+                             "480": {
+                                 "items": 2
+                             },
+                             "768": {
+                                 "items": 3
+                             },
+                             "992": {
+                                 "items": 4
+                             },
+                             "1200": {
+                                 "items": 5
+                             }
+                         }
+                     }'>
+                    {% for product in products %}
+                        <div class="product product-2">
+                            <figure class="product-media">
+                                
+                                {% if product.has_more_than_20_reviews %}
+                                     <span class="product-label label-circle label-top">{% trans "Top" %}</span>
+                                {% endif %}
+                                {% if product.is_clearance_product %}
+                                     <span class="product-label label-circle label-sale">{% trans "Sale" %}</span>
+                                     
+                                {% endif %}
+                                {% if product.is_new_product %}
+                                    <span class="product-label label-circle label-new">{% trans "New" %}</span>
+                                {% endif %}
+
+                                <a href="{{product.get_url}}">
+                                    {% thumbnail product.images "250x250" crop="center" as dhd %}
+                                    <img width="{{ dhd.width }}" height="{{ dhd.height }}" 
+                                         src="{{ dhd.url }}" 
+                                         alt="{{ product.product_name }}" class="product-image">
+                                    {% endthumbnail %}
+                                </a>
+
+                                <div class="product-action-vertical">
+                                    <a href="" class="btn-product-icon btn-wishlist btn-expandable"><span>{% trans "add to wishlist" %}</span></a>
+                                </div><!-- End .product-action -->
+
+                                <div class="product-action product-action-dark">
+                                    <a href="}" class="btn-product btn-cart" title="Add to cart"><span>{% trans "add to cart" %}</span></a>
+                                    <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
+                                </div><!-- End .product-action -->
+                            </figure><!-- End .product-media -->
+
+                            <div class="product-body">
+                                <div class="product-cat">
+                                    <a href="#">{{ product.subcategory.name }}</a>
+                                </div><!-- End .product-cat -->
+                                <h3 class="product-title"><a href="{{product.get_url}}">{{ product.product_name|truncate_title:8 }}</a></h3>
+
+                                <!-- Product Price -->
+                            <div class="product-price">
+                                {% if product.variations %}
+                                    <div class="product-price">
+                                        <span >{{ product.variations.first.price }} DA</span>
+                                        {% if product.variations.first.clearance_price > 0 %}
+                                            <span style="margin-left: 5px;" class="old-price text-success">{{ product.variations.first.clearance_price }} DA</span>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            </div><!-- End .product-price -->
+
+                                <div class="ratings-container">
+                                    <div class="rating-star">
+                                        <span>
+                                    <i class="fa fa-star{% if product.averageReview < 0.5 %}-o{% elif s.averageReview >= 0.5 and product.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if product.averageReview < 1.5 %}-o{% elif s.averageReview >= 1.5 and product.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if product.averageReview < 2.5 %}-o{% elif s.averageReview >= 2.5 and product.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if product.averageReview < 3.5 %}-o{% elif s.averageReview >= 3.5 and product.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if product.averageReview < 4.5 %}-o{% elif s.averageReview >= 4.5 and product.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+    
+                                    </span>
+                                    </div><!-- End .ratings -->
+                                    <span class="ratings-text">({{product.countReview}} {% trans "Reviews" %} )</span>
+
+                                </div><!-- End .rating-container -->
+                                
+                                <!-- Product Variations (Colors) -->
+                            <div class="product-nav product-nav-dots">
+                                {% for variation in product.variations.all %}
+                                    {% if variation.color %}
+                                        <a href="#" class="active" style="background: {{ variation.color }}"><span class="sr-only">{{ variation.name }}</span></a>
+                                    {% endif %}
+                                {% endfor %}
+                            </div><!-- End .product-nav -->
+
+                            </div><!-- End .product-body -->
+                        </div><!-- End .product -->
+                    {% endfor %}
+                </div><!-- End .owl-carousel -->
+            </div><!-- .End .tab-pane -->
+        {% endfor %}
+    </div><!-- End .tab-content -->
+</div><!-- End .container -->
+
+
+
+
+
+
+            <div class="mb-6"></div><!-- End .mb-6 -->
+
+<div class="container">
+    <div class="active-ads">
+        <h2 class="title">Active Advertisements</h2>
+        <div class="advertisement-container">
+            <div class="advertisement-wrapper">
+                <!-- Loop to display advertisements -->
+                {% for ad in active_ads %}
+                    <div class="col-lg-4 col-md-6 col-sm-12 advertisement">
+                        <a href="{{ ad.link }}" class="ad-link">
+                            <h6 class="ad-title">{{ ad.title }}</h6>
+                        </a>
+
+                        {% if ad.ad_type == 'image' %}
+                            <!-- Image Ad -->
+                            <a href="{{ ad.link }}" target="_blank" class="ad-link">
+                                {% thumbnail ad.image "250x250" crop="center" as ads %}
+                                <img src="{{ ads.url }}" alt="{{ ad.title }}" class="ad-image">
+                                {% endthumbnail %}
+                            </a>
+                        {% elif ad.ad_type == 'video' %}
+                            <!-- Video Ad -->
+                            <div class="ad-video-container" onclick="openVideoModal('{{ ad.youtube_link|youtube_id }}', {{ ad.id }})">
+                                {% if ad.youtube_link %}
+                                    <!-- Video Thumbnail -->
+                                    <img src="https://img.youtube.com/vi/{{ ad.youtube_link|youtube_id }}/0.jpg" alt="{{ ad.title }}" class="video-thumbnail">
+                                {% else %}
+                                    <p class="no-video">No video available.</p>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                <!-- Duplicate the same ads again for seamless scrolling -->
+                {% for ad in active_ads %}
+                    <div class="col-lg-4 col-md-6 col-sm-12 advertisement">
+                        <a href="{{ ad.link }}" class="ad-link">
+                            <h6 class="ad-title">{{ ad.title }}</h6>
+                        </a>
+
+                        {% if ad.ad_type == 'image' %}
+                            <!-- Image Ad -->
+                            <a href="{{ ad.link }}" target="_blank" class="ad-link">
+                                {% thumbnail ad.image "250x250" crop="center" as ads %}
+                                <img src="{{ ads.url }}" alt="{{ ad.title }}" class="ad-image">
+                                {% endthumbnail %}
+                            </a>
+                        {% elif ad.ad_type == 'video' %}
+                            <!-- Video Ad -->
+                            <div class="ad-video-container" onclick="openVideoModal('{{ ad.youtube_link|youtube_id }}', {{ ad.id }})">
+                                {% if ad.youtube_link %}
+                                    <!-- Video Thumbnail -->
+                                    <img src="https://img.youtube.com/vi/{{ ad.youtube_link|youtube_id }}/0.jpg" alt="{{ ad.title }}" class="video-thumbnail">
+                                {% else %}
+                                    <p class="no-video">No video available.</p>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {% if not active_ads %}
+        <div class="no-advertisement text-center">
+            <p>No active advertisements available at the moment.</p>
+        </div>
+    {% endif %}
+</div>
+
+<!-- Modal -->
+<div id="videoModal" class="video-modal" style="display:none;">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <iframe id="videoIframe" width="100%" height="100%" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+</div>
+
+<style type="text/css">
+  /* Base Styles */
+  .text-center {
+    text-align: center;
+  }
+
+  .advertisement-container {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+  }
+
+  .advertisement-wrapper {
+    display: flex;
+    animation: scrollAds 20s linear infinite;
+  }
+
+  .advertisement {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+    background: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin-right: 20px;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    width: 250px;
+  }
+
+  .advertisement:hover {
+    transform: translateY(-5px);
+  }
+
+  .ad-link {
+    display: block;
+    margin-bottom: 10px;
+    color: #333;
+    text-decoration: none;
+  }
+
+  .ad-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+  }
+
+  .ad-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .video-thumbnail {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .ad-video-container {
+    cursor: pointer;
+  }
+
+  .ad-video-container p {
+    color: #888;
+    font-size: 1rem;
+    margin-top: 10px;
+  }
+
+  .video-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 999;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-content {
+    position: relative;
+    width: 80%;
+    height: 80%;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #fff;
+    font-size: 30px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  .no-video {
+    font-size: 1rem;
+    color: #888;
+    text-align: center;
+    margin-top: 15px;
+  }
+
+  .no-advertisement p {
+    font-size: 1rem;
+    color: #888;
+    margin-top: 30px;
+  }
+
+  /* Animation for Ad Movement */
+  @keyframes scrollAds {
+    0% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(-50%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  /* Responsive Layout */
+  @media (max-width: 1199px) {
+    .col-lg-4 {
+      flex: 0 0 33.33%;
+      max-width: 33.33%;
+    }
+  }
+
+  @media (max-width: 991px) {
+    .col-md-6 {
+      flex: 0 0 50%;
+      max-width: 50%;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .col-sm-12 {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+
+    .ad-title {
+      font-size: 1rem;
+    }
+
+    .ad-image {
+      max-width: 90%;
+    }
+  }
+</style>
+
+<script type="text/javascript">
+  // Function to open the video modal
+  function openVideoModal(videoId, adId) {
+    const modal = document.getElementById('videoModal');
+    const iframe = document.getElementById('videoIframe');
+    
+    modal.style.display = 'flex';
+    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=10`; // Embed YouTube video
+  }
+
+  // Function to close the video modal
+  function closeModal() {
+    const modal = document.getElementById('videoModal');
+    const iframe = document.getElementById('videoIframe');
+
+    modal.style.display = 'none';
+    iframe.src = ''; // Stop the video
+  }
+
+  // JavaScript to trigger the animation once the page is loaded
+  document.addEventListener('DOMContentLoaded', function() {
+    const adWrapper = document.querySelector('.advertisement-wrapper');
+    adWrapper.style.animationPlayState = 'running'; // Start animation when the page loads
+  });
+</script>
+
+
+
+
+
+
+<div class="mb-6"></div><!-- End .mb-6 -->
+<div class="mb-6"></div><!-- End .mb-6 -->
+
+            <div class="container">
+                {% for f in signboard %}
+                 <div class="cta cta-border mb-5" style="background-image: url('{% static 'images/demos/demo-4/bg-1.jpg' %}');"
+>
+                    <img src="{% static 'images/demos/demo-4/camera.png' %}" alt="camera" class="cta-img">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12">
+                            <div class="cta-content">
+                                <div class="cta-text text-right text-white">
+                                    <p>{{f.sub_title}} <br><strong> {{f.big_title}} {{f.product.product_name|truncate_title:8}}</strong></p>
+                                </div><!-- End .cta-text -->
+
+                                
+
+
+                                 {% if f.product.variations.all %}
+                        {% with first_variation=f.product.variations.first %}
+                            {% if first_variation.clearance_price > 0 %}
+                               
+                                
+                                    
+                                    <a href="{{ f.product.get_url }}" class="btn btn-primary btn-round"><span>{% trans "Shop Now" %}<br><br> {{ first_variation.clearance_price|floatformat:2 }} DA</span><i class="icon-long-arrow-right"></i></a>
+                             
+                            {% endif %}
+                        {% endwith %}
+                   
+                    {% endif %}
+
+
+
+                            </div><!-- End .cta-content -->
+                        </div><!-- End .col-md-12 -->
+                    </div><!-- End .row -->
+                </div><!-- End .cta -->
+                {% endfor %}
+            </div><!-- End .container -->
+
+            <div class="container">
+    <div class="heading text-center mb-3">
+        <h2 class="title">{% trans "Deals & Outlet" %}</h2><!-- End .title -->
+        <p class="title-desc">{% trans "Today’s deal and more" %}</p><!-- End .title-desc -->
+    </div><!-- End .heading -->
+
+   <div class="row">
+    {% for deal in daily_and_outlet %}
+        <div class="col-lg-6 deal-col">
+            <div class="deal" style="background-image: url('{{ deal.image_slide.url }}');">
+                <div class="deal-top">
+                    <h2>{{ deal.sub_title }}</h2>
+                    <h4>{{ deal.product.category }}</h4>
+                </div><!-- End .deal-top -->
+
+                <div class="deal-content">
+                    <h3 class="product-title"><a href="{{ deal.product.get_absolute_url }}">{{ deal.product.product_name }}</a></h3><!-- End .product-title -->
+
+                    
+
+                    {% if deal.product.variations.all %}
+                        {% with first_variation=deal.product.variations.first %}
+                            {% if first_variation.clearance_price > 0 %}
+                               
+                                <div class="intro-price">
+                                    
+                                    <sup style="text-decoration: line-through;" class="intro-old-price">
+                                        {{ first_variation.price|floatformat:2 }} DA
+                                    </sup>
+                                    <span class="text-third" >{{ first_variation.clearance_price|floatformat:2 }} DA</span>
+                                </div><!-- End .intro-price -->
+                            {% else %}
+                            <div class="intro-price">
+                                <span class="text-third" >{{ first_variation.price|floatformat:2 }} DA</span>
+                            </div>
+                            {% endif %}
+                        {% endwith %}
+                   
+                    {% endif %}
+
+
+
+
+
+
+
+
+                    <a href="{{ deal.product.get_url }}" class="btn btn-link"><span>{% trans "Shop Now" %}</span><i class="icon-long-arrow-right"></i></a>
+                </div><!-- End .deal-content -->
+
+                <div class="deal-bottom">
+                    <!-- Countdown Timer -->
+                    <div class="deal-countdown" id="countdown_{{ deal.id }}" data-expiration="{{ deal.expiration_time|date:'Y-m-d H:i:s' }}">
+                        <!-- Countdown parts will be inserted here by JavaScript -->
+                    </div>
+                    <!-- End .deal-countdown -->
+                </div><!-- End .deal-bottom -->
+            </div><!-- End .deal -->
+        </div><!-- End .col-lg-6 -->
+    {% endfor %}
+</div><!-- End .row -->
+
+<script>
+    function startCountdown(id, expirationDate) {
+        const countdownElement = document.getElementById(id);
+        const expirationTime = new Date(expirationDate).getTime();
+
+        const interval = setInterval(() => {
+            const now = new Date().getTime();
+            const distance = expirationTime - now;
+
+            if (distance <= 0) {
+                clearInterval(interval);
+                countdownElement.innerHTML = "EXPIRED";
+            } else {
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                countdownElement.innerHTML = `
+                    <div class="countdown-part">
+                        <div class="countdown-number">${days}</div>
+                        <div class="countdown-label">Days</div>
+                    </div>
+                    <div class="countdown-part">
+                        <div class="countdown-number">${hours}</div>
+                        <div class="countdown-label">Hours</div>
+                    </div>
+                    <div class="countdown-part">
+                        <div class="countdown-number">${minutes}</div>
+                        <div class="countdown-label">Minutes</div>
+                    </div>
+                    <div class="countdown-part">
+                        <div class="countdown-number">${seconds}</div>
+                        <div class="countdown-label">Seconds</div>
+                    </div>
+                `;
+            }
+        }, 1000);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        {% for deal in daily_and_outlet %}
+            startCountdown('countdown_{{ deal.id }}', '{{ deal.expiration_time|date:"Y-m-d H:i:s" }}');
+        {% endfor %}
+    });
+</script>
+
+
+    <div class="more-container text-center mt-1 mb-5">
+        <a href="#" class="btn btn-outline-dark-2 btn-round btn-more"><span>{% trans "Shop more Outlet deals" %}</span><i class="icon-long-arrow-right"></i></a>
+    </div><!-- End .more-container -->
+</div><!-- End .container -->
+
+
+<style type="text/css">
+.deal-countdown {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.countdown-part {
+    text-align: center;
+}
+
+.countdown-number {
+    background-color: #39f;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: bold;
+    min-width: 50px;
+}
+
+.countdown-label {
+    font-size: 14px;
+    color: black;
+    margin-top: 5px;
+}
+
+
+
+</style>
+
+
+
+
+<div class="bg-light pt-5 pb-6">
+                <div class="container trending-products">
+                    <div class="heading heading-flex mb-3">
+
+        <div class="heading-left">
+            <h2 class="title">{% trans "Trending Products" %}</h2><!-- End .title -->
+        </div><!-- End .heading-left -->
+
+        <div class="heading-right">
+            <ul class="nav nav-pills nav-border-anim justify-content-center" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="top-rated-link" data-toggle="tab" 
+                       href="#top-rated-tab" role="tab" 
+                       aria-controls="top-rated-tab" aria-selected="true">
+                        {% trans "Top Rated" %}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="best-selling-link" data-toggle="tab" 
+                       href="#best-selling-tab" role="tab" 
+                       aria-controls="best-selling-tab" aria-selected="false">
+                        {% trans "Featured" %}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="on-sale-link" data-toggle="tab" 
+                       href="#on-sale-tab" role="tab" 
+                       aria-controls="on-sale-tab" aria-selected="false">
+                        {% trans "On Sale" %}
+                    </a>
+                </li>
+            </ul>
+        </div><!-- End .heading-right -->
+    </div><!-- End .heading -->
+
+    
+        <div class="row">
+                        <div class="col-xl-5col d-none d-xl-block">
+                            <div class="banner">
+                                <a href="#">
+                                    {% if ad %}
+    <div class="advertisement">
+        
+        
+        {% if ad.ad_type == 'image' %}
+            <a href="{{ ad.link }}" target="_blank" class="ad-link">
+                {% thumbnail ad.image "217x390" crop="center" as ads %}
+                <img width="{{ ads.width }}" height="{{ ads.height }}" src="{{ ads.url }}" alt="{{ ad.title }}" >
+                {% endthumbnail %}
+            </a>
+        
+        {% endif %}
+    </div>
+{% else %}
+    <div class="">
+        <p >No active advertisements available at the moment.</p>
+    </div>
+{% endif %}
+                                </a>
+                            </div><!-- End .banner -->
+                        </div><!-- End .col-xl-5col -->
+
+        <div class="col-xl-4-5col">
+        <!-- Top Rated Tab -->
+        <div class="tab-content tab-content-carousel just-action-icons-sm">
+        <div class="tab-pane p-0 fade show active" id="top-rated-tab" role="tabpanel" aria-labelledby="top-rated-link">
+            <div class="owl-carousel owl-full carousel-equal-height carousel-with-shadow" data-toggle="owl" 
+                                        data-owl-options='{
+                                            "nav": true, 
+                                            "dots": false,
+                                            "margin": 20,
+                                            "loop": false,
+                                            "responsive": {
+                                                "0": {
+                                                    "items":2
+                                                },
+                                                "480": {
+                                                    "items":2
+                                                },
+                                                "768": {
+                                                    "items":3
+                                                },
+                                                "992": {
+                                                    "items":4
+                                                }
+                                            }
+                                        }'>
+                {% for product in top_rated_products %}
+                    <div class="product product-2">
+                        <figure class="product-media">
+                            {% if product.has_more_than_20_reviews %}
+                                     <span class="product-label label-circle label-top">Top</span>
+                                {% endif %}
+                                {% if product.is_clearance_product %}
+                                     <span class="product-label label-circle label-sale">Sale</span>
+                                {% endif %}
+                                {% if product.is_new_product %}
+                                    <span class="product-label label-circle label-new">New</span>
+                                {% endif %}
+
+                            <a href="{{ product.get_url }}">
+                                {% thumbnail product.images "250x250" crop="center" as dhd %}
+                                <img width="{{ dhd.width }}" height="{{ dhd.height }}" 
+                                     src="{{ dhd.url }}" 
+                                     alt="{{ product.product_name }}" class="product-image">
+                                {% endthumbnail %}
+                            </a>
+                            <div class="product-action-vertical">
+                                <a href="" class="btn-product-icon btn-wishlist btn-expandable">
+                                    <span>add to wishlist</span>
+                                </a>
+                            </div><!-- End .product-action -->
+
+                            <div class="product-action product-action-dark">
+                                <a href="}" class="btn-product btn-cart" title="Add to cart">
+                                    <span>add to cart</span>
+                                </a>
+                                <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view">
+                                    <span>quick view</span>
+                                </a>
+                            </div><!-- End .product-action -->
+                        </figure><!-- End .product-media -->
+
+                        <div class="product-body">
+                            <div class="product-cat">
+                                <a href="#">{{ product.subcategory.name }}</a>
+                            </div><!-- End .product-cat -->
+
+                            <h3 class="product-title">
+                                <a href="{{ product.get_url }}">{{ product.product_name|truncatechars:15 }}</a>
+                            </h3><!-- End .product-title -->
+
+                            <!-- Product Price -->
+                            <div class="product-price">
+                                {% if product.variants %}
+                                    <div class="product-price">
+                                        <span style="color: black;">{{ product.variants.0.price }} DA</span>
+                                        {% if product.variants.0.clearance_price > 0 %}
+                                            <span style="margin-left: 5px;" class="old-price text-success">{{ product.variants.0.clearance_price }} DA</span>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            </div><!-- End .product-price -->
+
+                            <div class="ratings-container">
+                                <div class="rating-star">
+                                    <span>
+                                        <i class="fa fa-star{% if product.averageReview < 0.5 %}-o{% elif product.averageReview >= 0.5 and product.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                        <i class="fa fa-star{% if product.averageReview < 1.5 %}-o{% elif product.averageReview >= 1.5 and product.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                        <i class="fa fa-star{% if product.averageReview < 2.5 %}-o{% elif product.averageReview >= 2.5 and product.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                        <i class="fa fa-star{% if product.averageReview < 3.5 %}-o{% elif product.averageReview >= 3.5 and product.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                        <i class="fa fa-star{% if product.averageReview < 4.5 %}-o{% elif product.averageReview >= 4.5 and product.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    </span>
+                                </div><!-- End .ratings -->
+                                <span class="ratings-text">({{ product.countReview }} {% trans "Reviews" %})</span>
+                            </div><!-- End .ratings-container -->
+                            <!-- Product Variations (Colors) -->
+                            <div class="product-nav product-nav-dots">
+                                {% for variation in product.variations.all %}
+                                    {% if variation.color %}
+                                        <a href="#" class="active" style="background: {{ variation.color }}"><span class="sr-only">{{ variation.name }}</span></a>
+                                    {% endif %}
+                                {% endfor %}
+                            </div><!-- End .product-nav -->
+                        </div><!-- End .product-body -->
+                    </div><!-- End .product -->
+                {% endfor %}
+            </div><!-- End .owl-carousel -->
+        </div><!-- End .tab-pane -->
+
+        <!-- Best Selling Tab -->
+        <div class="tab-pane p-0 fade" id="best-selling-tab" role="tabpanel" aria-labelledby="best-selling-link">
+            <div class="owl-carousel owl-full carousel-equal-height carousel-with-shadow" data-toggle="owl" 
+                                        data-owl-options='{
+                                            "nav": true, 
+                                            "dots": false,
+                                            "margin": 20,
+                                            "loop": false,
+                                            "responsive": {
+                                                "0": {
+                                                    "items":2
+                                                },
+                                                "480": {
+                                                    "items":2
+                                                },
+                                                "768": {
+                                                    "items":3
+                                                },
+                                                "992": {
+                                                    "items":4
+                                                }
+                                            }
+                                        }'>
+                {% for product in featured_products %}
+
+                    <div class="product product-2">
+                        <figure class="product-media">
+                            {% if product.has_more_than_20_reviews %}
+                                     <span class="product-label label-circle label-top">{% trans "Top" %}</span>
+                                {% endif %}
+                                {% if product.is_clearance_product %}
+                                     <span class="product-label label-circle label-sale">{% trans "Sale" %}</span>
+                                {% endif %}
+                                {% if product.is_new_product %}
+                                    <span class="product-label label-circle label-new">{% trans "New" %}</span>
+                                {% endif %}
+                            <a href="{{ product.get_url }}">
+                                {% thumbnail product.images "250x250" crop="center" as dhd %}
+                                <img width="{{ dhd.width }}" height="{{ dhd.height }}" 
+                                     src="{{ dhd.url }}" 
+                                     alt="{{ product.product_name }}" class="product-image">
+                                {% endthumbnail %}
+                            </a>
+                            <div class="product-action-vertical">
+                                <a href="" class="btn-product-icon btn-wishlist btn-expandable">
+                                    <span>add to wishlist</span>
+                                </a>
+                            </div><!-- End .product-action -->
+
+                            <div class="product-action product-action-dark">
+                                <a href="" class="btn-product btn-cart" title="Add to cart">
+                                    <span>add to cart</span>
+                                </a>
+                                <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view">
+                                    <span>quick view</span>
+                                </a>
+                            </div><!-- End .product-action -->
+                        </figure><!-- End .product-media -->
+
+                        <div class="product-body">
+                            <div class="product-cat">
+                                <a href="#">{{ product.subcategory.name }}</a>
+                            </div><!-- End .product-cat -->
+
+                            <h3 class="product-title">
+                                <a href="{{ product.get_url }}">{{ product.product_name|truncatechars:15 }}</a>
+                            </h3><!-- End .product-title -->
+
+                           <!-- Product Price -->
+                            <div class="product-price">
+                                {% if product.variants %}
+                                    <div class="product-price">
+                                        <span style="color: black;">{{ product.variants.0.price }} DA</span>
+                                        {% if product.variants.0.clearance_price > 0 %}
+                                            <span style="margin-left: 5px;" class="old-price text-success">{{ product.variants.0.clearance_price }} DA</span>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            </div><!-- End .product-price -->
+
+                            <div class="ratings-container">
+                                <div class="rating-star">
+                                    <span>
+                                        <i class="fa fa-star{% if product.averageReview < 0.5 %}-o{% elif product.averageReview >= 0.5 and product.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                        <i class="fa fa-star{% if product.averageReview < 1.5 %}-o{% elif product.averageReview >= 1.5 and product.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                        <i class="fa fa-star{% if product.averageReview < 2.5 %}-o{% elif product.averageReview >= 2.5 and product.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                        <i class="fa fa-star{% if product.averageReview < 3.5 %}-o{% elif product.averageReview >= 3.5 and product.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                        <i class="fa fa-star{% if product.averageReview < 4.5 %}-o{% elif product.averageReview >= 4.5 and product.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    </span>
+                                </div><!-- End .ratings -->
+                                <span class="ratings-text">({{ product.countReview }} {% trans "Reviews" %})</span>
+                            </div><!-- End .ratings-container -->
+                            <!-- Product Variations (Colors) -->
+                            <div class="product-nav product-nav-dots">
+                                {% for variation in product.variations.all %}
+                                    {% if variation.color %}
+                                        <a href="#" class="active" style="background: {{ variation.color }}"><span class="sr-only">{{ variation.name }}</span></a>
+                                    {% endif %}
+                                {% endfor %}
+                            </div><!-- End .product-nav -->
+
+                        </div><!-- End .product-body -->
+                    </div><!-- End .product -->
+                {% endfor %}
+            </div><!-- End .owl-carousel -->
+        </div><!-- End .tab-pane -->
+
+        <!-- On Sale Tab -->
+        <div class="tab-pane p-0 fade" id="on-sale-tab" role="tabpanel" aria-labelledby="on-sale-link">
+            <div class="owl-carousel owl-full carousel-equal-height carousel-with-shadow" data-toggle="owl" 
+                                        data-owl-options='{
+                                            "nav": true, 
+                                            "dots": false,
+                                            "margin": 20,
+                                            "loop": false,
+                                            "responsive": {
+                                                "0": {
+                                                    "items":2
+                                                },
+                                                "480": {
+                                                    "items":2
+                                                },
+                                                "768": {
+                                                    "items":3
+                                                },
+                                                "992": {
+                                                    "items":4
+                                                }
+                                            }
+                                        }'>
+                {% for product in on_sale %}
+                    <div class="product product-2">
+                        <figure class="product-media">
+                            {% if product.has_more_than_20_reviews %}
+                                     <span class="product-label label-circle label-top">{% trans "Top" %}</span>
+                                {% endif %}
+                                {% if product.is_clearance_product %}
+                                     <span class="product-label label-circle label-sale">{% trans "Sale" %}</span>
+                                {% endif %}
+                                {% if product.is_new_product %}
+                                    <span class="product-label label-circle label-new">{% trans "New" %}</span>
+                                {% endif %}
+                            <a href="{{ product.get_url }}">
+                                {% thumbnail product.images "250x250" crop="center" as dhd %}
+                                <img width="{{ dhd.width }}" height="{{ dhd.height }}" 
+                                     src="{{ dhd.url }}" 
+                                     alt="{{ product.product_name }}" class="product-image">
+                                {% endthumbnail %}
+                            </a>
+                            <div class="product-action-vertical">
+                                <a href="" class="btn-product-icon btn-wishlist btn-expandable">
+                                    <span>add to wishlist</span>
+                                </a>
+                            </div><!-- End .product-action -->
+
+                            <div class="product-action product-action-dark">
+                                <a href="" class="btn-product btn-cart" title="Add to cart">
+                                    <span>add to cart</span>
+                                </a>
+                                <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view">
+                                    <span>quick view</span>
+                                </a>
+                            </div><!-- End .product-action -->
+                        </figure><!-- End .product-media -->
+
+                        <div class="product-body">
+                            <div class="product-cat">
+                                <a href="#">{{ product.subcategory.name }}</a>
+                            </div><!-- End .product-cat -->
+
+                            <h3 class="product-title">
+                                <a href="{{ product.get_url }}">{{ product.product_name|truncatechars:15 }}</a>
+                            </h3><!-- End .product-title -->
+
+                            <!-- Product Price -->
+                            <div class="product-price">
+                                {% if product.variants %}
+                                    <div class="product-price">
+                                        <span style="color: black;">{{ product.variants.0.price }} DA</span>
+                                        {% if product.variants.0.clearance_price > 0 %}
+                                            <span style="margin-left: 5px;" class="old-price text-success">{{ product.variants.0.clearance_price }} DA</span>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            </div><!-- End .product-price -->
+
+                            <div class="ratings-container">
+                                <div class="rating-star">
+                                    <span>
+                                        <i class="fa fa-star{% if product.averageReview < 0.5 %}-o{% elif product.averageReview >= 0.5 and product.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                        <i class="fa fa-star{% if product.averageReview < 1.5 %}-o{% elif product.averageReview >= 1.5 and product.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                        <i class="fa fa-star{% if product.averageReview < 2.5 %}-o{% elif product.averageReview >= 2.5 and product.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                        <i class="fa fa-star{% if product.averageReview < 3.5 %}-o{% elif product.averageReview >= 3.5 and product.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                        <i class="fa fa-star{% if product.averageReview < 4.5 %}-o{% elif product.averageReview >= 4.5 and product.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    </span>
+                                </div><!-- End .ratings -->
+                                <span class="ratings-text">({{ product.countReview }} {% trans "Reviews" %})</span>
+                            </div><!-- End .ratings-container -->
+                            <!-- Product Variations (Colors) -->
+                            <div class="product-nav product-nav-dots">
+                                {% for variation in product.variations.all %}
+                                    {% if variation.color %}
+                                        <a href="#" class="active" style="background: {{ variation.color }}"><span class="sr-only">{{ variation.name }}</span></a>
+                                    {% endif %}
+                                {% endfor %}
+                            </div><!-- End .product-nav -->
+                        </div><!-- End .product-body -->
+                    </div><!-- End .product -->
+                {% endfor %}
+            </div><!-- End .owl-carousel -->
+        </div><!-- End .tab-pane -->
+    </div>
+    </div>
+    </div>
+    </div><!-- End .tab-content -->
+</div><!-- End .container -->
+
+
+
+
+<div class="mb-5"></div><!-- End .mb-5 -->
+ <!-- Include the ads template -->
+             {% include 'partials/ads.html' %}
+
+<div class="mb-5"></div><!-- End .mb-5 -->
+
+<div class="container for-you">
+    <!-- Heading Section -->
+    <div class="heading heading-flex mb-3">
+        <div class="heading-left">
+            <h2 class="title">{% trans "Recommendation For You" %}</h2><!-- End .title -->
+        </div><!-- End .heading-left -->
+
+        <div class="heading-right">
+            <a href="{% url 'store' %}" class="title-link">{% trans "View All Recommendations" %} <i class="icon-long-arrow-right"></i></a>
+        </div><!-- End .heading-right -->
+    </div><!-- End .heading -->
+
+    <!-- Product Listing -->
+    <div class="products">
+        <div class="row justify-content-center">
+            {% for r in recommendadion %}
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="product product-2">
+                        <figure class="product-media">
+                            {% if r.has_more_than_20_reviews %}
+                                     <span class="product-label label-circle label-top">Top</span>
+                                {% endif %}
+                                {% if r.is_clearance_product %}
+                                     <span class="product-label label-circle label-sale">Sale</span>
+                                {% endif %}
+                                {% if r.is_new_product %}
+                                    <span class="product-label label-circle label-new">New</span>
+                                {% endif %}
+                            <a href="{{ r.get_url }}">
+                                {% thumbnail r.images "250x250" crop="center" as dhd %}
+                                    <img src="{{ dhd.url }}" alt="{{ r.product_name }}" class="product-image">
+                                {% endthumbnail %}
+                            </a>
+
+                            <!-- Product Actions (Wishlist, Cart, Quick View) -->
+                            <div class="product-action-vertical">
+                                <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>
+                            </div><!-- End .product-action -->
+
+                            <div class="product-action">
+                                <a href="#" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
+                                <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
+                            </div><!-- End .product-action -->
+                        </figure><!-- End .product-media -->
+
+                        <div class="product-body">
+                            <!-- Product Category -->
+                            <div class="product-cat">
+                                <a href="#">{{ r.subcategory.name }}</a>
+                            </div><!-- End .product-cat -->
+
+                            <!-- Product Title -->
+                            <h3 class="product-title"><a href="{{ r.get_url }}">{{ r.product_name|truncate_title:8 }}</a></h3><!-- End .product-title -->
+
+                            <!-- Product Price -->
+                            <div class="product-price">
+                                {% if r.variants %}
+                                    <div class="product-price">
+                                        <span>{{ r.variants.0.price }} DA</span>
+                                        {% if r.variants.0.clearance_price > 0 %}
+                                            <span style="margin-left: 5px;" class="old-price text-success">{{ r.variants.0.clearance_price }} DA</span>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            </div><!-- End .product-price -->
+
+                            <!-- Product Rating -->
+                            <div class="ratings-container">
+                                <div class="rating-star">
+                                    <span>
+                                        <i class="fa fa-star{% if r.averageReview < 0.5 %}-o{% elif r.averageReview >= 0.5 and r.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                        <i class="fa fa-star{% if r.averageReview < 1.5 %}-o{% elif r.averageReview >= 1.5 and r.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                        <i class="fa fa-star{% if r.averageReview < 2.5 %}-o{% elif r.averageReview >= 2.5 and r.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                        <i class="fa fa-star{% if r.averageReview < 3.5 %}-o{% elif r.averageReview >= 3.5 and r.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                        <i class="fa fa-star{% if r.averageReview < 4.5 %}-o{% elif r.averageReview >= 4.5 and r.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    </span>
+                                </div>
+                                <span class="ratings-text">( {{ r.countReview }} {% trans 'Reviews' %} )</span>
+                            </div><!-- End .rating-container -->
+
+                            <!-- Product Variations (Colors) -->
+                            <div class="product-nav product-nav-dots">
+                                {% for variation in r.variations.all %}
+                                    {% if variation.color %}
+                                        <a href="#" class="active" style="background: {{ variation.color }}"><span class="sr-only">{{ variation.name }}</span></a>
+                                    {% endif %}
+                                {% endfor %}
+                            </div><!-- End .product-nav -->
+                        </div><!-- End .product-body -->
+                    </div><!-- End .product -->
+                </div><!-- End .col-sm-6 col-md-4 col-lg-3 -->
+            {% endfor %}
+        </div><!-- End .row -->
+    </div><!-- End .products -->
+</div><!-- End .container -->
+
+ 
+
+ <div class="container">
+                <hr class="mt-5 mb-6">
+            </div><!-- End .container -->
+
+            <div class="blog-posts">
+                <div class="container">
+                    <h2 class="title text-center">{% trans "From Our Blog" %}</h2><!-- End .title-lg text-center -->
+
+                    <div class="owl-carousel owl-simple carousel-with-shadow" data-toggle="owl" 
+                        data-owl-options='{
+                            "nav": false, 
+                            "dots": true,
+                            "items": 3,
+                            "margin": 20,
+                            "loop": false,
+                            "responsive": {
+                                "0": {
+                                    "items":1
+                                },
+                                "600": {
+                                    "items":2
+                                },
+                                "992": {
+                                    "items":3
+                                }
+                            }
+                        }'>
+                        {% for ar in on_blog %}
+                        <article class="entry entry-display">
+                            <figure class="entry-media">
+                                <a href="{% url 'show_article' id=ar.id slug=ar.slug %}">
+                                     {% thumbnail ar.image "376x250" crop="center" as bl %}
+                                    <img width="{{ bl.width }}" height="{{bl.height }}" src="{{bl.url}}" alt="Image Desc">
+                                    {% endthumbnail %}
+                                </a>
+                                
+                            </figure><!-- End .entry-media -->
+
+                            <div class="entry-body text-center">
+                                <div class="entry-meta">
+                                    <a href="#">{{ar.posted_on}}</a>, {{ar.comment_count}} Comments
+                                </div><!-- End .entry-meta -->
+
+                                <h3 class="entry-title">
+                                    <a href="{% url 'show_article' id=ar.id slug=ar.slug %}">{{ar.title|truncate_title_blog:10}}.</a>
+                                </h3><!-- End .entry-title -->
+
+                                <div class="entry-content">
+                                    <a href="{% url 'show_article' id=ar.id slug=ar.slug %}" class="read-more">{% trans "Continue Reading" %}</a>
+                                </div><!-- End .entry-content -->
+                            </div><!-- End .entry-body -->
+                        </article><!-- End .entry -->
+                        {% endfor %}
+                    
+                        
+
+                       
+                    </div><!-- End .owl-carousel -->
+
+                    <div class="more-container text-center mt-2">
+                        <a href="{% url 'blog' %}" class="btn btn-outline-darker btn-more"><span>{% trans "View more articles" %}</span><i class="icon-long-arrow-right"></i></a>
+                    </div><!-- End .more-container -->
+                </div><!-- End .container -->
+            </div><!-- End .blog-posts -->
+
+            
+            <div class="mb-6"></div><!-- End .mb-6 -->
+
+<div class="container">
+    <div class="active-ads">
+        <h2 class="title">Active Advertisements</h2>
+        <div class="advertisement-container">
+            <div class="advertisement-wrapper">
+                <!-- Loop to display advertisements -->
+                {% for ad in active_ads %}
+                    <div class="col-lg-4 col-md-6 col-sm-12 advertisement">
+                        <a href="{{ ad.link }}" class="ad-link">
+                            <h6 class="ad-title">{{ ad.title }}</h6>
+                        </a>
+
+                        {% if ad.ad_type == 'image' %}
+                            <!-- Image Ad -->
+                            <a href="{{ ad.link }}" target="_blank" class="ad-link">
+                                {% thumbnail ad.image "250x250" crop="center" as ads %}
+                                <img src="{{ ads.url }}" alt="{{ ad.title }}" class="ad-image">
+                                {% endthumbnail %}
+                            </a>
+                        {% elif ad.ad_type == 'video' %}
+                            <!-- Video Ad -->
+                            <div class="ad-video-container" onclick="openVideoModal('{{ ad.youtube_link|youtube_id }}', {{ ad.id }})">
+                                {% if ad.youtube_link %}
+                                    <!-- Video Thumbnail -->
+                                    <img src="https://img.youtube.com/vi/{{ ad.youtube_link|youtube_id }}/0.jpg" alt="{{ ad.title }}" class="video-thumbnail">
+                                {% else %}
+                                    <p class="no-video">No video available.</p>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                <!-- Duplicate the same ads again for seamless scrolling -->
+                {% for ad in active_ads %}
+                    <div class="col-lg-4 col-md-6 col-sm-12 advertisement">
+                        <a href="{{ ad.link }}" class="ad-link">
+                            <h6 class="ad-title">{{ ad.title }}</h6>
+                        </a>
+
+                        {% if ad.ad_type == 'image' %}
+                            <!-- Image Ad -->
+                            <a href="{{ ad.link }}" target="_blank" class="ad-link">
+                                {% thumbnail ad.image "250x250" crop="center" as ads %}
+                                <img src="{{ ads.url }}" alt="{{ ad.title }}" class="ad-image">
+                                {% endthumbnail %}
+                            </a>
+                        {% elif ad.ad_type == 'video' %}
+                            <!-- Video Ad -->
+                            <div class="ad-video-container" onclick="openVideoModal('{{ ad.youtube_link|youtube_id }}', {{ ad.id }})">
+                                {% if ad.youtube_link %}
+                                    <!-- Video Thumbnail -->
+                                    <img src="https://img.youtube.com/vi/{{ ad.youtube_link|youtube_id }}/0.jpg" alt="{{ ad.title }}" class="video-thumbnail">
+                                {% else %}
+                                    <p class="no-video">No video available.</p>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {% if not active_ads %}
+        <div class="no-advertisement text-center">
+            <p>No active advertisements available at the moment.</p>
+        </div>
+    {% endif %}
+</div>
+
+<!-- Modal -->
+<div id="videoModal" class="video-modal" style="display:none;">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <iframe id="videoIframe" width="100%" height="100%" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+</div>
+
+<style type="text/css">
+  /* Base Styles */
+  .text-center {
+    text-align: center;
+  }
+
+  .advertisement-container {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+  }
+
+  .advertisement-wrapper {
+    display: flex;
+    animation: scrollAds 20s linear infinite;
+  }
+
+  .advertisement {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+    background: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin-right: 20px;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+    width: 250px;
+  }
+
+  .advertisement:hover {
+    transform: translateY(-5px);
+  }
+
+  .ad-link {
+    display: block;
+    margin-bottom: 10px;
+    color: #333;
+    text-decoration: none;
+  }
+
+  .ad-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+  }
+
+  .ad-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .video-thumbnail {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .ad-video-container {
+    cursor: pointer;
+  }
+
+  .ad-video-container p {
+    color: #888;
+    font-size: 1rem;
+    margin-top: 10px;
+  }
+
+  .video-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 999;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-content {
+    position: relative;
+    width: 80%;
+    height: 80%;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #fff;
+    font-size: 30px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  .no-video {
+    font-size: 1rem;
+    color: #888;
+    text-align: center;
+    margin-top: 15px;
+  }
+
+  .no-advertisement p {
+    font-size: 1rem;
+    color: #888;
+    margin-top: 30px;
+  }
+
+  /* Animation for Ad Movement */
+  @keyframes scrollAds {
+    0% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(-50%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  /* Responsive Layout */
+  @media (max-width: 1199px) {
+    .col-lg-4 {
+      flex: 0 0 33.33%;
+      max-width: 33.33%;
+    }
+  }
+
+  @media (max-width: 991px) {
+    .col-md-6 {
+      flex: 0 0 50%;
+      max-width: 50%;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .col-sm-12 {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+
+    .ad-title {
+      font-size: 1rem;
+    }
+
+    .ad-image {
+      max-width: 90%;
+    }
+  }
+</style>
+
+<script type="text/javascript">
+  // Function to open the video modal
+  function openVideoModal(videoId, adId) {
+    const modal = document.getElementById('videoModal');
+    const iframe = document.getElementById('videoIframe');
+    
+    modal.style.display = 'flex';
+    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=10`; // Embed YouTube video
+  }
+
+  // Function to close the video modal
+  function closeModal() {
+    const modal = document.getElementById('videoModal');
+    const iframe = document.getElementById('videoIframe');
+
+    modal.style.display = 'none';
+    iframe.src = ''; // Stop the video
+  }
+
+  // JavaScript to trigger the animation once the page is loaded
+  document.addEventListener('DOMContentLoaded', function() {
+    const adWrapper = document.querySelector('.advertisement-wrapper');
+    adWrapper.style.animationPlayState = 'running'; // Start animation when the page loads
+  });
+</script>
+
+
+
+ <div class="mb-4"></div><!-- End .mb-4 -->
+
+            <div class="container">
+                <hr class="mb-0">
+            </div><!-- End .container -->
+
+            <div class="icon-boxes-container bg-transparent">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="icon-box icon-box-side">
+                                <span class="icon-box-icon text-dark">
+                                    <i class="icon-rocket"></i>
+                                </span>
+                                <div class="icon-box-content">
+                                    <h3 class="icon-box-title">Free Shipping</h3><!-- End .icon-box-title -->
+                                    <p>Orders $50 or more</p>
+                                </div><!-- End .icon-box-content -->
+                            </div><!-- End .icon-box -->
+                        </div><!-- End .col-sm-6 col-lg-3 -->
+
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="icon-box icon-box-side">
+                                <span class="icon-box-icon text-dark">
+                                    <i class="icon-rotate-left"></i>
+                                </span>
+
+                                <div class="icon-box-content">
+                                    <h3 class="icon-box-title">Free Returns</h3><!-- End .icon-box-title -->
+                                    <p>Within 30 days</p>
+                                </div><!-- End .icon-box-content -->
+                            </div><!-- End .icon-box -->
+                        </div><!-- End .col-sm-6 col-lg-3 -->
+
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="icon-box icon-box-side">
+                                <span class="icon-box-icon text-dark">
+                                    <i class="icon-info-circle"></i>
+                                </span>
+
+                                <div class="icon-box-content">
+                                    <h3 class="icon-box-title">Get 20% Off 1 Item</h3><!-- End .icon-box-title -->
+                                    <p>when you sign up</p>
+                                </div><!-- End .icon-box-content -->
+                            </div><!-- End .icon-box -->
+                        </div><!-- End .col-sm-6 col-lg-3 -->
+
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="icon-box icon-box-side">
+                                <span class="icon-box-icon text-dark">
+                                    <i class="icon-life-ring"></i>
+                                </span>
+
+                                <div class="icon-box-content">
+                                    <h3 class="icon-box-title">We Support</h3><!-- End .icon-box-title -->
+                                    <p>24/7 amazing services</p>
+                                </div><!-- End .icon-box-content -->
+                            </div><!-- End .icon-box -->
+                        </div><!-- End .col-sm-6 col-lg-3 -->
+                    </div><!-- End .row -->
+                </div><!-- End .container -->
+            </div><!-- End .icon-boxes-container -->
+
+
+
+            <div class="cta bg-image bg-dark pt-4 pb-5 mb-0" style="background-image: url({% static 'images/demos/demo-4/bg-5.jpg' %});">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-sm-10 col-md-8 col-lg-6">
+                            <div class="cta-heading text-center">
+                                <h3 class="cta-title text-white">{% trans "Get The Latest Deals" %}</h3><!-- End .cta-title -->
+                                <p class="cta-desc text-white">and receive <span class="font-weight-normal">$20 coupon</span> for first shopping</p><!-- End .cta-desc -->
+                            </div><!-- End .text-center -->
+                        
+                            <form  method="post" action="{% url 'newsletter:subscribe' %}">
+                            {% csrf_token %}
+                                <div class="input-group input-group-round">
+                                    <input name="email" type="email" class="form-control form-control-white" placeholder="Enter your Email Address" aria-label="Email Adress" required>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="submit"><span>{% trans "Subscribe" %}</span><i class="icon-long-arrow-right"></i></button>
+                                    </div><!-- .End .input-group-append -->
+                                </div><!-- .End .input-group -->
+                            </form>
+                        </div><!-- End .col-sm-10 col-md-8 col-lg-6 -->
+                    </div><!-- End .row -->
+                </div><!-- End .container -->
+            </div><!-- End .cta -->
+    </main>
+
+{% endblock %}

@@ -1,0 +1,483 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load thumbnail %}
+
+{% load i18n %}
+
+{% block content %}
+{% if current_language == 'ar' %}
+    <style>
+      .main {
+        direction: rtl;
+      }
+      tr{
+        text-align: center;
+      }
+      .row{
+        text-align: right;
+      }
+      .product-media{
+        margin-right: 0.2rem !important;
+        margin-left: 1em !important;
+      }
+    </style>
+   {% endif %}
+
+ <script src="{% static 'tinymce/tinymce.min.js' %}"></script>
+<script>
+    tinymce.init({
+        selector: '#id_description',  // Update the selector to target the correct textarea
+        height: 300,  // Optional height for TinyMCE
+        menubar: false,  // Optional: disable the menubar
+        plugins: 'advlist autolink lists link image charmap print preview anchor',  // Optional: enable specific plugins
+        toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | link image',  // Optional: toolbar options
+    });
+</script>
+
+
+<main class="main">
+     <!-- Include the ads template -->
+                {% include 'partials/ads.html' %}
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">{% trans 'Home' %}</a></li>
+                
+                <li class="breadcrumb-item active" aria-current="page">{% trans 'create new product' %}</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+
+
+<div class="container">
+    <div class="row">
+        {% include 'includes/management_center_sidebar.html' %}
+        <div class="col-lg-5">
+            <div class="containerer">
+                <h5><b>{% trans 'Add New Product' %}</b></h5>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                   <div class="form-group">
+                      <label for="category">{% trans 'Category' %}</label>
+                      <select name="category" id="category" class="form-input">
+                          <option value="">{% trans 'Select Category' %}</option>
+                         {% for category in categories %}
+                         <option value="{{ category.id }}">{{ category.category_name }}</option>
+                        {% endfor %}
+                     </select>
+                   </div>
+
+                   <div class="form-group">
+                        <label for="subcategory">{% trans 'Subcategory' %}</label>
+                        <select name="subcategory" id="subcategory" class="form-input">
+                               <option value="">{% trans 'Select Subcategory' %}</option>
+                               {% for category, subcategories in category_dict.items %}
+                              <option label="{{ category.name }}">
+                                 {% for subcategory in subcategories %}
+                                  <option value="{{ subcategory.id }}" data-category="{{ category.id }}">{{ subcategory.name }}</option>
+                                 {% endfor %}
+                            </option>
+                             {% endfor %}
+                        </select>
+                   </div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Initially hide the subcategory dropdown
+        $("#subcategory").parent().hide();
+
+        // When a category is selected
+        $("#category").change(function() {
+            var selectedCategoryId = $(this).val();
+
+            // Hide subcategories by default
+            $("#subcategory option").hide();
+            
+            // Show only subcategories related to the selected category
+            $("#subcategory option[data-category=" + selectedCategoryId + "]").show();
+
+            // Show the subcategory dropdown
+            $("#subcategory").parent().show();
+        });
+    });
+</script>
+
+
+     <!-- Product Type -->
+    <div class="form-group">
+        <label for="product_type">{% trans 'Product Type' %}</label>
+        <select name="product_type" id="product_type" class="form-input" required>
+            <option value="physical" {% if product_form.product_type.value == 'physical' %}selected{% endif %}>{% trans 'Physical' %}</option>
+            <option value="digital" {% if product_form.product_type.value == 'digital' %}selected{% endif %}>{% trans 'Digital' %}</option>
+        </select>
+    </div>
+
+     <div class="form-group" id="digital_file_field" style="display: none;">
+    <label for="digital_file" class="form-label">{% trans 'Upload Digital File' %}</label>
+    
+    <!-- File Input -->
+    <div class="file-upload-container">
+        <input type="file" name="digital_file" id="digital_file" class="form-input file-input" accept=".pdf, .zip, .rar, .jpg, .png, .docx">
+        <label for="digital_file" class="file-upload-btn">
+            <span class="file-upload-icon"><i class="fas fa-upload"></i></span>
+            {% trans 'Choose File' %}
+        </label>
+    </div>
+    
+    <!-- Progress Bar Container -->
+    <div id="progress-container" class="progress-container" style="display: none;">
+        <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
+        <span id="progress-text" class="progress-text"></span>
+    </div>
+</div>
+
+<!-- Add your custom styles or include a CSS file -->
+<style>
+    /* Form Label Styling */
+    .form-label {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 8px;
+        color: #333;
+    }
+
+    /* File Upload Container */
+    .file-upload-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    /* File Input Styling */
+    .file-input {
+        display: none;
+    }
+
+    /* Custom File Upload Button */
+    .file-upload-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 600;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .file-upload-btn:hover {
+        background-color: #0056b3;
+    }
+
+    .file-upload-icon {
+        margin-right: 10px;
+    }
+
+    /* Progress Bar Styling */
+    .progress-container {
+        width: 100%;
+        background-color: #f3f3f3;
+        border-radius: 20px;
+        overflow: hidden;
+        margin-top: 15px;
+        position: relative;
+    }
+
+    .progress-bar {
+        height: 20px;
+        background-color: #4caf50;
+        text-align: center;
+        color: white;
+        line-height: 20px;
+        width: 0;
+        transition: width 0.5s ease;
+    }
+
+    .progress-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 14px;
+        font-weight: bold;
+        color: #333;
+    }
+</style>
+
+<!-- Include Font Awesome for the upload icon (if you haven't already) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Hide the progress bar initially
+        $('#progress-container').hide();
+
+        // Show the file input when product type is digital
+        $('#product_type').change(function() {
+            toggleDigitalFileField($(this).val());
+        });
+
+        function toggleDigitalFileField(productType) {
+            if (productType === 'digital') {
+                $('#digital_file_field').show();
+            } else {
+                $('#digital_file_field').hide();
+            }
+        }
+
+        // Handle file upload with AJAX and display progress bar
+        $('#digital_file').change(function(e) {
+            var file = e.target.files[0];
+            if (file) {
+                var formData = new FormData();
+                formData.append('digital_file', file);
+                
+                // Show progress bar
+                $('#progress-container').show();
+
+                $.ajax({
+                    url: '/upload/',  // Your Django upload view URL here
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    xhr: function() {
+                        var xhr = new XMLHttpRequest();
+                        // Update the progress bar as the file uploads
+                        xhr.upload.addEventListener('progress', function(e) {
+                            if (e.lengthComputable) {
+                                var percent = (e.loaded / e.total) * 100;
+                                $('#progress-bar').width(percent + '%').text(Math.round(percent) + '%');
+                            }
+                        });
+                        return xhr;
+                    },
+                    success: function(response) {
+                        // Handle successful upload
+                        alert('File uploaded successfully');
+                    },
+                   
+                });
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    // When the user selects a file
+document.getElementById('digital_file').addEventListener('change', function() {
+    let file = this.files[0];
+    
+    if (file) {
+        // Show the progress bar container
+        document.getElementById('progress-container').style.display = 'block';
+        
+        // Initialize the progress bar to 0
+        let progressBar = document.getElementById('progress-bar');
+        let progressText = document.getElementById('progress-text');
+        progressBar.style.width = '0%';
+        progressText.textContent = '0%';
+
+        // Simulate a file upload with a timeout (replace this with your actual upload logic)
+        let uploadProgress = 0;
+        let interval = setInterval(function() {
+            if (uploadProgress < 100) {
+                uploadProgress += 5;  // Increment progress
+                progressBar.style.width = uploadProgress + '%';
+                progressText.textContent = uploadProgress + '%';
+            } else {
+                clearInterval(interval);  // Stop once 100% is reached
+                progressText.textContent = 'Done';  // Display 'Done' when the upload is complete
+            }
+        }, 200); // Adjust interval speed (currently simulates upload over 10 seconds)
+    }
+});
+
+</script>
+
+    
+
+
+
+                    <div class="form-group">
+                        <label for="product_name">{% trans 'Product Name' %}</label>
+                        <input type="text" name="product_name" id="product_name" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+    <label for="{{ form.description.id_for_label }}">{% trans 'Description' %}</label>
+    {{ product_form.description }}  <!-- Render the 'description' field using Django's form rendering -->
+</div>
+
+                    
+                   <div class="form-group">
+              <label for="variation_category">{% trans 'Select Shipping' %}:</label>
+              <select name="shipping" id="variation_category" class="form-input wide-input">
+                <option value="0">{% trans 'Free Shipping (0 DA)' %}</option>
+                <option value="200">200.00 DA</option>
+                <option value="300">300.00 DA</option>
+                <option value="400">400.00 DA</option>
+                <option value="500">500.00 DA</option>
+                <option value="600">600.00 DA</option>
+               
+              </select>
+            </div>
+                    
+                    <div class="form-group">
+                        <label for="images">{% trans 'Images' %}</label>
+                        <input type="file" name="images" id="images" class="form-input">
+                    </div>
+
+                   
+   
+                     <div class="form-group">
+                        <label for="images">{% trans 'Coast Price' %}</label>
+                        <input type="text" name="cost_price" id="cost_price" class="form-input">
+                    </div>
+                    <br>
+                    <div class="form-group">
+                      <div>
+                        <p><b>Enable Affiliate Marketing</b><br> allows other users to promote and sell your product, earning a commission for each successful sale. By enabling this option, you give permission to affiliates to share and sell your product using their unique affiliate link. You can set the affiliate commission percentage, which will be paid to the affiliate for every sale they generate. This feature helps expand your product's reach while rewarding affiliates for their efforts.</p>
+                         <label for="affiliate_enabled">Enable Affiliate Marketing</label>
+                         <input type="checkbox" id="affiliate_enabled" name="is_affiliate_enabled">
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div>
+                      
+                      <label for="affiliate_percentage">Affiliate Percentage (%)</label>
+                       <input class="form-input" type="text" id="affiliate_percentage" name="affiliate_percentage" >
+                       <p>Set the percentage of commission that affiliates will earn for each sale of your product</p>
+                      </div>
+                    </div>
+
+                    <button style="background-color: #fcb941;" type="submit" class="btn btn-save">{% trans 'Save Product' %}</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-content">
+                <h2 class="title text-center mb-3">{% trans 'Publishing Information' %}</h2>
+                <div class="accordion accordion-rounded" id="accordion-1">
+                    <div class="card card-box card-sm bg-light">
+                        <div class="card-header" id="heading-1">
+                            <h2 class="card-title">
+                                <a role="button" data-toggle="collapse" href="#collapse-1" aria-expanded="true" aria-controls="collapse-1">
+                                    {% trans 'How to Chose Category and SubCategory' %}?
+                                </a>
+                            </h2>
+                        </div>
+                        <div id="collapse-1" class="collapse show" aria-labelledby="heading-1" data-parent="#accordion-1">
+                            <div class="card-body">
+                               <p>{% trans 'Choosing the right category after selecting a subcategory is crucial for effective organization and navigation. Follow these simple steps' %}:</p><br>
+                               <p>
+                               	<strong>1 - {% trans 'Understand Your Subcategory' %}:</strong> {% trans 'First, ensure you have a clear understanding of your subcategory. Know what it encompasses' %}.
+                               </p>
+                               <p><strong>2 - {% trans 'Consider Relevance' %}:</strong> {% trans 'Think about the primary purpose of your item or content and how it relates to the subcategory' %}.</p><br>
+                               <p><strong>3 - {% trans 'Explore Options' %}:</strong> {% trans 'Look through available categories to find the one that best matches your item or content' %}.</p><br>
+                                <p><strong>4 - {% trans 'Check for Precision' %}:</strong> {% trans 'Select a category that precisely represents your item or content, avoiding vague or overly broad choices' %}.</p><br>
+                                 <p><strong>5 - {% trans 'Think Like a User' %}:</strong> {% trans 'Imagine how users would search for your item, and choose a category that aligns with their expectations' %}.</p><br>
+                                  <p><strong>6 - {% trans 'Test the Waters' %}:</strong> {% trans 'If uncertain, try posting in one category and see how it performs. Adjust if necessary' %}.</p><br>
+                                   <p><strong>7 - {% trans 'Consult Guidelines:<strong> Refer to any platform-specific guidelines for category selection' %}.</p><br>
+                                   <p><strong>8 - {% trans 'Review and Refine' %}:</strong> {% trans 'Periodically review your choice to ensure it remains the best fit as your content or items evolve '%}.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-box card-sm bg-light">
+                        <div class="card-header" id="heading-2">
+                            <h2 class="card-title">
+                                <a class="collapsed" role,button" data-toggle="collapse" href="#collapse-2" aria-expanded="false" aria-controls="collapse-2">
+                                    {% trans 'how to Chose Product Name and Des and Price' %}?
+                                </a>
+                            </h2>
+                        </div>
+                        <div id="collapse-2" class="collapse" aria-labelledby="heading-2" data-parent="#accordion-1">
+                            <div class="card-body">
+                                <p><strong>1 - {% trans 'Product Name' %}:</strong> {% trans ' Choose a concise and descriptive name that highlights the products key features and purpose, making it easy for customers to understand' %}.</p>
+                                <p><strong>2 - {% trans 'Description' %}:</strong> {% trans 'Craft a brief yet informative description, highlighting the products benefits, key specifications, and unique selling points' %}.</p>
+                                <p><strong>3 - {% trans 'Price' %}:</strong> {% trans 'Research the market and competitors to set a competitive and profitable price. Consider factors like production costs, demand, and perceived value' %}.</p>
+                                <p><strong>4 - {% trans 'Test and Adjust' %}:</strong> {% trans 'Continuously monitor performance and customer feedback to refine your product name, description, and price for optimal results' %}.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-box card-sm bg-light">
+                        <div class="card-header" id="heading-3">
+                            <h2 class="card-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-3" aria-expanded="false" aria-controls="collapse-3">
+                                    {% trans 'Select Shipping and Stock?' %}
+                                </a>
+                            </h2>
+                        </div>
+                        <div id="collapse-3" class="collapse" aria-labelledby="heading-3" data-parent="#accordion-1">
+                            <div class="card-body">
+                               <p><strong>1 - {% trans 'Shipping' %}:</strong> {% trans 'Offer diverse shipping options, calculate competitive rates, and communicate tracking' %}.</p>
+                               <p><strong>2 - {% trans 'Stock' %}:</strong> {% trans 'Monitor inventory levels closely, adjust for seasons, and automate reordering for efficient stock management' %}.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-box card-sm bg-light">
+                        <div class="card-header" id="heading-4">
+                            <h2 class="card-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-4" aria-expanded="false" aria-controls="collapse-4">
+                                    {% trans 'My Image Product' %}
+                                </a>
+                            </h2>
+                        </div>
+                        <div id="collapse-4" class="collapse" aria-labelledby="heading-4" data-parent="#accordion-1">
+                            <div class="card-body">
+                               <p>{% trans 'When selecting a product image, opt for a clear, high-resolution photo that showcases the item from its best angle, emphasizing its key features and qualities' %}.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</main>
+<style>
+    .page-title {
+        font-size: 24px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .containerer {
+        background-color: #fff;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .btn-save {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .btn-save:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+{% endblock %}

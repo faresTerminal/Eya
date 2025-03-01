@@ -1,0 +1,128 @@
+{% extends "homebase.html" %}
+{% load static %}
+{% block title %}
+Checkout
+{% endblock %}
+{% block content %}
+
+<!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option" style="margin-bottom: 2em;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__links">
+                        <a href="./index.html"><i class="fa fa-home"></i> Home</a>
+                        <span>Send Payment</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+
+            <div class="alert alert-info text-center" role="alert">
+                              
+               Enter your personal information
+            </div>
+    
+
+              <section class="ftco-section ftco-no-pt ftco-no-pb">
+			<div class="container">
+				<div class="row ">
+					<div class="col-lg-3"></div>
+          <div class="col-lg-6">
+          	 <p class="lead " style="margin-top: 4em;">
+En saisissant vos informations personnelles, nous pouvons envoyer la commande correctement, là où vous vous trouvez ...</p>
+          	 <div class="card" style="width: 35rem;margin-bottom: 2em;margin-top: 4em;">
+                       <div class="card-header text-light" style="background: #ca1515;">
+                                      Montant total
+                        </div>
+                    <ul class="list-group list-group-flush">
+                   {% for item in cart %}
+                   <li class="list-group-item">item {{ item.quantity }}x {{ item.product.product_name }} =  <span>{{ item.product.price }} DA</span> </li>
+                 {% endfor %}
+                   
+                 </ul>
+                  <div class="card-header">
+                                     Total: {{ product.sub_total }} DA
+                </div>
+           </div>
+          	<div class="py-md-5">
+	          	<div class="heading-section ftco-animate mb-5">
+		          	<span class="subheading text-center">Informations client</span>
+		            <h2 class="mb-4 text-center">Envoyez la commande</h2>
+		          </div>
+	           <form action="." method="post" class="order-form"> {% csrf_token %}
+	              <div class="row">
+	                <div class="col-md-6">
+	                  <div class="form-group">
+	                    <label for="">Nom</label>
+	                    <input type="text" class="form-control" placeholder="Nom" name="first_name">
+	                  </div>
+	                </div>
+	                <div class="col-md-6">
+	                  <div class="form-group">
+	                    <label for="">Prénom</label>
+	                    <input type="text" class="form-control" placeholder="######" name="last_name">
+	                  </div>
+	                </div>
+	                <div class="col-md-6">
+	                  <div class="form-group">
+	                    <label for="">Email</label>
+	                    <input type="email" class="form-control" placeholder="######" name="email">
+	                  </div>
+	                </div>
+	                <div class="col-md-6">
+	                  <div class="form-group">
+	                    <label for="">address</label>
+	                    <input type="text" class="form-control"  placeholder="######" name="address">
+	                  </div>
+	                </div>
+	                <div class="col-md-6">
+	                  <div class="form-group">
+	                    <label for="">Wilaya</label>
+	                    <input type="text" class="form-control"  placeholder="######" name="city">
+	                  </div>
+	                </div>
+	                <div class="col-md-6">
+	                  <div class="form-group">
+	                    <label for="">Comun</label>
+	                    <input type="text" class="form-control"  placeholder="######" name="comun">
+	                  </div>
+	                </div>
+	                <div class="col-md-6">
+	                  <div class="form-group">
+	                    <label for="">Zip/Postal</label>
+	                    <input type="text" class="form-control"  placeholder="######" name="zip_code">
+	                  </div>
+	                </div>
+	                <div class="col-md-6">
+	                  <div class="form-group">
+	                    <label for="">N: Telephone</label>
+	                    <input type="text" class="form-control"  placeholder="######" name="phone_number">
+	                  </div>
+	                </div>
+
+	                <div class="col-md-12 mt-3">
+	                  <div class="form-group">
+	                   
+                                <button type="submit" class="btn btn-success btn-lg btn-block">Passer la commande</button>
+	                  </div>
+	                </div>
+	              </div>
+	            </form>
+	          </div>
+          </div>
+          <div class="col-lg-3"></div>
+        </div>
+			</div>
+
+		</section>
+		</div>
+
+
+           
+    	
+ 
+    {% endblock %}

@@ -1,0 +1,32 @@
+{% load i18n %}
+<aside class="col-md-4 col-lg-2">
+	                			<ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
+								    <li class="nav-item">
+								        <a class="nav-link {% if '/stock/' == request.path %}active{% endif %} "   href="{% url 'stock' %}" >{% trans 'Stock' %}</a>
+								    </li>
+								    <li class="nav-item">
+								        <a class="nav-link {% if '/product_list_stock/' in request.path %}active{% endif %} "   href="{% url 'product_list_stock' %}" >{% trans 'Product List' %}</a>
+								    </li>
+								     
+								     
+								    <li class="nav-item">
+								        <a class="nav-link {% if '/stock_adjust_page/' in request.path %}active{% endif %}" id="tab-orders-link"  href="{% url 'stock_adjust_page' %}">{% trans 'Stock Adjustment' %}</a>
+								    </li>
+								    <li class="nav-item">
+								        <a class="nav-link {% if '/low_stock/' in request.path %}active{% endif %}"   href="{% url 'low_stock' %}" >{% trans 'Low Stock' %}</a>
+								    </li>
+								     <li class="nav-item">
+								        <a class="nav-link {% if '/stock_valuation/' in request.path %}active{% endif %}" id="tab-address-link"  href="{% url 'stock_valuation' %}" >{% trans 'Stock Valuation' %}</a>
+								    </li>
+								    <li class="nav-item">
+								        <a class="nav-link {% if '/stock-history/' in request.path %}active{% endif %}" id="tab-address-link"  href="{% url 'stock_history' %}" >{% trans 'Stock History' %}</a>
+								    </li>
+								    
+								     
+								   
+								   
+								    <li class="nav-item">
+								        <a class="nav-link" href="{% url 'logout' %}">{% trans 'Sign Out' %}</a>
+								    </li>
+								</ul>
+</aside>

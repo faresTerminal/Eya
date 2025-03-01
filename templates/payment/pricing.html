@@ -1,0 +1,27 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+
+<h1 class="text-center my-4">Choose a Plan</h1>
+<div class="container">
+  <div class="row">
+    {% for plan in plans %}
+      <div class="col-md-4 mb-4">
+        <div class="card shadow-sm h-100">
+          <div class="card-body text-center">
+            <h2 class="card-title">{{ plan.name }}</h2>
+            <p class="card-text">{{ plan.description }}</p>
+            <p class="card-text font-weight-bold">Price: {{ plan.price }} DA</p>
+            <p class="card-text">Duration: {{ plan.duration_days }} days</p>
+            <a href="{% url 'payment:subscribe' %}" class="btn btn-primary">Subscribe</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}
+

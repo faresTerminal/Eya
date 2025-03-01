@@ -1,0 +1,69 @@
+
+{% extends 'homebase.html' %}
+{% load static %}
+
+{% block content %}
+<hr>
+  <div class="container">
+  	<div class="row">
+  		<div class="col-lg-2"></div>
+  		<dic class = "col-lg-8">
+    <div class="">
+      <h1 class="trial-expired-title">Trial Expired</h1>
+      <p class="trial-expired-message">Your trial period has ended. Please subscribe to a plan to continue using the service.</p>
+      <hr>
+      <div class="subscribe-button-container">
+        <a href="{% url 'payment:subscription_needed'  %}" class="subscribe-button">Subscribe Now</a>
+      </div>
+    </div>
+</dic>
+<div class="col-lg-2"></div>
+    </div>
+  </div>
+<hr>
+  <style>
+    /* General container styles */
+    
+    .trial-expired-container {
+      text-align: center;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      width: 100%;
+      max-width: 500px; /* Limit the width */
+    }
+
+    .trial-expired-title {
+      font-size: 36px;
+      color: #ff4d4f;
+      margin-bottom: 20px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .trial-expired-message {
+      font-size: 18px;
+      color: #555;
+      margin-bottom: 30px;
+    }
+
+    .subscribe-button-container {
+      text-align: center;
+    }
+
+    .subscribe-button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px 30px;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 18px;
+      transition: background-color 0.3s ease;
+    }
+
+    .subscribe-button:hover {
+      background-color: #45a049;
+    }
+  </style>
+{% endblock %}

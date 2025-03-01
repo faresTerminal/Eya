@@ -1,0 +1,150 @@
+
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .invoice-header { text-align: center; margin-bottom: 30px; }
+        .invoice-header h1 { margin: 0; }
+        .section { margin-bottom: 30px; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        table, th, td { border: 1px solid #000; }
+        th, td { padding: 8px; text-align: left; }
+        .text-right { text-align: right; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Invoice Header -->
+        <div class="invoice-header">
+            <h1>Invoice</h1>
+            <p><strong>Transaction ID:</strong> {{ order.transaction_id }}</p>
+            <p><strong>Order Date:</strong> {{ order.created_at|date:"Y-m-d H:i:s" }}</p>
+        </div>
+
+        <!-- Customer Details -->
+        <div class="section invoice-details">
+            <h3>Customer Details</h3>
+            <p><strong>Order:</strong> #{{ order.order_number}}</p>
+            <p><strong>Name:</strong> {{ order.full_name }}</p>
+            <p><strong>Phone:</strong> {{ order.phone }}</p>
+            <p><strong>Address:</strong> {{ order.full_address }}</p>
+            <p><strong>City, State:</strong> {{ order.city }}, {{ order.state }}</p>
+        </div>
+
+        <!-- Order Details -->
+        <div class="section order-details">
+            <h3>Order Details</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price (DA)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in ordered_products %}
+                    <tr>
+                        <td>
+                            {{ item.product.product_name }}
+                            {% if item.variations.all %}
+                            <p style="font-size: 0.9em; color: #555;">
+                                {% for i in item.variations.all %}
+                                    {{ i.color | capfirst }}: {{ i.size | capfirst }}<br>
+                                {% endfor %}
+                            </p>
+                            {% endif %}
+                        </td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.product_price }} DA
+                            {% if discount > 0 %}
+                            <br>( - {{ discount }} DA )
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Payment Summary -->
+        <div class="section payment-summary">
+            <h3>Payment Summary</h3>
+            <table>
+                <tr>
+                    <th>Subtotal</th>
+                    <td class="text-right">{{ subtotal }} DA</td>
+                </tr>
+                <tr>
+                    <th>Shipping</th>
+                    <td class="text-right">{{ total_shipping_cost }} DA</td>
+                </tr>
+                {% if coupon_discount > 0 %}
+                <tr>
+                    <th>Coupon Discount</th>
+                    <td class="text-right">- {{ coupon_discount }} DA</td>
+                </tr>
+                {% endif %}
+                {% if promotion_discount > 0 %}
+                <tr>
+                    <th>Promotion Discount</th>
+                    <td class="text-right">- {{ promotion_discount }} DA</td>
+                </tr>
+                {% endif %}
+                <tr>
+                    <th>Grand Total</th>
+                    <td class="text-right">{{ order.order_total|floatformat:2 }} DA</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Shipping Method -->
+        <div class="section shipping-method">
+            <h3>Shipping Details</h3>
+            <p>
+                {% if order.shipping_method == 'pickup' %}
+                    <strong>Pickup Delivery Company:</strong> {{ order.get_pickup_location_display }}
+                {% else %}
+                    <strong>Shipping Method:</strong> Home Delivery
+                {% endif %}
+            </p>
+            
+
+        </div>
+
+         <!-- Payment Method Section -->
+        <div class="shipping-method mt-5">
+            
+            <p>
+                {% if order.payment_method == 'cib' %}
+                  <strong>Payment Method</strong>:  Credit Bank Card (CIB)
+                {% elif order.payment_method == 'edahabia' %}
+                    <strong>Payment Method</strong>: Card Manitique
+                {% elif order.payment_method == 'cod' %}
+                    <strong>Payment Method</strong>: Cash on Delivery
+                {% endif %}
+            </p>
+
+           
+        </div>
+
+        <!-- Footer -->
+        <div class="section text-center">
+            <p>Thank you for shopping with us!</p>
+            <a href="{% url 'printer:generate_pdf' order_id=order.id %}" target="_blank">Generate PDF</a>
+        </div>
+    </div>
+
+</body>
+</html>
+
+{% endblock %}

@@ -1,0 +1,209 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load custom_filters %}
+{% block content %}
+
+<style>
+    /* Main Container */
+    .subscription-success {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        min-height: 70vh;
+        background-color: #e9f7e6;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    /* Heading */
+    .subscription-success h1 {
+        font-size: 2.8rem;
+        font-weight: bold;
+        color: #2e7d32;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+    }
+
+    /* Main Text */
+    .subscription-success p {
+        font-size: 1.2rem;
+        color: #333;
+        margin: 10px 0;
+        line-height: 1.6;
+    }
+
+    .subscription-success p strong {
+        color: #2e7d32;
+    }
+
+    /* Button */
+    .subscription-success a {
+        display: inline-block;
+        margin-top: 25px;
+        padding: 12px 24px;
+        background-color: #2e7d32;
+        color: white;
+        text-decoration: none;
+        font-size: 1.1rem;
+        border-radius: 6px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        font-weight: bold;
+    }
+
+    .subscription-success a:hover {
+        background-color: #388e3c;
+        transform: translateY(-2px);
+    }
+
+    /* Success Icon */
+    .icon-check-circle {
+        font-size: 5rem;
+        color: #2e7d32;
+        margin-bottom: 20px;
+    }
+
+    /* Link Style */
+    .subscription-success p a {
+        font-weight: normal;
+        color: #00796b;
+    }
+
+    .subscription-success p a:hover {
+        text-decoration: underline;
+    }
+    .ri-bank-card-line {
+        font-size: 2.5rem;
+        color: #2e7d32;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .subscription-success {
+            padding: 20px;
+        }
+
+        .subscription-success h1 {
+            font-size: 2.2rem;
+        }
+
+        .icon-check-circle {
+            font-size: 4rem;
+        }
+    }
+
+</style>
+<!-- Include Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div class="subscription-success">
+    <i class="ri-bank-card-line"></i>
+    <h1>Payment Successful</h1>
+    <p>Your payment was successfully processed! Your product is now ready for purchase.</p>
+    <p><strong>Transaction ID:</strong> {{ payment.entity_id }}</p>
+    {% if digital_products %}
+     <p class='digital-product-text' >Digital Product</p>
+     {% else %}
+    {% if payment.entity_id %}
+        <a href="{% url 'orders:view_invoice' transaction_id=payment.entity_id %}">
+            View Invoice
+        </a>
+    {% else %}
+        <p>Invoice not available at this moment. Please try again later.</p>
+    {% endif %}
+    {% endif %}
+<hr>
+    {% if digital_products %}
+    <h6 class="thank-you-message">Thank you for your purchase!</h6>
+    <p class="order-success-message">Your order has been successfully processed. You can download your digital products using the links below:</p>
+
+    <!-- Display expiration and download limit message -->
+    {% if order.is_download_expired %}
+        <p>Your download link has expired.</p>
+    {% elif order.has_reached_download_limit %}
+        <p>You have reached the maximum number of download attempts.</p>
+    {% else %}
+        <p>Your download link is valid until {{ order.download_expiration }}</p>
+    {% endif %}
+    
+    <ul class="download-list">
+        {% for item in download_links %}
+            <li class="download-item">
+                <span class="download-label">Download: </span>
+                <a href="{{ item.download_url }}" class="download-link">{{ item.product_name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p class="no-digital-message">Your order contains no digital products.</p>
+{% endif %}
+<style type="text/css">
+    /* General container for the message */
+.thank-you-message {
+    font-size: 1.5em;
+    color: #4CAF50; /* Green color */
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.order-success-message {
+    font-size: 1.1em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.download-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.download-item {
+    background-color: #f9f9f9; /* Light gray background */
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.download-label {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #333;
+    margin-right: 10px;
+}
+
+.download-link {
+    color: #007BFF; /* Blue color */
+    font-size: 1.1em;
+    text-decoration: none;
+    font-weight: normal;
+    transition: color 0.3s ease;
+}
+
+.download-link:hover {
+    color: #0056b3; /* Darker blue on hover */
+    text-decoration: underline;
+}
+
+.no-digital-message {
+    font-size: 1.2em;
+    color: #FF6347; /* Tomato color */
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+</style>
+
+
+</div>
+
+{% endblock %}
+
+
+

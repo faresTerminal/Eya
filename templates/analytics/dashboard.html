@@ -1,0 +1,1081 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load i18n %}
+{% load thumbnail %}
+{% load custom_k %}
+{% block content %}
+{% if current_language == 'ar' %}
+    <style>
+        .main {
+            direction: rtl;
+        }
+        tr {
+            text-align: center;
+        }
+        .row {
+            text-align: right;
+        }
+        .product-media {
+            margin-right: 0.2rem !important;
+            margin-left: 1em !important;
+        }
+        .list-group-item b {
+            margin-left: 2em;
+        }
+    </style>
+{% endif %}
+
+<main class="main">
+    <!-- Page Header -->
+    <!-- Include the ads template -->
+            {% include 'partials/ads.html' %}
+
+    <!-- Breadcrumb Navigation -->
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">{% trans 'Home' %}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{% trans 'Dashboard' %}</li>
+            </ol>
+        </div>
+    </nav>
+
+    <div class="page-content">
+        <div class="dashboard">
+            <div class="container">
+                <div class="row">
+                    <!-- Sidebar -->
+                    {% include 'includes/analytics_sidebar.html' %}
+                    
+                    <div class="col-md-8 col-lg-9">
+                        <p class="text-center">{% trans 'Analytics Dashboard' %}</p>
+
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel">
+                                <p>{% trans 'Hello' %} <span class="font-weight-normal text-dark">{{ user.first_name }}</span>, {% trans 'here are your key analytics' %}:</p>
+                                
+                               <div class="row mb-4">
+    
+    <!-- Transactions Column -->
+<div class="col-lg-8">
+    <div class="card">
+        <div class="card-body text-center">
+            <!-- Profile Picture -->
+            <img src="{{ user.userprofile.profile_picture.url }}" alt="Profile Picture" 
+                 class="rounded-circle mb-3" 
+                 style="width: 100px; height: 100px; object-fit: cover;">
+
+            <!-- Congratulatory Message -->
+            <h4>
+                {% trans "Congratulations" %} {{ user.first_name }}! 🎉
+            </h4>
+            <p>
+                {% trans "You have done " %} 
+                <svg width="50" height="50" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="50" cy="50" r="45" stroke="#e6e6e6" stroke-width="5" fill="none"/>
+  
+  <!-- Progress circle -->
+  <circle cx="50" cy="50" r="45" stroke="#28a745" stroke-width="5" fill="none" stroke-dasharray="283" stroke-dashoffset="calc(283 - ({{ growth_data.growth_percentage }} / 100) * 283)" transform="rotate(-90, 50, 50)"/>
+
+  <!-- Text showing the percentage -->
+  <text x="50%" y="50%" alignment-baseline="middle" text-anchor="middle" font-size="18" fill="#28a745">
+    {{ growth_data.growth_percentage }}%
+  </text>
+</svg>
+ 
+                {% trans "more sales today." %}
+            </p>
+            <p>
+                {% trans "Check your new raising badge in your profile." %}
+            </p>
+
+            <!-- Monthly Stats -->
+            <div class="mt-4">
+                <p>{% trans 'Current Month Revenue:' %} <strong>{{ growth_data.current_month_revenue }} DA</strong></p>
+                <p>{% trans 'Previous Month Revenue:' %} <strong>{{ growth_data.previous_month_revenue }} DA</strong></p>
+                <h6>{% trans 'Total Earnings:' %} <strong>{{ total_earnings }} DA</strong></h6>
+            </div>
+
+            <!-- Line Chart for Growth Comparison (Current Month vs Previous Month) -->
+            <canvas id="growth-chart" height="250"></canvas>
+
+        </div>
+    </div>
+</div>
+
+<!-- Include Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var ctx = document.getElementById('growth-chart').getContext('2d');
+
+        var growthChart = new Chart(ctx, {
+            type: 'line',  // Change to 'line' for a line chart
+            data: {
+                labels: ['Previous Month', 'Current Month'],  // Labels for X-axis (previous month vs current month)
+                datasets: [{
+                    label: 'Revenue Comparison',
+                    data: [
+                        {{ growth_data.previous_month_revenue|default:"0" }},  // Previous month revenue
+                        {{ growth_data.current_month_revenue|default:"0" }}  // Current month revenue
+                    ],
+                    borderColor: '#00E396',  // Line color (green)
+                    backgroundColor: 'rgba(0, 227, 150, 0.2)',  // Semi-transparent background color
+                    borderWidth: 3,
+                    fill: true  // Fill area below the line
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true  // Start the Y-axis from 0
+                    }
+                },
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.raw + ' DA';  // Display revenue in tooltip
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+
+
+    <!-- Analytics Cards Column -->
+    <div class="col-lg-4">
+        <div class="row">
+            <!-- Revenue -->
+<div class="col-md-6 mb-4">
+    <div class="card card-statistics">
+        <div class="card-body text-center">
+            <!-- SVG Line Chart -->
+            <svg width="100%" height="80" viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg">
+                <polyline fill="none" stroke="#16b1ff" stroke-width="2"
+                    points="0,70 10,60 20,65 30,55 40,45 50,55 60,50 70,40 80,45 90,30 100,35" />
+                <circle cx="10" cy="60" r="2" fill="#16b1ff" />
+                <circle cx="20" cy="65" r="2" fill="#16b1ff" />
+                <circle cx="30" cy="55" r="2" fill="#16b1ff" />
+                <circle cx="40" cy="45" r="2" fill="#16b1ff" />
+                <circle cx="50" cy="55" r="2" fill="#16b1ff" />
+                <circle cx="60" cy="50" r="2" fill="#16b1ff" />
+                <circle cx="70" cy="40" r="2" fill="#16b1ff" />
+                <circle cx="80" cy="45" r="2" fill="#16b1ff" />
+                <circle cx="90" cy="30" r="2" fill="#16b1ff" />
+                <circle cx="100" cy="35" r="2" fill="#16b1ff" />
+            </svg>
+
+            <!-- Icon and Text -->
+            <i style="background-color: #16b1ff; color: white; padding: 4px; border-radius: 10px; margin-bottom: 5px; display: inline-block;" class="ri-money-dollar-circle-line ri-24px"></i>
+            <h6 style="font-size: 1.5rem;">{% trans 'Revenue' %}</h6>
+            <h6>{{ total_revenue|format_revenue|default:"0.00" }} </h6>
+        </div>
+    </div>
+</div>
+<style type="text/css">
+    /* Adding some padding and margin to separate the chart */
+.card-body {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+/* Optionally, if you want to make the chart smoother or have a specific style for the line */
+svg polyline {
+    stroke-dasharray: 5, 5;  /* Adding dashed effect to the line */
+}
+
+svg circle {
+    transition: transform 0.2s ease-in-out;
+}
+
+/* You can also adjust the line color, size, or hover effects */
+svg polyline:hover {
+    stroke: #ff5733; /* Change color on hover */
+}
+
+</style>
+
+
+
+          <div class="col-md-6 mb-4">
+    <div class="card card-statistics">
+        <div class="card-body text-center">
+            <!-- SVG Line Chart representing Sales -->
+            <svg width="100%" height="80" viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg">
+                <!-- Line Chart with sales data -->
+                <polyline fill="none" stroke="#910dec" stroke-width="2"
+                    points="0,40 10,30 20,35 30,25 40,40 50,30 60,35 70,25 80,20 90,30 100,25" />
+                <!-- Circles on data points -->
+                <circle cx="10" cy="30" r="2" fill="#910dec" />
+                <circle cx="20" cy="35" r="2" fill="#910dec" />
+                <circle cx="30" cy="25" r="2" fill="#910dec" />
+                <circle cx="40" cy="40" r="2" fill="#910dec" />
+                <circle cx="50" cy="30" r="2" fill="#910dec" />
+                <circle cx="60" cy="35" r="2" fill="#910dec" />
+                <circle cx="70" cy="25" r="2" fill="#910dec" />
+                <circle cx="80" cy="20" r="2" fill="#910dec" />
+                <circle cx="90" cy="30" r="2" fill="#910dec" />
+                <circle cx="100" cy="25" r="2" fill="#910dec" />
+            </svg>
+
+            <!-- Sales Icon -->
+            <i style="background-color: #910dec; color: white; padding: 4px; border-radius: 10px; margin-bottom: 5px; display: inline-block;" class="ri-shopping-cart-2-line ri-24px"></i>
+            
+            <!-- Sales Text -->
+            <h6 style="font-size: 1.5rem;">{% trans 'Sales' %}</h6>
+            <h6>{{ sales_count|format_revenue|default:"0" }}</h6>
+        </div>
+    </div>
+</div>
+<style type="text/css">
+    /* Adding some padding and margin to separate the chart */
+.card-body {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+/* Optional, dashed effect for the line */
+svg polyline {
+    stroke-dasharray: 5, 5;  /* Make the line dashed */
+}
+
+/* Smooth transitions for circles */
+svg circle {
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Optional hover effect to change line color */
+svg polyline:hover {
+    stroke: #f05670;  /* Change the line color on hover */
+}
+
+</style>
+
+
+
+
+
+<style type="text/css">
+    [class^="ri-"], [class*=" ri-"] {
+  font-family: "remixicon" !important;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 18px; /* Default size */
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.ri-24px, .ri-24px::before {
+  font-size: 24px; /* This will set the icon size to 24px */
+}
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+</style>
+        <!-- Customers -->
+<div class="col-md-6 mb-4">
+    <div class="card card-statistics">
+        <!-- SVG Pie Chart -->
+        <div class="card-header text-center">
+            <svg width="100%" height="150" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <!-- Background Circle -->
+                <circle cx="50" cy="50" r="45" stroke="#e0e0e0" stroke-width="10" fill="none" />
+                <!-- Pie Chart (Customer Segment) -->
+                <circle cx="50" cy="50" r="45" stroke="#56ca00" stroke-width="10" fill="none" stroke-dasharray="120, 360" stroke-dashoffset="25" />
+            </svg>
+        </div>
+
+        <!-- Card Body -->
+        <div class="card-body text-center">
+            <!-- Add the Remix Pie Chart Icon -->
+            <i style="background-color: #56ca00;
+            color: white;
+            padding: 4px;
+            border-radius: 10px;
+            margin-bottom: 5px;
+            display: inline-block;" class="ri-user-line ri-24px"></i>
+            <h6 style="font-size: 1.5rem;">{% trans 'Customers' %}</h6>
+            <h6>{{ customers_count|format_revenue|default:"0" }}</h6>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Optional styling for the SVG */
+    .card-header {
+        background: white !important;
+    }
+    .card-header svg {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+
+
+
+
+
+
+
+
+        <!-- Products Card with Shopping Bag Icon -->
+<div class="col-md-6 mb-4">
+    <div class="card card-statistics">
+        
+        <!-- SVG Bar Chart -->
+        <div class="card-header text-center">
+            <svg width="100%" height="150" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <!-- Bar Chart - Representing Products Sold -->
+                <rect x="10" y="60" width="20" height="40" fill="#ffb400" /> <!-- Product 1 -->
+                <rect x="40" y="50" width="20" height="50" fill="#ffb400" /> <!-- Product 2 -->
+                <rect x="70" y="30" width="20" height="70" fill="#ffb400" /> <!-- Product 3 -->
+                <rect x="100" y="40" width="20" height="60" fill="#ffb400" /> <!-- Product 4 -->
+            </svg>
+        </div>
+
+        <!-- Card Body -->
+        <div class="card-body text-center">
+            <!-- Shopping Bag Icon for Products -->
+            <i style="background-color: #ffb400;
+            color: white;
+            padding: 4px;
+            border-radius: 10px;
+            margin-bottom: 5px;
+            display: inline-block;" class="ri-shopping-bag-line ri-24px"></i> <!-- Product Icon -->
+            <h6 style="font-size: 1.5rem;">{% trans 'Products' %}</h6>
+            <h6>{{ products_sold_count|format_revenue|default:"0" }}</h6>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Optional styling for the SVG */
+    .card-header {
+        background: white !important;
+    }
+    .card-header svg {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+
+
+
+
+        <!-- Shipping Revenue -->
+<div class="col-md-6 mb-4">
+    <div class="card card-statistics">
+        
+        <!-- SVG Line Chart -->
+        <div class="card-header text-center">
+            <svg width="100%" height="150" viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg">
+                <!-- Line chart representing shipping revenue -->
+                <polyline fill="none" stroke="#e83e8c" stroke-width="3" points="0,120 50,110 100,90 150,80 200,70 250,60 300,50 350,40 400,30" />
+                <!-- Circles representing data points -->
+                <circle cx="0" cy="120" r="4" fill="#e83e8c" />
+                <circle cx="50" cy="110" r="4" fill="#e83e8c" />
+                <circle cx="100" cy="90" r="4" fill="#e83e8c" />
+                <circle cx="150" cy="80" r="4" fill="#e83e8c" />
+                <circle cx="200" cy="70" r="4" fill="#e83e8c" />
+                <circle cx="250" cy="60" r="4" fill="#e83e8c" />
+                <circle cx="300" cy="50" r="4" fill="#e83e8c" />
+                <circle cx="350" cy="40" r="4" fill="#e83e8c" />
+                <circle cx="400" cy="30" r="4" fill="#e83e8c" />
+            </svg>
+        </div>
+
+        <!-- Card Body -->
+        <div class="card-body text-center">
+            <i style="background-color: #e83e8c;
+            color: white;
+            padding: 4px;
+            border-radius: 10px;
+            margin-bottom: 5px;
+            display: inline-block;" class="ri-truck-line ri-24px"></i> <!-- Shipping Icon -->
+            <h6 style="font-size: 1.5rem;">{% trans 'Shipping' %}</h6>
+            <h6>{{ shipping_revenue_total|format_revenue }} DA</h6>  <!-- Display shipping revenue -->
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Optional styling for the SVG */
+    .card-header {
+        background: white !important;
+    }
+    .card-header svg {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+
+
+<!-- Daily Transaction -->
+<div class="col-md-6 mb-4">
+    <div class="card card-statistics">
+        
+        <!-- SVG Bar Chart -->
+        <div class="card-header text-center">
+            <svg width="100%" height="150" viewBox="0 0 400 150" xmlns="http://www.w3.org/2000/svg">
+                <!-- Bar chart representing daily transactions -->
+                <rect x="10" y="50" width="40" height="100" fill="#3e80e8" /> <!-- Transaction 1 -->
+                <rect x="60" y="70" width="40" height="80" fill="#3e80e8" /> <!-- Transaction 2 -->
+                <rect x="110" y="40" width="40" height="110" fill="#3e80e8" /> <!-- Transaction 3 -->
+                <rect x="160" y="60" width="40" height="90" fill="#3e80e8" /> <!-- Transaction 4 -->
+                <rect x="210" y="30" width="40" height="120" fill="#3e80e8" /> <!-- Transaction 5 -->
+                <rect x="260" y="80" width="40" height="60" fill="#3e80e8" /> <!-- Transaction 6 -->
+                <rect x="310" y="40" width="40" height="110" fill="#3e80e8" /> <!-- Transaction 7 -->
+                <rect x="360" y="50" width="40" height="100" fill="#3e80e8" /> <!-- Transaction 8 -->
+            </svg>
+        </div>
+
+        <!-- Card Body -->
+        <div class="card-body text-center">
+            <i style="background-color: #3e80e8;
+            color: white;
+            padding: 4px;
+            border-radius: 10px;
+            margin-bottom: 5px;
+            display: inline-block;" class="ri-bank-card-line ri-24px"></i> <!-- Bank Card Icon -->
+            <h6 style="font-size: 1.5rem;">{% trans 'Daily<br>Transaction' %}</h6>
+            <h6>{{ total_revenue_today|format_revenue }} </h6> <!-- Display daily transaction revenue -->
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Optional styling for the SVG */
+    .card-header {
+        background: white !important;
+    }
+    .card-header svg {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+
+
+
+
+
+        </div>
+    </div>
+</div>
+
+                               
+
+<div class="row mb-4">
+    <!-- Sales by State Analytics Table -->
+    <div class="col-lg-6 ">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <b>{% trans 'Sales by State' %}</b>
+            <a href="{% url 'State_Sales' %}" class="btn btn-link btn-sm">{% trans 'View All' %}</a>
+        </div>
+        <div class="card-body">
+            <!-- Sales by State Table -->
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>{% trans 'State' %}</th>
+                            <th>{% trans 'Total Sales' %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for data in state_data %}
+                            <tr>
+                                <td>{{ data.state }}</td>
+                                <td>{{ data.total_sales|default:"0.00"|floatformat:2 }} DA</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Daily Overview Card -->
+            <div class="mt-4">
+                <div class="card-header">
+                    <b>{% trans 'Daily Overview' %}</b>
+                </div>
+                <div class="card-body">
+                    <p>{% trans 'Your sales performance is ' %}
+                        <span class="text-success">{{ daily_overview.performance|floatformat:2 }}% 😎</span>
+                        {% trans 'compared to yesterday.' %}
+                    </p>
+                    <p>{% trans 'Current Day Sales:' %} <b>{{ daily_overview.current_day_sales }} DA</b></p>
+                    <p>{% trans 'Previous Day Sales:' %} <b>{{ daily_overview.previous_day_sales }} DA</b></p>
+
+                    <!-- Bar Chart for Daily Sales -->
+                    <canvas id="daily-sales-chart" height="250"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Include Chart.js via CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var ctx = document.getElementById('daily-sales-chart').getContext('2d');
+        
+        var dailySalesChart = new Chart(ctx, {
+            type: 'bar',  // Bar chart type
+            data: {
+                labels: ['Current Day', 'Previous Day'],  // X-axis labels
+                datasets: [{
+                    label: '{% trans "Sales" %}',  // Chart label
+                    data: [
+                        {{ daily_overview.current_day_sales|default:"0" }},
+                        {{ daily_overview.previous_day_sales|default:"0" }}
+                    ],  // Sales data for the current and previous day
+                    backgroundColor: ['#00E396', '#FF5733'],  // Different colors for each bar
+                    borderColor: ['#00E396', '#FF5733'],  // Border colors for bars
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,  // Start the Y-axis from zero
+                        ticks: {
+                            stepSize: 1000  // Adjust this step size based on your sales values
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false  // Hide legend (optional)
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.raw + ' DA';  // Display sales value with 'DA'
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+    <!-- Total Profit and Weekly Overview -->
+    <div class="col-lg-6">
+         
+
+
+        <!-- Weekly Overview -->
+<div class="card mb-4">
+    <div class="card-header">
+        <b>{% trans 'Weekly Overview' %}</b>
+    </div>
+    <div class="card-body">
+        <p>{% trans 'Your sales performance is ' %}
+            <span class="text-success">{{ weekly_overview_data.performance|floatformat:2 }}% 😎</span>
+            {% trans 'compared to last week.' %}
+        </p>
+        <p>{% trans 'Current Week Sales:' %} <b>{{ weekly_overview_data.current_week_sales }} DA</b></p>
+        <p>{% trans 'Last Week Sales:' %} <b>{{ weekly_overview_data.previous_week_sales }} DA</b></p>
+
+        <!-- Bar Chart for Weekly Sales -->
+        <canvas id="weekly-sales-chart" height="250"></canvas>
+    </div>
+</div>
+
+<!-- Include Chart.js via CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var ctx = document.getElementById('weekly-sales-chart').getContext('2d');
+        
+        var weeklySalesChart = new Chart(ctx, {
+            type: 'bar',  // Bar chart type
+            data: {
+                labels: ['Current Week', 'Last Week'],  // X-axis labels
+                datasets: [{
+                    label: '{% trans "Sales" %}',  // Chart label
+                    data: [
+                        {{ weekly_overview_data.current_week_sales|default:"0" }},
+                        {{ weekly_overview_data.previous_week_sales|default:"0" }}
+                    ],  // Sales data for the current and last week
+                    backgroundColor: ['#00E396', '#FF5733'],  // Different colors for each bar
+                    borderColor: ['#00E396', '#FF5733'],  // Border colors for bars
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,  // Start the Y-axis from zero
+                        ticks: {
+                            stepSize: 10000  // Adjust this step size based on your sales values
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false  // Hide legend (optional)
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.raw + ' DA';  // Display sales value with 'DA'
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+
+        <!-- Total Profit -->
+<div class="card">
+    <div class="card-header">
+        <b>{% trans 'Total Profit' %}</b>
+    </div>
+    <div class="card-body">
+        <p>{% trans 'Total Revenue:' %} <b>{{ total_profit.total_revenue }} DA</b></p>
+        <p>{% trans 'Total Cost:' %} <b>{{ total_profit.total_cost }} DA</b></p>
+        <p>{% trans 'Total Profit:' %} 
+            <b class="text-success">{{ total_profit.total_profit|floatformat:2 }} DA</b>
+        </p>
+
+        <!-- Floating Bar Chart -->
+        <canvas id="total-profit-floating-bar-chart" height="250"></canvas>
+    </div>
+</div>
+
+<!-- Include Chart.js via CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var ctx = document.getElementById('total-profit-floating-bar-chart').getContext('2d');
+        
+        var floatingBarChart = new Chart(ctx, {
+            type: 'bar',  // Use bar chart type for floating bars
+            data: {
+                labels: ['Total Revenue', 'Total Cost', 'Total Profit'],  // X-axis labels
+                datasets: [
+                    {
+                        label: '{% trans "Total Revenue" %}',
+                        data: [
+                            {{ total_profit.total_revenue|default:"0" }},
+                            0,  // No data for Cost
+                            0   // No data for Profit
+                        ],
+                        backgroundColor: '#00E396',  // Revenue bar color
+                        borderRadius: 5,  // Rounded corners
+                        borderSkipped: 'bottom',  // Prevent border at the bottom (floating effect)
+                        barPercentage: 0.5,  // Bar width
+                        categoryPercentage: 0.8  // Category width percentage
+                    },
+                    {
+                        label: '{% trans "Total Cost" %}',
+                        data: [
+                            0,  // No data for Revenue
+                            {{ total_profit.total_cost|default:"0" }},
+                            0   // No data for Profit
+                        ],
+                        backgroundColor: '#FF5733',  // Cost bar color
+                        borderRadius: 5,  // Rounded corners
+                        borderSkipped: 'bottom',  // Prevent border at the bottom (floating effect)
+                        barPercentage: 0.5,  // Bar width
+                        categoryPercentage: 0.8  // Category width percentage
+                    },
+                    {
+                        label: '{% trans "Total Profit" %}',
+                        data: [
+                            0,  // No data for Revenue
+                            0,  // No data for Cost
+                            {{ total_profit.total_profit|default:"0" }}
+                        ],
+                        backgroundColor: '#28A745',  // Profit bar color
+                        borderRadius: 5,  // Rounded corners
+                        borderSkipped: 'bottom',  // Prevent border at the bottom (floating effect)
+                        barPercentage: 0.5,  // Bar width
+                        categoryPercentage: 0.8  // Category width percentage
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,  // Ensure the main Y-axis starts at 0
+                        stacked: true  // Enable stacking of the bars
+                    },
+                    x: {
+                        beginAtZero: true  // Ensure the X-axis starts at 0
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top'  // Position the legend at the top
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.raw + ' DA';  // Display the value with "DA"
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+    </div>
+</div>
+
+                                
+   <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <b>{% trans 'Product Profits' %}</b>
+
+            <a href="{% url 'Product_Profits' %}" class="btn btn-link btn-sm">{% trans 'View All' %}</a>
+        </div>
+        <canvas id="product-analytics-chart" height="100"></canvas>
+        <thead>
+            <tr>
+                <th>{% trans 'Image' %}</th>
+                <th>{% trans 'Product' %}</th>
+                <th>{% trans 'Cost Price/DA' %}</th>
+                <th>{% trans 'Quantity' %}</th>
+                <th>{% trans 'Profit/DA' %}</th>
+                <th>{% trans 'Balance/DA' %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in analytics_data %}
+                <tr>
+                    <td>
+                        {% thumbnail data.product.images "70x70" crop="center" as p_pic %}
+                        <img width="{{ p_pic.width }}" height="{{p_pic.height}}" src="{{ p_pic.url }}">
+                        {% endthumbnail %}
+                    </td>
+                    <td>{{ data.product }}</td>
+                    <td>{{ data.cost_price }} </td>
+                    <td>{{ data.quantity }}</td>
+                    <td>{{ data.total_withdrawals }} </td>
+                    <td>{{ data.balance }} </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+<!-- Include Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Prepare data for the chart
+        var labels = [
+            {% for data in analytics_data %}
+                {
+                    name: '',
+                    image: '{% thumbnail data.product.images "70x70" crop="center" as p_pic %}{{ p_pic.url }}{% endthumbnail %}'
+                },
+            {% endfor %}
+        ];
+
+        var costPrices = [
+            {% for data in analytics_data %}
+                {{ data.total_deposits_with_quantity }},
+            {% endfor %}
+        ];
+
+        var profits = [
+            {% for data in analytics_data %}
+                {{ data.total_withdrawals }},
+            {% endfor %}
+        ];
+
+        var balances = [
+            {% for data in analytics_data %}
+                {{ data.balance }},
+            {% endfor %}
+        ];
+
+        // Initialize the chart
+        var ctx = document.getElementById('product-analytics-chart').getContext('2d');
+        var productChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels.map(label => label.name), // Use product names as labels
+                datasets: [
+                    {
+                        label: '{% trans "Cost Price" %}',
+                        data: costPrices,
+                        backgroundColor: '#FF5733',
+                        barPercentage: 0.5
+                    },
+                    {
+                        label: '{% trans "Profit" %}',
+                        data: profits,
+                        backgroundColor: '#28A745',
+                        barPercentage: 0.5
+                    },
+                    {
+                        label: '{% trans "Balance" %}',
+                        data: balances,
+                        backgroundColor: '#00E396',
+                        barPercentage: 0.5
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.raw + ' DA'; // Display values with "DA"
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: '{% trans "Amount (DA)" %}'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: '{% trans "Products" %}'
+                        }
+                    }
+                }
+            },
+            plugins: [
+                {
+                    id: 'customLabels',
+                    afterDatasetsDraw: function(chart) {
+                        var ctx = chart.ctx;
+                        chart.data.labels.forEach((label, index) => {
+                            var meta = chart.getDatasetMeta(0).data[index];
+                            var image = new Image();
+                            image.src = labels[index].image;
+                            image.onload = function() {
+                                ctx.drawImage(image, meta.x - 15, chart.chartArea.bottom + 10, 30, 30);
+                            };
+                        });
+                    }
+                }
+            ]
+        });
+    });
+</script>
+
+
+                                <!-- Customer Data Table -->
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                    	<div class="card-header d-flex justify-content-between align-items-center">
+                                           <b>{% trans 'Costumers Sales' %}</b>
+                                            <a href="{% url 'Costumer_Sales' %}" class="btn btn-link btn-sm">{% trans 'View All' %}</a>
+                                        </div>
+                                        <thead>
+                                            <tr>
+                                                <th>Profile Picture</th>
+                                                <th>Username</th>
+                                                <th>Email</th>
+                                                <th>Total Sales</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for customer in customer_data %}
+                                                <tr>
+                                                    <td>
+                                                        {% if customer.profile_picture %}
+                                                            <img src="{{ customer.profile_picture }}" alt="{{ customer.user.username }}" width="50" height="50">
+                                                        {% else %}
+                                                            <img src="{% static 'images/default-profile.png' %}" alt="{{ customer.user.username }}" width="50" height="50">
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>{{ customer.username }}</td>
+                                                    <td>{{ customer.email }}</td>
+                                                    <td>{{ customer.total_spent|floatformat:2 }} DA</td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                 <!-- Most Viewed Products Table -->
+<div class="row mb-4">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <b>{% trans 'Most Viewed Products' %}</b>
+                <a href="{% url 'Product_Viewer' %}" class="btn btn-link btn-sm">{% trans 'View All' %}</a>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Product Image</th>
+                                <th>Product Name</th>
+                                <th>Views</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for product in most_viewed_products %}
+                                <tr>
+                                    <td>
+                                        {% thumbnail product.images "70x70" crop="center" as pp_pic %}
+                                        <img width="{{ pp_pic.width }}" height="{{ pp_pic.height }}" src="{{ pp_pic.url }}" alt="{{ product.product_name }}">
+                                        {% endthumbnail %}
+                                    </td>
+                                    <td>
+                                        <a href="{{ product.get_url }}" style="color: #333;">{{ product.product_name }}</a>
+                                    </td>
+                                    <td>{{ product.view_count }} {% trans 'views' %}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<style type="text/css">
+	/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+/* Page Header */
+.page-header {
+    background-color: #f7f8fa;
+    padding: 50px 0;
+    color: #fff;
+    text-align: center;
+    background-size: cover;
+}
+
+/* Cards */
+.card {
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.card-header {
+    background-color: #f0f0f0;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+/* Tables */
+.table {
+    margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    padding: 15px;
+    text-align: left;
+}
+
+.table-bordered {
+    border: 1px solid #ddd;
+}
+
+.table-striped tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+/* Misc */
+.text-center {
+    text-align: center;
+}
+
+.text-success {
+    color: #28a745;
+}
+
+.font-weight-normal {
+    font-weight: normal;
+}
+/* Styles for Most Viewed Products Table */
+.table th, .table td {
+    padding: 15px;
+    vertical-align: middle;
+}
+
+.table img {
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.table-bordered {
+    border: 1px solid #ddd;
+}
+
+.table-striped tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+
+</style>
+{% endblock %}

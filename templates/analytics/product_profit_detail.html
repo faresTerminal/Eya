@@ -1,0 +1,1191 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load i18n %}
+{% load thumbnail %}
+{% block content %}
+<main class="main">
+   <!-- Include the ads template -->
+            {% include 'partials/ads.html' %}
+
+    <!-- Breadcrumbs -->
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">{% trans 'Home' %}</a></li>
+                <li class="breadcrumb-item"><a href="#">{% trans 'Analytics' %}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{% trans 'Product Profit Details' %}</li>
+               <li class="breadcrumb-item active" aria-current="page">{{product.product_name}}</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+    
+    <div class="container">
+        <div class="row">
+            {% include 'includes/analytics_sidebar.html' %}
+
+            
+            <div class="col-lg-9">
+    <div style="margin-bottom: 3em;" class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <label for="product_select" class="form-label">Select a product:</label>
+            <select id="product_select" class="form-select" onchange="window.location.href=this.value;">
+                <option value="">--Select Product--</option>
+                {% for p in products %}
+                    <option value="{% url 'product_profit_detail' p.slug %}" {% if p.slug == product.slug %}selected{% endif %}>
+                        {{ p.product_name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+</div>
+
+                    <style>
+    #product_select {
+        border-radius: 8px; /* Rounded corners */
+        padding: 10px 15px; /* Padding inside the dropdown */
+        font-size: 1rem; /* Font size */
+        border: 1px solid #ccc; /* Light border color */
+        transition: border-color 0.3s; /* Smooth border color change */
+    }
+
+    #product_select:focus {
+        border-color: #007bff; /* Blue border on focus */
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Light shadow on focus */
+    }
+
+    .form-label {
+        font-weight: bold;
+        color: #333;
+    }
+</style>
+
+
+                 
+
+
+                <!-- Product Profit Detail Card -->
+                <div class="card" style="text-align: center;">
+                    <div class="card-header">
+                        <h4 style="text-align: center;" class="card-title">{% trans 'Product Profit Analysis for' %}<br> {{ product.product_name }}</h4>
+                    </div>
+                    <hr>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <i style="background-color: #959c9f;
+                                    color: white;
+                                    padding: 4px;
+                                    border-radius: 10px;
+                                    margin-bottom: 5px;
+                                    display: inline-block;" class="ri-price-tag-line ri-24px"></i>
+                                <div class="card-stat">
+                                    <h6>{% trans 'Cost Price' %}</h6>
+                                    <p class="text-muted">{{ cost_price|floatformat:2 }} DA</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <i style="background-color: #28a745;
+                                    color: white;
+                                    padding: 4px;
+                                    border-radius: 10px;
+                                    margin-bottom: 5px;
+                                    display: inline-block;" class="ri-shopping-cart-2-line ri-24px"></i>
+                                <div class="card-stat">
+                                    <h6>{% trans 'Quantity Sold' %}</h6>
+                                    <p class="text-muted">{{ total_quantity }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <i style="background-color: #424344;
+                                    color: white;
+                                    padding: 4px;
+                                    border-radius: 10px;
+                                    margin-bottom: 5px;
+                                    display: inline-block;" class="ri-price-tag-2-line ri-24px"></i>
+                                <div class="card-stat">
+                                    <h6>{% trans 'Total Cost Price' %} </h6>
+                                    <p class="text-muted">{{ total_deposits_with_quantity|floatformat:2 }} DA</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <i style="background-color: #16b1ff;
+                                    color: white;
+                                    padding: 4px;
+                                    border-radius: 10px;
+                                    margin-bottom: 5px;
+                                    display: inline-block;" class="ri-money-dollar-circle-line ri-24px"></i>
+                                <div class="card-stat">
+                                    <h6>{% trans 'Total Withdrawals' %}</h6>
+                                    <p class="text-muted">{{ total_withdrawals|floatformat:2 }} DA</p>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        
+                        <div class="row " >
+                            <div class="col-lg-8">
+                               
+                                <div class="card-stat" style="border: 2px solid #56ca00; border-radius: 10px; padding: 15px;">
+    <div class="row">
+        <!-- Column for the image (on the left) -->
+        <div class="col-md-4">
+            {% thumbnail product.images "250x250" crop="center" as AN %}
+                <img width="{{ AN.width }}" height="{{ AN.height }}" src="{{ AN.url }}" alt="Product Image">
+            {% endthumbnail %}
+        </div>
+
+        <!-- Column for the text and additional information (on the right) -->
+        <div style="text-align: left;" class="col-md-8 col-12">
+    <i style="background-color: #56ca00; color: white; padding: 4px; border-radius: 10px; margin-bottom: 5px; display: inline-block;" class="ri-shopping-bag-line ri-24px"></i>
+    <h6>{% trans 'Profit (Balance)' %}</h6>
+    <p class="text-success">{{ balance|floatformat:2 }} DA</p>
+    <p><strong>{% trans 'Product Name' %}: </strong>{{ product.product_name }}</p>
+    <p><strong>{% trans 'Description' %}: </strong>{{ product.description|safe }}</p>
+    <p><strong>{% trans 'Gategory' %}: </strong>{{ product.category}} </p>
+</div>
+
+    </div>
+</div>
+
+                               
+
+                             </div>
+                             <div class="col-lg-4">
+                               <!-- Product Profit Card -->
+<div class="mt-4">
+    <div class="card-header">
+        <b>{% trans 'Product Profit' %}</b>
+    </div>
+    <canvas id="profit-breakdown-chart" height="100"></canvas>
+</div>
+<!-- Include Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Script to Create the Doughnut Chart -->
+<script>
+var ctx = document.getElementById('profit-breakdown-chart').getContext('2d');
+var profitChart = new Chart(ctx, {
+    type: 'doughnut',  // Change the chart type to doughnut
+    data: {
+        labels: ['Total Cost Price', 'Total Withdrawals', 'Profit (Balance)'],  // Labels for each section
+        datasets: [{
+            data: [
+                {{ total_deposits_with_quantity|floatformat:2 }},
+                {{ total_withdrawals|floatformat:2 }},
+                {{ balance|floatformat:2 }}
+            ],  // Data for cost, withdrawals, and profit
+            backgroundColor: ['#FF5733', '#FFB300', '#56CA00'],  // Colors for cost (red), withdrawals (yellow), and profit (green)
+            borderColor: ['#FF5733', '#FFB300', '#56CA00'],  // Border colors to match the background
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,  // Make the chart responsive
+        cutoutPercentage: 70,  // Set the size of the doughnut hole
+        plugins: {
+            legend: {
+                position: 'top',  // Position the legend on top of the chart
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(tooltipItem) {
+                        return tooltipItem.raw + ' DA';  // Show data with currency in tooltips
+                    }
+                }
+            }
+        }
+    }
+});
+</script>
+
+                            
+                        </div>
+
+                        </div>
+
+                        <!-- Start row Alytics Bars -->
+                        <div class="row" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                            <div class="col-lg-12">
+                                <!-- Product Profit Detail Card -->
+<div class="mt-4">
+    <div class="card-header">
+        <b>{% trans 'Weekly Sales Performance' %}</b>
+    </div>
+    <div class="card-body">
+        <!-- Multi-Axis Line Chart for Weekly Sales -->
+        <canvas id="weekly-sales-chart" height="250"></canvas>
+    </div>
+</div>
+
+<!-- Include Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+// Get the weekly sales data from the context
+var weeklySalesData = {
+    labels: ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+    datasets: [
+        {
+            label: '{% trans "Current Week Sales (DA)" %}',
+            data: [
+                {{ weekly_sales_data.current_week_sales.Saturday|floatformat:2 }},
+                {{ weekly_sales_data.current_week_sales.Sunday|floatformat:2 }},
+                {{ weekly_sales_data.current_week_sales.Monday|floatformat:2 }},
+                {{ weekly_sales_data.current_week_sales.Tuesday|floatformat:2 }},
+                {{ weekly_sales_data.current_week_sales.Wednesday|floatformat:2 }},
+                {{ weekly_sales_data.current_week_sales.Thursday|floatformat:2 }},
+                {{ weekly_sales_data.current_week_sales.Friday|floatformat:2 }},
+                
+            ],
+            borderColor: 'rgba(0, 123, 255, 1)',  // Blue for current week
+            backgroundColor: 'rgba(0, 123, 255, 0.2)',  // Blue (lighter) for current week fill
+            borderWidth: 2,
+            pointBackgroundColor: 'rgba(0, 123, 255, 1)',  // Blue point color
+            pointBorderColor: 'rgba(0, 123, 255, 1)',      // Blue point border color
+            pointRadius: 5,
+            fill: false,  // No fill for the line chart
+        },
+        {
+            label: '{% trans "Previous Week Sales (DA)" %}',
+            data: [
+                {{ weekly_sales_data.previous_week_sales.Saturday|floatformat:2 }},
+                {{ weekly_sales_data.previous_week_sales.Sunday|floatformat:2 }},
+                {{ weekly_sales_data.previous_week_sales.Monday|floatformat:2 }},
+                {{ weekly_sales_data.previous_week_sales.Tuesday|floatformat:2 }},
+                {{ weekly_sales_data.previous_week_sales.Wednesday|floatformat:2 }},
+                {{ weekly_sales_data.previous_week_sales.Thursday|floatformat:2 }},
+                {{ weekly_sales_data.previous_week_sales.Friday|floatformat:2 }},
+                
+            ],
+            borderColor: 'rgba(255, 99, 132, 1)',  // Red for previous week
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',  // Red (lighter) for previous week fill
+            borderWidth: 2,
+            pointBackgroundColor: 'rgba(255, 99, 132, 1)',  // Red point color
+            pointBorderColor: 'rgba(255, 99, 132, 1)',      // Red point border color
+            pointRadius: 5,
+            fill: false,  // No fill for the line chart
+        }
+    ]
+};
+
+// Create the chart
+var ctx = document.getElementById('weekly-sales-chart').getContext('2d');
+var weeklySalesChart = new Chart(ctx, {
+    type: 'line',  // Line chart with points
+    data: weeklySalesData,
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    callback: function(value) {
+                        return value + ' DA';  // Format y-axis with currency symbol
+                    }
+                }
+            }
+        },
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function(tooltipItem) {
+                        return tooltipItem.raw + ' DA';  // Show data with currency in tooltips
+                    }
+                }
+            }
+        }
+    }
+});
+</script>
+
+                                
+                            </div>
+                            
+                        </div>
+
+                        <div class="row" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                            <div class="col-lg-12">
+
+                                <!-- Product Profit Detail Card -->
+<div class="mt-4">
+    <div class="card-header">
+        <b>{% trans 'Monthly Sales Performance ' %}</b>
+    </div>
+    <div class="card-body">
+        <!-- Multi-Axis Line Chart for Monthly Sales -->
+        <canvas id="monthly-sales-chart2" height="250"></canvas>
+    </div>
+</div>
+
+<!-- Include Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+// Get the monthly sales data from the context
+var monthlySalesData = {
+    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+    datasets: [
+        {
+            label: '{% trans "Current Month Sales (DA)" %}',
+            data: [
+                {{ monthly_sales_data2.current_month_sales.0|floatformat:2 }},
+                {{ monthly_sales_data2.current_month_sales.1|floatformat:2 }},
+                {{ monthly_sales_data2.current_month_sales.2|floatformat:2 }},
+                {{ monthly_sales_data2.current_month_sales.3|floatformat:2 }}
+            ],
+            borderColor: 'rgba(0, 123, 255, 1)',  // Blue for current month
+            backgroundColor: 'rgba(0, 123, 255, 0.2)',  // Blue (lighter) for current month fill
+            borderWidth: 2,
+            pointBackgroundColor: 'rgba(0, 123, 255, 1)',  // Blue point color
+            pointBorderColor: 'rgba(0, 123, 255, 1)',      // Blue point border color
+            pointRadius: 5,
+            fill: false,  // No fill for the line chart
+        },
+        {
+            label: '{% trans "Previous Month Sales (DA)" %}',
+            data: [
+                {{ monthly_sales_data2.previous_month_sales.0|floatformat:2 }},
+                {{ monthly_sales_data2.previous_month_sales.1|floatformat:2 }},
+                {{ monthly_sales_data2.previous_month_sales.2|floatformat:2 }},
+                {{ monthly_sales_data2.previous_month_sales.3|floatformat:2 }}
+            ],
+            borderColor: 'rgba(255, 99, 132, 1)',  // Red for previous month
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',  // Red (lighter) for previous month fill
+            borderWidth: 2,
+            pointBackgroundColor: 'rgba(255, 99, 132, 1)',  // Red point color
+            pointBorderColor: 'rgba(255, 99, 132, 1)',      // Red point border color
+            pointRadius: 5,
+            fill: false,  // No fill for the line chart
+        }
+    ]
+};
+
+// Create the chart
+var ctx = document.getElementById('monthly-sales-chart2').getContext('2d');
+var monthlySalesChart = new Chart(ctx, {
+    type: 'line',  // Line chart with points
+    data: monthlySalesData,
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    callback: function(value) {
+                        return value + ' DA';  // Format y-axis with currency symbol
+                    }
+                }
+            }
+        },
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function(tooltipItem) {
+                        return tooltipItem.raw + ' DA';  // Show data with currency in tooltips
+                    }
+                }
+            }
+        }
+    }
+});
+</script>
+
+                                
+                            </div>
+                            
+                        </div>
+
+
+                        <div class="row" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                            <div class="col-lg-12">
+                                <!-- Product Profit Detail Card -->
+<div class="mt-4">
+    <div class="card-header">
+        <b>{% trans 'Yearly Sales Performance' %} </b>
+    </div>
+    <div class="card-body">
+        <!-- Multi-Axis Line Chart for Monthly Sales -->
+        <canvas id="monthly-sales-chart" height="250"></canvas>
+    </div>
+</div>
+
+<!-- Include Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+// Get the monthly sales data from the context
+var monthlySalesData = {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+    datasets: [
+        {
+            label: '{% trans "Current Year Sales (DA)" %}',
+            data: [
+                {{ monthly_sales_data.current_year_sales.01|floatformat:2 }},
+                {{ monthly_sales_data.current_year_sales.02|floatformat:2 }},
+                {{ monthly_sales_data.current_year_sales.03|floatformat:2 }},
+                {{ monthly_sales_data.current_year_sales.04|floatformat:2 }},
+                {{ monthly_sales_data.current_year_sales.05|floatformat:2 }},
+                {{ monthly_sales_data.current_year_sales.06|floatformat:2 }},
+                {{ monthly_sales_data.current_year_sales.07|floatformat:2 }},
+                {{ monthly_sales_data.current_year_sales.08|floatformat:2 }},
+                {{ monthly_sales_data.current_year_sales.09|floatformat:2 }},
+                {{ monthly_sales_data.current_year_sales.10|floatformat:2 }},
+                {{ monthly_sales_data.current_year_sales.11|floatformat:2 }},
+                {{ monthly_sales_data.current_year_sales.12|floatformat:2 }}
+            ],
+            borderColor: 'rgba(0, 123, 255, 1)',  // Blue for current year
+            backgroundColor: 'rgba(0, 123, 255, 0.2)',  // Blue (lighter) for current year fill
+            borderWidth: 2,
+            pointBackgroundColor: 'rgba(0, 123, 255, 1)',  // Blue point color
+            pointBorderColor: 'rgba(0, 123, 255, 1)',      // Blue point border color
+            pointRadius: 5,
+            fill: false,  // No fill for the line chart
+        },
+        {
+            label: '{% trans "Previous Year Sales (DA)" %}',
+            data: [
+                {{ monthly_sales_data.previous_year_sales.01|floatformat:2 }},
+                {{ monthly_sales_data.previous_year_sales.02|floatformat:2 }},
+                {{ monthly_sales_data.previous_year_sales.03|floatformat:2 }},
+                {{ monthly_sales_data.previous_year_sales.04|floatformat:2 }},
+                {{ monthly_sales_data.previous_year_sales.05|floatformat:2 }},
+                {{ monthly_sales_data.previous_year_sales.06|floatformat:2 }},
+                {{ monthly_sales_data.previous_year_sales.07|floatformat:2 }},
+                {{ monthly_sales_data.previous_year_sales.08|floatformat:2 }},
+                {{ monthly_sales_data.previous_year_sales.09|floatformat:2 }},
+                {{ monthly_sales_data.previous_year_sales.10|floatformat:2 }},
+                {{ monthly_sales_data.previous_year_sales.11|floatformat:2 }},
+                {{ monthly_sales_data.previous_year_sales.12|floatformat:2 }}
+            ],
+            borderColor: 'rgba(255, 99, 132, 1)',  // Red for previous year
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',  // Red (lighter) for previous year fill
+            borderWidth: 2,
+            pointBackgroundColor: 'rgba(255, 99, 132, 1)',  // Red point color
+            pointBorderColor: 'rgba(255, 99, 132, 1)',      // Red point border color
+            pointRadius: 5,
+            fill: false,  // No fill for the line chart
+        }
+    ]
+};
+
+// Create the chart
+var ctx = document.getElementById('monthly-sales-chart').getContext('2d');
+var monthlySalesChart = new Chart(ctx, {
+    type: 'line',  // Line chart with points
+    data: monthlySalesData,
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    callback: function(value) {
+                        return value + ' DA';  // Format y-axis with currency symbol
+                    }
+                }
+            }
+        },
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function(tooltipItem) {
+                        return tooltipItem.raw + ' DA';  // Show data with currency in tooltips
+                    }
+                }
+            }
+        }
+    }
+});
+</script>
+
+                                
+                            </div>
+                            
+                        </div>
+
+
+                        <div class="row" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                            <div class="col-lg-12">
+
+ <!-- Sales by Region Line Chart -->
+<div class="mt-4">
+    <div class="card-header">
+        <b>{% trans 'Sales by Wilaya' %} </b>
+    </div>
+    <div class="card-body">
+        <!-- Line Chart for Sales by Region -->
+        <canvas id="sales-by-region-line-chart" height="250"></canvas>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+var regions = [];
+var sales = [];
+
+// Collect region labels and corresponding sales values
+{% for region, sales_value in sales_by_region.items %}
+    regions.push("{{ region }}");
+    sales.push({{ sales_value|floatformat:2 }});
+{% endfor %}
+
+// Calculate the total sales
+var totalSales = sales.reduce((sum, value) => sum + value, 0);
+
+// Prepare data for line chart
+var salesData = {
+    labels: regions,  // Regions as labels on the x-axis
+    datasets: [{
+        label: '{% trans "Sales by Region (DA)" %}',
+        data: sales,  // Sales values for each region
+        fill: false,  // Do not fill the area under the line
+        borderColor: 'rgba(54, 162, 235, 1)',  // Line color
+        tension: 0.1,  // Smooth the line (tension of the curve)
+        borderWidth: 2,
+        pointBackgroundColor: 'rgba(54, 162, 235, 1)',  // Points color
+        pointRadius: 5,  // Radius of the points
+        datalabels: {
+            formatter: function(value) {
+                // Calculate percentage and return formatted label
+                var percentage = (value / totalSales) * 100;
+                return percentage.toFixed(2) + '%'; // Format as percentage
+            },
+            color: 'black',  // Color of the percentage text
+            anchor: 'end',   // Position the percentage at the end of the data point
+        }
+    }]
+};
+
+var ctx = document.getElementById('sales-by-region-line-chart').getContext('2d');
+var salesByRegionLineChart = new Chart(ctx, {
+    type: 'line',  // Line chart type (derived from bar chart)
+    data: salesData,
+    options: {
+        responsive: true,
+        scales: {
+            x: {
+                beginAtZero: true
+            },
+            y: {
+                beginAtZero: true,  // Ensure the y-axis starts at 0
+                ticks: {
+                    callback: function(value) {
+                        return value + ' DA';  // Add currency symbol to y-axis labels
+                    }
+                }
+            }
+        },
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function(tooltipItem) {
+                        var percentage = (tooltipItem.raw / totalSales) * 100;
+                        return tooltipItem.raw + ' DA (' + percentage.toFixed(2) + '%)';  // Show data with currency and percentage in tooltips
+                    }
+                }
+            },
+            // Include data labels plugin for displaying percentages
+            datalabels: {
+                anchor: 'end',  // Position the labels at the end of the line points
+                align: 'end',
+                color: 'black',
+                font: {
+                    weight: 'bold',
+                    size: 12
+                }
+            }
+        }
+    }
+});
+</script>
+
+
+                                
+                            </div>
+                            
+                        </div>
+                            <hr>
+                        <div class="row" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+
+                            <div class="col-lg-12">
+   <h6>Top 5 Selling Variations</h6>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Variation</th>
+            <th>Quantity Sold</th>
+            <th>Total Sales (DA)</th>
+            <th>Price (DA)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for variation_data in top_selling_variations %}
+        <tr>
+            <td>
+                {% if variation_data.variant_type == 'color' %}
+                    Color: {{ variation_data.color }}
+                {% elif variation_data.variant_type == 'size' %}
+                    Size: {{ variation_data.size }}
+                {% elif variation_data.variant_type == 'size_and_color' %}
+                    Color: {{ variation_data.color }} - Size: {{ variation_data.size }}
+                {% else %}
+                    No Variation
+                {% endif %}
+            </td>
+            <td>{{ variation_data.quantity_sold }}</td>
+            <td>{{ variation_data.total_sales|floatformat:2 }}</td>
+            <td>{{ variation_data.price|floatformat:2 }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<canvas id="topSellingVariationsChart" height="250"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var chartLabels = [
+        {% for variation_data in top_selling_variations %}
+        `{% if variation_data.variant_type == 'color' %}Color: {{ variation_data.color }}{% elif variation_data.variant_type == 'size' %}Size: {{ variation_data.size }}{% elif variation_data.variant_type == 'size_and_color' %}Color: {{ variation_data.color }} - Size: {{ variation_data.size }}{% else %}No Variation{% endif %}`,
+        {% endfor %}
+    ];
+
+    var quantitySoldData = [
+        {% for variation_data in top_selling_variations %}
+        {{ variation_data.quantity_sold }},
+        {% endfor %}
+    ];
+
+    var totalSalesData = [
+        {% for variation_data in top_selling_variations %}
+        {{ variation_data.total_sales }},
+        {% endfor %}
+    ];
+
+    var ctx = document.getElementById('topSellingVariationsChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar', // Stacked bar chart
+        data: {
+            labels: chartLabels, // X-axis labels
+            datasets: [
+                {
+                    label: 'Quantity Sold',
+                    data: quantitySoldData,
+                    backgroundColor: 'rgba(255, 99, 132, 0.6)', // Red for quantity sold
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1,
+                    borderRadius: 10, // Adding border radius for rounded bars
+                    categoryPercentage: 0.5, // Adjust the bar width
+                },
+                {
+                    label: 'Total Sales (DA)',
+                    data: totalSalesData,
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)', // Blue for total sales
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1,
+                    borderRadius: 10, // Adding border radius for rounded bars
+                    categoryPercentage: 0.5, // Adjust the bar width
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Top Selling Variations'
+                }
+            },
+            scales: {
+                x: {
+                    stacked: true, // Stack the bars
+                },
+                y: {
+                    stacked: true, // Stack the values
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+
+                                
+                            </div>
+                            
+                        </div>
+
+<hr>
+                        <div class="row" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+
+                            <div class="col-lg-12">
+                                <h6>Customer Feedback </h6>
+                                <div class="row">
+                                    <div class="col-lg-6">
+
+<div class="feedback-section">
+    
+    <p><strong>Average Rating:</strong> {{ feedback_data.average_rating }}/5</p>
+    <p><strong>Total Reviews:</strong> {{ feedback_data.total_reviews }}</p>
+
+    <div class="review-breakdown">
+        <h6>Review Sentiment Breakdown:</h6>
+        <p><span style="color: #81d3d3;">Positive Reviews:</span> {{ feedback_data.positive_percentage }}%</p>
+        <p><span style="color: orange;">Neutral Reviews:</span> {{ feedback_data.neutral_percentage }}%</p>
+        <p><span style="color: red;">Negative Reviews:</span> {{ feedback_data.negative_percentage }}%</p>
+    </div>
+</div>
+</div>
+<div class="col-lg-6">
+<div style="max-width: 300px; margin: auto;">
+    <canvas id="feedbackChart" height="250"></canvas>
+</div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Get customer feedback data from context
+    var feedbackData = {
+        labels: ['Positive Reviews', 'Neutral Reviews', 'Negative Reviews'],  // Labels for each section
+        datasets: [
+            {
+                label: 'Review Sentiment Breakdown',
+                data: [
+                    {{ feedback_data.positive_percentage|floatformat:2 }},
+                    {{ feedback_data.neutral_percentage|floatformat:2 }},
+                    {{ feedback_data.negative_percentage|floatformat:2 }}
+                ], // Data for positive, neutral, and negative percentages
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.7)',  // Green for positive
+                    'rgba(255, 206, 86, 0.7)',  // Yellow for neutral
+                    'rgba(255, 99, 132, 0.7)'   // Red for negative
+                ],  // Background colors for each section
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',  // Green border for positive
+                    'rgba(255, 206, 86, 1)',  // Yellow border for neutral
+                    'rgba(255, 99, 132, 1)'   // Red border for negative
+                ],  // Border colors for each section
+                borderWidth: 1
+            }
+        ]
+    };
+
+    // Create the Polar Area chart
+    var ctx = document.getElementById('feedbackChart').getContext('2d');
+    var feedbackChart = new Chart(ctx, {
+        type: 'polarArea',  // Polar Area chart type
+        data: feedbackData,
+        options: {
+            responsive: true,
+            scales: {
+                r: {  // Radial axis
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return value + '%';  // Format radial axis as percentage
+                        }
+                    }
+                }
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return tooltipItem.raw + '%';  // Show percentage in tooltips
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+
+                            </div>
+                            
+                        </div>
+<hr>
+                        <div class="row" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+
+                            <div class="col-lg-12">
+                                <!-- Inventory Status for Each Variation -->
+<div class="inventory-status">
+    <h5>Inventory Status </h5>
+    <div class="row">
+        <div class="col-lg-6">
+             <p><strong>Total Stock Available:</strong> {{ inventory_data.total_quantity_in_stock }} units</p>
+             <p><strong>Reorder Threshold:</strong> {{ inventory_data.reorder_threshold }} units</p>
+
+        </div>
+        <div class="col-lg-6">
+
+            <h6>Stockout Alerts:</h6>
+    <ul>
+        {% for alert in inventory_data.stockout_alerts %}
+            <li>
+                Variation: {{ alert.variation.name }} 
+                - Last Stockout Date: {{ alert.last_stockout_date }}
+            </li>
+        {% empty %}
+            <li>No stockouts detected.</li>
+        {% endfor %}
+    </ul>
+            
+        </div>
+        
+    </div>
+   
+    <br>
+
+    <h6>Current Stock Level for Each Variation:</h6>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Variation</th>
+                <th>Current Stock</th>
+                <th>Reorder Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stock in inventory_data.current_stock_data %}
+                <tr>
+                    
+                    <td>
+                {% if stock.variation.variant_type == 'color' %}
+                    Color: {{ stock.color }}
+                {% elif stock.variation.variant_type == 'size' %}
+                    Size: {{ stock.variation.size }}
+                {% elif stock.variation.variant_type == 'size_and_color' %}
+                    Color: {{ stock.variation.color }} - Size: {{ stock.variation.size }}
+                {% else %}
+                    No Variation
+                {% endif %}
+            </td>
+                    <td>{{ stock.current_stock }}</td>
+                    <td>
+                        {% if stock.is_below_reorder %}
+                            <span style="color: red;">Below Reorder Threshold</span>
+                        {% else %}
+                            <span style="color: green;">Sufficient Stock</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Chart to Visualize Inventory Levels -->
+<div style="max-width: 700px; margin: auto;">
+    <canvas id="inventoryChart" height="250"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var inventoryData = {
+        labels: [
+            {% for stock in inventory_data.current_stock_data %}
+                {% if stock.variation.variant_type == 'color' %}
+                    '{{ stock.variation.color }}',
+                {% elif stock.variation.variant_type == 'size' %}
+                    'Size: {{ stock.variation.size }}',
+                {% elif stock.variation.variant_type == 'size_and_color' %}
+                    'Color: {{ stock.variation.color }} - Size: {{ stock.variation.size }}',
+                {% else %}
+                    'No Variation',
+                {% endif %}
+            {% endfor %}
+        ],
+        datasets: [{
+            label: 'Current Stock Level',
+            data: [
+                {% for stock in inventory_data.current_stock_data %}
+                    {{ stock.current_stock }},
+                {% endfor %}
+            ],
+            backgroundColor: [
+                {% for stock in inventory_data.current_stock_data %}
+                    {% if stock.is_below_reorder %}
+                        'rgba(255, 99, 132, 0.6)',  // Red for low stock
+                    {% else %}
+                        'rgba(75, 192, 192, 0.6)',  // Green for sufficient stock
+                    {% endif %}
+                {% endfor %}
+            ],
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+        }]
+    };
+
+    var ctx = document.getElementById('inventoryChart').getContext('2d');
+    var inventoryChart = new Chart(ctx, {
+        type: 'bar',  // Bar chart for inventory levels
+        data: inventoryData,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top', // Display the legend on top
+                },
+                title: {
+                    display: true,
+                    text: 'Inventory Levels for Each Variation'
+                }
+            },
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Product Variations'
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Stock Level'
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+                                
+                            </div>
+                            
+                        </div>
+
+<hr>
+                        <div class="row" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+
+                            <div class="col-lg-12">
+
+                                <h6>Profit per Customer </h6>
+                                <a href="{% url 'show_all_costumers_by_product' product.slug product.id %}">View All</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Customer</th>
+            <th>Total Spent (DA)</th>
+            <th>Profit (DA)</th>
+            <th>Email</th>
+            <th>Profile Picture</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for customer_data in product_profit_data %}
+        <tr>
+            <td>{{ customer_data.username }}</td>
+            <td>{{ customer_data.total_spent|floatformat:2 }}</td>
+            <td>{{ customer_data.profit|floatformat:2 }}</td>
+            <td>{{ customer_data.email }}</td>
+            <td>
+                {% if customer_data.profile_picture %}
+                    <img src="{{ customer_data.profile_picture }}" alt="Profile Picture" style="width: 50px; height: 50px; border-radius: 50%;margin-left: 3em;">
+                {% else %}
+                    No Picture
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+                                
+                            </div>
+                            
+                        </div>
+
+                        <hr>
+                        <div class="row" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+
+                            <div class="col-lg-12">
+                               
+<h6>Price Sensitivity Analysis </h6>
+
+{% if price_data %}
+<div style="max-width: 800px; margin: auto;">
+    <canvas id="priceVsProfitabilityChart" height="250"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var priceData = {{ price_data|safe }};
+    var salesData = {{ sales_data|safe }};
+    var profitData = {{ profit_data|safe }};
+
+    var ctx = document.getElementById('priceVsProfitabilityChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: priceData,  // X-axis (Price Points)
+            datasets: [
+                {
+                    label: 'Sales Volume',
+                    data: salesData,
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 2,
+                    yAxisID: 'y1',
+                    type: 'bar'
+                },
+                {
+                    label: 'Profitability (DA)',
+                    data: profitData,
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderWidth: 2,
+                    fill: true,
+                    yAxisID: 'y2',
+                    type: 'line'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Price (DA)'
+                    }
+                },
+                y1: {
+                    title: {
+                        display: true,
+                        text: 'Sales Volume'
+                    },
+                    beginAtZero: true
+                },
+                y2: {
+                    title: {
+                        display: true,
+                        text: 'Profitability (DA)'
+                    },
+                    beginAtZero: true,
+                    position: 'right'
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            if (tooltipItem.datasetIndex === 0) {
+                                return tooltipItem.raw + ' units';
+                            } else if (tooltipItem.datasetIndex === 1) {
+                                return tooltipItem.raw + ' DA';
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+{% else %}
+<p>No price sensitivity data available for this product.</p>
+{% endif %}
+
+                            </div>
+                            
+                        </div>
+
+                        <div class="row" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+
+                            <div class="col-lg-12">
+
+
+
+
+                                
+                            </div>
+                            
+                        </div>
+                            
+
+
+                        <!-- End Analytics Bars -->
+                        
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+
+{% endblock %}
+
+<style>
+/* Global Styling */
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+/* Card Styles */
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.card-body {
+    padding: 30px;
+}
+
+/* Profit Details Section */
+.card-stat {
+    background-color: #f0f8ff;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);  /* Added shadow here */
+    transition: all 0.3s ease-in-out; /* Optional for hover effect */
+}
+
+.card-stat:hover {
+    transform: translateY(-5px);  /* Slight lift on hover */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);  /* Increased shadow on hover */
+}
+
+.card-stat h5 {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #555;
+}
+
+.card-stat p {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.card-stat .text-muted {
+    color: #6c757d;
+}
+
+.card-stat .text-success {
+    color: #28a745;
+}
+
+/* Chart Container */
+#profit-trend {
+    margin-top: 30px;
+}
+</style>

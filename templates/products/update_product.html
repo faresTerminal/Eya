@@ -1,0 +1,138 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load thumbnail %} 
+
+
+{% load i18n %}
+
+{% block content %}
+{% if current_language == 'ar' %}
+    <style>
+      .main {
+        direction: rtl;
+      }
+      tr{
+        text-align: center;
+      }
+      .row{
+        text-align: right;
+      }
+      .product-media{
+        margin-right: 0.2rem !important;
+        margin-left: 1em !important;
+      }
+      p{
+        text-align: right;
+      }
+    </style>
+   {% endif %}
+<style>
+        
+        .containerer {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+        }
+        .checkbox-label {
+            margin-right: 10px;
+        }
+        button {
+            display: block;
+            width: 30%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+<main class="main">
+  <!-- Include the ads template -->
+                {% include 'partials/ads.html' %}
+  <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">{% trans 'Home' %}</a></li>
+        <li class="breadcrumb-item"><a href="#">{% trans 'Clearance' %}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{% trans 'Add Clearance Price' %}</li>
+      </ol>
+    </div><!-- End .container -->
+  </nav><!-- End .breadcrumb-nav -->
+
+<div class="container">
+  <div class="row">
+{% include 'includes/management_center_sidebar.html' %}
+    <div class="col-lg-9">
+
+      <div class="containerer">
+    <h5>{% trans 'Add Clearance Price' %} {{ product.product.product_name }}<br></h5>
+    <p>{{product.color}}: {{product.size}}</p>
+    <div style="text-align: center;">
+        <!-- Display the product price -->
+        <p  >{% trans 'Product Price' %}: <b>{{ product.price }} {% trans 'DA' %}</b></p><br>
+        {% if product.is_active %}
+        <p  >{% trans 'Clearance Price' %}: <b>{{ product.clearance_price }} {% trans 'DA' %}</b></p>
+        {% endif %}
+        
+        <!-- Display the product image -->
+        <img src="{{ product.product.images.url }}" alt="{{ product.product_name }}" style="max-width: 200px; display: block; margin: 0 auto;">
+    </div>
+    
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+       
+
+        <div class="form-group">
+            <label for="code">{% trans 'Clearance Price' %}:</label><br>
+            <small><strong>{% trans 'Add New Clearance Price' %} </strong></small><br>
+            <input style="width: 70%;" type="text" name="clearance_price" id="code" required>
+        </div>
+        
+        <div class="form-group checkbox-group">
+            <label class="checkbox-label" for="active">{% trans 'Active' %}:</label>
+            <input type="checkbox" name="is_clearance" id="active" checked>
+        </div>
+        <button style="background-color: #fcb941;"  type="submit">{% trans 'Update  Price' %}</button>
+    </form>
+</div>
+      
+</div>
+    <div class="col-lg-3">
+           
+     </div>
+    </div>
+    
+  </div>
+  
+</div>
+</main>
+{% endblock %}

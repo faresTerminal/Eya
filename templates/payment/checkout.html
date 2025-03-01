@@ -1,0 +1,17 @@
+{% extends 'homebase.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="card shadow-sm p-4 rounded" style="max-width: 500px; width: 100%;">
+        <h2 class="text-center mb-4">Checkout</h2>
+        <p class="text-center mb-3"><strong>Amount:</strong> {{ checkout.amount }} DZD</p>
+        <p class="text-center mb-4"><strong>Payment Method:</strong> {{ checkout.payment_method }}</p>
+        
+        <div class="text-center">
+            <a href="{{ checkout.checkout_url }}" class="btn btn-primary btn-lg">Proceed to Payment</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

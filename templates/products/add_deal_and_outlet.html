@@ -1,0 +1,201 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load thumbnail %}
+
+{% load i18n %}
+
+{% block content %}
+{% if current_language == 'ar' %}
+    <style>
+      .main {
+        direction: rtl;
+      }
+      tr{
+        text-align: center;
+      }
+      .row{
+        text-align: right;
+      }
+      .product-media{
+        margin-right: 0.2rem !important;
+        margin-left: 1em !important;
+      }
+    </style>
+   {% endif %}
+<main class="main">
+    <!-- Include the ads template -->
+                {% include 'partials/ads.html' %}
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">{% trans 'Home' %}</a></li>
+                <li class="breadcrumb-item"><a href="#">{% trans 'Add Product' %}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{% trans 'add a Deal and Outlet' %}</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+
+
+<div class="container">
+    <div class="row">
+        {% include 'includes/management_center_sidebar.html' %}
+        <div class="col-lg-5">
+            <div class="containerer">
+                <h5><b>{% trans 'Add New Deals and Outlet' %}</b></h5>
+                <form method="post" enctype="multipart/form-data" action="{% url 'create_deals_and_outlet' %}">
+                    {% csrf_token %}
+                   <div class="form-group">
+                      <label for="category">{% trans 'Product' %}</label>
+                      <select name="product" id="product" class="form-input">
+                          <option value="">{% trans 'Select Product' %}</option>
+                         {% for p in product %}
+                         <option value="{{ p.id }}">{{ p.product_name }}</option>
+                        {% endfor %}
+                     </select>
+                   </div>
+
+                    <div class="form-group">
+                        <label for="product_name">{% trans 'Sub Title' %}</label>
+                        <input type="text" name="sub_title" id="product_name" class="form-input" required>
+                    </div>
+                   
+                    
+                    <div class="form-group">
+                        <label for="images">{% trans 'Images' %}</label>
+                        <input type="file" name="image_slide" id="images" class="form-input">
+                    </div>
+                   <div class="form-group">
+                               <label for="expiration_time">{% trans 'Expiration Time' %}</label>
+                               <input type="datetime-local" name="expiration_time" id="expiration_time" class="form-input" required>
+                   </div>
+
+                  <div class="form-group">
+                      <label for="deal_of_day">{% trans 'Deal of the Day' %}</label>
+                      <input type="checkbox" name="deal_of_day" id="deal_of_day">
+                  </div>
+
+
+
+                    <button style="background-color: #fcb941;" type="submit" class="btn btn-save">{% trans 'Submit' %}</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-content">
+                <h2 class="title text-center mb-3">{% trans 'Publishing Information' %}</h2>
+                <div class="accordion accordion-rounded" id="accordion-1">
+                    <div class="card card-box card-sm bg-light">
+                        <div class="card-header" id="heading-1">
+                            <h2 class="card-title">
+                                <a role="button" data-toggle="collapse" href="#collapse-1" aria-expanded="true" aria-controls="collapse-1">
+                                    {% trans 'How to Chose Category and SubCategory?' %}
+                                </a>
+                            </h2>
+                        </div>
+                        <div id="collapse-1" class="collapse show" aria-labelledby="heading-1" data-parent="#accordion-1">
+                            <div class="card-body">
+                               <p>{% trans 'Choosing the right category after selecting a subcategory is crucial for effective organization and navigation. Follow these simple steps' %}:</p><br>
+                               <p>
+                                <strong>1 - {% trans 'Understand Your Subcategory' %}:</strong> {% trans 'First, ensure you have a clear understanding of your subcategory. Know what it encompasses' %}.
+                               </p>
+                               <p><strong>2 - {% trans 'Consider Relevance' %}:</strong> {% trans 'Think about the primary purpose of your item or content and how it relates to the subcategory' %}.</p><br>
+                               <p><strong>3 - {% trans 'Explore Options' %}:</strong> {% trans 'Look through available categories to find the one that best matches your item or content' %}.</p><br>
+                                <p><strong>4 - {% trans 'Check for Precision' %}:</strong> {% trans 'Select a category that precisely represents your item or content, avoiding vague or overly broad choices' %}.</p><br>
+                                 <p><strong>5 - {% trans 'Think Like a User' %}:</strong> {% trans 'Imagine how users would search for your item, and choose a category that aligns with their expectations' %}.</p><br>
+                                  
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-box card-sm bg-light">
+                        <div class="card-header" id="heading-2">
+                            <h2 class="card-title">
+                                <a class="collapsed" role,button" data-toggle="collapse" href="#collapse-2" aria-expanded="false" aria-controls="collapse-2">
+                                    {% trans 'how to Chose Product Name and Des and Price?' %}'
+                                </a>
+                            </h2>
+                        </div>
+                        <div id="collapse-2" class="collapse" aria-labelledby="heading-2" data-parent="#accordion-1">
+                            <div class="card-body">
+                                <p><strong>1 - Product Name:</strong> Choose a concise and descriptive name that highlights the product's key features and purpose, making it easy for customers to understand.</p>
+                                <p><strong>2 - Description:</strong> Craft a brief yet informative description, highlighting the product's benefits, key specifications, and unique selling points.</p>
+                                <p><strong>3 - Price:</strong> Research the market and competitors to set a competitive and profitable price. Consider factors like production costs, demand, and perceived value.</p>
+                                <p><strong>4 - Test and Adjust:</strong> Continuously monitor performance and customer feedback to refine your product name, description, and price for optimal results.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-box card-sm bg-light">
+                        <div class="card-header" id="heading-3">
+                            <h2 class="card-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-3" aria-expanded="false" aria-controls="collapse-3">
+                                    Select Shipping and Stock?
+                                </a>
+                            </h2>
+                        </div>
+                        <div id="collapse-3" class="collapse" aria-labelledby="heading-3" data-parent="#accordion-1">
+                            <div class="card-body">
+                               <p><strong>1 - Shipping:</strong> Offer diverse shipping options, calculate competitive rates, and communicate tracking.</p>
+                               <p><strong>2 - Stock:</strong> Monitor inventory levels closely, adjust for seasons, and automate reordering for efficient stock management.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-box card-sm bg-light">
+                        <div class="card-header" id="heading-4">
+                            <h2 class="card-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-4" aria-expanded="false" aria-controls="collapse-4">
+                                    My Image Product
+                                </a>
+                            </h2>
+                        </div>
+                        <div id="collapse-4" class="collapse" aria-labelledby="heading-4" data-parent="#accordion-1">
+                            <div class="card-body">
+                               <p>When selecting a product image, opt for a clear, high-resolution photo that showcases the item from its best angle, emphasizing its key features and qualities.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</main>
+<style>
+    .page-title {
+        font-size: 24px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .containerer {
+        background-color: #fff;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .btn-save {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .btn-save:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+{% endblock %}

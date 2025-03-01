@@ -1,0 +1,97 @@
+{% extends 'homebase.html' %}
+{% load static %}
+
+{% load thumbnail %}
+
+{% load i18n %}
+
+{% block content %}
+{% if current_language == 'ar' %}
+    <style>
+      .main {
+        direction: rtl;
+      }
+      tr{
+        text-align: center;
+      }
+      .row{
+        text-align: right;
+      }
+      .product-media{
+        margin-right: 0.2rem !important;
+        margin-left: 1em !important;
+      }
+    </style>
+   {% endif %}
+ <main class="main">
+          <!-- Include the ads template -->
+                {% include 'partials/ads.html' %}
+            <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">{% trans 'Home' %}</a></li>
+                        
+                        <li class="breadcrumb-item active" aria-current="page">{% trans 'Management Center' %}</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-success text-center" role="alert">
+  {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+ 
+
+            <div class="page-content">
+              <div class="dashboard">
+                  <div class="container">
+                    <div class="row">
+                      {% include 'includes/management_center_sidebar.html' %}
+
+                    
+                    
+                    <div class="col-md-6">
+                    <ul class="nav nav-pills" id="tabs-5" role="tablist" style="width: 110%;">
+                  <li class="nav-item">
+                      <a class="nav-link active" id="tab-17-tab" data-toggle="tab" href="#tab-17" role="tab" aria-controls="tab-17" aria-selected="true">{% trans 'Add Products' %}</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" id="tab-18-tab" data-toggle="tab" href="#tab-18" role="tab" aria-controls="tab-18" aria-selected="false">{% trans 'Clearance Price' %}</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" id="tab-19-tab" data-toggle="tab" href="#tab-19" role="tab" aria-controls="tab-19" aria-selected="false">{% trans 'Add SignBoards' %}</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" id="tab-20-tab" data-toggle="tab" href="#tab-20" role="tab" aria-controls="tab-20" aria-selected="false">{% trans 'Add Articles' %}</a>
+                  </li>
+              </ul>
+              <div class="tab-content" id="tab-content-5">
+                  <div class="tab-pane fade show active" id="tab-17" role="tabpanel" aria-labelledby="tab-17-tab">
+                    <p> - {% trans 'This feature allows administrators or sellers to add new products to the online store. It typically involves entering details such as product name, description, images, pricing, and other relevant information' %}.
+                   - {% trans 'Product management may also include options for organizing products into categories and specifying inventory levels' %}.</p>
+                  </div><!-- .End .tab-pane -->
+                  <div class="tab-pane fade" id="tab-18" role="tabpanel" aria-labelledby="tab-18-tab">
+                    <p>  - {% trans 'The clearance price feature likely enables users to set discounted prices for products during a clearance sale or promotional period' %}.
+                   - {% trans 'Administrators may be able to specify the original price and the discounted clearance price for selected products' %}.</p>
+                  </div><!-- .End .tab-pane -->
+                  <div class="tab-pane fade" id="tab-19" role="tabpanel" aria-labelledby="tab-19-tab">
+                    <p> - {% trans 'The add signboards feature suggests the ability to include visual elements or promotional banners on the website' %}.
+                    - {% trans 'This feature may allow administrators to create and upload graphical signboards or banners for promotional purposes, showcasing deals or special offers' %}.</p>
+                  </div><!-- .End .tab-pane -->
+                  <div class="tab-pane fade" id="tab-20" role="tabpanel" aria-labelledby="tab-20-tab">
+                    <p>- {% trans 'Adding articles is a content management feature that enables administrators to publish informational or promotional articles on the website' %}.
+                   - {% trans 'This could be used for blog posts, news updates, or any other content relevant to the websites audience' %}.</p>
+                  </div><!-- .End .tab-pane -->
+              </div><!-- End .tab-content -->
+                    </div><!-- End .col-md-6 -->
+                        
+
+                    </div><!-- End .row -->
+                  </div><!-- End .container -->
+                </div><!-- End .dashboard -->
+            </div><!-- End .page-content -->
+</main><!-- End .main -->
+
+{% endblock %}

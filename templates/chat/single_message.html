@@ -1,0 +1,4 @@
+<div class="message {% if message.sender == request.user %}sent{% else %}received{% endif %}">
+    {{ message.content }} 
+    <small>{{ message.timestamp|date:"H:i, d M Y" }}</small>
+</div>

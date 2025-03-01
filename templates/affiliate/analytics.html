@@ -1,0 +1,104 @@
+{% extends "homebase.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Affiliate Analytics</h2>
+    
+    <!-- إيرادات يومية، أسبوعية، شهرية -->
+    <div class="row text-center mb-4">
+        <div class="col-md-4">
+            <div class="card shadow p-3 bg-light">
+                <h5 class="text-primary">Daily Earnings</h5>
+                <p class="fw-bold">${{ daily_earnings }}</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow p-3 bg-light">
+                <h5 class="text-success">Weekly Earnings</h5>
+                <p class="fw-bold">${{ weekly_earnings }}</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow p-3 bg-light">
+                <h5 class="text-danger">Monthly Earnings</h5>
+                <p class="fw-bold">${{ monthly_earnings }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- رسم بياني للنقرات حسب المصدر -->
+    <div class="card shadow p-4 mb-4">
+        <h4 class="text-center">Clicks by Source</h4>
+        <canvas id="clicksChart" style="max-height: 200px;"></canvas>
+    </div>
+    
+    <!-- رسم بياني للتحويلات حسب المنتج -->
+    <div class="card shadow p-4">
+        <h4 class="text-center">Conversions by Product</h4>
+        <canvas id="conversionsChart" style="max-height: 200px;"></canvas>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // بيانات النقرات حسب المصدر
+        var clicksData = {{ clicks_by_source|safe }};
+        var clicksLabels = clicksData.map(data => data.source);
+        var clicksCounts = clicksData.map(data => data.count);
+
+        var ctx1 = document.getElementById('clicksChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: clicksLabels,
+                datasets: [{
+                    label: 'Clicks by Source',
+                    data: clicksCounts,
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                layout: {
+                    padding: {
+                        top: 10,
+                        bottom: 10
+                    }
+                }
+            }
+        });
+
+        // بيانات التحويلات حسب المنتج
+        var conversionsData = {{ conversions_by_product|safe }};
+        var conversionsLabels = conversionsData.map(data => data.order__product__name);
+        var conversionsCounts = conversionsData.map(data => data.count);
+
+        var ctx2 = document.getElementById('conversionsChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'pie',
+            data: {
+                labels: conversionsLabels,
+                datasets: [{
+                    label: 'Conversions by Product',
+                    data: conversionsCounts,
+                    backgroundColor: ['red', 'green', 'blue', 'orange', 'purple'],
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                layout: {
+                    padding: {
+                        top: 10,
+                        bottom: 10
+                    }
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}

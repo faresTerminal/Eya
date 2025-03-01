@@ -1,0 +1,252 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load thumbnail %}
+{% load i18n %}
+{% load custom_filters1 %}
+{% block content %}
+{% if current_language == 'ar' %}
+    <style>
+      .main {
+        direction: rtl;
+      }
+      .row {
+        text-align: right;
+      }
+      .breadcrumb-item a, .breadcrumb-item.active {
+        text-align: right;
+      }
+    </style>
+{% endif %}
+<style type="text/css">
+    /* Customize button styles for each social platform */
+.btn-social {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 15px;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.btn-facebook { background-color: #3b5998; }
+.btn-instagram { background-color: #C13584; }
+.btn-youtube { background-color: #FF0000; }
+.btn-twitter { background-color: #1DA1F2; }
+.btn-pinterest { background-color: #E60023; }
+.btn-tiktok { background-color: #000000; }
+
+.btn-social i {
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.seller-details {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+</style>
+<main class="main">
+   <!-- Include the ads template -->
+            {% include 'partials/ads.html' %}
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">{% trans 'Home' %}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{% trans 'Seller Profile' %}</li>
+            </ol>
+        </div>
+    </nav>
+
+    <!-- Seller Information and Products -->
+    <div class="page-content">
+        <div class="container">
+            <div class="row">
+                <!-- Sidebar -->
+                {% include 'includes/poster_sidebar.html' %}
+
+                <!-- Main Content: Seller Information and Products -->
+                <div class="col-md-9">
+                    <!-- Seller Information -->
+                    <div class="seller-info card mb-5 p-4 shadow-sm">
+                        <h2 class="text-center mb-4" style="font-size: 1.8rem;">{% trans 'Seller Information' %}</h2>
+                        <div class="row">
+                            <div class="col-md-4 text-center">
+                                {% if user_profile and user_profile.profile_picture %}
+                                    <img src="{{ user_profile.profile_picture.url }}" alt="{% trans 'Profile Picture' %}" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
+                                <h5 style="text-align: left;"> {{ user.username }}</h5>
+                            <div class="ratings-container">
+                                        <div class="rating-star">
+                                <span>
+                                    <i class="fa fa-star{% if reviews.averageReview < 0.5 %}-o{% elif reviews.averageReview >= 0.5 and reviews.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if reviews.averageReview < 1.5 %}-o{% elif reviews.averageReview >= 1.5 and reviews.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if reviews.averageReview < 2.5 %}-o{% elif reviews.averageReview >= 2.5 and reviews.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if reviews.averageReview < 3.5 %}-o{% elif reviews.averageReview >= 3.5 and reviews.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if reviews.averageReview < 4.5 %}-o{% elif reviews.averageReview >= 4.5 and reviews.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+    
+                                    </span>
+
+                            </div>
+                                        <a class="ratings-text" href="#product-review-link" id="review-link">( {{review_count}} {% trans 'Reviews' %} )</a>
+                                    </div><!-- End .rating-container -->
+                                {% else %}
+                                    <img src="{% static 'images/default-avatar.png' %}" alt="{% trans 'Default Avatar' %}" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
+                                {% endif %}
+
+                            </div>
+                            <div class="col-md-8">
+                                <p><strong>{% trans 'Name' %}:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+                                <p><strong>{% trans 'Username' %}:</strong> {{ user.username }}</p>
+
+                                <p><strong>{% trans 'Email' %}:</strong>
+                                {% if userprofile.show_email  %}
+                                 {{ userprofile.email }}
+                                 {% else %}
+                                   <strong>{% trans 'Hidden' %}</strong>
+                                 {% endif %}
+                             </p>
+                                <p><strong>{% trans 'Phone' %}:</strong> {{ user.phone_number }}</p>
+                                {% if user_profile %}
+                                    <p><strong>{% trans 'Address' %}:</strong> {{ user_profile.full_address }}</p>
+                                    <p><strong>{% trans 'City' %}:</strong> {{ user_profile.city }}</p>
+                                    <p><strong>{% trans 'Country' %}:</strong> {{ user_profile.country }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="row">
+                            
+                            <div class="col-lg-12">
+                                 <!-- Social Links -->
+                        {% if shop_social %}
+                            <ul class="social-links list-unstyled d-flex flex-wrap">
+                                {% if shop_social.facebook %}
+                                    <li class="mb-3 mr-3">
+                                        <a href="{{ shop_social.facebook }}" target="_blank" class="btn btn-social btn-facebook d-flex align-items-center">
+                                            <i class="fa fa-facebook mr-2"></i> Facebook
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                {% if shop_social.instagram %}
+                                    <li class="mb-3 mr-3">
+                                        <a href="{{ shop_social.instagram }}" target="_blank" class="btn btn-social btn-instagram d-flex align-items-center">
+                                            <i class="fa fa-instagram mr-2"></i> Instagram
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                {% if shop_social.youtube %}
+                                    <li class="mb-3 mr-3">
+                                        <a href="{{ shop_social.youtube }}" target="_blank" class="btn btn-social btn-youtube d-flex align-items-center">
+                                            <i class="fa fa-youtube mr-2"></i> YouTube
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                {% if shop_social.twiter %}
+                                    <li class="mb-3 mr-3">
+                                        <a href="{{ shop_social.twiter }}" target="_blank" class="btn btn-social btn-twitter d-flex align-items-center">
+                                            <i class="fa fa-twitter mr-2"></i> Twitter
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                {% if shop_social.pinterest %}
+                                    <li class="mb-3 mr-3">
+                                        <a href="{{ shop_social.pinterest }}" target="_blank" class="btn btn-social btn-pinterest d-flex align-items-center">
+                                            <i class="fa fa-pinterest mr-2"></i> Pinterest
+                                        </a>
+                                    </li>
+                                {% endif %}
+                               {% if shop_social.tiktok %}
+                                    <li class="mb-3 mr-3">
+                                        <a href="{{ shop_social.tiktok }}" target="_blank" class="btn btn-social btn-tiktok d-flex align-items-center">
+                                            <!-- Custom SVG for TikTok -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="mr-2" style="width: 20px; height: 20px;">
+                                                <path d="M448,209.2v63.2c-33.2,0-65.8-3.2-97.5-9.5c-4.5,76.8-66.7,137.5-144.8,137.5c-27.8,0-54-7.8-75.8-21.2c-21.5-13.7-38.5-33.3-49.7-56.3c-10.8-22.5-16.8-47.8-16.8-74.2c0-82.8,67-149.8,149.8-149.8c4.5,0,9.2,0.2,13.7,0.5v63.8c-4.5-0.5-9-0.8-13.7-0.8c-48,0-86.8,38.8-86.8,86.8c0,48,38.8,86.8,86.8,86.8c47,0,85-37.5,86.7-84.2c-22-4.5-43.2-10.7-63.8-18.8V94.2c20.3,11.7,43.3,20.3,67.8,22.7c5.5,28,20.2,52.7,40.8,71.2C382.8,202.5,415.2,209.2,448,209.2z"/>
+                                            </svg> TikTok
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        {% else %}
+                            <p>{% trans 'No social media links available.' %}</p>
+                        {% endif %}
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    <!-- Products for Sale -->
+                    <h2 class="text-center mb-4" style="font-size: 1.8rem;">{% trans 'Products for Sale' %}</h2>
+                    <div class="row">
+                        {% for p in products %}
+                        <div class="col-md-4 col-sm-6 mb-4">
+                            <div class="card product-card shadow-sm" style="border-radius: 10px;">
+                                <a href="{{ p.get_url }}" class="d-block">
+                                    <figure class="product-media">
+                                        {% thumbnail p.images "160x160" crop="center" as clr_pic %}
+                                            <img class="card-img-top" src="{{ clr_pic.url }}" alt="{{ p.product_name }}" style="border-top-left-radius: 10px; border-top-right-radius: 10px;">
+                                        {% endthumbnail %}
+                                    </figure>
+                                </a>
+                                <div class="card-body text-center">
+                                    <h4 class="card-title" style="font-size: 1.1rem;"><a href="{{ p.get_url }}" class="text-dark">{{ p.product_name|truncate_title:8 }}</a></h4>
+                                    <p class="product-cat mb-2">{{ p.category }}</p>
+                                    {% if p.variants %}
+                                    <div class="product-price">
+                                            {{p.variants.0.price}}
+                                             <span>{% trans 'DA' %}</span>
+                                            {% if p.variants.0.clearance_price > 0 %}
+                                                    
+                                            
+                                                   
+                                                    <span style="margin-left: 5px;" class="old-price text-success"> {{p.variants.0.clearance_price}} </span><span>{% trans 'DA' %}</span>
+                                            {% endif %}
+                                     </div><!-- End .product-price -->
+                                     {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <p class="text-center">{% trans 'No products available' %}</p>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Pagination -->
+                    <nav aria-label="Page navigation">
+                        {% if products.has_other_pages %}
+                            <ul class="pagination justify-content-center">
+                                {% if products.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ products.previous_page_number }}" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo; {% trans 'Previous' %}</span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                                
+                                {% for i in products.paginator.page_range %}
+                                    {% if products.number == i %}
+                                    <li class="page-item active"><a class="page-link">{{ i }}</a></li>
+                                    {% else %}
+                                    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                                
+                                {% if products.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ products.next_page_number }}" aria-label="Next">
+                                        <span aria-hidden="true">{% trans 'Next' %} &raquo;</span>
+                                    </a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        {% endif %}
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

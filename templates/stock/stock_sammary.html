@@ -1,0 +1,79 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load thumbnail %}
+
+{% load i18n %}
+
+{% block content %}
+{% if current_language == 'ar' %}
+    <style>
+      .main {
+        direction: rtl;
+      }
+      tr{
+        text-align: center;
+      }
+      .row{
+        text-align: right;
+      }
+      .product-media{
+        margin-right: 0.2rem !important;
+        margin-left: 1em !important;
+      }
+    </style>
+   {% endif %}
+<main class="main">
+    <!-- Include the ads template -->
+                {% include 'partials/ads.html' %}
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">{% trans 'Home' %}</a></li>
+                <li class="breadcrumb-item"><a href="#">{% trans 'Low Stock information' %}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{% trans 'Stock Summary' %}</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="inventory-container">
+                    <h3>{% trans 'Stock Valuation' %}</h3>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">{% trans 'Product Name' %}</th>
+                                <th scope="col">{% trans 'Initial Stock' %}</th>
+                                <th scope="col">{% trans 'Price' }</th>
+                                <th scope="col">{% trans 'Initial Valuation' %}</th>
+                                <th scope="col">{% trans 'Selling Stock' %}</th>
+                                <th scope="col">{% trans 'Selling Price' %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for p in initial_variation_valuation %}
+                                <tr class="{% if p.is_low_stock %}low-stock{% endif %}">
+                                    <td>
+                                        {% thumbnail p.product.images "50x50" crop="center" as p_pic %}
+                                            <img width="{{ p_pic.width }}" height="{{ p_pic.height }}" src="{{ p_pic.url }}">
+                                        {% endthumbnail %}
+                                    </td>
+                                    <td>{{ p.product.product_name }}<br>{{ p.color }}: {{ p.size }}</td>
+                                    <td>{{ p.initial_stock_quantity }}</td>
+                                    <td>{{ p.price }} DA</td>
+                                    <td>{{ p.valuation|floatformat:2 }} DA</td>
+                                    <td>{{ total_selling_stock }}</td>
+                                    <td>{{ total_selling_price|floatformat:2 }} DA</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <p>{% trans 'Total Stock Valuation' %}: <b>{{ initial_total_valuation|floatformat:2 }} DA</b></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

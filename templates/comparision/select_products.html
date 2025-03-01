@@ -1,0 +1,48 @@
+{% extends 'homebase.html' %}
+{% load static %}
+
+ 
+
+{% block content %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Reference to the search input field
+        var searchInput = $('input[name="q"]');
+        
+        // Reference to the search suggestions div
+        var suggestionsDiv = $('#search-suggestions');
+
+        // Function to show/hide search suggestions div
+        function toggleSuggestions() {
+            if (searchInput.val().trim() === '') {
+                suggestionsDiv.hide();
+            } else {
+                suggestionsDiv.show();
+            }
+        }
+
+        // Bind the toggleSuggestions function to the input field's input event
+        searchInput.on('input', toggleSuggestions);
+    });
+</script>
+
+<form method="GET" action="{% url 'product_search' %}">
+    <input type="text" name="letter" placeholder="Enter a letter..." value="{{ letter }}">
+    <button type="submit">Search</button>
+</form>
+
+{% if suggestions %}
+    <h2>Product Names Containing "{{ letter }}":</h2>
+    <ul>
+        {% for suggestion in suggestions %}
+            <li>{{ suggestion }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No product names containing "{{ letter }}" found.</p>
+{% endif %}
+
+
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% load i18n %}
+<aside class="col-md-4 col-lg-3">
+    <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'Seller_Info' %}active{% endif %}"
+               href="{% url 'Seller_Info' user.username %}">
+               {% trans 'Seller Info' %}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'top_seller_products' %}active{% endif %}"
+               href="{% url 'top_seller_products' user.username %}">
+               {% trans 'Top Products' %}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'seller_reviews' %}active{% endif %}"
+               href="{% url 'seller_reviews' user.username %}">
+               {% trans 'Seller Reviews' %}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'seller_contact' %}active{% endif %}"
+               href="{% url 'seller_contact' user.username %}">
+               {% trans 'Contact Seller' %}
+            </a>
+        </li>
+        
+    </ul>
+</aside>

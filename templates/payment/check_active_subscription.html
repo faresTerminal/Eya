@@ -1,0 +1,76 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% block content %}
+<hr>
+    <div class="subscription-check">
+        <h4>Your Subscription is Active!</h4>
+
+        {% if user.subscription_active %}
+            
+
+            <!-- Display invoice information if available -->
+            {% if invoice %}
+                <div class="invoice-details">
+                    <h3>Invoice Information</h3>
+                    <p><strong>Transaction ID:</strong> {{ invoice.payment.transaction_id }}</p>
+                    <p><strong>Issued Date:</strong> {{ invoice.issued_date }}</p>
+                    <p><strong>Plan Name:</strong> {{ invoice.payment.plan.name }}</p>
+                    <p><strong>Amount Paid:</strong> {{ invoice.payment.amount }} DA</p>
+                    <p><strong>Payment Date:</strong> {{ invoice.payment.payment_date }}</p>
+                    
+                    {% if invoice.pdf %}
+                        <p><a href="{{ invoice.pdf.url }}" target="_blank">Download PDF</a></p>
+                    {% else %}
+                        <p>No PDF available for this invoice.</p>
+                    {% endif %}
+                </div>
+            {% else %}
+                <p>No invoice available for your active subscription.</p>
+            {% endif %}
+
+            <div class="actions">
+                <p>If you want to manage your subscription or make changes, please visit your <a href="">profile page</a>.</p>
+                <p>If you'd like to cancel your subscription, please <a href="">click here</a>.</p>
+            </div>
+
+            <div class="cta">
+                <a href="" class="btn btn-primary">Go to Subscription Success</a>
+            </div>
+       
+        {% endif %}
+    </div>
+<hr>
+    <style>
+        .subscription-check {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .subscription-details, .invoice-details {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .subscription-details h3, .invoice-details h3 {
+            margin-bottom: 10px;
+        }
+        .actions p {
+            margin-top: 20px;
+        }
+        .cta {
+            margin-top: 30px;
+        }
+        .btn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+{% endblock %}

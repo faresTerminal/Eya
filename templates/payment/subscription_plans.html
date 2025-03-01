@@ -1,0 +1,126 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="pricing-section py-5 bg-light">
+    <div class="container">
+        <!-- Header Section -->
+        <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-6">
+        <div class="text-center mb-5">
+            <h2 class="display-6 fw-bold text-primary">Flexible Pricing Plans</h2>
+            <p class="text-muted">
+                Choose a plan that fits your needs. Upgrade, downgrade, or cancel anytime.
+            </p>
+        </div>
+        <div class="col-lg-2"></div>
+        </div>
+
+        </div>
+
+        <!-- Pricing Cards -->
+        <div class="row g-4">
+            {% for plan in plans %}
+                <div class="col-md-4">
+                    <div class="card shadow-sm border-0 h-100">
+                        <!-- Plan Header -->
+                        <div class="card-header bg-primary text-white text-center py-4">
+                            <h4 class="mb-0">{{ plan.name }}</h4>
+                        </div>
+
+                        <!-- Plan Details -->
+                        <div class="card-body text-center">
+                            <h1 class="display-4 fw-bold mb-3">
+                                {{ plan.price }} <small class="text-muted fs-5">DZD</small>
+                            </h1>
+                            <ul class="list-unstyled">
+                                <li class="mb-2">{{ plan.description }}</li>
+                                <li class="mb-2"><strong>Duration:</strong> {{ plan.duration_days }} days</li>
+                                <li class="mb-2"><strong>Max Products:</strong> {{ plan.max_products }}</li>
+                            </ul>
+                            <form method="POST" action="{% url 'payment:subscribe_to_plan' plan_id=plan.id %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="plan_id" value="{{ plan.id }}">
+                                <div class="mb-3">
+                                    <select name="gateway" class="form-select"  required>
+                                        <option value="CIB">Chargily</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-lg w-100">Subscribe Now</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+<style>
+/* General Styling */
+.pricing-section {
+    background-color: #f9fafa;
+}
+
+.card-header {
+    background: linear-gradient(90deg, #2563eb, #1e40af);
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+h1.display-4 {
+    font-size: 2.5rem;
+    color: #1e40af;
+}
+
+ul.list-unstyled li {
+    font-size: 1rem;
+    color: #374151;
+}
+
+/* Button Styling */
+.btn-primary {
+    background-color: #2563eb;
+    border: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 10px 15px;
+    transition: background 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #1e3a8a;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .card-body {
+        padding: 1.5rem;
+    }
+
+    h1.display-4 {
+        font-size: 2rem;
+    }
+
+    .btn-primary {
+        font-size: 1rem;
+    }
+}
+</style>

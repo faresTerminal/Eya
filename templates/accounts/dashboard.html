@@ -1,0 +1,133 @@
+{% extends 'homebase.html' %}
+{% load static %}
+
+{% load thumbnail %}
+{% load i18n %}
+
+{% block content %}
+{% if current_language == 'ar' %}
+    <style>
+      .main {
+        direction: rtl;
+      }
+      tr{
+        text-align: center;
+      }
+      .row{
+        text-align: right;
+      }
+      .product-media{
+        margin-right: 0.2rem !important;
+        margin-left: 1em !important;
+      }
+      .list-group-item b{
+        margin-left: 2em;
+      }
+    </style>
+   {% endif %}
+ <main class="main">
+        	<!-- Include the ads template -->
+            {% include 'partials/ads.html' %}
+            <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">{% trans 'Home' %}</a></li>
+                        
+                        <li class="breadcrumb-item active" aria-current="page">{% trans 'Dashboard' %}</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+
+            <div class="page-content">
+            	<div class="dashboard">
+	                <div class="container">
+	                	<div class="row">
+	                		{% include 'includes/dashboard_sidebar.html' %}
+                        
+	                		<div class="col-md-8 col-lg-9">
+                        <p style="text-align: center;">{% trans 'Dashboard' %}</p> <br>
+	                			<div class="tab-content">
+								    <div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel" aria-labelledby="tab-dashboard-link">
+								    	<p>{% trans ' Hello' %} <span class="font-weight-normal text-dark">{{user.first_name}}</span>  {% trans '  you have' %} <b> {{ orders.count}} {% trans '  orders' %}.</b> 
+								    	<br>
+								    	{% trans ' From your account dashboard you can view your' %} <a href="{% url 'my_orders' %}" class="tab-trigger link-underline">{% trans ' recent orders' %}</a>, {% trans ' manage your' %} <a href="{% url 'edit_profile' %}" class="tab-trigger">{% trans ' edit your profile' %}</a>, {% trans ' and' %} <a href="{% url 'change_password' %}" class="tab-trigger">{% trans ' edit your password' %} </a>.</p>
+								    	<div class="row">
+								    		<div class="col-lg-2">
+								    			{% thumbnail userprofile.profile_picture "120x120" crop="center" as profile_pic %}
+								    			<img style="width: 150px;
+                                                   border-radius: 1em !important;" width="{{ profile_pic.width }}" height="{{profile_pic.height }}" src="{{profile_pic.url}}" class="rounded float-end" alt="...">
+                        {% endthumbnail %}
+                        <br>
+
+                       
+                        <a href="{% url 'add_product' %}">{% trans 'Add Product' %}</a><br>
+                        <a href="{% url 'list_clearance_products' %}">{% trans 'Clearance Price' %}</a><br>
+                        <a href="{% url 'create_article' %}"> {% trans 'Add Article' %}</a><br><br>
+								    		</div>
+								    		<div class="col-lg-10">
+								    			<div class="card" >
+                                                    <div class="card-header">
+                                                     {% trans 'Your Information' %}
+                                                     </div>
+
+                                                        <ul class="list-group list-group-flush">
+                                                           <li class="list-group-item"><b>{% trans ' Email:' %}:</b> {{user.email}}</li>
+                                                           <li class="list-group-item"><b>{% trans ' Full Name' %}:</b> <span>{{user.full_name}}</span> </li>
+                                                           <li class="list-group-item"> <b>{% trans ' User Name' %}:</b> {{user.username}}</li>
+                                                           <li class="list-group-item"><b>{% trans ' Phone Number' %}:</b> {{user.phone_number}}</li>
+                                                           <li class="list-group-item"><b>{% trans ' Joined At' %}:</b> {{user.date_joined}}</li>
+                                                           <li class="list-group-item"><b>{% trans ' Last Login' %}:</b> {{user.last_login }}</li>
+                                                           
+                                                        </ul>
+                                                    </div>
+								    		</div>
+
+								    	</div>
+								    	
+								    </div><!-- .End .tab-pane -->
+
+								    <div class="tab-pane fade" id="tab-orders" role="tabpanel" aria-labelledby="tab-orders-link">
+								    	{%if orders %}
+								    	
+								    	<!-- create table for orders -->
+								    	<table class="table">
+  <thead>
+    <tr>
+      <th scope="col"><b>{% trans 'Order' %}#</b></th>
+      <th scope="col"><b>{% trans 'Billing Name' %}</b></th>
+      <th scope="col"><b>{% trans 'Phone' %}</b></th>
+      <th scope="col"><b>{% trans 'Order Total' %}</b></th>
+      <th scope="col"><b>{% trans 'Date' %}</b></th>
+    </tr>
+  </thead>
+  <tbody>
+  	{% for order in orders%}
+    <tr>
+      <td >{{order.order_number}}</td>
+      <td>{{order.full_name}}</td>
+      <td>{{order.phone}}</td>
+      <td>{{order.order_total}} $ </td>
+      <td>{{order.created_at}}<br><a href="#">{% trans 'see your product info' %}</a></td>
+    </tr>
+    {% endfor %}
+  
+  </tbody>
+</table>
+{% else%}
+<p>{% trans 'No order has been made yet' %}.</p>
+{% endif %}
+								    	
+								    	
+
+								    		
+
+								   
+								
+	                		</div><!-- End .col-lg-9 -->
+	                	</div><!-- End .row -->
+	                </div><!-- End .container -->
+                </div><!-- End .dashboard -->
+            </div><!-- End .page-content -->
+        </main><!-- End .main -->
+
+{% endblock %}

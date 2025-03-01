@@ -1,0 +1,104 @@
+
+{% extends 'homebase.html' %}
+{% load static %}
+
+{% load i18n %}
+{% block content %}
+{% if current_language == 'ar' %}
+    <style>
+    	.main {
+    		direction: rtl;
+    	}
+    	tr{
+    		text-align: center;
+    	}
+    </style>
+   {% endif %}
+<main class="main">
+        	 <!-- Include the ads template -->
+                {% include 'partials/ads.html' %}
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">{% trans 'Home' %}</a></li>
+                        <li class="breadcrumb-item"><a href="#">{% trans 'Shop' %}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{% trans 'Shopping Cart' %}</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+  <div class="chat-container">
+    <h5>Chat for Product: {{ product.product_name }}</h5>
+
+    <div class="chat-messages">
+      {% for message in chat_messages %}
+      
+        <div class="message">
+          <p><strong>{{ message.sender }}:</strong> {{ message.message }}</p>
+        </div>
+      {% endfor %}
+    </div>
+
+    <!-- Form for sending new messages -->
+    <form method="post" action="{% url 'product_chat' category_slug=product.category.slug product_slug=product.slug %}">
+      {% csrf_token %}
+      <label for="message">Your Message:</label>
+      <textarea name="message" rows="4" cols="50" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+</main>
+<style >
+/* In your CSS file or within a <style> tag in the template */
+.chat-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.chat-messages {
+  margin-top: 20px;
+}
+
+.message {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f2f2f2;
+  border-radius: 8px;
+}
+
+form {
+  margin-top: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+textarea {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+button {
+  background-color: #4caf50;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+	
+
+</style>
+{% endblock %}

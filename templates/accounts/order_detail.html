@@ -1,0 +1,136 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load thumbnail %}
+{% block content %}
+<main class="main">
+            <!-- Include the ads template -->
+            {% include 'partials/ads.html' %}
+            <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Account</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">My orders</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+
+<!-- order -->
+<div class="container">
+    <div class="row">
+{% include 'includes/dashboard_sidebar.html' %}
+        <div class="col-lg-9">
+
+             <div class="tab-pane " id="tab-address" role="tabpanel" aria-labelledby="tab-address-link">
+                                        <p>The following addresses will be used on the checkout page by default,<br> And we show your product you buy it.</p><br>
+
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="card card-dashboard">
+                                                    <div class="card-body">
+                                                        <h3 class="card-title">Product Show</h3><!-- End .card-title -->
+
+                                                        {% for item in order_detail %}
+                                                        <p><b> {{ item.product.product_name }}.</b><br>
+                                                            {% thumbnail item.product.images "80x80" crop="center" as azere %}
+                                                            <img width="{{ azere.width }}" height="{{azere.height }}" src="{{azere.url}}" class="">
+                                                            {% endthumbnail %}
+                                                             <p class="small text-muted">
+                                                        {% if item.variations.all %}
+                                                                {% for i in item.variations.all %}
+                                                                    {{ i.color | capfirst }} : {{ i.size | capfirst }} <br>
+                                                                {% endfor %}
+                                                            {% endif %}
+                                                    </p><br>
+                                                    Quantity: {{ item.quantity }}<br>
+                                                    {{ item.product_price }} DA <br>
+                                                    
+                                                           
+                                                         
+
+                                                        </p>
+                                                        <hr>
+
+                                                        {% endfor %}
+                                                       </p>
+                                                    </div><!-- End .card-body -->
+                                                </div><!-- End .card-dashboard -->
+                                                 
+                                            </div><!-- End .col-lg-6 -->
+
+                                            <div class="col-lg-6">
+                                                <div class="card card-dashboard">
+                                                    
+                                                    <div class="card-body">
+                                                        <h3 class="card-title">Billing Address</h3><!-- End .card-title -->
+
+                                                        <p>{{ order.full_name }}<br>
+                                                         Phone : {{order.phone}}<br>
+                                                        {{ order.full_address }}<br>
+                                                        {{ order.city }}, {{ order.state }}<br>
+                                                        {{ order.country }}<br>
+                                                        <p><strong>Order # </strong>{{ order.order_number }}</p>
+                                                        <p><strong>Order Date: </strong> {{order.created_at|date}}</p>
+
+                                                       </p>
+                                                    </div><!-- End .card-body -->
+                                                </div><!-- End .card-dashboard -->
+
+                                                <div class="card card-dashboard">
+                                                    <div class="card-body">
+                                                        <h3 class="card-title">Calculate</h3><!-- End .card-title -->
+                                                        
+                                                        <p>Subtotal: {{ subtotal }} DA</p>
+                                                        <p>Shipping: {{ order.shipping_total }} DA</p>
+                                                        <p>Grand Total: {{ order.order_total }} DA</p>
+                                                    </div><!-- End .card-body -->
+                                                </div><!-- End .card-dashboard -->
+                                                 <div class="card card-dashboard">
+                                                    <div class="card-body">
+                                                        
+
+                                                         <h3 class="card-title">Shipping Method</h3>
+            <p>
+                {% if order.shipping_method == 'home' %}
+                    Home Delivery
+                {% elif order.shipping_method == 'pickup' %}
+                    Pick Up from Delivery Bureau
+                {% endif %}
+            </p>
+
+            {% if order.shipping_method == 'pickup' %}
+            <p><strong>Pick Up Location:</strong> {{ order.pickup_location }}</p>
+            {% endif %}
+                                                    </div><!-- End .card-body -->
+                                                </div><!-- End .card-dashboard -->
+                                                <div class="card card-dashboard">
+                                                    <div class="card-body">
+                                                        <h3 class="card-title">Payment Method</h3><!-- End .card-title -->
+                                                        
+                                                        <p>
+                {% if order.payment_method == 'cib' %}
+                  Credit Bank Card (CIB)
+                {% elif order.payment_method == 'edahabia' %}
+                     Card Manitique
+                {% elif order.payment_method == 'cod' %}
+                    Cash on Delivery
+                {% endif %}
+            </p>
+                                                    </div><!-- End .card-body -->
+                                                </div><!-- End .card-dashboard -->
+                                            </div><!-- End .col-lg-6 -->
+                                        </div><!-- End .row -->
+                                    </div><!-- .End .tab-pane -->
+            
+        </div>
+        
+    </div>
+    
+</div>
+
+
+</main>
+
+
+
+{% endblock %}

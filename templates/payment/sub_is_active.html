@@ -1,0 +1,78 @@
+{% extends 'homebase.html' %}
+{% load static %}
+
+{% block content %}
+
+<hr>
+<div class="container">
+  
+  <div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8">
+      <div class="trial-expired-container">
+        <h3 class="trial-expired-title">
+          <i style="background-color: green; color: white; padding: 4px; border-radius: 10px; margin-bottom: 5px; display: inline-block;" class="ri-verified-badge-fill"></i> You already have an active subscription
+        </h3>
+        <hr>
+        <p style="text-align:center;" class="trial-expired-message">Return to Home Page</p>
+        
+        
+        <div class="subscribe-button-container">
+          <a href="{% url 'home' %}" class="subscribe-button">Back Home</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-2"></div>
+  </div>
+</div>
+<hr>
+
+<style>
+  
+
+  .trial-expired-title {
+    font-size: 36px;
+    color: green;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .trial-expired-message {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 20px;
+  }
+
+  .contact-list {
+    list-style-type: none;
+    padding: 0;
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 30px;
+  }
+
+  .contact-list li {
+    margin-bottom: 10px;
+  }
+
+  .subscribe-button-container {
+    text-align: center;
+  }
+
+  .subscribe-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+  }
+
+  .subscribe-button:hover {
+    background-color: #45a049;
+  }
+</style>
+{% endblock %}
+

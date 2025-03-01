@@ -1,0 +1,47 @@
+ {% load i18n %}
+<aside class="col-md-4 col-lg-2">
+    <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link {% if '/accounts/' == request.path %}active{% endif %}" href="{% url 'dashboard' %}" >{% trans "Dashboard" %}</a>
+        </li>
+         <li class="nav-item">
+            <a class="nav-link {% if '/edit_profile/' in request.path %}active{% endif %}" href="{% url 'edit_profile' %}" >{% trans "Edit Profile" %}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if '/User_Products/' in request.path %}active{% endif %}" href="{% url 'User_Products' %}" >{% trans "Edit/Remove Products" %}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if '/dashboard/' in request.path %}active{% endif %}" href="{% url 'affiliate_dashboard' %}" >{% trans "Affiliate" %}</a>
+        </li>
+         <li class="nav-item">
+            <a class="nav-link {% if '/buyer_dashboard/' in request.path %}active{% endif %}" href="{% url 'buyer_commission_dashboard' %}" >{% trans "Affiliate Debts" %}</a>
+        </li>
+         <li class="nav-item">
+            <a class="nav-link {% if '/social_media/' in request.path %}active{% endif %}" href="{% url 'social_media' %}" >{% trans "Social Media" %}</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link {% if '/my_orders/' in request.path %}active{% endif %}" id="tab-orders-link" href="{% url 'my_orders' %}">{% trans "Orders" %}</a>
+        </li>
+        
+       
+        <li class="nav-item">
+            <a class="nav-link {% if '/printing/' in request.path %}active{% endif %}" id="tab-address-link" href="{% url 'printing' %}" >{% trans "Orders Confirmed" %}</a>
+        </li>
+         <li class="nav-item">
+            <a class="nav-link {% if '/download/' in request.path %}active{% endif %}" id="tab-address-link" href="{% url 'orders:download_purchase' %}" >{% trans "Download Purchase" %}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.resolver_match.url_name == 'conversation_list' %}active{% endif %}"
+               href="{% url 'conversation_list' %}">
+               {% trans 'Messages Seller' %}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if '/change_password/' in request.path %}active{% endif %}" id="tab-address-link" href="{% url 'change_password' %}" >{% trans "Change Password" %}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">{% trans "Sign Out" %}</a>
+        </li>
+    </ul>
+</aside>

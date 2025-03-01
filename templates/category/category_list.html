@@ -1,0 +1,133 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load thumbnail %}
+{% load i18n %}
+
+{% block content %}
+{% if current_language == 'ar' %}
+    <style>
+        .main {
+            direction: rtl;
+        }
+        tr{
+            text-align: center;
+        }
+        .row{
+            text-align: right;
+        }
+        .product-media{
+            margin-right: 0.2rem !important;
+            margin-left: 1em !important;
+        }
+    </style>
+   {% endif %}
+
+ <main class="main">
+        	<div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
+        		<div class="container">
+        			<h1 class="page-title">{% trans 'Product By Category' %}</h1>
+        		</div><!-- End .container -->
+        	</div><!-- End .page-header -->
+            <nav aria-label="breadcrumb" class="breadcrumb-nav">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">{% trans 'Home' %}</a></li>
+                        <li class="breadcrumb-item"><a href="">{% trans 'Show Category' %}</a></li>
+                        
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+
+            <div class="page-content">
+                <div class="container">
+                	
+                	<hr class="mb-4">
+
+                	<h2 class="title text-center mb-3">{% trans 'Categories' %}</h2><!-- End .title mb-2 -->
+                    <hr>
+                    <div class="category-container">
+                     <!-- Category 1 -->
+                     {% for category in categories %}
+                     <a href="{% url 'products_by_category' category.slug %}">
+                     <div class="category">
+                          {% thumbnail category.cat_image "275x275" crop="center" as ml %}
+                          <img width="{{ ml.width }}" height="{{ml.height }}" src="{{ml.url}}" alt="Banner">
+                          {% endthumbnail %}
+                         <h3>{{category.category_name}}</h3>
+
+                     </div>
+                     </a>
+                    {% endfor %}
+
+   
+
+   
+
+                     </div>
+					
+                    
+
+                	<hr class="mb-4">
+                </div><!-- End .container -->
+
+            </div><!-- End .page-content -->
+
+            <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .category-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        .category {
+            box-sizing: border-box;
+            width: 200px;
+            margin: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .category:hover {
+            transform: scale(1.05);
+        }
+
+        .category img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        .category h3 {
+            margin-top: 10px;
+            font-size: 18px;
+            text-align: center;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    // Your jQuery code can go here, if needed
+    // For example, you can add click events or other interactions
+</script>
+
+        </main><!-- End .main -->
+
+
+{% endblock %}

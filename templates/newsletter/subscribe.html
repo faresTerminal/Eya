@@ -1,0 +1,22 @@
+{% extends 'homebase.html' %}
+{% load static %}
+
+ 
+
+
+{% block content %}
+    <h2>Subscribe to our Newsletter</h2>
+    
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post" action="{% url 'newsletter:subscribe' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Subscribe</button>
+    </form>
+{% endblock %}
+

@@ -1,0 +1,26 @@
+
+{% extends 'homebase.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<h2>Your Payments</h2>
+<table>
+    <tr>
+        <th>Transaction ID</th>
+        <th>Amount</th>
+        <th>Payment Date</th>
+        <th>Invoice</th>
+    </tr>
+    {% for payment in payments %}
+    <tr>
+        <td>{{ payment.transaction_id }}</td>
+        <td>{{ payment.amount }}</td>
+        <td>{{ payment.payment_date }}</td>
+        <td>
+            <a href="{% url 'download_invoice' payment.id %}">Download Invoice</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

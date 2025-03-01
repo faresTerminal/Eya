@@ -1,0 +1,90 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% block content %}
+
+<style>
+    .subscription-success {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        min-height: 70vh;
+        background-color: #e9f7e6;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .subscription-success h1 {
+        font-size: 2.8rem;
+        font-weight: bold;
+        color: #2e7d32;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+    }
+
+    .subscription-success p {
+        font-size: 1.2rem;
+        color: #333;
+        margin: 10px 0;
+        line-height: 1.6;
+    }
+
+    .subscription-success p strong {
+        color: #2e7d32;
+    }
+
+    .subscription-success a {
+        display: inline-block;
+        margin-top: 25px;
+        padding: 12px 24px;
+        background-color: #2e7d32;
+        color: white;
+        text-decoration: none;
+        font-size: 1.1rem;
+        border-radius: 6px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        font-weight: bold;
+    }
+
+    .subscription-success a:hover {
+        background-color: #388e3c;
+        transform: translateY(-2px);
+    }
+
+    .icon-check-circle {
+        font-size: 5rem;
+        color: #2e7d32;
+        margin-bottom: 20px;
+    }
+
+    .subscription-success p a {
+        font-weight: normal;
+        color: #00796b;
+    }
+
+    .subscription-success p a:hover {
+        text-decoration: underline;
+    }
+
+</style>
+
+<div class="subscription-success">
+    <i class="icon-check-circle fas fa-check-circle"></i>
+    <h1>Subscription Successful</h1>
+    <p>Your payment was successfully processed! Your subscription is now active.</p>
+    <p><strong>Transaction ID:</strong> {{ payment.entity_id }}</p>
+
+    {% if payment.entity_id %}
+        <a href="{% url 'payment:view_invoice' transaction_id=payment.entity_id %}">
+            View Invoice
+        </a>
+    {% else %}
+        <p>Invoice not available at this moment. Please try again later.</p>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+

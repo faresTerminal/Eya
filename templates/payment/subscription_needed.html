@@ -1,0 +1,104 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<!-- Include Chart.js -->
+
+<section class="pricing-section py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h1 class="display-4 text-primary fw-bold">Choose Your Plan</h1>
+            <p class="text-muted">
+                Flexible pricing plans designed for every need. Upgrade to unlock premium features.
+            </p>
+        </div>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for plan in plans %}
+            <div class="col">
+                <form method="POST" action="{% url 'payment:subscribe_to_plan' plan.id %}">
+                 {% csrf_token %}
+                <div class="card pricing-card h-100 shadow">
+                    <div class="card-header text-center bg-gradient text-white py-4">
+                        <h3 style="color: #fff;" class="fw-bold">{{ plan.name }}</h3>
+                    </div>
+                    <div class="card-body text-center">
+                        <h2 class="price display-4 text-primary">{{ plan.price|floatformat:2 }} DZD</h2>
+                        <p class="text-muted">Billed every {{ plan.duration_days }} days</p>
+                        <ul class="features list-unstyled mt-4 mb-5">
+                            <li><i class="ri-price-tag-line"></i> {{ plan.description }}</li>
+                            <li><i class="fas fa-clock text-info"></i> Duration: <strong>{{ plan.duration_days }} days</strong></li>
+                            <li><i class="fas fa-box-open text-warning"></i> Max Products: <strong>{{ plan.max_products }}</strong></li>
+                        </ul>
+                       <!--
+                            <select name="gateway" class="form-select mb-3" required>
+                                <option value="Chargily">Chargily</option>
+                            </select>
+                           
+                        -->
+                         <button type="submit" class="btn btn-primary btn-lg w-100">Upgrade</button>
+                    </div>
+                </div>
+              </form>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<style>
+/* General Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Pricing Section */
+.pricing-section {
+    background: linear-gradient(135deg, #ffffff, #e9ecef);
+    padding: 60px 0;
+}
+
+/* Pricing Cards */
+.pricing-card {
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.pricing-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.bg-gradient {
+    background: linear-gradient(90deg, #007bff, #6610f2);
+}
+
+/* Features List */
+.features li {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    border-radius: 50px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+i {
+  font-size: 2rem;
+  color: gren;
+  color: #39f;
+}
+</style>
+{% endblock %}
+

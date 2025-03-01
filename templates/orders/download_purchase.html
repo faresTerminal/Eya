@@ -1,0 +1,242 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load i18n %}
+{% load thumbnail%}
+{% block content %}
+  {% if current_language == 'ar' %}
+    <style>
+      .main {
+        direction: rtl;
+      }
+      tr {
+        text-align: center;
+      }
+      .row {
+        text-align: right;
+      }
+    </style>
+  {% endif %}
+
+  <main class="main">
+    <div class="page-header text-center" style="background-image: url('{% static 'images/page-header-bg.jpg' %}')">
+      <div class="container">
+        <h1 class="page-title">{% trans 'My Downloads' %}<span>{{ full_name }}</span></h1>
+      </div><!-- End .container -->
+    </div><!-- End .page-header -->
+
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-4">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">{% trans 'Home' %}</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">{% trans 'Account' %}</a></li>
+          <li class="breadcrumb-item active" aria-current="page">{% trans 'My Downloads' %}</li>
+        </ol>
+      </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+
+    <div class="page-content">
+      <div class="dashboard">
+        <div class="container">
+          <div class="row">
+            {% include 'includes/dashboard_sidebar.html' %}
+
+            <div class="col-md-8 col-lg-10">
+              <div class="downloads-section">
+                <h6 class="text-center">{% trans 'List of My Purchased Downloads' %}</h6><br>
+
+                {% if download_links %}
+                  <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover">
+                      <thead class="thead-dark">
+                        <tr>
+                          <th scope="col"><b>{% trans 'Img' %}</b></th>
+                          <th scope="col"><b>{% trans 'Order Number' %}</b></th>
+                          <th scope="col"><b>{% trans 'Product Name' %}</b></th>
+                          <th scope="col"><b>{% trans 'Transaction' %}</b></th>
+                          <th scope="col"><b>{% trans 'Download Status' %}</b></th>
+                          <th scope="col"><b>{% trans 'Attempts Left' %}</b></th>
+                          <th scope="col"><b>{% trans 'Actions' %}</b></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for link in download_links %}
+  {% if not link.order.is_download_removed %}
+    <tr>
+      <td>
+        {% thumbnail link.image "70x70" crop="center" as p_p %}
+        <img width="{{ p_p.width }}" height="{{p_p.height }}" src="{{p_p.url}}">
+        {% endthumbnail %}
+      </td>
+      <td>#{{ link.order_number }}</td>
+      <td>{{ link.product_name }}</td>
+      <td>{{ link.transaction_id }}</td>
+      <td>
+        {% if link.download_status == 'expired' %}
+          <span class="status expired">{% trans 'Expired' %}</span>
+        {% elif link.download_status == 'limit reached' %}
+          <span class="status limit-reached">{% trans 'Download Limit Reached' %}</span>
+        {% else %}
+          <span class="status valid">{% trans 'Valid until' %} {{ link.download_expiration }}</span>
+        {% endif %}
+      </td>
+      <td>{{ link.remaining_downloads }}</td>
+      <td>
+        {% if link.download_status == 'valid' %}
+          <a href="{{ link.download_url }}" class="btn btn-primary">{% trans 'Download' %}</a>
+          <a href="{% url 'orders:remove_download' link.order_id %}" class="btn btn-danger">{% trans 'Remove' %}</a>
+        {% else %}
+          <span class="btn btn-secondary" disabled>{% trans 'Unavailable' %}</span>
+           <a href="{% url 'orders:remove_download' link.order_id %}" class="btn btn-danger">{% trans 'Remove' %}</a>
+        {% endif %}
+      </td>
+    </tr>
+  {% endif %}
+{% endfor %}
+
+                      </tbody>
+                    </table>
+                  </div><!-- .table-responsive -->
+                {% else %}
+                  <p class="text-center">{% trans 'No Downloadable Products Purchased Yet' %}</p>
+                {% endif %}
+              </div><!-- .downloads-section -->
+            </div><!-- End .col-md-8 -->
+          </div><!-- End .row -->
+        </div><!-- End .container -->
+      </div><!-- End .dashboard -->
+    </div><!-- End .page-content -->
+  </main><!-- End .main -->
+
+  <style>
+    /* Table Styling */
+    .table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .table th, .table td {
+      padding: 12px 15px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+
+    .table th {
+      background-color: #f2f2f2;
+      font-weight: bold;
+    }
+
+    .table tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    /* Status Styling */
+    .status {
+      display: inline-block;
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .status.expired {
+      background-color: #e57373;
+      color: white;
+    }
+
+    .status.limit-reached {
+      background-color: #ffb74d;
+      color: white;
+    }
+
+    .status.valid {
+      background-color: #81c784;
+      color: white;
+    }
+
+    /* Button Styling */
+    .btn-primary {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 5px;
+      display: inline-block;
+      font-size: 1em;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+
+    .btn-secondary {
+      background-color: #cccccc;
+      color: #666666;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+
+    .btn-secondary:hover {
+      background-color: #999999;
+    }
+
+    /* Pagination Styling */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    .page-item {
+      margin: 0;
+    }
+
+    .page-link {
+      background-color: #f1f1f1;
+      border: 1px solid #ddd;
+      padding: 8px 12px;
+      color: #333;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .page-item.active .page-link {
+      background-color: #007bff;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    .page-item.disabled .page-link {
+      color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .page-item:hover .page-link {
+      background-color: #007bff;
+      color: #fff;
+    }
+
+    @media (max-width: 768px) {
+      .page-header {
+        padding: 60px 0;
+      }
+
+      .table th, .table td {
+        padding: 10px;
+      }
+
+      .downloads-section {
+        padding: 20px;
+      }
+
+      .btn-outline-primary-2 {
+        font-size: 16px;
+      }
+    }
+  </style>
+
+{% endblock %}

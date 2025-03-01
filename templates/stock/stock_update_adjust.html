@@ -1,0 +1,83 @@
+<!-- inventory_app/templates/inventory_app/stock_adjustment.html -->
+
+{% extends 'homebase.html' %}
+{% load static %}
+{% load thumbnail %}
+{% load i18n %}
+
+{% block content %}
+{% if current_language == 'ar' %}
+    <style>
+      .main {
+        direction: rtl;
+      }
+      tr{
+        text-align: center;
+      }
+      .row{
+        text-align: right;
+      }
+      .product-media{
+        margin-right: 0.2rem !important;
+        margin-left: 1em !important;
+      }
+    </style>
+   {% endif %}
+
+<main class="main">
+     <!-- Include the ads template -->
+                {% include 'partials/ads.html' %}
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">{% trans 'Home' %}</a></li>
+               <li class="breadcrumb-item"><a href="#">{% trans 'Low Stock information' %}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{% trans 'Stock Adjustment' %}</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+<div class="container">
+	<div class="row">
+		{% include 'includes/stock_sidebar.html' %}
+		<div class="col-lg-9">
+
+  
+    <h5>{% trans 'Stock Adjustment for' %} {{ product.product_name }}</h5>
+    {% thumbnail product.images "120x120" crop="center" as p_pic %}                                                          
+          <img width="{{ p_pic.width }}" height="{{p_pic.height }}" src="{{p_pic.url}}">
+     {% endthumbnail %}
+
+    <form method="post" >
+      {% csrf_token %}
+      
+      
+      <div class="form-group">
+              <label for="adjustment_type">{% trans 'Adjustment Type' %}:</label>
+              <select name="adjustment_type" id="adjustment_type" class="form-input wide-input">
+               
+                  <option value="add">{% trans 'add' %}</option>
+                  <option value="subtract">{% trans 'subtract' %}</option>
+               
+               
+              </select>
+      </div>
+       <br>
+       <div class="form-group">
+                        <label for="stock">{% trans 'Quantity' %}:</label>
+                        <input type="text" name="quantity" id="stock" class="form-input" pattern="[0-9]*" inputmode="numeric">
+       </div>
+       <br>
+       <div class="form-group">
+                        <label for="description">{% trans 'Reason' %}</label>
+                        <textarea name="reason" id="description" class="form-input" rows="4" required></textarea>
+       </div>
+       <br>
+      <button type="submit" class="btn btn-primary">{% trans 'Adjust Stock' %}</button>
+    </form>
+
+  </div>
+
+</div>
+</div>
+</main>
+{% endblock %}

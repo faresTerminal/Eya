@@ -1,0 +1,39 @@
+{% extends 'homebase.html' %}
+{% load static %}
+
+
+
+{% block content %}
+<main class="main">
+        	<!-- Include the ads template -->
+            {% include 'partials/ads.html' %}
+            <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        
+                        <li class="breadcrumb-item active" aria-current="page">Confirmation Link</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+<div class="container"></div>
+<div class="row">
+<div class="col-lg-3"></div>
+<div class="col-lg-6" style="margin-top: 3em;margin-bottom: 8em;">
+	<div class="tab-content" style="text-align: center;">
+	<p class="link-underline" style="margin-top: 2em;"><span class="font-weight-normal text-dark">Thank you for registering with us! We've just sent an activation link to your email address.</span> </p><br>
+	<a class="btn btn-outline-primary-2"  href="/">Back Home</a>
+	</div>
+
+</div>
+<div class="col-lg-3"></div>
+</div>
+</div>
+
+
+
+</main>
+
+
+
+{% endblock %}

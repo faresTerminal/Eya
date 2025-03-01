@@ -1,0 +1,279 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<style>
+    /* General styling */
+   
+    .container {
+      
+    }
+    
+    /* Chat Sidebar */
+    .conversation-list {
+        max-height: 500px;
+        overflow-y: auto;
+        padding: 0;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .conversation-item {
+        display: flex;
+        align-items: center;
+        padding: 12px;
+        border-bottom: 1px solid #f0f0f0;
+        transition: background-color 0.3s;
+        cursor: pointer;
+    }
+    .conversation-item:hover {
+        background-color: #f8f9fa;
+    }
+    .profile-pic {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        margin-right: 12px;
+    }
+    .flex-grow-1 {
+        flex-grow: 1;
+    }
+
+    /* Chat Section Styling */
+    .chat-section {
+        padding: 0;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .chat-header {
+        background-color: #fff;
+        color: white;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+    .chat-header h5, .chat-header a {
+        color: black;
+    }
+    .chat-body {
+        padding: 20px;
+        max-height: 400px;
+        overflow-y: auto;
+        background-color: #f1f1f1;
+    }
+    .message {
+        margin-bottom: 12px;
+        padding: 10px 15px;
+        border-radius: 18px;
+        max-width: 75%;
+        position: relative;
+    }
+    .sent {
+        background-color: #007bff;
+        color: white;
+        margin-left: auto;
+        text-align: right;
+        border-bottom-right-radius: 5px;
+    }
+    .received {
+        background-color: #e9ecef;
+        color: black;
+        text-align: left;
+        border-bottom-left-radius: 5px;
+    }
+
+    /* Chat Footer Styling */
+    .chat-footer {
+        display: flex;
+        padding: 15px;
+        background-color: white;
+        border-top: 1px solid #e9ecef;
+    }
+    .chat-footer input[type="text"] {
+        flex: 1;
+        border-radius: 20px;
+        padding: 10px;
+        border: 1px solid #ced4da;
+        margin-right: 10px;
+        transition: border-color 0.3s;
+    }
+    .chat-footer input[type="text"]:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+    .chat-footer button {
+        border-radius: 20px;
+        padding: 8px 15px;
+    }
+
+    /* Notifications */
+    .noti-list {
+        max-height: 400px;
+        overflow-y: auto;
+        padding: 0;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .noti-item {
+        padding: 12px;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #f0f0f0;
+        transition: background-color 0.3s;
+    }
+    .noti-item:hover {
+        background-color: #f8f9fa;
+    }
+    .noti-image img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+    .profile-pic-small {
+    width: 25px;  /* Adjust the width to your preferred size */
+    height: 25px; /* Match the height for a square aspect ratio */
+    border-radius: 50%; /* Makes the image circular */
+    margin-right: 10px; /* Adds space between the image and text */
+}
+
+</style>
+
+<main class="main">
+    <!-- Include the ads template -->
+            {% include 'partials/ads.html' %}
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">{% trans 'Home' %}</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">{% trans 'Account' %}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{% trans 'My Conversations' %}</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+    {% load humanize %}
+    <div class="container">
+        <p style="text-align: center;">{% trans ' Hello' %} <span class="font-weight-normal text-dark">{{user.first_name}}</span>  {% trans '  you have' %} <b> {{ orders.count}} {% trans '  conversation' %}.</b> 
+                                        <br>
+                                        {% trans ' From your account dashboard you can view your' %} <a href="{% url 'my_orders' %}" class="tab-trigger link-underline">{% trans ' recent orders' %}</a>, {% trans ' manage your' %} <a href="{% url 'edit_profile' %}" class="tab-trigger">{% trans ' edit your profile' %}</a>, {% trans ' and' %} <a href="{% url 'change_password' %}" class="tab-trigger">{% trans ' edit your password' %} </a>.</p><hr>
+        <div class="row">
+
+            <!-- Sidebar Conversations List -->
+            <div class="col-md-3">
+
+                <h5>Conversations</h5>
+                <div class="conversation-list">
+                    {% for item in conversations %}
+                    <a href="{% url 'view_conversation' item.id %}" class="text-decoration-none">
+                        <div class="conversation-item">
+                            {% if item.buyer.userprofile.profile_picture %}
+                                <img src="{{ item.buyer.userprofile.profile_picture.url }}" class="profile-pic" alt="Profile Picture">
+                            {% else %}
+                                <img src="{% static 'default_profile_picture.png' %}" class="profile-pic" alt="Default Profile Picture">
+                            {% endif %}
+                            <div class="flex-grow-1">
+                                <strong>{{ item.buyer.username }}</strong>
+                                <p class="text-muted mb-1">{{ item.latest_message.content|truncatewords:5 }}</p>
+                                <small class="text-muted">{{ item.product.product_name }}</small><br>
+                                <small class="text-muted">{{ item.created_at|naturaltime }}</small>
+                            </div>
+                            {% if item.unread_count > 0 %}
+                                <span class="unread-count">{{ item.unread_count }}</span>
+                            {% endif %}
+                        </div>
+                    </a>
+                    {% empty %}
+                        <p class="text-muted">No conversations available.</p>
+                    {% endfor %}
+                </div>
+            </div>
+            
+           <!-- Chat Section -->
+<div class="col-md-6 chat-section">
+
+    <div class="chat-toolbar d-flex justify-content-between align-items-center p-2" style="background-color: #fcb941; border-radius: 8px 8px 0 0; ">
+    <!-- Refresh Icon -->
+    <a href="" class="text-decoration-none" onclick="refreshChat({{ conversation.id }}); return false;" style="color: black;">
+        <i class="fas fa-sync-alt"></i> Refresh
+    </a>
+
+    <!-- Settings Icon -->
+    <a style="color: black;" href="#" class="text-decoration-none" data-toggle="modal" data-target="#settingsModal">
+         Settings
+    </a>
+
+    <!-- Other action icons if needed -->
+</div>
+
+    <div class="chat-header text-center d-flex flex-column align-items-center">
+        <!-- Profile Picture and Seller Info -->
+        <img src="{{ conversation.buyer.userprofile.profile_picture.url }}" class="profile-pic mb-2" alt="Profile Picture" style="width: 60px; height: 60px; border-radius: 50%;">
+        <h5 class="m-0">{{ conversation.buyer.username }}</h5>
+        <small class="text-muted">Is buyer from EcoHome</small>
+        <small class="text-muted"><strong>from </strong> {{conversation.buyer.userprofile.state}} / {{conversation.buyer.userprofile.city}}</small>
+        
+        <!-- Product Info and View Profile Link -->
+        <small><strong>Product:</strong> {{ conversation.product.product_name }}</small>
+        <a href="{% url 'Seller_Info' username=conversation.buyer.username %}" class="btn btn-outline-secondary btn-sm mt-2">Voir le Profil</a>
+    </div>
+
+    <div class="chat-body" id="chat-body-{{ conversation.id }}" style="max-height: 400px; overflow-y: auto; padding: 15px; background-color: #ffffff; border: 1px solid #dee2e6; border-radius: 8px;">
+        {% for message in messages %}
+            <div class="message {% if message.sender == request.user %}sent{% else %}received{% endif %}" style="padding: 10px 15px; border-radius: 15px; max-width: 80%; margin-bottom: 10px; {% if message.sender == request.user %} background-color: #3c3b3a; color: white; margin-left: auto; {% else %} background-color: #e9ecef; color: black; {% endif %}">
+                {{ message.content }}
+                <small class="d-block text-muted mt-1" style="font-size: 0.8em;">{{ message.timestamp|naturaltime }}</small>
+                <img src="{{ message.sender.userprofile.profile_picture.url }}" 
+     alt="{{ message.sender.username }}'s profile picture" 
+     class="profile-pic-small">
+
+            </div>
+        {% empty %}
+            <p class="text-muted text-center">No messages yet. Start the conversation!</p>
+        {% endfor %}
+    </div>
+
+    <div class="chat-footer d-flex align-items-center p-3" style="background-color: #f8f9fa; border-top: 1px solid #dee2e6;">
+        <form id="chat-form-{{ conversation.id }}" method="POST" action="{% url 'view_conversation' conversation.id %}" onsubmit="sendMessage(event, {{ conversation.id }}); return false;" class="w-100 d-flex">
+            {% csrf_token %}
+            <input type="text" name="content" class="form-control me-2" placeholder="Type a message..." required style="border-radius: 20px;">
+            <button type="submit" class="btn btn-primary" style="border-radius: 20px;">Send</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    .chat-section {
+        padding: 0;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .profile-pic {
+        border-radius: 50%;
+    }
+    .chat-header h5 {
+        font-size: 1.1em;
+        color: #333;
+    }
+</style>
+
+            <!-- Notifications List -->
+            <div class="col-md-3">
+
+                
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+    function openChat(conversationId) {
+        console.log('Opening chat for conversation:', conversationId);
+    }
+</script>
+{% endblock %}

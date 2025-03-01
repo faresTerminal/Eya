@@ -1,0 +1,209 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load thumbnail %}
+{% load i18n %}
+
+{% block content %}
+{% if current_language == 'ar' %}
+    <style>
+      .main {
+        direction: rtl;
+      }
+      tr {
+        text-align: center;
+      }
+      .row {
+        text-align: right;
+      }
+      .product-media {
+        margin-right: 0.2rem !important;
+        margin-left: 1em !important;
+      }
+    </style>
+{% endif %}
+
+<main class="main">
+  <!-- Page Header -->
+   <!-- Include the ads template -->
+                {% include 'partials/ads.html' %}
+
+  <!-- Breadcrumb Navigation -->
+  <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">{% trans 'Home' %}</a></li>
+        <li class="breadcrumb-item"><a href="#">Add Product</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{% trans 'Create Gallery' %}</li>
+      </ol>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="row">
+      <!-- Sidebar -->
+      {% include 'includes/management_center_sidebar.html' %}
+      
+      <!-- Main Content -->
+      <div class="col-lg-5">
+        <h4 class="page-title mb-4">{% trans 'Add Product Gallery' %}</h4>
+
+        <!-- Product Information -->
+        <div class="product-info mb-4">
+          <h5>{{ product.product_name }}</h5>
+          <p>{{ product.description|safe }}</p>
+          <img src="{{ product.images.url }}" alt="{{ product.product_name }}" class="img-fluid" style="max-width: 100px;">
+        </div>
+
+        <!-- Gallery Image Form -->
+        <form method="post" enctype="multipart/form-data" action="{% url 'add_gallery_images' product.id %}">
+          {% csrf_token %}
+          
+          <!-- Image Upload -->
+          <div class="form-group">
+            <label for="images">{% trans 'Add Images' %}</label>
+            <input type="file" name="image" id="images" class="form-input form-control">
+          </div>
+
+          <!-- YouTube URL Field (Only show if no youtube_url exists in the gallery) -->
+          {% if not has_youtube_url %}
+            <div class="form-group">
+              <label for="youtube_url">{% trans 'Add YouTube Video URL' %} (Optional)</label>
+              <input type="url" name="youtube_url" id="youtube_url" class="form-input form-control" placeholder="Enter YouTube URL">
+            </div>
+          {% endif %}
+
+          <!-- Submit Button -->
+          <button class="btn btn-primary" type="submit">{% trans 'Upload Image' %}</button>
+        </form>
+
+        <!-- Links -->
+        <div class="mt-4">
+          <a href="{{product.get_url}}" class="btn btn-outline-primary">{% trans 'Show your Product' %}</a>
+          <a href="{% url 'add_description' product.id %}" class="btn btn-outline-secondary">{% trans 'Add Description' %}</a>
+        </div>
+      </div>
+
+      <!-- Product Details -->
+      <div class="col-lg-3">
+        <h5 class="page-title mb-4">{% trans 'Information about your product' %}</h5>
+
+        <!-- Product Table -->
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">{% trans 'Image' %}</th>
+              <th scope="col">{% trans 'Product Name' %}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><img src="{{ product.images.url }}" alt="{{ product.product_name }}" class="img-fluid" style="max-width: 100px;"></td>
+              <td style="text-align:center;">{{ product.product_name }}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Product Gallery -->
+        <div class="product-images mb-4">
+          {% for gl in gallery %}
+            <div class="product-image">
+              <img src="{{ gl.image.url }}" alt="{{ product.product_name }}" class="img-fluid">
+            </div>
+            <form method="post" action="{% url 'remove_gallery_image' product.id gl.id %}">
+              {% csrf_token %}
+              <button class="btn-remove" type="submit"><i class="icon-close"></i></button>
+            </form>
+          {% endfor %}
+        </div>
+
+        <!-- Size and Color Tables -->
+        <div class="size-table mb-4">
+          <h4>{% trans 'Size' %}</h4>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>{% trans 'Size' %}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for variant in variants %}
+                <tr>
+                  <td>{{ variant.size }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="color-table mb-4">
+          <h4>{% trans 'Color' %}</h4>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>{% trans 'Color' %}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for variant in variants %}
+                <tr>
+                  <td>{{ variant.color }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<style>
+  .product-images {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+  }
+
+  .product-image {
+    margin: 0 10px;
+  }
+
+  .form-group label {
+    font-weight: bold;
+  }
+
+  .form-input {
+    border-radius: 5px;
+    padding: 10px;
+    width: 100%;
+  }
+
+  .btn {
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+
+  .btn-remove {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #d9534f;
+  }
+
+  .product-table th,
+  .product-table td {
+    padding: 10px;
+  }
+
+  .product-table th {
+    background-color: #f8f9fa;
+  }
+
+  .size-table th,
+  .color-table th {
+    background-color: #f8f9fa;
+  }
+</style>
+
+{% endblock %}

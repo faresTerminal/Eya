@@ -1,0 +1,120 @@
+
+
+
+
+{% extends 'homebase.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<style type="text/css">
+    /* Customize button styles for each social platform */
+.btn-social {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 15px;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.btn-facebook { background-color: #3b5998; }
+.btn-instagram { background-color: #C13584; }
+.btn-youtube { background-color: #FF0000; }
+.btn-twitter { background-color: #1DA1F2; }
+.btn-pinterest { background-color: #E60023; }
+.btn-tiktok { background-color: #000000; }
+
+.btn-social i {
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.seller-details {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+</style>
+<main class="main">
+   <!-- Include the ads template -->
+            {% include 'partials/ads.html' %}
+
+    <div class="page-content">
+        <div class="container">
+            <div class="row">
+                <!-- Sidebar -->
+               
+                    {% include 'includes/poster_sidebar.html' %}
+               
+
+                <!-- Main Content -->
+                <div class="col-md-8">
+                    <div class="seller-details bg-light p-4 rounded shadow">
+                        <h5 class="mb-4 text-primary">{% trans 'Contact Information for' %} <strong>{{ user.username }}</strong></h5>
+
+                        <!-- Social Media Links Section -->
+                        <h4 class="text-secondary">{% trans 'Social Media Links' %}</h4>
+                        <hr>
+
+                        <!-- Social Links -->
+                        {% if shop_social %}
+                            <ul class="social-links list-unstyled d-flex flex-wrap">
+                                {% if shop_social.facebook %}
+                                    <li class="mb-3 mr-3">
+                                        <a href="{{ shop_social.facebook }}" target="_blank" class="btn btn-social btn-facebook d-flex align-items-center">
+                                            <i class="fa fa-facebook mr-2"></i> Facebook
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                {% if shop_social.instagram %}
+                                    <li class="mb-3 mr-3">
+                                        <a href="{{ shop_social.instagram }}" target="_blank" class="btn btn-social btn-instagram d-flex align-items-center">
+                                            <i class="fa fa-instagram mr-2"></i> Instagram
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                {% if shop_social.youtube %}
+                                    <li class="mb-3 mr-3">
+                                        <a href="{{ shop_social.youtube }}" target="_blank" class="btn btn-social btn-youtube d-flex align-items-center">
+                                            <i class="fa fa-youtube mr-2"></i> YouTube
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                {% if shop_social.twiter %}
+                                    <li class="mb-3 mr-3">
+                                        <a href="{{ shop_social.twiter }}" target="_blank" class="btn btn-social btn-twitter d-flex align-items-center">
+                                            <i class="fa fa-twitter mr-2"></i> Twitter
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                {% if shop_social.pinterest %}
+                                    <li class="mb-3 mr-3">
+                                        <a href="{{ shop_social.pinterest }}" target="_blank" class="btn btn-social btn-pinterest d-flex align-items-center">
+                                            <i class="fa fa-pinterest mr-2"></i> Pinterest
+                                        </a>
+                                    </li>
+                                {% endif %}
+                               {% if shop_social.tiktok %}
+                                    <li class="mb-3 mr-3">
+                                        <a href="{{ shop_social.tiktok }}" target="_blank" class="btn btn-social btn-tiktok d-flex align-items-center">
+                                            <!-- Custom SVG for TikTok -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="mr-2" style="width: 20px; height: 20px;">
+                                                <path d="M448,209.2v63.2c-33.2,0-65.8-3.2-97.5-9.5c-4.5,76.8-66.7,137.5-144.8,137.5c-27.8,0-54-7.8-75.8-21.2c-21.5-13.7-38.5-33.3-49.7-56.3c-10.8-22.5-16.8-47.8-16.8-74.2c0-82.8,67-149.8,149.8-149.8c4.5,0,9.2,0.2,13.7,0.5v63.8c-4.5-0.5-9-0.8-13.7-0.8c-48,0-86.8,38.8-86.8,86.8c0,48,38.8,86.8,86.8,86.8c47,0,85-37.5,86.7-84.2c-22-4.5-43.2-10.7-63.8-18.8V94.2c20.3,11.7,43.3,20.3,67.8,22.7c5.5,28,20.2,52.7,40.8,71.2C382.8,202.5,415.2,209.2,448,209.2z"/>
+                                            </svg> TikTok
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        {% else %}
+                            <p>{% trans 'No social media links available.' %}</p>
+                        {% endif %}
+                    </div>
+                </div><!-- End .col-md-8 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .page-content -->
+</main><!-- End .main -->
+{% endblock %}

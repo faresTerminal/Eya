@@ -1,0 +1,41 @@
+<!-- publicite/templates/publicite/show_ads.html -->
+
+{% if ad %}
+<div class="advertisement">
+    <h3>{{ ad.title }}</h3>
+    {% if ad.type == 'image' %}
+        <a href="{{ ad.link }}" target="_blank">
+            <img src="{{ ad.image_url }}" alt="{{ ad.title }}">
+        </a>
+    {% elif ad.type == 'video' %}
+        <video controls>
+            <source src="{{ ad.video_url }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    {% endif %}
+</div>
+{% else %}
+<p>No active advertisements.</p>
+
+<script>
+fetch('/publicite/api/random/')
+    .then(response => response.json())
+    .then(data => {
+        if (!data.error) {
+            let adHtml = `<h3>${data.title}</h3>`;
+            if (data.type === 'image') {
+                adHtml += `<a href="${data.link}" target="_blank">
+                            <img src="${data.image_url}" alt="${data.title}">
+                           </a>`;
+            } else if (data.type === 'video') {
+                adHtml += `<video controls>
+                            <source src="${data.video_url}" type="video/mp4">
+                           </video>`;
+            }
+            document.getElementById('ad-container').innerHTML = adHtml;
+        }
+    });
+</script>
+<div id="ad-container"></div>
+
+{% endif %}

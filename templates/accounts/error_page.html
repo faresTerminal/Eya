@@ -1,0 +1,104 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<hr>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h4 class="card-title">{% trans "Error" %}</h4>
+                </div>
+                <div class="card-body text-center">
+                    <p class="error-message">{% trans "The confirmation code has expired. Please request a new confirmation code." %}</p>
+                    
+                    {% if user_id %}
+                        <a href="{% url 'resend_confirmation_code' user_id=user_id %}" class="btn btn-primary">
+                            {% trans "Get New Code" %}
+                        </a>
+                    {% else %}
+                        <p class="text-muted">{% trans "There was an issue with your request. Please try again later." %}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+{% endblock %}
+
+<style>
+    /* Container setup */
+    
+
+    /* Card styling */
+    .card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
+    }
+
+    .card-header {
+        background-color: #f5f5f5;
+        padding: 20px;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+
+    .card-title {
+        font-size: 24px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .card-body {
+        padding: 30px;
+    }
+
+    /* Error message styling */
+    .error-message {
+        color: #d9534f;
+        font-size: 18px;
+        font-weight: 500;
+        margin-bottom: 20px;
+    }
+
+    /* Button styling */
+    .btn {
+        display: inline-block;
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: 600;
+        border-radius: 5px;
+        text-decoration: none;
+        text-align: center;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+        background-color: #0056b3;
+    }
+
+    /* Link styling (for the fallback) */
+    .text-muted {
+        font-size: 14px;
+        color: #777;
+    }
+
+    /* Responsive design */
+    @media (max-width: 767px) {
+        .container {
+            padding: 15px;
+        }
+        .card {
+            margin-bottom: 15px;
+        }
+    }
+</style>
+
+

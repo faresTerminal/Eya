@@ -1,0 +1,129 @@
+{% extends 'homebase.html' %}
+{% load static %}
+
+{% load thumbnail %}
+
+{% load i18n %}
+
+{% block content %}
+{% if current_language == 'ar' %}
+    <style>
+      .main {
+        direction: rtl;
+      }
+      tr{
+        text-align: center;
+      }
+      .row{
+        text-align: right;
+      }
+      .product-media{
+        margin-right: 0.2rem !important;
+        margin-left: 1em !important;
+      }
+      .list-group-item b{
+        margin-left: 2em;
+      }
+    </style>
+   {% endif %}
+   {% include 'includes/alerts.html' %}
+
+ <main class="main">
+        	<!-- Include the ads template -->
+            {% include 'partials/ads.html' %}
+            <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">{% trans 'Home' %}</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">{% trans 'Account' %}</a>
+                        <li class="breadcrumb-item active" aria-current="page">{% trans 'Edit Profie' %}</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+
+            <div class="page-content">
+            	<div class="dashboard">
+	                <div class="container">
+	                	<div class="row">
+	                		{% include 'includes/dashboard_sidebar.html' %}
+
+	                		<div class="col-md-8 col-lg-9">
+	                			<p style="text-align: center;">{% trans 'Edit Profile' %}</p> 
+	                			<div class="tab-content">
+								    <div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel" aria-labelledby="tab-dashboard-link">
+								    	<div class="text-right">
+								    		 {% thumbnail userprofile.profile_picture "120x120" crop="center" as profile_pic %}
+				                            <img width="{{ profile_pic.width }}" height="{{profile_pic.height }}" src="{{profile_pic.url}}"style="border-radius:30px;">
+				                            {% endthumbnail %}
+			                            </div>
+			                            <br>
+								    	<form action="{% url 'edit_profile' %}" method="POST" enctype="multipart/form-data">
+			                				<div class="row">
+			                					{% csrf_token %}
+			                					<div class="col-sm-6">
+			                						<label>{% trans 'First Name' %} *</label>
+			                						{{user_form.first_name}}
+			                					</div><!-- End .col-sm-6 -->
+
+			                					<div class="col-sm-6">
+			                						<label>{% trans 'Last Name' %} *</label>
+			                						{{user_form.last_name}}
+			                					</div><!-- End .col-sm-6 -->
+			                				</div><!-- End .row -->
+
+		            						<div class="row">
+			                					<div class="col-sm-6">
+			                						<label>{% trans 'Phone' %} *</label>
+			                						{{user_form.phone_number}}
+			                					</div><!-- End .col-sm-6 -->
+
+			                					<div class="col-sm-6">
+			                						<label>{% trans 'Profile Picture' %} *</label>
+			                						{{profile_form.profile_picture}}
+
+			                					</div><!-- End .col-sm-6 -->
+			                				</div><!-- End .row -->
+
+		                					
+
+		        							
+
+		            						<div class="row">
+			                					
+			                					<div class="col-sm-4">
+			                						<label>{% trans 'City * Comun' %}</label>
+			                						{{profile_form.city}}
+			                					</div><!-- End .col-sm-6 -->
+
+			                					<div class="col-sm-4">
+			                						<label>{% trans 'State * Wilaya' %}</label>
+			                						{{profile_form.state}}
+
+			                					</div><!-- End .col-sm-6 -->
+			                				</div><!-- End .row -->
+
+			                				<label>{% trans 'adress line 1' %} *</label>
+		        							{{profile_form.address_line1}}
+
+		                					<button type="submit" class="btn btn-outline-primary-2">
+			                					<span>{% trans 'SAVE CHANGES' %}</span>
+			            						<i class="icon-long-arrow-right"></i>
+			                				</button>
+			                			</form>
+								    	
+								    </div><!-- .End .tab-pane -->
+
+								    
+
+								   
+
+								   
+								</div>
+	                		</div><!-- End .col-lg-9 -->
+	                	</div><!-- End .row -->
+	                </div><!-- End .container -->
+                </div><!-- End .dashboard -->
+            </div><!-- End .page-content -->
+        </main><!-- End .main -->
+
+{% endblock %}

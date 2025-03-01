@@ -1,0 +1,73 @@
+{% extends 'homebase.html' %}
+{% load static %}
+
+{% block content %}
+<main class="main">
+    <!-- Include the ads template -->
+                {% include 'partials/ads.html' %}
+
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Account</a></li>
+                <li class="breadcrumb-item active" aria-current="page">My orders</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <!-- Add any content for the left column if needed -->
+            </div>
+            <div class="col-lg-6">
+                <div style="margin-top: 4em;">
+                    <h5>Table of Orders</h5>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Order Number</th>
+                            <th scope="col">First Name</th>
+                            <th scope="col">Last Name</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Pickup Location</th> <!-- New Column for Pickup Location -->
+                            <th scope="col">Printing</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in complete_orders %}
+                        <tr>
+                            <td>#{{ order.order_number }}</td>
+                            <td>{{ order.first_name }}</td>
+                            <td>{{ order.last_name }}</td>
+                            <td>{{ order.status }}</td>
+
+                            <!-- Display Pickup Location if the shipping method is 'pickup' -->
+                            <td>
+                                {% if order.shipping_method == 'pickup' %}
+                                <p><strong>Delivery Company:</strong>
+                                    {{ order.get_pickup_location_display }}</p>
+                                {% else %}
+                                    <p><strong>Home Delivery</strong></p>
+                                {% endif %}
+                            </td>
+
+                            <td><a href="{% url 'printer:order_detail' order.id %}">Show</a></td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6">No complete orders found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-lg-3">
+                <!-- Add any content for the right column if needed -->
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

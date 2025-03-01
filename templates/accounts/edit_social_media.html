@@ -1,0 +1,138 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<style type="text/css">
+    /* Customize button styles for each social platform */
+.btn-social {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 15px;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.btn-facebook { background-color: #3b5998; }
+.btn-instagram { background-color: #C13584; }
+.btn-youtube { background-color: #FF0000; }
+.btn-twitter { background-color: #1DA1F2; }
+.btn-pinterest { background-color: #E60023; }
+.btn-tiktok { background-color: #000000; }
+
+.btn-social i {
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.seller-details {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+</style>
+  {% if current_language == 'ar' %}
+    <style>
+      .main {
+        direction: rtl;
+      }
+      tr {
+        text-align: center;
+      }
+      .row {
+        text-align: right;
+      }
+      .product-media {
+        margin-right: 0.2rem !important;
+        margin-left: 1em !important;
+      }
+      .list-group-item b {
+        margin-left: 2em;
+      }
+    </style>
+    
+  {% endif %}
+{% include 'includes/alerts.html' %}
+  <main class="main">
+    <!-- Include the ads template -->
+            {% include 'partials/ads.html' %}
+
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">{% trans ' Home' %}</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">{% trans ' Account' %}</a></li>
+          <li class="breadcrumb-item active" aria-current="page">{% trans ' edit social media' %}</li>
+        </ol>
+      </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+
+    <div class="page-content">
+      <div class="dashboard">
+        <div class="container">
+          <div class="row">
+            {% include 'includes/dashboard_sidebar.html' %}
+
+            <div class="col-md-8 col-lg-9">
+              
+
+             <div class="col-sm-9">
+
+         <form method="post" enctype="multipart/form-data" >
+                                    {% csrf_token %}
+                              <div class="row">
+                                <div class="tab-pane fade show active" id=" tab-dashboard" role="tabpanel" aria-labelledby="tab-dashboard-link">
+                                 <p>({% trans 'Hello' %} <span class="font-weight-normal text-dark">{{user.full_name}})</span>  
+                                    <br>
+                                                      <strong>{% trans 'you can add your social media accounts to your Profile (Optional)' %}:</strong>
+
+                                                   
+                                                   
+                                     .</p>
+                               </div><!-- .End .tab-pane -->
+                                <div class="col-sm-12">
+                                  <label>{% trans 'Title' %} *</label>
+                                  <input type="text" name="title" class="form-control" required>
+                                  <label>{% trans 'Facebook' %} * </label>
+                                  
+                                  <input  type="text" name="facebook" class="form-control" >
+
+                                  <label>{% trans 'Instagram' %} *</label>
+                                  <input type="text" name="instagram" class="form-control" >
+                                  <label>{% trans 'Youtube' %} *</label>
+                                  <input type="text" name="youtube" class="form-control" >
+                                  <label>{% trans 'Twiter' %} *</label>
+                                  <input type="text" name="twiter" class="form-control" >
+                                  <label>{% trans 'Pinterest' %} *</label>
+                                  <input type="text" name="pinterest" class="form-control" >
+                                  <label>{% trans 'Tik Tok' %} *</label>
+                                  <input type="text" name="tiktok" class="form-control" >
+                                  
+                                </div><!-- End .col-sm-6 -->
+
+                               
+                              </div><!-- End .row -->
+                              
+                              
+                           
+                           
+                                            <hr>
+                              <button type="submit" class="btn btn-outline-primary-2">
+                                <span>{% trans 'Save Edit' %}</span>
+                              <i class="icon-long-arrow-right"></i>
+                              </button>
+         </form>
+                
+              
+            </div><!-- End .col-lg-9 -->
+          </div><!-- End .row -->
+              
+        </div><!-- End .container -->
+      </div><!-- End .dashboard -->
+    </div><!-- End .page-content -->
+  </main><!-- End .main -->
+
+{% endblock %}

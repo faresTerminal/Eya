@@ -1,0 +1,185 @@
+{% extends 'homebase.html' %}
+{% load static %}
+
+ {% load thumbnail%}
+
+{% block content %}
+        <main class="main">
+        	 <!-- Include the ads template -->
+             {% include 'partials/ads.html' %}
+            <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                        
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+
+            <div class="page-content">
+                <div class="container">
+        			<div class="toolbox">
+        				<div class="toolbox-left">
+                            <a href="#" class="sidebar-toggler"><i class="icon-bars"></i>Filters</a>
+        				</div><!-- End .toolbox-left -->
+
+                        <div class="toolbox-center">
+                            <div class="toolbox-info">
+                                Showing <span> {{product_count}}</span> Products
+                            </div><!-- End .toolbox-info -->
+                        </div><!-- End .toolbox-center -->
+
+        				<div class="toolbox-right">
+        					<div class="toolbox-sort">
+        						<label for="sortby">Sort by:</label>
+        						<div class="select-custom">
+									<select name="sortby" id="sortby" class="form-control">
+										<option value="popularity" selected="selected">Most Popular</option>
+										<option value="rating">Most Rated</option>
+										<option value="date">Date</option>
+									</select>
+								</div>
+        					</div><!-- End .toolbox-sort -->
+        				</div><!-- End .toolbox-right -->
+        			</div><!-- End .toolbox -->
+                    {% if products %}
+                    <div class="products">
+                        <div class="row">
+                            {% for s in products %}
+                            
+                            <div class="col-6 col-md-4 col-lg-4 col-xl-3">
+                                <div class="product">
+                                    <figure class="product-media">
+                                        {% if s.has_more_than_20_reviews %}
+                                     <span class="product-label label-circle label-top">Top</span>
+                                {% endif %}
+                                {% if s.is_clearance_product %}
+                                     <span class="product-label label-circle label-sale">Sale</span>
+                                {% endif %}
+                                {% if s.is_new_product %}
+                                    <span class="product-label label-circle label-new">New</span>
+                                {% endif %}
+                                        
+                                        <a href="{{s.get_url}}">
+                                            {% thumbnail s.images "275x275" crop="center" as ml %}
+                                            <img width="{{ ml.width }}" height="{{ml.height }}" src="{{ml.url}}" class="product-image">
+                                            {% endthumbnail %}
+                                        </a>
+                                        
+                                        <div class="product-action-vertical">
+                                            <a href="{% url 'add_to_wishlist' s.id %}" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+                                        </div><!-- End .product-action -->
+
+                                        <div class="product-action action-icon-top">
+                                            <!-- 
+                                            <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                                             -->
+                                            <a href="{{s.get_url}}" class="btn-product btn-quickview" title="Quick view"><span>detail view</span></a>
+                                            <a href="#" class="btn-product btn-compare" title="Compare"><span>compare</span></a>
+                                        </div><!-- End .product-action -->
+                                    </figure><!-- End .product-media -->
+
+                                    <div class="product-body">
+                                        <div class="product-cat">
+                                            <a href="#">{{s.category}}</a>
+                                        </div><!-- End .product-cat -->
+                                        <h3 class="product-title"><a href="{{s.get_url}}">{{s.product_name}}</a></h3><!-- End .product-title -->
+                                          {% if s.variants %}
+                                         <div class="product-price">
+                                            {{ s.variants.0.price }} DA
+                                            {% if s.variants.0.clearance_price > 0 %}
+                                                    
+                                            
+                                                   
+                                                    <span style="margin-left: 5px;" class="old-price text-success">{{s.variants.0.clearance_price}} DA</span>
+                                            {% endif %}
+                                        </div><!-- End .product-price -->
+                                        {% endif %}
+                                        <div class="ratings-container">
+                                             <div class="rating-star">
+                                <span>
+                                    <i class="fa fa-star{% if s.averageReview < 0.5 %}-o{% elif s.averageReview >= 0.5 and s.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if s.averageReview < 1.5 %}-o{% elif s.averageReview >= 1.5 and s.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if s.averageReview < 2.5 %}-o{% elif s.averageReview >= 2.5 and s.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if s.averageReview < 3.5 %}-o{% elif s.averageReview >= 3.5 and s.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if s.averageReview < 4.5 %}-o{% elif s.averageReview >= 4.5 and s.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+    
+                                    </span>
+                            </div>
+                                            <span class="ratings-text">( {{s.countReview}} Reviews )</span>
+                                        </div><!-- End .rating-container -->
+                                        <!-- Product Variations (Colors) -->
+                            <div class="product-nav product-nav-dots">
+                                {% for variation in s.variations.all %}
+                                    {% if variation.color %}
+                                        <a href="#" class="active" style="background: {{ variation.color }}"><span class="sr-only">{{ variation.name }}</span></a>
+                                    {% endif %}
+                                {% endfor %}
+                            </div><!-- End .product-nav -->
+
+                                        
+                                    </div><!-- End .product-body -->
+                                </div><!-- End .product -->
+
+                            </div><!-- End .col-sm-6 col-lg-4 col-xl-3 -->
+                            {% endfor %}
+                            {%else %}
+                            <div>
+                                <h5 class="text-center text-info">No Rusalt Found it ... please try again</h5>
+                            </div>
+                            {% endif %}
+
+
+                        </div><!-- End .row -->
+
+                        <nav aria-label="Page navigation">
+                            {% if products.has_other_pages %}
+                                <ul class="pagination">
+                                    {% if products.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link page-link-prev" href="?page={{products.previous_page_number}}" aria-label="Previous" tabindex="-1" aria-disabled="true">
+                                            <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>Prev
+                                        </a>
+                                    </li>
+                                    {% else %}
+                                    <li class="page-item disabled">
+                                        <a class="page-link page-link-prev" href="#" aria-label="Previous" tabindex="-1" aria-disabled="true">
+                                            <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>Prev
+                                        </a>
+                                    </li>
+                                    {%endif%}
+                                    {% for i in products.paginator.page_range %}
+                                    {% if products.number == i %}
+                                    <li class="page-item active" aria-current="page"><a class="page-link" href="#">{{i}}</a></li>
+                                    {% else %}
+                                    <li class="page-item"><a class="page-link" href="?page={{i}}">2</a></li>
+                                    
+                                    <li class="page-item-total">of All</li>
+                                    {% endif %}
+                                    {% endfor %}
+                                    {% if products.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link page-link-next" href="?page={{products.next_page_number}}" aria-label="Next">
+                                            Next <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
+                                        </a>
+                                    </li>
+                                    {%else%}
+                                    <li class="page-item disabled">
+                                        <a class="page-link page-link-next" href="#" aria-label="Next">
+                                            Next <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
+                                        </a>
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                                {% endif %}
+                            </nav>
+                    </div><!-- End .products -->
+
+                  
+                   
+                </div><!-- End .container -->
+            </div><!-- End .page-content -->
+        </main><!-- End .main -->
+
+        {% endblock %}

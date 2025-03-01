@@ -1,0 +1,26 @@
+{% extends 'homebase.html' %}
+{% load static %}
+
+ 
+
+{% block content %}
+
+<div>
+<hr class="mt-4 mb-4">
+                     <div class="row">
+                     	<div class="col-lg-3"></div>
+                     	<div class="col-lg-6">
+                    <div class="text-center">
+                        <h2 class="title">You have already subscribed to our newsletter with this email address. Thank you for your continued support!</h2><!-- End .title -->
+                        
+                        <div class="heading-right">
+                            <a href="{% url 'store' %}" class="title-link">Start Shopping Now <i class="icon-long-arrow-right"></i></a>
+                        </div>
+                    </div><!-- End .text-center -->
+                    </div>
+                    <div class="col-lg-3"></div>
+                     </div>
+                    <hr class="mt-4 mb-4">
+</div>
+
+{% endblock %}

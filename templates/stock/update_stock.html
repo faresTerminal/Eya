@@ -1,0 +1,85 @@
+<!-- inventory_app/templates/inventory_app/update_stock.html -->
+
+{% extends 'homebase.html' %}
+{% load static %}
+{% load thumbnail %}
+{% load i18n %}
+
+{% block content %}
+{% if current_language == 'ar' %}
+    <style>
+      .main {
+        direction: rtl;
+      }
+      tr{
+        text-align: center;
+      }
+      .row{
+        text-align: right;
+      }
+      .product-media{
+        margin-right: 0.2rem !important;
+        margin-left: 1em !important;
+      }
+    </style>
+   {% endif %}
+
+
+
+  
+<main class="main">
+    <!-- Include the ads template -->
+                {% include 'partials/ads.html' %}
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">{% trans 'Home' %}</a></li>
+                <li class="breadcrumb-item"><a href="#">{% trans 'Low Stock information' %}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{% trans 'Inventory Overview' %}</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+
+<div class="container">
+ <div class="row">
+  {% include 'includes/stock_sidebar.html' %}
+  <div class="col-lg-9">
+  <div >
+    <h5>{% trans 'Update Stock' %} - {{ product.product.product_name }}</h5>
+    <span class="span">{{product.color}}: {{product.size}}</span>
+     {% thumbnail product.product.images "120x120" crop="center" as p_pic %}                                                          
+          <img width="{{ p_pic.width }}" height="{{p_pic.height }}" src="{{p_pic.url}}">
+     {% endthumbnail %}
+
+    <form method="post">
+      {% csrf_token %}
+
+      
+       
+       <div class="form-group">
+        <label for="qty">{% trans 'New Stock Quantity' %}:</label><br>
+         <div class="details-filter-row details-row-size">
+                                        
+                                        <div class="product-details-quantity">
+                                            <input name="new_quantity" type="number" id="new_quantity" class="form-control" value="0"  step="1" data-decimals="0" required>
+                                        </div><!-- End .product-details-quantity -->
+        </div><!-- End .details-filter-row -->
+         
+       </div>
+      <br>
+      
+
+     
+       <div class="form-group">
+                        <label for="reason_for_change">{% trans 'Reason for Change' %}:</label>
+                        <textarea name="reason_for_change" id="reason_for_change" class="form-input" rows="4" required></textarea>
+       </div>
+      <br>
+      <button class="btn btn-primary" type="submit">{% trans 'Update Stock' %}</button>
+    </form>
+    </div>
+  </div>
+  </div>
+</div>
+</main>
+{% endblock %}

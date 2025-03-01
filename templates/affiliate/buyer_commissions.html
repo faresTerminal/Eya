@@ -1,0 +1,198 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+  {% if current_language == 'ar' %}
+    <style>
+      .main {
+        direction: rtl;
+      }
+      tr {
+        text-align: center;
+      }
+      .row {
+        text-align: right;
+      }
+      .table th, .table td {
+        text-align: center;
+      }
+    </style>
+  {% endif %}
+
+  <main class="main">
+   <!-- Include the ads template -->
+            {% include 'partials/ads.html' %}
+
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-4">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">{% trans 'Home' %}</a></li>
+          <li class="breadcrumb-item active" aria-current="page">{% trans 'Affiliate Commissions' %}</li>
+        </ol>
+      </div>
+    </nav>
+
+    <div class="page-content">
+      <div class="dashboard">
+        <div class="container">
+          <div class="row">
+            {% include 'includes/dashboard_sidebar.html' %}
+
+            <div class="col-md-8 col-lg-10">
+              <div class="orders-section">
+                <h6 class="text-center">{% trans 'Affiliate Commissions You Must Pay' %}</h6><br>
+
+                {% if affiliates_commissions %}
+                  <div class="table-responsive">
+                    <table style="text-align: center;" class="table table-bordered table-striped table-hover">
+                      <thead class="thead-dark">
+    <tr>
+        <th>{% trans 'Img' %}</th>
+        <th>{% trans 'Affiliate Email' %}</th>
+        <th>{% trans 'Affiliate User' %}</th>
+        <th>{% trans 'Number Phone' %}</th>
+        <th>{% trans 'Total Commission' %}</th>
+        <th class="text-success">{% trans 'Paid' %}</th>
+        <th class="text-danger">{% trans 'Pending' %}</th>
+        <th>{% trans 'View Orders' %}</th>
+    </tr>
+</thead>
+<tbody>
+    {% for affiliate, details in affiliates_commissions.items %}
+    <tr>
+        <td><img width="50" height="50" class="rounded-circle" src="{{ affiliate.user.userprofile.profile_picture.url }}"></td>
+        <td>
+            <a href="{% url 'affiliate_commission_detail' affiliate.id %}">
+                {{ affiliate.user.email }}
+            </a>
+        </td>
+        <td>{{ affiliate.user.full_name }}</td>
+        <td>{{ affiliate.user.phone_number }}</td>
+        <td class="text-primary fw-bold">{{ details.total_earnings }} DA</td>
+        <td class="text-success fw-bold">{{ details.total_paid }} DA</td>
+        <td class="text-danger fw-bold">
+          <a href="{% url 'payment:pay_all_pending_affiliate_commissions' affiliate_id=affiliate.id %}">
+        {{ details.total_pending }} DA<br> <span style="text-decoration: underline;">Pay now</span></a>
+      </td>
+        <td>
+            <a href="{% url 'affiliate_commission_detail' affiliate.id %}" class="btn btn-info">{% trans 'View Orders' %}</a>
+        </td>
+    </tr>
+    {% endfor %}
+</tbody>
+
+                    </table>
+                  </div>
+
+                  <div class="row mt-4">
+    <div class="col">
+        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded shadow">
+            <h6 class="fw-bold text-primary mb-0">{% trans 'Total Due' %}: {{ total_due }} DA</h6>
+            <h6 class="fw-bold text-success mb-0">{% trans 'Total Paid' %}: {{ total_paid }} DA</h6>
+            <h6 class="fw-bold text-danger mb-0">{% trans 'Total Pending' %}: {{ total_pending }} DA</h6>
+        </div>
+    </div>
+</div>
+
+
+
+                      </div>
+                   <!-- Line Chart for Daily Commissions -->
+<div class="row mt-5">
+    <div class="col">
+        <h4 class="text-center">{% trans 'Daily Commission Trend' %}</h4>
+        <canvas id="dailyCommissionChart" width="400" height="200"></canvas>
+    </div>
+</div>
+
+                  <div class="row mt-5">
+  <div class="col">
+    <h4 class="text-center">{% trans 'Commission Trend' %}</h4>
+    <canvas id="commissionChart" width="400" height="200"></canvas>
+  </div>
+</div> 
+
+
+                {% else %}
+                  <p class="text-center">{% trans 'You do not owe any affiliate commissions.' %}</p>
+                {% endif %}
+
+              </div><!-- End .orders-section -->
+            </div><!-- End .col-lg-10 -->
+          </div><!-- End .row -->
+        </div><!-- End .container -->
+      </div><!-- End .dashboard -->
+    </div><!-- End .page-content -->
+  </main>
+
+  <!-- Include Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+ <script>
+  var ctx = document.getElementById('commissionChart').getContext('2d');
+  var commissionChart = new Chart(ctx, {
+    type: 'bar',  // Change chart type to 'bar'
+    data: {
+      labels: [{% for affiliate, details in affiliates_commissions.items %} '{{ affiliate.user.email }}', {% endfor %}],
+      datasets: [{
+        label: '{% trans "Total Commission (DA)" %}',
+        data: [{% for affiliate, details in affiliates_commissions.items %} {{ details.total_earnings }}, {% endfor %}],
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 2,
+        borderRadius: 10,  // Add rounded corners to the bars
+        hoverBackgroundColor: 'rgba(54, 162, 235, 0.4)',
+        hoverBorderColor: 'rgba(54, 162, 235, 1)',
+        hoverBorderWidth: 3
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      },
+      plugins: {
+        legend: {
+          position: 'top',  // Position legend at the top
+        }
+      }
+    }
+  });
+</script>
+
+
+
+<!-- Chart.js Script for Daily Line Chart -->
+<script>
+    var ctx = document.getElementById('dailyCommissionChart').getContext('2d');
+    var dailyCommissionChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [{% for date, amount in daily_commissions.items %} '{{ date }}', {% endfor %}], // Dates
+            datasets: [{
+                label: '{% trans "Daily Commission (DA)" %}',
+                data: [{% for date, amount in daily_commissions.items %} {{ amount }}, {% endfor %}], // Earnings per day
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 2,
+                pointBackgroundColor: 'rgba(255, 99, 132, 1)',
+                pointRadius: 5,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+
+{% endblock %}

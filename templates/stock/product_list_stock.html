@@ -1,0 +1,188 @@
+
+
+{% extends 'homebase.html' %}
+{% load static %}
+{% load thumbnail%}
+{% load i18n %}
+
+{% block content %}
+{% if current_language == 'ar' %}
+    <style>
+      .main {
+        direction: rtl;
+      }
+      tr{
+        text-align: center;
+      }
+      .row{
+        text-align: right;
+      }
+      .product-media{
+        margin-right: 0.2rem !important;
+        margin-left: 1em !important;
+      }
+    </style>
+   {% endif %}
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+$(document).ready(function () {
+    // Filter products by name
+    $('#filterByName').on('input', function () {
+        var filterValue = $(this).val().toLowerCase();
+
+        // Loop through each row in the table body
+        $('.inventory-container tbody tr').each(function () {
+            var productName = $(this).find('td:nth-child(2)').text().toLowerCase();
+
+            // Show or hide the row based on the filter value
+            if (productName.indexOf(filterValue) > -1) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    });
+});
+</script>
+
+<main class="main">
+    <!-- Include the ads template -->
+                {% include 'partials/ads.html' %}
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">{% trans 'Home' %}</a></li>
+                <li class="breadcrumb-item"><a href="#">{% trans 'Stock Information ' %}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{% trans 'Inventory Overview' %}</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+  
+<div class="container">
+
+  <div class="row">
+{% include 'includes/stock_sidebar.html' %}
+    <div class="col-lg-9">
+      <div class="toolbox">
+               
+
+<div class=>
+     <!-- Add the input for filtering by name -->
+    <div class="toolbox-left">
+        <label for="filterByName">{% trans 'Filter by Name' %}:</label>
+        <input type="text" id="filterByName" class="form-control" placeholder="{% trans 'Enter product name or Variations' %}">
+    </div><!-- End .toolbox-filter -->
+</div><!-- End .toolbox-center -->
+
+
+</div><!-- End .toolbox -->
+
+      
+
+         <div class="inventory-container">
+          <h3>{% trans 'Products List And Stock Details' %}</h3>
+          <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">{% trans 'Product Name' %}</th>
+      <th scope="col">{% trans 'Initial Stock' %}</th>
+      <th scope="col">{% trans 'Sell Stock' %}</th>
+      <th scope="col">{% trans 'Rest Stock' %}</th>
+      <th scope="col">{% trans 'Reorder Point' %}</th>
+      <th scope="col">{% trans 'Update' %}</th>
+
+     
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in variation_list %}
+    <tr class="{% if p.is_low_stock %}low-stock{% endif %}">
+      <td>
+         {% thumbnail p.product.images "70x70" crop="center" as p_pic %}                                                          
+          <img width="{{ p_pic.width }}" height="{{p_pic.height }}" src="{{p_pic.url}}">
+          {% endthumbnail %}
+      </td>
+      <td style="padding-left: 30px;padding-right: 5px;"><b>{{p.product.product_name}}</b><br>{{p.color}}: {{p.size}}</td>
+      
+      <td>{{p.initial_stock_quantity}}</td>
+      <td>{{p.stock_difference}}</td>
+      {% if p.quantity <= 10 %}
+      <td style="color: red;">{{p.quantity}}</td>
+      {% else%}
+      <td>{{p.quantity}}</td>
+      {% endif %}
+      {% if p.is_low_stock %}
+      <td style="color: red;">{% trans 'low-stock' %}</td>
+      {% else%}
+
+      <td>{{p.reorder_point}}</td>
+      {% endif %}
+      
+      <td><a href="{% url 'update_stock' p.id %}">{% trans 'Update Stock' %}</a></td>
+      
+
+     
+    </tr>
+    {% endfor %}
+   
+  </tbody>
+</table>
+<nav aria-label="Page navigation">
+                            {% if variation_list.has_other_pages %}
+                                <ul class="pagination">
+                                    {% if variation_list.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link page-link-prev" href="?page={{variation_list.previous_page_number}}" aria-label="Previous" tabindex="-1" aria-disabled="true">
+                                            <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>{% trans 'Prev' %}
+                                        </a>
+                                    </li>
+                                    {% else %}
+                                    <li class="page-item disabled">
+                                        <a class="page-link page-link-prev" href="#" aria-label="Previous" tabindex="-1" aria-disabled="true">
+                                            <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>{% trans 'Prev' %}
+                                        </a>
+                                    </li>
+                                    {%endif%}
+                                    {% for i in variation_list.paginator.page_range %}
+                                    {% if variation_list.number == i %}
+                                    <li class="page-item active" aria-current="page"><a class="page-link" href="#">{{i}}</a></li>
+                                    {% else %}
+                                    <li class="page-item"><a class="page-link" href="?page={{i}}">2</a></li>
+                                    
+                                    <li class="page-item-total">{% trans 'of All' %}</li>
+                                    {% endif %}
+                                    {% endfor %}
+                                    {% if variation_list.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link page-link-next" href="?page={{variation_list.next_page_number}}" aria-label="Next">
+                                            {% trans 'Next' %} <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
+                                        </a>
+                                    </li>
+                                    {%else%}
+                                    <li class="page-item disabled">
+                                        <a class="page-link page-link-next" href="#" aria-label="Next">
+                                            {% trans 'Next' %} <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
+                                        </a>
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                                {% endif %}
+                            </nav>
+   
+
+   
+         
+   
+
+      
+         </div>
+    
+    </div>
+  
+  </div>
+</div>
+</main>
+{% endblock %}

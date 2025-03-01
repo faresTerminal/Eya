@@ -1,0 +1,118 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load i18n %}
+{% load thumbnail %}
+{% block content %}
+{% if current_language == 'ar' %}
+    <style>
+      .main {
+        direction: rtl;
+      }
+      tr {
+        text-align: center;
+      }
+      .row {
+        text-align: right;
+      }
+      .product-media {
+        margin-right: 0.2rem !important;
+        margin-left: 1em !important;
+      }
+      .list-group-item b {
+        margin-left: 2em;
+      }
+    </style>
+{% endif %}
+
+<main class="main">
+    <!-- Include the ads template -->
+            {% include 'partials/ads.html' %}
+    
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">{% trans 'Home' %}</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">{% trans 'Account' %}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{% trans 'My Conversations' %}</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+
+    <div class="page-content">
+        <div class="dashboard">
+            <div class="container">
+                <div class="row">
+                    {% include 'includes/dashboard_sidebar.html' %}
+
+                    <div class="col-md-8 col-lg-9">
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="tab-dashboard" role="tabpanel" aria-labelledby="tab-dashboard-link">
+                                {% if conversations %}
+                                    <p style="text-align: center;">{% trans 'Last 6 Message Conversations' %}</p><br>
+                                    
+                                    <!-- Conversations Table -->
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"></th>
+                                                <th scope="col"><b>{% trans 'Product Name' %}</b></th>
+                                                <th scope="col"><b>{% trans 'Sender' %}</b></th>
+                                                <th scope="col"><b>{% trans 'Date' %}</b></th>
+                                                <th scope="col"><b>{% trans 'Action' %}</b></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for item in conversations %}
+                                                <tr>
+                                                    <td>
+                                                        {% thumbnail item.conversation.product.images "40x40" crop="center" as img %}
+                                                       <img width="{{ img.width }}" height="{{img.height }}" src="{{img.url}}"style="border-radius:5px;">
+                                                       {% endthumbnail %}
+                                                    </td>
+                                                    <td style="width: 37%;">
+                                                        
+                                                        {{ item.conversation.product.product_name }}
+
+                                                        
+
+                                                    </td>
+                                                    <td>{{ item.conversation.buyer.username }}
+                                                        {% thumbnail item.conversation.buyer.userprofile.profile_picture "40x40" crop="center" as product_pice %}
+                                                       <img width="{{ product_pice.width }}" height="{{product_pice.height }}" src="{{product_pice.url}}"style="border-radius:5px;">
+                                                       {% endthumbnail %}
+                                                       
+                                                   
+                                                    </td>
+                                                    <td>{{ item.conversation.created_at }}</td>
+                                                    <td>
+                                                        <a href="{% url 'view_conversation' conversation_id=item.conversation.id %}">
+                                                            {% trans 'See Messages' %}
+                                                        </a>
+                                                        {% if item.unread_count > 0 %}
+                                                            <span class="badge badge-warning">{{ item.unread_count }} {% trans 'unread' %}</span>
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    <p>{% trans 'No conversations have been started yet.' %}</p>
+                                {% endif %}
+
+                                <a href="{% url 'store' %}" class="btn btn-outline-primary-2">
+                                    <span>{% trans 'More Shopping' %}</span>
+                                    <i class="icon-long-arrow-right"></i>
+                                </a>
+                            </div><!-- End .tab-pane -->
+                        </div><!-- End .tab-content -->
+                    </div><!-- End .col-lg-9 -->
+                </div><!-- End .row -->
+            </div><!-- End .container -->
+        </div><!-- End .dashboard -->
+    </div><!-- End .page-content -->
+</main><!-- End .main -->
+
+{% endblock %}
+
+

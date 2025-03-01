@@ -1,0 +1,224 @@
+
+
+{% extends 'homebase.html' %}
+{% load static %}
+{% load thumbnail %}
+{% load i18n %}
+
+{% block content %}
+{% if current_language == 'ar' %}
+    <style>
+        .main {
+            direction: rtl;
+        }
+        tr {
+            text-align: center;
+        }
+        .row {
+            text-align: right;
+        }
+        .product-media {
+            margin-right: 0.2rem !important;
+            margin-left: 1em !important;
+        }
+    </style>
+{% endif %}
+
+<main class="main">
+    <!-- Include the ads template -->
+                {% include 'partials/ads.html' %}
+
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">{% trans 'Home' %}</a></li>
+                <li class="breadcrumb-item"><a href="#">{% trans 'Stock Information' %}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{% trans 'Inventory Overview' %}</li>
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+
+    <div class="container">
+        <div class="row">
+            {% include 'includes/stock_sidebar.html' %}
+            <div class="col-lg-9">
+                <div class="inventory-container">
+                    <h2 class="section-title">{% trans 'Inventory Overview' %}</h2>
+
+                    <!-- Inventory Summary Section -->
+                    <div class="summary">
+                        <h3 class="section-subtitle">{% trans 'Summary' %}:</h3>
+                        <ul class="summary-list">
+                            <li><strong>{% trans 'Total Number of Products' %}:</strong> {{ total_products }}</li>
+                            <li><strong>{% trans 'Low-Stock Products' %}:</strong>
+                                <ul class="low-stock-list">
+                                    {% for p in low_stock_variations %}
+                                        <li class="low-stock-item">
+                                            <div class="product-info">
+                                                <img src="{{ p.product.images.url }}" alt="{{ p.product.product_name }}" class="product-image">
+                                                <div>
+                                                    <strong>{{ p.product.product_name }}</strong><br>
+                                                    <span>{{ p.color }}: {{ p.size }} - {{ p.stock }} in <b>{{ p.product.category }}</b></span>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <hr>
+
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Detailed Product Information Section -->
+                    <div class="detailed-products">
+                        <h3 class="section-subtitle">{% trans 'Detailed Product Information' %}:</h3>
+                        <div class="row">
+                            {% for p in products %}
+                                <div class="col-lg-4 col-sm-6">
+                                    <div class="product-card">
+                                        <strong>{{ p.product_name }}</strong>
+                                        <ul class="variation-list">
+                                            {% for variation in p.variations.all %}
+                                                <li>
+                                                    <span>Variation: {{ variation.color | capfirst }} - {{ variation.size | capfirst }}</span><br>
+                                                    <span>Stock Quantity: {{ variation.quantity }}</span><hr>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                        <p><strong>{% trans 'Category' %}:</strong> {{ p.category }}</p>
+                                        <div class="product-media">
+                                            {% thumbnail p.images "80x80" crop="center" as p_pic %}
+                                                <img src="{{ p_pic.url }}" width="{{ p_pic.width }}" height="{{ p_pic.height }}" alt="{{ p.product_name }}">
+                                            {% endthumbnail %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <a href="{% url 'product_list_stock' %}" class="see-more-link">{% trans 'See More' %}</a>
+                    </div>
+
+                    <!-- Other Relevant Metrics Section -->
+                    <div class="other-metrics">
+                        <h3 class="section-subtitle">{% trans 'Other Relevant Metrics' %}:</h3>
+                        <ul class="metrics-list">
+                            <li><strong>{% trans 'Average Stock Quantity' %}:</strong> {{ average_stock }}%</li>
+                        </ul>
+                    </div>
+                </div>
+            </div><!-- End .col-lg-9 -->
+        </div><!-- End .row -->
+    </div><!-- End .container -->
+</main>
+<style type="text/css">
+  /* Page Header Styling */
+.page-header {
+    background-size: cover;
+    background-position: center;
+    padding: 50px 0;
+}
+
+.page-title {
+    color: #fff;
+    font-size: 2rem;
+    text-transform: uppercase;
+}
+
+/* Breadcrumb */
+.breadcrumb-nav {
+    margin-bottom: 20px;
+}
+
+.breadcrumb-item a {
+    text-decoration: none;
+    color: #333;
+}
+
+.breadcrumb-item.active {
+    font-weight: bold;
+}
+
+/* Inventory Summary and Detailed Product Styles */
+.summary, .detailed-products, .other-metrics {
+    margin-bottom: 30px;
+}
+
+.section-title {
+    font-size: 2rem;
+    color: #333;
+}
+
+.section-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #fcb941;
+}
+
+.summary-list, .metrics-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.summary-list li, .metrics-list li {
+    margin: 10px 0;
+}
+
+.low-stock-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.product-info {
+    display: flex;
+    align-items: center;
+}
+
+.product-image {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.product-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.product-card strong {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.variation-list {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 10px;
+}
+
+.variation-list li {
+    margin: 5px 0;
+}
+
+.product-media img {
+    border-radius: 4px;
+}
+
+/* See More Link */
+.see-more-link {
+    color: #007bff;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.see-more-link:hover {
+    text-decoration: underline;
+}
+
+</style>
+{% endblock %}

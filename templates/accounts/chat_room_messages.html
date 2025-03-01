@@ -1,0 +1,90 @@
+<!-- In your_app/templates/accounts/message_detail.html -->
+{% extends 'homebase.html' %}
+{% load i18n %}
+
+{% block content %}
+<style>
+    .message-detail {
+        margin-top: 20px;
+    }
+
+    .conversation p {
+        margin: 5px 0;
+    }
+
+    .reply-form {
+        margin-top: 20px;
+        border-top: 1px solid #ddd;
+        padding-top: 20px;
+    }
+
+    .reply-form label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+
+    .reply-form textarea {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+    }
+
+    .reply-form button {
+        background-color: #4caf50;
+        color: #fff;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .reply-form button:hover {
+        background-color: #45a049;
+    }
+</style>
+
+<main class="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="message-detail">
+                            <h2>{% trans 'Message Detail' %}</h2>
+                            <p><strong>{% trans 'Sender' %}:</strong> {{ message.sender }}</p>
+                            <p><strong>{% trans 'Message' %}:</strong> {{ message.message }}</p>
+                        </div>
+
+                        <!-- Conversation Section -->
+                        <div class="conversation">
+                            <h3>{% trans 'Conversation' %}</h3>
+                            {% for convo_message in messages %}
+                                <p>
+                                    {% if convo_message.sender == message.receiver %}
+                                        <strong>{{ convo_message.sender }}:</strong>
+                                    {% else %}
+                                        <strong>{{ convo_message.sender }} (You):</strong>
+                                    {% endif %}
+                                    {{ convo_message.message }}
+                                </p>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Reply Form Section -->
+                        <div class="reply-form">
+                            <form method="post" action="{% url 'send_reply_message' message_id=chat_room.id %}">
+                                {% csrf_token %}
+                                <label for="reply_message">{% trans 'Your Reply:' %}</label>
+                                <textarea name="reply_message" rows="4" cols="50" required></textarea>
+                                <button type="submit">{% trans 'Send Reply' %}</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

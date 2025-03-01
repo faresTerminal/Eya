@@ -1,0 +1,105 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<main class="main">
+    <!-- Include the ads template -->
+            {% include 'partials/ads.html' %}
+
+    <!-- Page Content -->
+    <div class="page-content">
+        <div class="container">
+            <div class="row">
+                <!-- Sidebar Section -->
+                
+                    {% include 'includes/poster_sidebar.html' %}
+                
+
+                <!-- Main Content Section -->
+                <div class="col-md-8 col-lg-8">
+                   {% include 'includes/alerts.html' %}
+                     <!-- Display Seller Reviews -->
+                    <div class="reviews">
+                        <h3>{% trans 'Customer Reviews' %}</h3>
+
+                        {% for review in reviews %}
+                            <div class="review mb-4 p-3 border rounded">
+                                <div class="review-header d-flex justify-content-between align-items-center">
+                                    <h4>{{ review.reviewer.username }} 
+                                        <small class="text-muted">{{ review.created_at|date:"F j, Y" }}</small>
+                                    </h4>
+                                   <div class="rating">
+    <!-- Rating Stars -->
+    {% for i in "12345" %}
+        {% if i <= review.rating %}
+            <i class="icon-star filled-star" style="color: gold;"></i>  <!-- Color for filled stars -->
+        {% else %}
+            <i class="icon-star empty-star" style="color: lightgray;"></i>  <!-- Color for empty stars -->
+        {% endif %}
+    {% endfor %}
+</div>
+
+ <span class="ratings-text">( {{review.rating}} {% trans 'Reviews' %} )</span>
+                                </div><!-- End .review-header -->
+                                <p class="review-comment mt-2">{{ review.comment }}</p>
+                            </div><!-- End .review -->
+                        {% empty %}
+                            <p class="text-muted">{% trans 'No reviews yet. Be the first to leave a review!' %}</p>
+                        {% endfor %}
+                    </div><!-- End .reviews -->
+                    <!-- Review Submission Form -->
+                    {% if user.is_authenticated %}
+                        <div class="mb-5 review-form p-4 border rounded">
+                            <h3>{% trans 'Leave a Review for' %} <span>{{ seller.username }}</span></h3>
+                            <form method="post" class="form">
+                                {% csrf_token %}
+                                
+                                <!-- Rating Stars -->
+                                <div class="rating mb-3">
+                                    <label>{% trans 'Your Rating:' %}</label>
+                                    <div class="rate">
+                                        <input type="radio" name="rating" id="rating10" value="5" required />
+                                        <label for="rating10" title="5"></label>
+                                        <input type="radio" name="rating" id="rating9" value="4.5" required />
+                                        <label for="rating9" title="4.5" class="half"></label>
+                                        <input type="radio" name="rating" id="rating8" value="4" required />
+                                        <label for="rating8" title="4"></label>
+                                        <input type="radio" name="rating" id="rating7" value="3.5" required />
+                                        <label for="rating7" title="3.5" class="half"></label>
+                                        <input type="radio" name="rating" id="rating6" value="3" required />
+                                        <label for="rating6" title="3"></label>
+                                        <input type="radio" name="rating" id="rating5" value="2.5" required />
+                                        <label for="rating5" title="2.5" class="half"></label>
+                                        <input type="radio" name="rating" id="rating4" value="2" required />
+                                        <label for="rating4" title="2"></label>
+                                        <input type="radio" name="rating" id="rating3" value="1.5" required />
+                                        <label for="rating3" title="1.5" class="half"></label>
+                                        <input type="radio" name="rating" id="rating2" value="1" required />
+                                        <label for="rating2" title="1"></label>
+                                        <input type="radio" name="rating" id="rating1" value="0.5" required />
+                                        <label for="rating1" title="0.5" class="half"></label>
+                                    </div>
+                                </div>
+
+                                <!-- Comment Section -->
+                                <div class="form-group">
+                                    <label for="comment">{% trans 'Review:' %}</label>
+                                    <textarea name="comment" id="comment" rows="4" class="form-control" placeholder="{% trans 'Write your review here' %}" required></textarea>
+                                </div>
+
+                                <!-- Submit Button -->
+                                <button type="submit" class="btn btn-primary mt-3">{% trans 'Submit Review' %}</button>
+                            </form>
+                        </div><!-- End .review-form -->
+                    {% else %}
+                        <p>{% trans 'You must be logged in to leave a review.' %} <a href="{% url 'login' %}">{% trans 'Login now' %}</a></p>
+                    {% endif %}
+
+                   
+                </div><!-- End .col-lg-9 -->
+            </div><!-- End .row -->
+        </div><!-- End .container -->
+    </div><!-- End .page-content -->
+</main><!-- End .main -->
+{% endblock %}

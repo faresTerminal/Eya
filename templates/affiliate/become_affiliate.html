@@ -1,0 +1,60 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+  {% if current_language == 'ar' %}
+    <style>
+      .main {
+        direction: rtl;
+      }
+      .row {
+        text-align: right;
+      }
+    </style>
+  {% endif %}
+
+  <main class="main">
+    <!-- Include the ads template -->
+            {% include 'partials/ads.html' %}
+
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-4">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">{% trans 'Home' %}</a></li>
+          <li class="breadcrumb-item active" aria-current="page">{% trans 'Become an Affiliate' %}</li>
+        </ol>
+      </div>
+    </nav>
+
+    <div class="page-content">
+      <div class="dashboard">
+        <div class="container">
+          <div class="row">
+            {% include 'includes/dashboard_sidebar.html' %}
+            
+            <div class="col-md-8 col-lg-10">
+              <div class="card shadow-lg border-0 rounded-lg">
+                <div class="card-header bg-primary text-white">
+                  <h3 class="card-title text-center">{% trans 'Join the Affiliate Program' %}</h3>
+                </div>
+                <div class="card-body">
+                 
+                  <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-group mb-3">
+                      <label for="affiliate_code" class="font-weight-bold">{% trans 'Choose Your Affiliate Code' %}</label>
+                      <input type="text" name="affiliate_code" id="affiliate_code" class="form-control form-control-lg" placeholder="{% trans 'Enter a unique affiliate code' %}" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block mt-4">{% trans 'Join Affiliate Program' %}</button>
+                  </form>
+                </div>
+              </div><!-- End .card -->
+            </div><!-- End .col-lg-10 -->
+          </div><!-- End .row -->
+        </div><!-- End .container -->
+      </div><!-- End .dashboard -->
+    </div><!-- End .page-content -->
+  </main>
+
+{% endblock %}

@@ -1,0 +1,201 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load thumbnail %}
+
+{% block content %}
+<main class="main">
+    <!-- Include the ads template -->
+                {% include 'partials/ads.html' %}
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Edit Product</a></li>
+                
+            </ol>
+        </div><!-- End .container -->
+    </nav><!-- End .breadcrumb-nav -->
+</main>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="containerer">
+                <h2>Edit Product</h2>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select name="category" id="category" class="form-input">
+                            <option value="">Select Category</option>
+                            {% for category in categories %}
+                                <option value="{{ category.id }}">{{ category.category_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="subcategory">Subcategory</label>
+                        <select name="subcategory" id="subcategory" class="form-input">
+                            <option value="">Select Subcategory</option>
+                            {% for category, subcategories in category_dict.items %}
+                                <optgroup label="{{ category.name }}">
+                                    {% for subcategory in subcategories %}
+                                        <option value="{{ subcategory.id }}">{{ subcategory.name }}</option>
+                                    {% endfor %}
+                                </optgroup>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="product_name">Product Name</label>
+                        {{product_form.product_name}}
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                       
+                        {{product_form.description}}
+                    </div>
+                    
+                   <div class="form-group">
+              <label for="variation_category">Select Shipping:</label>
+              <select name="shipping" id="variation_category" class="form-input wide-input">
+                <option value="0">Free Shipping (0 DA)</option>
+                <option value="200">200 DA</option>
+                <option value="300">300 DA</option>
+                <option value="400">400 DA</option>
+                <option value="500">500 DA</option>
+                <option value="600">600 DA</option>
+               
+              </select>
+            </div>
+                    
+                    <div class="form-group">
+                        <label for="images">Images</label>
+                        <img src="{{product_form.images.url}}">
+                        <input type="file" name="images" id="images" class="form-input">
+                    </div>
+                    <button style="background-color: #fcb941;" type="submit" class="btn btn-save">Save Product</button>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="page-content">
+                <h2 class="title text-center mb-3">Publishing Information</h2>
+                <div class="accordion accordion-rounded" id="accordion-1">
+                    <div class="card card-box card-sm bg-light">
+                        <div class="card-header" id="heading-1">
+                            <h2 class="card-title">
+                                <a role="button" data-toggle="collapse" href="#collapse-1" aria-expanded="true" aria-controls="collapse-1">
+                                    How to Chose Category and SubCategory?
+                                </a>
+                            </h2>
+                        </div>
+                        <div id="collapse-1" class="collapse show" aria-labelledby="heading-1" data-parent="#accordion-1">
+                            <div class="card-body">
+                               <p>Choosing the right category after selecting a subcategory is crucial for effective organization and navigation. Follow these simple steps:</p><br>
+                               <p>
+                               	<strong>1 - Understand Your Subcategory:</strong> First, ensure you have a clear understanding of your subcategory. Know what it encompasses.
+                               </p>
+                               <p><strong>2 - Consider Relevance:</strong> Think about the primary purpose of your item or content and how it relates to the subcategory.</p><br>
+                               <p><strong>3 - Explore Options:</strong> Look through available categories to find the one that best matches your item or content.</p><br>
+                                <p><strong>4 - Check for Precision:</strong> Select a category that precisely represents your item or content, avoiding vague or overly broad choices.</p><br>
+                                 <p><strong>5 - Think Like a User:</strong> Imagine how users would search for your item, and choose a category that aligns with their expectations.</p><br>
+                                  <p><strong>6 - Test the Waters:</strong> If uncertain, try posting in one category and see how it performs. Adjust if necessary.</p><br>
+                                   <p><strong>7 - Consult Guidelines:<strong> Refer to any platform-specific guidelines for category selection.</p><br>
+                                   <p><strong>8 - Review and Refine:</strong> Periodically review your choice to ensure it remains the best fit as your content or items evolve.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-box card-sm bg-light">
+                        <div class="card-header" id="heading-2">
+                            <h2 class="card-title">
+                                <a class="collapsed" role,button" data-toggle="collapse" href="#collapse-2" aria-expanded="false" aria-controls="collapse-2">
+                                    how to Chose Product Name and Des and Price?
+                                </a>
+                            </h2>
+                        </div>
+                        <div id="collapse-2" class="collapse" aria-labelledby="heading-2" data-parent="#accordion-1">
+                            <div class="card-body">
+                                <p><strong>1 - Product Name:</strong> Choose a concise and descriptive name that highlights the product's key features and purpose, making it easy for customers to understand.</p>
+                                <p><strong>2 - Description:</strong> Craft a brief yet informative description, highlighting the product's benefits, key specifications, and unique selling points.</p>
+                                <p><strong>3 - Price:</strong> Research the market and competitors to set a competitive and profitable price. Consider factors like production costs, demand, and perceived value.</p>
+                                <p><strong>4 - Test and Adjust:</strong> Continuously monitor performance and customer feedback to refine your product name, description, and price for optimal results.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-box card-sm bg-light">
+                        <div class="card-header" id="heading-3">
+                            <h2 class="card-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-3" aria-expanded="false" aria-controls="collapse-3">
+                                    Select Shipping and Stock?
+                                </a>
+                            </h2>
+                        </div>
+                        <div id="collapse-3" class="collapse" aria-labelledby="heading-3" data-parent="#accordion-1">
+                            <div class="card-body">
+                               <p><strong>1 - Shipping:</strong> Offer diverse shipping options, calculate competitive rates, and communicate tracking.</p>
+                               <p><strong>2 - Stock:</strong> Monitor inventory levels closely, adjust for seasons, and automate reordering for efficient stock management.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-box card-sm bg-light">
+                        <div class="card-header" id="heading-4">
+                            <h2 class="card-title">
+                                <a class="collapsed" role="button" data-toggle="collapse" href="#collapse-4" aria-expanded="false" aria-controls="collapse-4">
+                                    My Image Product
+                                </a>
+                            </h2>
+                        </div>
+                        <div id="collapse-4" class="collapse" aria-labelledby="heading-4" data-parent="#accordion-1">
+                            <div class="card-body">
+                               <p>When selecting a product image, opt for a clear, high-resolution photo that showcases the item from its best angle, emphasizing its key features and qualities.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .page-title {
+        font-size: 24px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    .containerer {
+        background-color: #fff;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .btn-save {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .btn-save:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% load i18n %}
+<aside class="col-md-4 col-lg-3">
+    <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link {% if '/management_center/' in request.path %}active{% endif %}" href="{% url 'Management_Center' %}">{% trans 'Management Center' %}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if '/add-product/' in request.path %}active{% endif %}" href="{% url 'add_product' %}">{% trans 'Add Product' %}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if '/list_clearance_products/' in request.path %}active{% endif %}" href="{% url 'list_clearance_products' %}">{% trans 'Clearance Price' %}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if '/add-coupon/' in request.path %}active{% endif %}" href="{% url 'add_coupon' %}">{% trans 'Add Coupon' %}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if '/create-signboard/' in request.path %}active{% endif %}" href="{% url 'create_signboard' %}">{% trans 'Add Signboards' %}</a>
+        </li>
+         <li class="nav-item">
+            <a class="nav-link {% if '/create-deal-and-outlet/' in request.path %}active{% endif %}" href="{% url 'create_deals_and_outlet' %}">{% trans 'Deals & Outlet' %}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if '/create_article/' in request.path %}active{% endif %}" href="{% url 'create_article' %}">{% trans 'Add Article' %}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if '/manage-pixels/' in request.path %}active{% endif %}" href="{% url 'manage_pixels' %}">{% trans 'Add Facebook Pixel' %}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'dashboard' %}">{% trans 'Dashboard' %}</a>
+        </li>
+    </ul>
+</aside>

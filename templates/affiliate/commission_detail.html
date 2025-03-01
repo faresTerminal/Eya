@@ -1,0 +1,258 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+  {% if current_language == 'ar' %}
+    <style>
+      .main {
+        direction: rtl;
+      }
+      tr {
+        text-align: center;
+      }
+      .row {
+        text-align: right;
+      }
+      .table th, .table td {
+        text-align: center;
+      }
+    </style>
+  {% endif %}
+
+  <main class="main">
+   <!-- Include the ads template -->
+            {% include 'partials/ads.html' %}
+
+    <nav aria-label="breadcrumb" class="breadcrumb-nav mb-4">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">{% trans 'Home' %}</a></li>
+          <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">{% trans 'Account' %}</a></li>
+          <li class="breadcrumb-item active" aria-current="page">{% trans 'Commission Details' %}</li>
+        </ol>
+      </div>
+    </nav>
+
+    <div class="page-content">
+      <div class="dashboard">
+        <div class="container">
+          <div class="row">
+            {% include 'includes/dashboard_sidebar.html' %}
+
+            <div class="col-md-8 col-lg-10">
+              <div class="orders-section">
+                <h6 class="text-center">{% trans 'List of Commission Payments' %}</h6><br>
+
+                {% if commission_payments %}
+                  <div class="table-responsive" style="overflow-y: auto;">
+                    <table class="table table-bordered table-striped table-hover">
+                      <thead class="thead-dark">
+                        <tr>
+                          <th scope="col"><b>{% trans 'Order' %}#</b></th>
+                          <th scope="col"><b>{% trans 'Order Number' %}</b></th>
+                          <th scope="col"><b>{% trans 'Product' %}</b></th>
+                          <th scope="col"><b>{% trans 'Buyer' %}</b></th>
+                          <th scope="col"><b>{% trans 'Phone' %}</b></th>
+                          
+                          
+                          <th scope="col"><b>{% trans 'Shipping Method' %}</b></th>
+                          <th scope="col"><b>{% trans 'Payment Method' %}</b></th>
+                          <th scope="col"><b>{% trans 'Status' %}</b></th>
+                          <th scope="col"><b>{% trans 'State' %}</b></th>
+                          <th scope="col"><b>{% trans 'City' %}</b></th>
+                          
+                          <th scope="col"><b>{% trans 'Order Total' %}</b></th>
+                          <th scope="col"><b>{% trans 'Commission' %}</b></th>
+                          <th scope="col"><b>{% trans 'Date' %}</b></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for commission in commission_payments %}
+                          <tr>
+                            <td>#{{ commission.order.id }}</td>
+                            <td>{{ commission.order.order_number }}</td>
+                            <td>{{ commission.order.product.product_name }}</td>
+                            <td>{{ commission.order.full_name }}</td>
+                            <td>{{ commission.order.phone }}</td>
+                            
+                            <td>{{ commission.order.shipping_method|capfirst }}</td>  <!-- Display shipping method -->
+                            <td>{{ commission.order.payment_method|capfirst }}</td>  <!-- Display payment method -->
+                            <td>{{ commission.order.status }}</td> 
+                            <td>{{ commission.order.state }}</td>  <!-- Display state -->
+                            <td>{{ commission.order.city }}</td>  <!-- Display city -->
+                            <td>{{ commission.order.order_total }} DA</td>
+                            <td class="text-success fw-bold">{{ commission.commission_amount }} DA</td>
+                            <td>{{ commission.created_at|date:"d M Y" }}</td>
+                            {% if commission.is_paid == True %}
+                            <td>
+                              <a href="{% url 'payment:pay_affiliate_commission' commission_id=commission.id %}" class="btn btn-success">{% trans 'Paid' %}</a>
+                            </td>
+                            {% else %}
+                            <td>
+                              <a href="{% url 'payment:pay_affiliate_commission' commission_id=commission.id %}" class="btn btn-info">{% trans 'pending' %}</a>
+                            </td>
+                            {% endif %}
+                          </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+
+                  </div>
+                  <br>
+                   <!-- Paginator -->
+                  <div class="dataTables_paginate paging_simple_numbers">
+                    <ul class="pagination">
+                      {% if commission_payments.has_previous %}
+                        <li class="paginate_button page-item previous">
+                          <a href="?page={{ commission_payments.previous_page_number }}" aria-controls="DataTables_Table_0" class="page-link"><i class="ri-arrow-left-s-line"></i></a>
+                        </li>
+                      {% else %}
+                        <li class="paginate_button page-item previous disabled">
+                          <a class="page-link"><i class="ri-arrow-left-s-line"></i></a>
+                        </li>
+                      {% endif %}
+
+                      {% for num in commission_payments.paginator.page_range %}
+                        {% if commission_payments.number == num %}
+                          <li class="paginate_button page-item active">
+                            <a href="?page={{ num }}" class="page-link">{{ num }}</a>
+                          </li>
+                        {% else %}
+                          <li class="paginate_button page-item">
+                            <a href="?page={{ num }}" class="page-link">{{ num }}</a>
+                          </li>
+                        {% endif %}
+                      {% endfor %}
+
+                      {% if commission_payments.has_next %}
+                        <li class="paginate_button page-item next">
+                          <a href="?page={{ commission_payments.next_page_number }}" aria-controls="DataTables_Table_0" class="page-link"><i class="ri-arrow-right-s-line"></i></a>
+                        </li>
+                      {% else %}
+                        <li class="paginate_button page-item next disabled">
+                          <a class="page-link"><i class="ri-arrow-right-s-line"></i></a>
+                        </li>
+                      {% endif %}
+                    </ul>
+                  </div>
+
+                  <div class="row mt-4">
+    <div class="col">
+        <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded shadow flex-wrap">
+            {% if total_pending_commission > 0 %}
+                <form style="margin-bottom: 1rem;" method="POST" action="{% url 'payment:pay_all_pending_affiliate_commissions' affiliate_id=affiliate.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success">
+                        {% trans 'Pay All Pending Commissions' %}
+                    </button>
+                </form>
+
+            {% endif %}
+
+            <div class="d-flex flex-wrap gap-2">
+                {% if total_pending_commission > 0 %}
+                    <span class="fw-bold px-3 py-2 rounded" style="background-color: #baece7;">
+                        <strong>{% trans 'Pending Commission' %}:</strong> {{ total_pending_commission }} DA
+                    </span> &nbsp;|&nbsp;
+                {% endif %}
+
+                {% if total_paid_commission > 0 %}
+                    <span class="fw-bold px-3 py-2 rounded" style="background-color: #76ee76;">
+                        <strong>{% trans 'Paid Commission' %}:</strong> {{ total_paid_commission }} DA
+                    </span> &nbsp;|&nbsp;
+                {% endif %}
+
+                {% if total_commission %}
+                    <span class="fw-bold px-3 py-2 rounded text-white" style="background-color: #ff5f5f;">
+                        <strong>{% trans 'Total Commission Due' %}:</strong> {{ total_commission }} DA
+                    </span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+                {% else %}
+                  <p class="text-center">{% trans 'No commission records found.' %}</p>
+                {% endif %}
+
+                <div class="mt-4">
+                  <a href="{% url 'buyer_commission_dashboard' %}" class="btn btn-secondary">{% trans 'Back to List' %}</a>
+                </div>
+
+              </div><!-- End .orders-section -->
+            </div><!-- End .col-lg-10 -->
+          </div><!-- End .row -->
+        </div><!-- End .container -->
+      </div><!-- End .dashboard -->
+    </div><!-- End .page-content -->
+  </main>
+
+  <style>
+    .table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .table th, .table td {
+      padding: 12px 15px;
+      text-align: left;
+      border: 1px solid #ddd;
+    }
+
+    .table th {
+      background-color: #f2f2f2;
+      font-weight: bold;
+    }
+
+    .table tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    .page-item {
+      margin: 0;
+    }
+
+    .page-link {
+      background-color: #f1f1f1;
+      border: 1px solid #ddd;
+      padding: 8px 12px;
+      color: #333;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .page-item.active .page-link {
+      background-color: #007bff;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    .page-item.disabled .page-link {
+      color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .page-item:hover .page-link {
+      background-color: #007bff;
+      color: #fff;
+    }
+
+    .page-link i {
+      font-size: 14px;
+    }
+  </style>
+
+{% endblock %}
+

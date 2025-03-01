@@ -1,0 +1,337 @@
+{% extends 'homebase.html' %}
+{% load static %}
+
+{% load thumbnail %} 
+{% load custom_filters1 %}
+{% load i18n %}
+{% block content %}
+{% if current_language == 'ar' %}
+    <style>
+        .main {
+            direction: rtl;
+        }
+        tr{
+            text-align: center;
+        }
+        .entry-body{
+            text-align: center;
+        }
+        .widget{
+            text-align: right;
+        }
+        .reply{
+            text-align: right;
+        }
+        .comments{
+            text-align: right;
+        }
+        .icon-linkedin{
+            margin-right: 2em;
+        }
+        .comment-date{
+            margin-right: 1em;
+        }
+        .title{
+            text-align: right;
+        }
+    </style>
+   {% endif %}
+
+
+{% block og_tags %}
+<!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@YourTwitterHandle">
+    <meta name="twitter:title" content="{{ art.title }}">
+    <meta name="twitter:description" content="{{ art.description }}">
+    <meta name="twitter:image" content="{{ art.image.url }}">
+<!--                       end twitter                             -->
+    <meta property="og:title" content="{{ art.title }}" />
+    <meta property="og:description" content="{{ art.description }}" />
+    <meta property="og:image" content="https://7a0b-105-235-133-246.ngrok-free.app{{ art.image.url }}" />
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+    <meta property="og:type" content="blog" />
+    <meta property="og:site_name" content="Eco-dz Shopping" />
+    <meta property="og:image:alt" content="{{ art.title}} Image" />
+{% endblock %}
+
+{% include 'includes/alerts.html' %}
+ <main class="main">
+        	<!-- Include the ads template -->
+{% include 'partials/ads.html' %}
+
+        	
+            <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">{% trans 'Home' %}</a></li>
+                        <li class="breadcrumb-item"><a href="#">{% trans 'Blog' %}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{art.title}}</li>
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+           
+            <div class="page-content">
+                <div class="container">
+                	<div class="row">
+                		<div class="col-lg-9">
+                            <article class="entry single-entry">
+                                <figure class="entry-media">
+                                    {% thumbnail art.image "870x420" crop="center" as pil %}
+                                    <img width="{{ pil.width }}" height="{{pil.height }}" src="{{pil.url}}">
+                                    {% endthumbnail %}
+                                </figure><!-- End .entry-media -->
+
+                                <div class="entry-body">
+                                    <div class="entry-meta">
+                                        <span class="entry-author">
+                                            {% trans 'by' %} <a href="#">{{user.username}}</a>
+                                        </span>
+                                        <span class="meta-separator">|</span>
+                                        <a href="#">{{art.publish}}</a>
+                                        <span class="meta-separator">|</span>
+                                        
+                                    </div><!-- End .entry-meta -->
+
+                                    <h2 class="entry-title">
+                                        {{art.title}}
+                                    </h2><!-- End .entry-title -->
+
+                                    <div class="entry-cats">
+                                        in <a href="#">Lifestyle</a>,
+                                        <a href="#">Shopping</a>
+                                    </div><!-- End .entry-cats -->
+
+                                    <div class="entry-content editor-content">
+                                        <p>{{ art.body|safe }}</p>
+
+                                        
+
+                                        
+                                    </div><!-- End .entry-content -->
+
+                                    <div class="entry-footer row no-gutters flex-column flex-md-row">
+                                        
+
+                                        <div class="col-md-auto mt-2 mt-md-0">
+                                            <div class="social-icons social-icons-color">
+                                                <span class="social-label">{% trans 'Share this post' %}:</span>
+                                                <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" class="social-icon social-facebook" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
+
+
+                                                 <a href="https://twitter.com/intent/tweet?text={{ art.title|urlencode }}&url={{ request.build_absolute_uri }}&hashtags=fashion,style&via=YourWebsiteName" 
+                                                class="social-icon" 
+                                                title="Share on Twitter" 
+                                                target="_blank">
+                                                <i class="icon-twitter"></i> 
+                                                </a>
+
+
+                                                <a href="#" class="social-icon social-pinterest" title="Pinterest" target="_blank"><i class="icon-pinterest"></i></a>
+                                                <a href="#" class="social-icon social-linkedin" title="Linkedin" target="_blank"><i class="icon-linkedin"></i></a>
+                                            </div><!-- End .soial-icons -->
+                                        </div><!-- End .col-auto -->
+                                    </div><!-- End .entry-footer row no-gutters -->
+                                </div><!-- End .entry-body -->
+
+                                
+                            </article><!-- End .entry -->
+
+                            <nav class="pager-nav" aria-label="Page navigation">
+                            	{% if previous_post %}
+                                <a class="pager-link pager-link-prev" href="{% url 'show_article' previous_post.id previous_post.slug%}" aria-label="Previous" tabindex="-1">
+                                    {% trans 'Previous Post' %}
+                                    <span class="pager-link-title">{{previous_post}}</span>
+                                </a>
+                                {% endif %}
+                                 {% if next_post %}
+                                <a class="pager-link pager-link-next" href="{% url 'show_article' next_post.id next_post.slug%}" aria-label="Next" tabindex="-1">
+                                    {% trans 'Next Post' %}
+                                    <span class="pager-link-title">{{next_post}}</span>
+                                </a>
+                                {% endif %}
+                            </nav><!-- End .pager-nav -->
+
+                            <div class="related-posts">
+                                <h3 class="title">{% trans 'Related Posts' %}</h3><!-- End .title -->
+
+                                <div class="owl-carousel owl-simple" data-toggle="owl" 
+                                    data-owl-options='{
+                                        "nav": false, 
+                                        "dots": true,
+                                        "margin": 20,
+                                        "loop": false,
+                                        "responsive": {
+                                            "0": {
+                                                "items":1
+                                            },
+                                            "480": {
+                                                "items":2
+                                            },
+                                            "768": {
+                                                "items":3
+                                            }
+                                        }
+                                    }'>
+                                    {% for t in three %}
+                                    <article class="entry entry-grid">
+                                        <figure class="entry-media">
+                                            <a href="{% url 'show_article' id=t.id slug=t.slug %}">
+                                                {% thumbnail t.image "277x185" crop="center" as piller %}
+                                                <img width="{{ piller.width }}" height="{{piller.height }}" src="{{piller.url}}">
+                                                {% endthumbnail %}
+                                            </a>
+                                        </figure><!-- End .entry-media -->
+
+                                        <div class="entry-body">
+                                            <div class="entry-meta">
+                                                <a href="#">{{t.publish}}</a>
+                                                <span class="meta-separator">|</span>
+                                                <a href="#">2 {% trans 'Comments' %}</a>
+                                            </div><!-- End .entry-meta -->
+
+                                            <h2 class="entry-title">
+                                                <a href="{% url 'show_article' id=t.id slug=t.slug %}">{{t.title|truncate_title_blog:8}}</a>
+                                            </h2><!-- End .entry-title -->
+
+                                            
+                                        </div><!-- End .entry-body -->
+                                    </article><!-- End .entry -->
+                                    {%endfor %}
+
+                                    
+                                </div><!-- End .owl-carousel -->
+                            </div><!-- End .related-posts -->
+
+                            <div class="comments">
+                                <h3 class="title">{{art.comment_count}} {% trans 'Comments' %}</h3><!-- End .title -->
+
+                                <ul>
+                                	{% for cm in add %}
+                                    <li>
+                                        <div class="comment">
+                                            <figure class="comment-media">
+                                                <a href="#">
+                                                    
+                                                    <img  src="{{ cm.user_comment.userprofile.profile_picture.url }} " alt="User name">
+                                                </a>
+                                            </figure>
+
+                                            <div class="comment-body">
+                                                <!--<a href="#" class="comment-reply">{% trans 'Reply' %}</a>-->
+                                                <div class="comment-user">
+                                                    <h4><a href="#">{{cm.user_comment.username}}</a></h4>
+                                                    <span class="comment-date">{{cm.date}}</span>
+                                                </div><!-- End .comment-user -->
+
+                                                <div class="comment-content">
+                                                    <p>{{cm.comment}} </p>
+                                                </div><!-- End .comment-content -->
+                                            </div><!-- End .comment-body -->
+                                        </div><!-- End .comment -->
+                                       
+                                        
+
+                                    </li>
+
+                                   {% endfor %}
+                                </ul>
+                            </div><!-- End .comments -->
+                            <div class="reply">
+                                <div class="heading">
+                                    <!<h3 class="title">{% trans 'Leave A Reply' %}</h3><!-- End .title -->
+                                    <p class="title-desc">Your email address will not be published. Required fields are marked *</p>
+                                </div><!-- End .heading -->
+
+                                <form action="{% url 'save_comment' id=art.id slug=art.slug %}" method="POST">
+                                	{% csrf_token %}
+                                    <label for="reply-message" class="sr-only">{% trans 'Comment' %}</label>
+                                    <textarea name="comment"  id="reply-message" cols="30" rows="4" class="form-control" required placeholder="Comment *"></textarea>
+
+                                    
+
+                                    <button type="submit" class="btn btn-outline-primary-2">
+                                        <span>{% trans 'POST COMMENT' %}</span>
+                                        <i class="icon-long-arrow-right"></i>
+                                    </button>
+                                </form>
+                            </div><!-- End .reply -->
+                		</div><!-- End .col-lg-9 -->
+
+                		<aside class="col-lg-3">
+                			<div class="sidebar">
+                				<div class="widget widget-search">
+                                    <h3 class="widget-title">{% trans 'Search' %}</h3><!-- End .widget-title -->
+
+                                     <form action="{% url 'Blog_Search' %}" class="search" method='GET'>
+                                        <label for="ws" class="sr-only">{% trans 'Search in blog' %}</label>
+                                        <input type="search" class="form-control" name="keyword" id="ws" placeholder="Search in blog" required>
+                                        <button type="submit" class="btn"><i class="icon-search"></i><span class="sr-only">{% trans 'Search' %}</span></button>
+                                    </form>
+                                </div><!-- End .widget -->
+
+                               
+
+                                <div class="widget">
+                                    <h3 class="widget-title">{% trans 'Popular Posts' %}</h3><!-- End .widget-title -->
+
+                                    <ul class="posts-list">
+                                        {% for posts in popular_posts %}
+                                        <li>
+                                            <figure>
+                                                <a href="{% url 'show_article' id=posts.id slug=posts.slug %}">
+                                                     {% thumbnail posts.image "80x80" crop="center" as pill %}
+                                                    <img width="{{ pill.width }}" height="{{pill.height }}" src="{{pill.url}}">
+                                                    {% endthumbnail %}
+                                                </a>
+                                            </figure>
+
+                                            <div>
+                                                <span>{{posts.posted_on}}</span>
+                                                <h4><a href="{% url 'show_article' id=posts.id slug=posts.slug %}">{{posts.title|truncate_title_blog:10}}.</a></h4>
+                                            </div>
+                                        </li>
+                                        {% endfor %}
+                                        
+                                    </ul><!-- End .posts-list -->
+                                </div><!-- End .widget -->
+
+                                <div class="widget widget-banner-sidebar">
+                                    <div class="banner-sidebar-title">ad box 280 x 280</div><!-- End .ad-title -->
+                                    
+                                    <div class="banner-sidebar">
+                                        <a href="{% url 'Clearance_Products' %}">
+                                            <img src="{% static 'images/blog/sidebar/banner.jpg' %}" alt="banner">
+                                        </a>
+                                    </div><!-- End .banner-ad -->
+                                </div><!-- End .widget -->
+
+                                <div class="widget">
+                                    <h3 class="widget-title">{% trans 'Products Tags' %}</h3><!-- End .widget-title -->
+
+                                       
+                                        
+                                    <div class="tagcloud">
+                                    	{% for category in categories %}
+                                        <a href="{{category.get_url}}">{{category.category_name}}</a>
+                                        {% endfor %}
+                                       
+                                    </div><!-- End .tagcloud -->
+                                </div><!-- End .widget -->
+
+                                <div class="widget widget-text">
+                                    <h3 class="widget-title">{% trans 'About Blog' %}</h3><!-- End .widget-title -->
+
+                                    <div class="widget-text-content">
+                                        <p>{% trans 'Welcome to our store! We offer a wide selection of items for you to explore. From fashion to tech, weve got it all. Start shopping now and find your favorites!' %}</p>
+                                    </div><!-- End .widget-text-content -->
+                                </div><!-- End .widget -->
+                			</div><!-- End .sidebar sidebar-shop -->
+                		</aside><!-- End .col-lg-3 -->
+                	</div><!-- End .row -->
+                </div><!-- End .container -->
+            </div><!-- End .page-content -->
+        </main><!-- End .main -->
+
+
+{% endblock %}

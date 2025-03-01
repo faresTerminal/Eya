@@ -1,0 +1,183 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="confirmation-container">
+    <div class="confirmation-card">
+        <div class="confirmation-card-header">
+            <h2 class="confirmation-title">{% trans "Account Confirmation" %}</h2>
+            <p class="confirmation-subtitle">{% trans "Please enter the confirmation code sent to your email." %}</p>
+        </div>
+        <div class="confirmation-card-body">
+            <form method="POST" class="confirmation-form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="confirmation_code">{% trans "Enter your confirmation code:" %}</label>
+                    <input type="text" name="confirmation_code" id="confirmation_code" class="form-input" required>
+                </div>
+                <div class="form-group text-center">
+                    <button type="submit" class="btn-submit">{% trans "Confirm Account" %}</button>
+                </div>
+            </form>
+            <div id="countdown" class="countdown">
+                <p>{% trans "Time left to enter confirmation code:" %} <span id="timer">01:30</span></p>
+            </div>
+
+            {% if user_id %}
+    <a href="{% url 'resend_confirmation_code' user_id=user_id %}" class="resend-link">
+        {% trans "Get a New Code" %}
+    </a>
+{% else %}
+    <p class="error-text">{% trans "Something went wrong. Please try again later." %}</p>
+{% endif %}
+
+        </div>
+    </div>
+</div>
+
+<script>
+    // Set the expiration time from the backend
+    var expirationTime = {{ remaining_time|default:0 }};
+    
+    // Countdown logic
+    function startCountdown() {
+        var countdownElement = document.getElementById("timer");
+        var timerInterval = setInterval(function() {
+            var minutes = Math.floor(expirationTime / 60);
+            var seconds = Math.floor(expirationTime % 60);
+
+            // Pad single digit seconds/minutes with leading zero
+            if (seconds < 10) seconds = "0" + seconds;
+            if (minutes < 10) minutes = "0" + minutes;
+
+            countdownElement.textContent = minutes + ":" + seconds;
+            
+            // Stop the countdown if time is over
+            if (expirationTime <= 0) {
+                clearInterval(timerInterval);
+                countdownElement.textContent = "{% trans 'Code expired' %}";
+                document.getElementById("confirmation_code").disabled = true;
+                document.querySelector("button[type='submit']").disabled = true; // Disable the submit button
+            }
+            expirationTime--; // Decrease the remaining time
+        }, 1000); // Update every second
+    }
+
+    // Start the countdown when the page loads
+    window.onload = startCountdown;
+</script>
+
+<style>
+    .confirmation-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #f4f7fa;
+    }
+
+    .confirmation-card {
+        background: #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        width: 100%;
+        max-width: 500px;
+        padding: 30px;
+        margin: 20px;
+    }
+
+    .confirmation-card-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .confirmation-title {
+        font-size: 24px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .confirmation-subtitle {
+        font-size: 14px;
+        color: #888;
+    }
+
+    .confirmation-form .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        font-size: 14px;
+        font-weight: 500;
+        color: #555;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    .btn-submit {
+        width: 100%;
+        padding: 12px;
+        background-color: #007bff;
+        color: #fff;
+        font-size: 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .btn-submit:hover {
+        background-color: #0056b3;
+    }
+
+    .countdown {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 16px;
+        color: #ff0000;
+    }
+
+    .resend-link {
+        display: block;
+        text-align: center;
+        margin-top: 20px;
+        font-size: 14px;
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .resend-link:hover {
+        text-decoration: underline;
+    }
+
+    /* Media Queries for Mobile Devices */
+    @media (max-width: 576px) {
+        .confirmation-card {
+            padding: 20px;
+        }
+
+        .confirmation-title {
+            font-size: 20px;
+        }
+
+        .btn-submit {
+            font-size: 14px;
+        }
+
+        .countdown {
+            font-size: 14px;
+        }
+    }
+</style>
+
+{% endblock %}

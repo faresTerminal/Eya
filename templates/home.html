@@ -1,0 +1,1020 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load thumbnail %}
+{% load i18n %}
+{% load custom_filters1 %}
+{% load custom_filters %}
+
+{% load translation_tags %}
+{% block content %}
+
+
+  
+{% include 'includes/alerts.html' %}
+ <main class="main">
+    <div class="intro-section pt-3 pb-3 mb-2">
+    <div class="container">
+        <div class="row">
+
+            <!-- Main Slider Section -->
+            <div class="col-lg-8">
+                <div class="intro-slider-container slider-container-ratio mb-2 mb-lg-0">
+                    <div class="intro-slider owl-carousel owl-simple owl-dark owl-nav-inside" data-toggle="owl" 
+                         data-owl-options='{
+                             "nav": false, 
+                             "dots": true,
+                             "responsive": {
+                                 "768": {
+                                     "nav": true,
+                                     "dots": false
+                                 }
+                             }
+                         }'>
+
+                        {% for products in daily_slide %}
+                        <div class="intro-slide">
+                            <figure class="slide-image">
+                                <picture>
+                                    {% thumbnail products.image_slide "415x345" crop="center" as ki %}
+                                    <source width="{{ ki.width }}" height="{{ ki.height }}" srcset="{{ ki.url }}">
+                                    {% endthumbnail %}
+                                    {% thumbnail products.image_slide "779x399" crop="center" as kil %}
+                                    <img width="{{ kil.width }}" height="{{ kil.height }}" src="{{ kil.url }}" alt="Image Desc">
+                                    {% endthumbnail %}
+                                </picture>
+                            </figure>
+
+                            <div class="intro-content">
+                                <h3 class="intro-subtitle text-primary">{{ products.sub_title }}</h3>
+
+                                <!-- Product Category -->
+                                <h1 class="intro-title">
+                                    {{ products.product.category.category_name }}
+                                </h1>
+
+                                <!-- Product Subcategory -->
+                                <h1 class="intro-title">
+                                    {{ products.product.subcategory.name }}
+                                </h1>
+
+                                <!-- Product Price -->
+                                <div class="intro-price">
+                                    <sup>{% trans 'Today:' %}</sup>
+                                    <span class="text-primary">{{ products.clear_price|floatformat:2 }}</span>
+                                    <span>{% trans 'DA' %}</span>
+                                </div>
+
+                                <!-- Button to Product Page -->
+                                <a href="{{ products.product.get_url }}" class="btn btn-primary btn-round">
+                                    <span>{% trans "Click Here" %}</span>
+                                    <i class="icon-long-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                    </div> <!-- End .intro-slider -->
+                    <span class="slider-loader"></span> <!-- End .slider-loader -->
+                </div> <!-- End .intro-slider-container -->
+            </div> <!-- End .col-lg-8 -->
+
+            <!-- Sidebar Section (Banners) -->
+            <div class="col-lg-4">
+                <div class="intro-banners">
+                    
+                   <!-- Top Products Banner -->
+{% for top in top_products %}
+    <div class="banner mb-lg-1 mb-xl-2">
+        <a href="{{ top.get_url }}">
+            <img src="{% static 'images/demos/demo-3/banners/banner-1.jpg' %}" alt="Banner">
+        </a>
+        <div class="banner-content">
+            <h3 class="banner-title">
+                <a href="{{ top.get_url }}">{{ top.product_name|truncate_words:3 }}
+                    {% if top.averageReview %}
+                        <span>Avg. Rating: {{ top.averageReview|floatformat:1 }} 
+                            ({{ top.countReview }} reviews)
+                        </span>
+                    {% else %}
+                        <span>No Reviews Yet</span>
+                    {% endif %}
+                </a>
+            </h3>
+            <a href="{% url 'Top_Products' %}" class="banner-link">
+                {% trans "Top Product" %}<i class="icon-long-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+{% endfor %}
+
+
+                    <!-- Clearance Products Banner -->
+                    {% for cl in clearance_products %}
+    <div class="banner mb-lg-1 mb-xl-2">
+        <a href="{{ cl.get_url }}">
+            <img src="{% static 'images/demos/demo-3/banners/banner-2.jpg' %}" alt="Banner">
+        </a>
+        <div class="banner-content">
+            <h3 class="banner-title">
+                <a href="{{ cl.get_url }}">{{ cl.product_name|truncate_words:3 }}</a>
+                {% if cl.variants %}
+                
+                    
+                            <span>Save {{ cl.variants.0.discount_price|floatformat:2 }} DA</span>
+                        
+                    
+                {% endif %}
+            </h3>
+            <a href="{% url 'Clearance_Products' %}" class="banner-link">
+                {% trans "Clearance" %}<i class="icon-long-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+{% endfor %}
+
+
+                    <!-- Featured Products Banner -->
+                    {% for f in featured_banner %}
+                    <div class="banner mb-0">
+                        <a href="{% url 'Featured_Products' %}">
+                            <img src="{% static 'images/demos/demo-3/banners/banner-3.jpg' %}" alt="Banner">
+                        </a>
+                        <div class="banner-content">
+                            <h3 class="banner-title">
+                                <a href="{{ f.get_url }}">{{ f.product_name|truncate_words:3 }}<span>{{f.category.category_name}}</span></a>
+
+                            </h3>
+                            <a href="{% url 'Featured_Products' %}" class="banner-link">
+                                {% trans "Featured" %}<i class="icon-long-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div> <!-- End .intro-banners -->
+            </div> <!-- End .col-lg-4 -->
+
+        </div> <!-- End .row -->
+    </div> <!-- End .container -->
+</div> <!-- End .intro-section -->
+
+
+   <div class="container featured">
+    <!-- Nav Pills -->
+    <ul class="nav nav-pills nav-border-anim nav-big justify-content-center mb-3" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="products-featured-link" data-toggle="tab" href="#products-featured-tab" role="tab" aria-controls="products-featured-tab" aria-selected="true">{% trans "Featured" %}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="products-sale-link" data-toggle="tab" href="#products-sale-tab" role="tab" aria-controls="products-sale-tab" aria-selected="false">{% trans "On Sale" %}</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="products-top-link" data-toggle="tab" href="#products-top-tab" role="tab" aria-controls="products-top-tab" aria-selected="false">{% trans "Top Rated" %}</a>
+        </li>
+    </ul>
+
+    <!-- Tab Content -->
+    <div class="tab-content tab-content-carousel">
+        
+        <!-- Featured Products Tab -->
+        <div class="tab-pane p-0 fade show active" id="products-featured-tab" role="tabpanel" aria-labelledby="products-featured-link">
+            <div class="owl-carousel owl-full carousel-equal-height carousel-with-shadow" data-toggle="owl" 
+                data-owl-options='{
+                    "nav": true, 
+                    "dots": true,
+                    "margin": 20,
+                    "loop": false,
+                    "responsive": {
+                        "0": {
+                            "items": 2
+                        },
+                        "600": {
+                            "items": 2
+                        },
+                        "992": {
+                            "items": 3
+                        },
+                        "1200": {
+                            "items": 4
+                        }
+                    }
+                }'>
+                <!-- Start Featured Product -->
+                {% for p in featured_products %}
+                <div class="product product-2">
+                    <figure class="product-media">
+                        {% if p.variants %}
+                            {% if p.variants.0.clearance_price > 0 %}
+                                <span class="product-label label-sale">{% trans "Sale" %}</span>
+                            {% else %}
+                                {% if p.is_new %}
+                                    <span class="product-label label-new">{% trans "New" %}</span>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                        <a href="{{ p.get_url }}">
+                            {% thumbnail p.images "275x275" crop="center" as lj %}
+                            <img width="{{ lj.width }}" height="{{ lj.height }}" src="{{ lj.url }}" class="product-image">
+                            {% endthumbnail %}
+                        </a>
+
+                        <!-- Product Actions -->
+                        <div class="product-action-vertical">
+                            <a href="{% url 'add_to_wishlist' p.id %}" class="btn-product-icon btn-wishlist btn-expandable"><span>{% trans "add to wishlist" %}</span></a>
+                        </div>
+                        <div class="product-action product-action-dark">
+                            <a href="{% url 'add_cart' p.id %}" class="btn-product btn-cart" title="Add to cart"><span>{% trans "add to cart" %}</span></a>
+                        </div>
+                    </figure>
+
+                    <!-- Product Body -->
+                    <div class="product-body">
+                        <div class="product-cat">
+                            <a href="#">{{ p.category }}</a>
+                        </div>
+                        <h3 class="product-title"><a href="{{ p.get_url }}">{{ p.product_name|truncate_title:8 }}</a></h3>
+                        
+                        {% if p.variants %}
+                        <div class="product-price">
+                            {{ p.variants.0.price }} <span>{% trans 'DA' %}</span>
+                            {% if p.variants.0.clearance_price > 0 %}
+                                <span style="margin-left: 5px;" class="old-price text-success">{{ p.variants.0.clearance_price }}</span><span>{% trans 'DA' %}</span>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+
+                        <!-- Product Rating -->
+                        <div class="ratings-container">
+                            <div class="rating-star">
+                                <span>
+                                    <i class="fa fa-star{% if p.averageReview < 0.5 %}-o{% elif p.averageReview >= 0.5 and p.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if p.averageReview < 1.5 %}-o{% elif p.averageReview >= 1.5 and p.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if p.averageReview < 2.5 %}-o{% elif p.averageReview >= 2.5 and p.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if p.averageReview < 3.5 %}-o{% elif p.averageReview >= 3.5 and p.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if p.averageReview < 4.5 %}-o{% elif p.averageReview >= 4.5 and p.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            <span class="ratings-text">( {{ p.countReview }} Reviews )</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                <!-- End Featured Product -->
+            </div>
+        </div>
+
+        <!-- On Sale Products Tab -->
+        <div class="tab-pane p-0 fade" id="products-sale-tab" role="tabpanel" aria-labelledby="products-sale-link">
+            <div class="owl-carousel owl-full carousel-equal-height carousel-with-shadow" data-toggle="owl" 
+                data-owl-options='{
+                    "nav": true, 
+                    "dots": true,
+                    "margin": 20,
+                    "loop": false,
+                    "responsive": {
+                        "0": {
+                            "items": 2
+                        },
+                        "600": {
+                            "items": 2
+                        },
+                        "992": {
+                            "items": 3
+                        },
+                        "1200": {
+                            "items": 4
+                        }
+                    }
+                }'>
+                {% for sale in on_sale %}
+                <div class="product product-2">
+                    <figure class="product-media">
+                        {% if sale.variants %}
+                            {% if sale.variants.0.clearance_price > 0 %}
+                                <span class="product-label label-sale">{% trans "Sale" %}</span>
+                            {% else %}
+                                {% if sale.is_new %}
+                                    <span class="product-label label-new">{% trans "New" %}</span>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                        <a href="{{ sale.get_url }}">
+                            {% thumbnail sale.images "275x275" crop="center" as sales %}
+                            <img width="{{ sales.width }}" height="{{ sales.height }}" src="{{ sales.url }}" class="product-image">
+                            {% endthumbnail %}
+                        </a>
+
+                        <!-- Product Actions -->
+                        <div class="product-action-vertical">
+                            <a href="{% url 'add_to_wishlist' sale.id %}" class="btn-product-icon btn-wishlist btn-expandable"><span>{% trans "add to wishlist" %}</span></a>
+                        </div>
+                        <div class="product-action product-action-dark">
+                            <a href="{% url 'add_cart' sale.id %}" class="btn-product btn-cart" title="Add to cart"><span>{% trans "add to cart" %}</span></a>
+                        </div>
+                    </figure>
+
+                    <!-- Product Body -->
+                    <div class="product-body">
+                        <div class="product-cat">
+                            <a href="#">Digital Cameras</a>
+                        </div>
+                        <h3 class="product-title"><a href="{{ sale.get_url }}">{{ sale.product_name|truncate_title:8 }}</a></h3>
+                        
+                        {% if sale.variants %}
+                        <div class="product-price">
+                            {{ sale.variants.0.price }} <span>{% trans 'DA' %}</span>
+                            {% if sale.variants.0.clearance_price > 0 %}
+                                <span style="margin-left: 5px;" class="old-price text-success">{{ sale.variants.0.clearance_price }}</span>
+                                <span>{% trans 'DA' %}</span>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+
+                        <!-- Product Rating -->
+                        <div class="ratings-container">
+                            <div class="rating-star">
+                                <span>
+                                    <i class="fa fa-star{% if sale.averageReview < 0.5 %}-o{% elif sale.averageReview >= 0.5 and sale.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if sale.averageReview < 1.5 %}-o{% elif sale.averageReview >= 1.5 and sale.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if sale.averageReview < 2.5 %}-o{% elif sale.averageReview >= 2.5 and sale.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if sale.averageReview < 3.5 %}-o{% elif sale.averageReview >= 3.5 and sale.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if sale.averageReview < 4.5 %}-o{% elif sale.averageReview >= 4.5 and sale.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            <span class="ratings-text">( {{ sale.countReview }} Reviews )</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Top Rated Products Tab -->
+        <div class="tab-pane p-0 fade" id="products-top-tab" role="tabpanel" aria-labelledby="products-top-link">
+            <div class="owl-carousel owl-full carousel-equal-height carousel-with-shadow" data-toggle="owl" 
+                data-owl-options='{
+                    "nav": true, 
+                    "dots": true,
+                    "margin": 20,
+                    "loop": false,
+                    "responsive": {
+                        "0": {
+                            "items": 2
+                        },
+                        "600": {
+                            "items": 2
+                        },
+                        "992": {
+                            "items": 3
+                        },
+                        "1200": {
+                            "items": 4
+                        }
+                    }
+                }'>
+                {% for rating in top_rated_products %}
+                <div class="product product-2">
+                    <figure class="product-media">
+                        {% if rating.variants %}
+                            {% if rating.variants.0.clearance_price > 0 %}
+                                <span class="product-label label-sale">{% trans "Sale" %}</span>
+                            {% else %}
+                                {% if rating.is_new %}
+                                    <span class="product-label label-new">{% trans "New" %}</span>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                        <a href="{{ rating.get_url }}">
+                            {% thumbnail rating.images "275x275" crop="center" as rate %}
+                            <img width="{{ rate.width }}" height="{{ rate.height }}" src="{{ rate.url }}" class="product-image">
+                            {% endthumbnail %}
+                        </a>
+
+                        <!-- Product Actions -->
+                        <div class="product-action-vertical">
+                            <a href="{% url 'add_to_wishlist' rating.id %}" class="btn-product-icon btn-wishlist btn-expandable"><span>{% trans "add to wishlist" %}</span></a>
+                        </div>
+                        <div class="product-action product-action-dark">
+                            <a href="{% url 'add_cart' rating.id %}" class="btn-product btn-cart" title="Add to cart"><span>{% trans "add to cart" %}</span></a>
+                        </div>
+                    </figure>
+
+                    <!-- Product Body -->
+                    <div class="product-body">
+                        <div class="product-cat">
+                            <a href="#">{{ rating.category }}</a>
+                        </div>
+                        <h3 class="product-title"><a href="{{ rating.get_url }}">{{ rating.product_name|truncate_title:8 }}</a></h3>
+
+                        {% if rating.variants %}
+                        <div class="product-price">
+                            {{ rating.variants.0.price }} <span>{% trans 'DA' %}</span>
+                            {% if rating.variants.0.clearance_price > 0 %}
+                                <span style="margin-left: 5px;" class="old-price text-success">{{ rating.variants.0.clearance_price }}</span><span>{% trans 'DA' %}</span>
+                            {% endif %}
+                            <span class="out-text">{{ rating.variants.0.quantity }} in Stock</span>
+                        </div>
+                        {% endif %}
+
+                        <!-- Product Rating -->
+                        <div class="ratings-container">
+                            <div class="rating-star">
+                                <span>
+                                    <i class="fa fa-star{% if rating.averageReview < 0.5 %}-o{% elif rating.averageReview >= 0.5 and rating.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if rating.averageReview < 1.5 %}-o{% elif rating.averageReview >= 1.5 and rating.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if rating.averageReview < 2.5 %}-o{% elif rating.averageReview >= 2.5 and rating.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if rating.averageReview < 3.5 %}-o{% elif rating.averageReview >= 3.5 and rating.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if rating.averageReview < 4.5 %}-o{% elif rating.averageReview >= 4.5 and rating.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            <span class="ratings-text">( {{ rating.countReview }} Reviews )</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div><!-- End .tab-content -->
+</div><!-- End .container -->
+
+
+            <div class="mb-7 mb-lg-11"></div><!-- End .mb-7 -->
+            {% for f in signboard %}
+            <div class="container">
+                <div class="cta cta-border cta-border-image mb-5 mb-lg-7" style="background-image: url({{f.image_slide.url}});">
+                    <div class="cta-border-wrapper bg-white">
+                        <div class="row justify-content-center">
+                            <div class="col-md-11 col-xl-11">
+                                <div class="cta-content">
+                                    <div class="cta-heading">
+                                        <h3 class="cta-title text-right"><span class="text-primary">{{f.sub_title}}</span> <br>{{f.big_title}}</h3><!-- End .cta-title -->
+                                    </div><!-- End .cta-heading -->
+                                    
+                                    <div class="cta-text">
+                                        <p>Get <span class="text-dark font-weight-normal">FREE SHIPPING* & {{ f.reward_percentage|floatformat:2 }}% rewards</span> on <br>{{f.product.product_name|truncate_title:8}}</p>
+                                    </div><!-- End .cta-text -->
+                                    <a href="{{f.product.get_url}}" class="btn btn-primary btn-round"><span>Add to Cart with {{f.clear_price}}/DA</span><i class="icon-long-arrow-right"></i></a>
+                                </div><!-- End .cta-content -->
+                            </div><!-- End .col-xl-7 -->
+                        </div><!-- End .row -->
+                    </div><!-- End .bg-white -->
+                </div><!-- End .cta -->
+            </div><!-- End .container -->
+            {% endfor %}
+
+
+            <div class="container">
+                {% for deal in active_promotions%}
+                <div class="cta signboard cta-border cta-border-image mb-5 mb-lg-7" style="background-image: url({{deal.image_background.url}});">
+                    <div class="cta-border-wrapper bg-white">
+                        <div class="row justify-content-center">
+
+                            <div class="col-md-11 col-xl-11">
+                                <div class="cta-content">
+                                    <div class="cta-heading">
+                                        <h3 class="cta-title text-right"><span class="text-primary">{% trans "New Deals" %}</span> <br>{{deal.title}}</h3><!-- End .cta-title -->
+                                    </div><!-- End .cta-heading -->
+                                    
+                                    <div class="cta-text">
+                                        <p>{% trans 'Shop Now with' %} {{deal.discount_percentage}} off<br>
+                                         <strong>{{deal.categories.category_name}}</strong></p>
+                                    </div><!-- End .cta-text -->
+                                    
+                                    <a href="{{deal.product.get_url}}" class="btn btn-primary btn-round"><span>{% trans 'Shop Now with' %} {{deal.discount_percentage}} % off </span><span> </span><i class="icon-long-arrow-right"></i></a>
+                                    
+                                </div><!-- End .cta-content -->
+                            </div><!-- End .col-xl-7 -->
+                        </div><!-- End .row -->
+                    </div><!-- End .bg-white -->
+                </div><!-- End .cta -->
+                {% endfor %}
+            </div><!-- End .container -->
+
+            <div class="bg-light deal-container pt-7 pb-7 mb-5">
+                <div class="container">
+                    <div class="heading text-center mb-4">
+                        <h2 class="title">{% trans "Deals & Outlet" %}</h2><!-- End .title -->
+                        <p class="title-desc">{% trans "Today’s deal and more" %}</p><!-- End .title-desc -->
+                    </div><!-- End .heading -->
+
+                    <div class="row">
+                        {% if deals_outlet %}
+                        {% for deals in deals_outlet %}
+                        <div class="col-lg-6 deal-col">
+                            <div class="deal" style="background-image: url('{{deals.image_slide.url}}');">
+                                <div class="deal-top">
+                                    <h2>{{deals.sub_title}}.</h2>
+                                    <h3>{{deals.product.category.category_name}} </h3>
+                                    <h3>{{deals.product.subcategory.name}} </h3>
+                                </div><!-- End .deal-top -->
+
+                                <div class="deal-content">
+                                    <h3 class="product-title"><a href="product.html">{{deals.product}}</a></h3><!-- End .product-title -->
+                                 
+                                    <div class="product-price">
+                                        <span class="new-price">{{deals.clear_price}}</span><span>{% trans 'DA' %}</span>
+                                        <span class="old-price">Was {{deals.price}}</span><span>{% trans 'DA' %}</span>
+                                    </div><!-- End .product-price -->
+
+                                    <a href="{{deals.product.get_url}}" class="btn btn-link"><span>{% trans "Shop Now" %}</span><i class="icon-long-arrow-right"></i></a>
+                                </div><!-- End .deal-content -->
+                                  <!-- create expiration time ith id -->
+                                  <div  id="countdown-timer">
+    <script>
+    var countDownDate = new Date("{{ deals.expiration_time|date:'Y-m-d H:i:s' }}").getTime();
+
+    var x = setInterval(function() {
+        var now = new Date().getTime();
+        var distance = countDownDate - now;
+
+        if (distance <= 0) {
+            clearInterval(x);
+            document.getElementById("countdown-timer").innerHTML = "Deal Expired";
+        } else {
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            document.getElementById("countdown-timer").innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
+        }
+    }, 1000);
+</script>
+ </div>
+                               
+                            </div><!-- End .deal -->
+                        </div><!-- End .col-lg-6 -->
+                        {% endfor %}
+                        {% else %}
+                         <div class="col-lg-6">
+                            <div class="products">
+                                <div class="row">
+                                    {% for clear in clearance1 %}
+                                    <div class="col-6">
+                                        <div class="product product-2">
+                                            <figure class="product-media">
+                                                
+                                                <span class="product-label label-circle label-sale">{% trans "Sale" %}</span>
+                                                <a href="{{clear.get_url}}">
+                                                    {% thumbnail clear.images "280x280" crop="center" as d %}
+                                                    <img width="{{ d.width }}" height="{{d.height }}" src="{{d.url}}" class="product-image">
+                                                    {% endthumbnail %}
+                                                </a>
+                                                
+
+                                                <div class="product-action-vertical">
+                                                    <a href="{% url 'add_to_wishlist' clear.id %}" class="btn-product-icon btn-wishlist btn-expandable"><span>{% trans "add to wishlist" %}</span></a>
+                                                </div><!-- End .product-action -->
+
+                                                <div class="product-action product-action-dark">
+                                                    <a href="{% url 'add_cart' clear.id %}" class="btn-product btn-cart" title="Add to cart"><span>{% trans "add to cart" %}</span></a>
+                                                    <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
+                                                </div><!-- End .product-action -->
+                                            </figure><!-- End .product-media -->
+
+                                            <div class="product-body">
+                                                <div class="product-cat">
+                                                    <a href="#">{{clear.category}}</a>
+                                                </div><!-- End .product-cat -->
+                                                <h3 class="product-title"><a href="{{clear.get_url}}">{{clear.product_name|truncate_title:8}}</a></h3><!-- End .product-title -->
+                                                {% if clear.variants %}
+                                                <div class="product-price">
+                                                    <span class="new-price">{{clear.variants.0.clearance_price}}</span>
+                                                    <span>{% trans 'DA' %}</span>
+                                                    <span class="old-price"> {{clear.variants.0.price}}</span>
+                                                    <span>{% trans 'DA' %}</span>
+                                                </div><!-- End .product-price -->
+                                                {% endif %}
+                                                <div class="ratings-container">
+                                                    <div class="rating-star">
+                                <span>
+                                    <i class="fa fa-star{% if clear.averageReview < 0.5 %}-o{% elif s.averageReview >= 0.5 and clear.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if clear.averageReview < 1.5 %}-o{% elif s.averageReview >= 1.5 and clear.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if clear.averageReview < 2.5 %}-o{% elif s.averageReview >= 2.5 and clear.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if clear.averageReview < 3.5 %}-o{% elif s.averageReview >= 3.5 and clear.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if clear.averageReview < 4.5 %}-o{% elif s.averageReview >= 4.5 and clear.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+    
+                                    </span>
+                            </div>
+                                            <span class="ratings-text">( {{clear.countReview}} Reviews )</span>
+                                                </div><!-- End .rating-container -->
+                                            </div><!-- End .product-body -->
+                                        </div><!-- End .product -->
+                                    </div><!-- End .col-sm-6 -->
+                                    {% endfor %}
+                                    
+                                    
+                                </div><!-- End .row -->
+                            </div><!-- End .products -->
+                        </div><!-- End .col-lg-6 -->
+                        {% endif %}
+                        <div class="col-lg-6">
+                            <div class="products">
+                                <div class="row">
+                                    {% for clear in clearance2 %}
+                                    <div class="col-6">
+                                        <div class="product product-2">
+                                            <figure class="product-media">
+                                                
+                                                <span class="product-label label-circle label-sale">{% trans "Sale" %}</span>
+                                                <a href="{{clear.get_url}}">
+                                                    {% thumbnail clear.images "280x280" crop="center" as d %}
+                                                    <img width="{{ d.width }}" height="{{d.height }}" src="{{d.url}}" class="product-image">
+                                                    {% endthumbnail %}
+                                                </a>
+                                                
+
+                                                <div class="product-action-vertical">
+                                                    <a href="{% url 'add_to_wishlist' clear.id %}" class="btn-product-icon btn-wishlist btn-expandable"><span>{% trans "add to wishlist" %}</span></a>
+                                                </div><!-- End .product-action -->
+
+                                                <div class="product-action product-action-dark">
+                                                    <a href="{% url 'add_cart' clear.id %}" class="btn-product btn-cart" title="Add to cart"><span>{% trans "add to cart" %}</span></a>
+                                                    <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
+                                                </div><!-- End .product-action -->
+                                            </figure><!-- End .product-media -->
+
+                                            <div class="product-body">
+                                                <div class="product-cat">
+                                                    <a href="#">{{clear.category}}</a>
+                                                </div><!-- End .product-cat -->
+                                                <h3 class="product-title"><a href="{{clear.get_url}}">{{clear.product_name|truncate_title:8}}</a></h3><!-- End .product-title -->
+                                                {% if clear.variants %}
+                                                <div class="product-price">
+                                                    <span class="new-price">{{clear.variants.0.clearance_price}}</span>
+                                                    <span>{% trans 'DA' %}</span>
+                                                    <span class="old-price"> {{clear.variants.0.price}}</span><span>{% trans 'DA' %}</span>
+                                                </div><!-- End .product-price -->
+                                                {% endif %}
+                                                <div class="ratings-container">
+                                                    <div class="rating-star">
+                                <span>
+                                    <i class="fa fa-star{% if clear.averageReview < 0.5 %}-o{% elif s.averageReview >= 0.5 and clear.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if clear.averageReview < 1.5 %}-o{% elif s.averageReview >= 1.5 and clear.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if clear.averageReview < 2.5 %}-o{% elif s.averageReview >= 2.5 and clear.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if clear.averageReview < 3.5 %}-o{% elif s.averageReview >= 3.5 and clear.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if clear.averageReview < 4.5 %}-o{% elif s.averageReview >= 4.5 and clear.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+    
+                                    </span>
+                            </div>
+                                            <span class="ratings-text">( {{clear.countReview}} Reviews )</span>
+                                                </div><!-- End .rating-container -->
+                                            </div><!-- End .product-body -->
+                                        </div><!-- End .product -->
+                                    </div><!-- End .col-sm-6 -->
+                                    {% endfor %}
+                                    
+                                    
+                                </div><!-- End .row -->
+                            </div><!-- End .products -->
+                        </div><!-- End .col-lg-6 -->
+                    </div><!-- End .row -->
+
+                    <div class="more-container text-center mt-3 mb-0">
+                        <a href="{% url 'Clearance_Products' %}" class="btn btn-outline-dark-2 btn-round btn-more"><span>{% trans "Shop more Outlet deals" %}</span><i class="icon-long-arrow-right"></i></a>
+                    </div><!-- End .more-container -->
+                </div><!-- End .container -->
+            </div><!-- End .deal-container -->
+
+            <div class="container">
+                <div class="owl-carousel mt-5 mb-5 owl-simple" data-toggle="owl" 
+                        data-owl-options='{
+                            "nav": false, 
+                            "dots": false,
+                            "margin": 30,
+                            "loop": false,
+                            "responsive": {
+                                "0": {
+                                    "items":2
+                                },
+                                "420": {
+                                    "items":3
+                                },
+                                "600": {
+                                    "items":4
+                                },
+                                "900": {
+                                    "items":5
+                                },
+                                "1024": {
+                                    "items":6
+                                }
+                            }
+                        }'>
+                        <a href="#" class="brand">
+                            <img src="{% static 'images/brands/1.png' %}" alt="Brand Name">
+                        </a>
+
+                        <a href="#" class="brand">
+                            <img src="{% static 'images/brands/2.png' %}" alt="Brand Name">
+                        </a>
+
+                        <a href="#" class="brand">
+                            <img src="{% static 'images/brands/3.png' %}" alt="Brand Name">
+                        </a>
+
+                        <a href="#" class="brand">
+                            <img src="{% static 'images/brands/4.png' %}" alt="Brand Name">
+                        </a>
+
+                        <a href="#" class="brand">
+                            <img src="{% static 'images/brands/5.png' %}" alt="Brand Name">
+                        </a>
+
+                        <a href="#" class="brand">
+                            <img src="{% static 'images/brands/6.png' %}" alt="Brand Name">
+                        </a>
+                    </div><!-- End .owl-carousel -->
+            </div><!-- End .container -->
+
+           <div class="container">
+                <hr class="mt-5 mb-6">
+            </div><!-- End .container -->
+
+          <div class="container top">
+    <div class="heading heading-flex mb-3">
+        <div class="heading-left">
+            <h2 class="title">Top Selling Products</h2><!-- End .title -->
+        </div><!-- End .heading-left -->
+
+        <div class="heading-right">
+            <ul class="nav nav-pills nav-border-anim justify-content-center" role="tablist">
+                {% for category, products in categorys.items %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if forloop.first %}active{% endif %}" 
+                           id="top-{{ category }}-link" data-toggle="tab" 
+                           href="#top-{{ category }}-tab" role="tab" 
+                           aria-controls="top-{{ category }}-tab" 
+                           aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">
+                            {{ category|title }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div><!-- End .heading-right -->
+    </div><!-- End .heading -->
+
+    <div class="tab-content tab-content-carousel just-action-icons-sm">
+        {% for category, products in categorys.items %}
+            <div class="tab-pane p-0 fade {% if forloop.first %}show active{% endif %}" 
+                 id="top-{{ category }}-tab" role="tabpanel" 
+                 aria-labelledby="top-{{ category }}-link">
+                <div class="owl-carousel owl-full carousel-equal-height carousel-with-shadow" data-toggle="owl" 
+                     data-owl-options='{
+                         "nav": true, 
+                         "dots": false,
+                         "margin": 20,
+                         "loop": false,
+                         "responsive": {
+                             "0": {
+                                 "items": 2
+                             },
+                             "480": {
+                                 "items": 2
+                             },
+                             "768": {
+                                 "items": 3
+                             },
+                             "992": {
+                                 "items": 4
+                             },
+                             "1200": {
+                                 "items": 5
+                             }
+                         }
+                     }'>
+                    {% for product in products %}
+                        <div class="product product-2">
+                            <figure class="product-media">
+                                <!--
+                                <span class="product-label label-circle label-top">Top</span> -->
+                                <a href="{{product.get_url}}">
+                                    {% thumbnail product.images "250x250" crop="center" as dhd %}
+                                    <img width="{{ dhd.width }}" height="{{ dhd.height }}" 
+                                         src="{{ dhd.url }}" 
+                                         alt="{{ product.product_name }}" class="product-image">
+                                    {% endthumbnail %}
+                                </a>
+
+                                <div class="product-action-vertical">
+                                    <a href="{% url 'add_to_wishlist' product.id %}" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+                                </div><!-- End .product-action -->
+
+                                <div class="product-action product-action-dark">
+                                    <a href="{% url 'add_cart' product.id %}" class="btn-product btn-cart" title="Add to cart"><span>add to cart</span></a>
+                                    <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
+                                </div><!-- End .product-action -->
+                            </figure><!-- End .product-media -->
+
+                            <div class="product-body">
+                                <div class="product-cat">
+                                    <a href="#">{{ product.subcategory.name }}</a>
+                                </div><!-- End .product-cat -->
+                                <h3 class="product-title"><a href="{{product.get_url}}">{{ product.product_name|truncate_title:8 }}</a></h3><!-- End .product-title -->
+                                <div class="product-price">{{ product.variations.first.price }} DA</div><!-- End .product-price -->
+                                <div class="ratings-container">
+                                    <div class="rating-star">
+                                        <span>
+                                    <i class="fa fa-star{% if product.averageReview < 0.5 %}-o{% elif s.averageReview >= 0.5 and product.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if product.averageReview < 1.5 %}-o{% elif s.averageReview >= 1.5 and product.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if product.averageReview < 2.5 %}-o{% elif s.averageReview >= 2.5 and product.averageReview < 3 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if product.averageReview < 3.5 %}-o{% elif s.averageReview >= 3.5 and product.averageReview < 4 %}-half-o {% endif %}" aria-hidden="true"></i>
+                                    <i class="fa fa-star{% if product.averageReview < 4.5 %}-o{% elif s.averageReview >= 4.5 and product.averageReview < 5 %}-half-o {% endif %}" aria-hidden="true"></i>
+    
+                                    </span>
+                                    </div><!-- End .ratings -->
+                                    <span class="ratings-text">({{product.countReview}} Reviews )</span>
+                                </div><!-- End .rating-container -->
+                            </div><!-- End .product-body -->
+                        </div><!-- End .product -->
+                    {% endfor %}
+                </div><!-- End .owl-carousel -->
+            </div><!-- .End .tab-pane -->
+        {% endfor %}
+    </div><!-- End .tab-content -->
+</div><!-- End .container -->
+
+
+
+
+            
+           <div class="container">
+                <hr class="mt-5 mb-6">
+            </div><!-- End .container -->
+
+            <div class="blog-posts">
+                <div class="container">
+                    <h2 class="title text-center">{% trans "From Our Blog" %}</h2><!-- End .title-lg text-center -->
+
+                    <div class="owl-carousel owl-simple carousel-with-shadow" data-toggle="owl" 
+                        data-owl-options='{
+                            "nav": false, 
+                            "dots": true,
+                            "items": 3,
+                            "margin": 20,
+                            "loop": false,
+                            "responsive": {
+                                "0": {
+                                    "items":1
+                                },
+                                "600": {
+                                    "items":2
+                                },
+                                "992": {
+                                    "items":3
+                                }
+                            }
+                        }'>
+                        {% for ar in on_blog %}
+                        <article class="entry entry-display">
+                            <figure class="entry-media">
+                                <a href="{% url 'show_article' id=ar.id slug=ar.slug %}">
+                                     {% thumbnail ar.image "376x250" crop="center" as bl %}
+                                    <img width="{{ bl.width }}" height="{{bl.height }}" src="{{bl.url}}" alt="Image Desc">
+                                    {% endthumbnail %}
+                                </a>
+                                
+                            </figure><!-- End .entry-media -->
+
+                            <div class="entry-body text-center">
+                                <div class="entry-meta">
+                                    <a href="#">{{ar.posted_on}}</a>, {{ar.comment_count}} Comments
+                                </div><!-- End .entry-meta -->
+
+                                <h3 class="entry-title">
+                                    <a href="{% url 'show_article' id=ar.id slug=ar.slug %}">{{ar.title|truncate_title_blog:10}}.</a>
+                                </h3><!-- End .entry-title -->
+
+                                <div class="entry-content">
+                                    <a href="{% url 'show_article' id=ar.id slug=ar.slug %}" class="read-more">{% trans "Continue Reading" %}</a>
+                                </div><!-- End .entry-content -->
+                            </div><!-- End .entry-body -->
+                        </article><!-- End .entry -->
+                        {% endfor %}
+                    
+                        
+
+                       
+                    </div><!-- End .owl-carousel -->
+
+                    <div class="more-container text-center mt-2">
+                        <a href="{% url 'blog' %}" class="btn btn-outline-darker btn-more"><span>{% trans "View more articles" %}</span><i class="icon-long-arrow-right"></i></a>
+                    </div><!-- End .more-container -->
+                </div><!-- End .container -->
+            </div><!-- End .blog-posts -->
+
+            
+
+            <div class="container">
+                <hr class="mt-5 mb-0">
+            </div><!-- End .container -->
+
+            <div class="icon-boxes-container mt-2 mb-2 bg-transparent">
+                <div class="container">
+                    <div class="row supporter">
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="icon-box icon-box-side">
+                                <span class="icon-box-icon text-dark">
+                                    <i class="icon-rocket"></i>
+                                </span>
+                                <div class="icon-box-content">
+                                    <h3 class="icon-box-title">{% trans "Free Shipping" %}</h3><!-- End .icon-box-title -->
+                                    <p>{% trans "Orders 30000 DA or more" %}</p>
+                                </div><!-- End .icon-box-content -->
+                            </div><!-- End .icon-box -->
+                        </div><!-- End .col-sm-6 col-lg-3 -->
+
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="icon-box icon-box-side">
+                                <span class="icon-box-icon text-dark">
+                                    <i class="icon-rotate-left"></i>
+                                </span>
+
+                                <div class="icon-box-content">
+                                    <h3 class="icon-box-title">{% trans "Free Returns" %}</h3><!-- End .icon-box-title -->
+                                    <p>{% trans "Within 30 days" %}</p>
+                                </div><!-- End .icon-box-content -->
+                            </div><!-- End .icon-box -->
+                        </div><!-- End .col-sm-6 col-lg-3 -->
+
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="icon-box icon-box-side">
+                                <span class="icon-box-icon text-dark">
+                                    <i class="icon-info-circle"></i>
+                                </span>
+
+                                <div class="icon-box-content">
+                                    <h3 class="icon-box-title">{% trans "Get 20% Off 1 Item" %}</h3><!-- End .icon-box-title -->
+                                    <p>{% trans "when you sign up" %}</p>
+                                </div><!-- End .icon-box-content -->
+                            </div><!-- End .icon-box -->
+                        </div><!-- End .col-sm-6 col-lg-3 -->
+
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="icon-box icon-box-side">
+                                <span class="icon-box-icon text-dark">
+                                    <i class="icon-life-ring"></i>
+                                </span>
+
+                                <div class="icon-box-content">
+                                    <h3 class="icon-box-title">{% trans "We Support" %}</h3><!-- End .icon-box-title -->
+                                    <p>{% trans "24/7 amazing services" %}</p>
+                                </div><!-- End .icon-box-content -->
+                            </div><!-- End .icon-box -->
+                        </div><!-- End .col-sm-6 col-lg-3 -->
+                    </div><!-- End .row -->
+                </div><!-- End .container -->
+            </div><!-- End .icon-boxes-container -->
+
+            <div class="container">
+                <div class="cta cta-separator cta-border-image cta-half mb-0" style="background-image: url('{% static 'images/demos/demo-3/bg-2.jpg' %}');">
+                    <div class="cta-border-wrapper bg-white">
+                        <div class="row">
+                            {% for media in shop_social%}
+                            <div class="col-lg-6">
+                                <div class="cta-wrapper cta-text text-center">
+                                    <h3 class="cta-title">{{media.title}}</h3><!-- End .cta-title -->
+                                    <p class="cta-desc">{{media.sub_title}}. </p><!-- End .cta-desc -->
+                            
+                                    <div class="social-icons social-icons-colored justify-content-center">
+                                        <a href="{{media.facebook}}" class="social-icon social-facebook" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
+                                        <a href="{{media.twiter}}" class="social-icon social-twitter" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
+                                        <a href="{{media.instagram}}" class="social-icon social-instagram" title="Instagram" target="_blank"><i class="icon-instagram"></i></a>
+                                        <a href="{{media.youtube}}" class="social-icon social-youtube" title="Youtube" target="_blank"><i class="icon-youtube"></i></a>
+                                        <a href="{{media.pinterest}}" class="social-icon social-pinterest" title="Pinterest" target="_blank"><i class="icon-pinterest"></i></a>
+                                    </div><!-- End .soial-icons -->
+                                </div><!-- End .cta-wrapper -->
+                            </div><!-- End .col-lg-6 -->
+                            {% endfor %}
+
+                            <div class="col-lg-6">
+                                <div class="cta-wrapper text-center">
+                                    <h3 class="cta-title">{% trans "Get the Latest Deals" %}</h3><!-- End .cta-title -->
+                                    <p class="cta-desc">{% trans "and" %} <br>{% trans "receive" %} <span class="text-primary">{% trans "2000 DA coupon" %}</span> {% trans "for first shopping" %}</p><!-- End .cta-desc -->
+                            
+                                    <form  method="post" action="{% url 'newsletter:subscribe' %}">
+                                        {% csrf_token %}
+                                        
+                                        <div class="input-group">
+                                            <input type="email" class="form-control" placeholder="Enter your Email Address" name="email" aria-label="Email Adress"  required>
+                                            <div class="input-group-append">
+                                                <button style="display: block ruby;
+                                                width: auto;" class="btn btn-primary btn-rounded" type="submit"><i class="icon-long-arrow-right"></i>{% trans "Subscrib Now" %}</button>
+                                            </div><!-- .End .input-group-append -->
+                                        </div><!-- .End .input-group -->
+                                    </form>
+                                   
+    
+    
+   
+                                </div><!-- End .cta-wrapper -->
+                            </div><!-- End .col-lg-6 -->
+                        </div><!-- End .row -->
+                    </div><!-- End .bg-white -->
+                </div><!-- End .cta -->
+            </div><!-- End .container -->
+        </main><!-- End .main -->
+
+<!-- for expiratin deals clock -->
+
+ 
+  {% endblock %} 

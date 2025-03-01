@@ -1,0 +1,208 @@
+
+{% extends 'homebase.html' %}
+{% load static %}
+{% load thumbnail %} 
+{% block content %}
+<style>
+  .form-group {
+    display: inline-block;
+    margin-right: 20px; /* Add spacing between fields */
+  }
+
+  /* Rest of your existing styles */
+  .slider {
+    width: 100%;
+    height: 15px;
+    background-color: #ccc;
+    position: relative;
+  }
+
+  .slider-handle {
+   
+    background-color: #007bff;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+  }
+
+  #price-value {
+    display: block;
+    margin-top: 10px;
+  }
+</style>
+
+
+
+  <style>
+    .page-title {
+      font-size: 24px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    .form-container {
+      background-color: #fff;
+      padding: 20px;
+      border: 1px solid #e1e1e1;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .form-checkbox {
+      margin-right: 5px;
+    }
+
+    .form-label {
+      font-weight: normal;
+    }
+
+    .btn-save {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .btn-save:hover {
+      background-color: #0056b3;
+    }
+  </style>
+  <style type="text/css">
+    /* Add this CSS to your stylesheet */
+.variants-table {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-header {
+  display: table-row;
+  background-color: #007bff;
+  color: #fff;
+}
+
+.cell {
+  display: table-cell;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  font-weight: bold;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  display: table-row;
+}
+
+/* Add more CSS for styling as needed */
+
+  </style>
+
+
+<main class="main">
+  <!-- Include the ads template -->
+                {% include 'partials/ads.html' %}
+  <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Add Product</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Edit Variants</li>
+      </ol>
+    </div><!-- End .container -->
+  </nav><!-- End .breadcrumb-nav -->
+</main>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6">
+      <h2 class="page-title">Edit Variants</h2>
+      <div class="row">
+        <div class="col-md-12 form-container">
+          <!-- Display product information -->
+          <div class="product-info">
+            <h3 style="font-size: 24px; margin-bottom: 10px;">{{ product.product_name }}</h3>
+            <p style="font-size: 16px; margin-bottom: 10px;">Description: {{ product.description }}</p>
+            <img src="{{ product.images.url }}" alt="{{ product.product_name }}" style="max-width: 100px; height: auto;">
+            <p style="font-size: 18px; color: #2ecc71; font-weight: bold; margin-bottom: 20px;">Price: {{ product.price }} DA</p>
+          </div>
+          <form method="post" enctype="multipart/form-data" action="{% url 'add_variants' product.id %}">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="variation_category">Variation Category</label>
+              <select name="variation_category" id="variation_category" class="form-input wide-input">
+                <option value="color">Color</option>
+                <option value="size">Size</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="variant_value">Variant Value</label>
+              <input type="text" name="variation_value" id="variant_value" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label  for="is_active">Active</label>
+              <input type="checkbox" name="is_active" id="is_active" class="form-checkbox" checked>
+            </div>
+            <br>
+            <button style="background-color: #fcb941;" type="submit" class="btn btn-save">Save Variant</button>
+          </form>
+          <br>
+          <h5 style="font-size: 16px; margin-bottom: 10px;">Add Gallery Images for your Product <br>{{ product.product_name }}</h5>
+ 
+          <a style="background-color: #fcb941;" class="btn btn-save" href="{% url 'add_gallery_images' product.id %}">Upload Images</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+  <!-- Display saved variants information -->
+  <div class="variants-info">
+    
+    <h2 class="page-title">Saved Variants Information</h2>
+    <div class="variants-table">
+      <div class="table-header">
+        <div style="background-color: #fcb941;" class="cell">Variation Table</div>
+        
+      </div>
+      <ul>
+        <li>
+
+          <div class="cell">{{ product.product_name }}</div>
+          <div class="cell">  {{ product.price }} DA</div>
+          <div class="cell"> <img src="{{ product.images.url }}" alt="{{ product.product_name }}" style="max-width: 100px; height: auto;"></div>
+        </li>
+
+        {% for variant in variants %}
+
+          <li>
+            <div class="cell">{{ variant.variation_category }}</div>
+            <div class="cell">{{ variant.variation_value }}</div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+
+  </div>
+</div>
+
+
+{% endblock %}

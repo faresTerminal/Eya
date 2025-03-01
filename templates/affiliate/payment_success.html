@@ -1,0 +1,130 @@
+{% extends 'homebase.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+<style>
+    /* Main Container */
+    .payment-success {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        min-height: 70vh;
+        background-color: #e9f7e6;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    /* Heading */
+    .payment-success h1 {
+        font-size: 2.8rem;
+        font-weight: bold;
+        color: #2e7d32;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+    }
+
+    /* Main Text */
+    .payment-success p {
+        font-size: 1.2rem;
+        color: #333;
+        margin: 10px 0;
+        line-height: 1.6;
+    }
+
+    .payment-success p strong {
+        color: #2e7d32;
+    }
+
+    /* Button */
+    .payment-success a {
+        display: inline-block;
+        margin-top: 25px;
+        padding: 12px 24px;
+        background-color: #2e7d32;
+        color: white;
+        text-decoration: none;
+        font-size: 1.1rem;
+        border-radius: 6px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        font-weight: bold;
+    }
+
+    .payment-success a:hover {
+        background-color: #388e3c;
+        transform: translateY(-2px);
+    }
+
+    /* Success Icon */
+    .icon-check-circle {
+        font-size: 5rem;
+        color: #2e7d32;
+        margin-bottom: 20px;
+    }
+
+    /* Link Style */
+    .payment-success p a {
+        font-weight: normal;
+        color: #00796b;
+    }
+
+    .payment-success p a:hover {
+        text-decoration: underline;
+    }
+
+    .ri-bank-card-line {
+        font-size: 2.5rem;
+        color: #2e7d32;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .payment-success {
+            padding: 20px;
+        }
+
+        .payment-success h1 {
+            font-size: 2.2rem;
+        }
+
+        .icon-check-circle {
+            font-size: 4rem;
+        }
+    }
+
+</style>
+
+<div class="payment-success">
+    <i class="ri-bank-card-line"></i>
+    <h1>{% trans 'Affiliate Payment Successful' %}</h1>
+    <p>{% trans 'The payment for the affiliate commission has been successfully processed.' %}</p>
+    
+    <h4>{% trans 'Commission Details' %}:</h4>
+    <ul>
+        <li>{% trans 'Affiliate Email' %}: {{ affiliate.user.email }}</li>
+        <li>{% trans 'Commission Amount' %}: {{ commission.commission_amount }} DA</li>
+        <li>{% trans 'Payment Reference' %}: {{ commission.payment_reference }}</li>
+    </ul>
+
+    <h4>{% trans 'Affiliate Details' %}:</h4>
+    <ul>
+        <li>{% trans 'Affiliate Name' %}: {{ affiliate.user.full_name }}</li>
+        <li>{% trans 'Affiliate Total Earnings' %}: {{ affiliate.total_earnings }} DA</li>
+    </ul>
+
+    <p>{% trans 'Thank you for processing the payment.' %}</p>
+    {% if commission.is_paid %}
+        <a href="">
+            {% trans 'View Commission Details' %}
+        </a>
+    {% else %}
+        <p>{% trans 'Payment is pending. Please try again later.' %}</p>
+    {% endif %}
+</div>
+
+{% endblock %}

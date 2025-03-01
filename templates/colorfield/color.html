@@ -1,0 +1,22 @@
+{% load static %}
+
+<div class="form-group">
+    <label for="{{ widget.id_for_label }}">{{ widget.label }}</label>
+    <input type="color"
+           name="{{ widget.name }}"
+           id="{{ widget.id_for_label }}"
+           value="{{ widget.value|stringformat:"s" }}"
+           {% for attr, value in widget.attrs.items %}
+               {{ attr }}="{{ value|stringformat:"s" }}"
+           {% endfor %}>
+    {% if widget.errors %}
+        <div class="text-danger">
+            {% for error in widget.errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+
+
+
