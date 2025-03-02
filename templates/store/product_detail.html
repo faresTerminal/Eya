@@ -276,6 +276,40 @@
                                    {% endif %}
                                    </div>
                                 </div>
+                                <div class="product-details-footer">
+                                        <div class="product-cat">
+                                            <span>{% trans 'Category:' %}</span>
+                                            <a href="#">{{single_product.category}}</a>,
+                                            <a href="#">{{single_product.subcategory}}</a>,
+                                            
+                                        </div><!-- End .product-cat -->
+
+
+                                        <div class="social-icons social-icons-sm">
+                                            <span class="social-label">{% trans 'Share:' %}</span>
+                                            <a  class="social-icon"  title="Share on Facebook" href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" ><i class="icon-facebook-f"></i>
+                                            </a>
+
+
+                                            <a href="https://twitter.com/intent/tweet?text={{ single_product.product_name|urlencode }}&url={{ request.build_absolute_uri }}&hashtags=fashion,style&via=YourWebsiteName" 
+                                            class="social-icon" 
+                                            title="Share on Twitter" 
+                                            target="_blank">
+                                            <i class="icon-twitter"></i> 
+                                            </a>
+
+                                            <a href="#" class="social-icon" title="Instagram" target="_blank"><i class="icon-instagram"></i>
+                                            </a>
+
+                                            <a href="https://www.pinterest.com/pin/create/button/?url={{ request.build_absolute_uri }}&media={{ single_product.images.url }}&description={{ single_product.product_name|urlencode }}" 
+                                            class="social-icon" 
+                                            title="Pinterest" 
+                                            target="_blank">
+                                            <i class="icon-pinterest"></i>
+                                            </a>
+
+                                        </div>
+                                    </div><!-- End .product-details-footer -->
                             </form>
                         </div>
                     </div>
@@ -398,7 +432,7 @@
                 </div>
 
                  <!-- Include the ads template -->
-             {% include 'partials/ads.html' %}
+                {% include 'partials/ads.html' %}
 
                 <!-- Related Products Section -->
                 <h2 class="title text-center mb-4">{% trans 'You May Also Like' %}</h2>

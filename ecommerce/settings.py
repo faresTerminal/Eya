@@ -27,10 +27,12 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = True
 
 # List of allowed hosts (update with your domain in production)
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '7fe0-105-235-132-103.ngrok-free.app']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'e183-105-235-133-231.ngrok-free.app']
 
 USE_I18N = True
 
+RECAPTCHA_PUBLIC_KEY = '6Lf2yuYqAAAAABV8rnoclnyhYeGrLXmKu04jeG9p'
+RECAPTCHA_PRIVATE_KEY = '6Lf2yuYqAAAAAM_FnhQagvEi4umIaAVR7CZB5R3T'
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # This should be the default
 SESSION_COOKIE_NAME = 'sessionid'
@@ -283,7 +285,8 @@ CHARGILY_URL = "https://pay.chargily.net/test/api/v2"
 
 
 # settings.py
-SITE_URL = "https://7fe0-105-235-132-103.ngrok-free.app"  # Replace with your actual site URL
+SITE_URL = "https://e183-105-235-133-231.ngrok-free.app"  # Replace with your actual site URL
+
 
 
 

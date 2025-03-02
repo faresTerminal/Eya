@@ -21,6 +21,7 @@
     </style>
 {% endif %}
 {% include 'includes/alerts.html' %}
+
 <main class="main">
     <!-- Include the ads template -->
                 {% include 'partials/ads.html' %}
@@ -109,6 +110,8 @@
                                         <input id="phone" name="phone" type="tel" class="form-control" value="{{ order.phone }}" required>
                                     </div>
                                 </div>
+
+                               
                                 
                                 <!-- Order Notes -->
                                 <label>{% trans 'Order Notes (Optional)' %}</label>
