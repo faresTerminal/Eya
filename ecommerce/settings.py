@@ -27,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = True
 
 # List of allowed hosts (update with your domain in production)
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'e183-105-235-133-231.ngrok-free.app']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.vercel.app', '.now.sh']
 
 USE_I18N = True
 
