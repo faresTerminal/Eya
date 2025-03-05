@@ -1,3 +1,6 @@
+pip>=21.0
+setuptools>=49.0.0
+
 Adyen==4.0.0
 aiohappyeyeballs==2.4.6
 aiohttp==3.11.13
