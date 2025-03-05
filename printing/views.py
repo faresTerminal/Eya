@@ -84,8 +84,11 @@ def order_detail(request, order_id):
 
 
 
-# Define pdfkit_config with the path to wkhtmltopdf
-WKHTMLTOPDF_CMD = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'
+# Check if running on Heroku
+if 'DYNO' in os.environ:
+    WKHTMLTOPDF_CMD = '/app/bin/wkhtmltopdf'
+else:
+    WKHTMLTOPDF_CMD = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'  # Local path
 
 pdfkit_config = pdfkit.configuration(wkhtmltopdf=WKHTMLTOPDF_CMD)
 

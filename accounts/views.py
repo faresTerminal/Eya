@@ -799,3 +799,27 @@ def check_expired_accounts():
 
 
 
+from twilio.rest import Client
+from django.conf import settings
+import random
+
+def send_sms(phone_number):
+    # Generate a verification code
+    verification_code = ''.join(random.choices('0123456789', k=6))
+
+    # Store this verification code in the user's model (in a new field) for later validation
+
+    try:
+        client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
+
+        # Send the SMS
+        message = client.messages.create(
+            body=f"Your verification code is {verification_code}",
+            from_=settings.TWILIO_PHONE_NUMBER,  # Twilio phone number
+            to=phone_number
+        )
+        return verification_code  # You can save this code in the user model for later validation
+
+    except Exception as e:
+        print(f"Error sending SMS: {e}")
+        return None

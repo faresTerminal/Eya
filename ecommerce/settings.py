@@ -27,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = True
 
 # List of allowed hosts (update with your domain in production)
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.vercel.app', '.now.sh']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'souqify-cb4979b2c021.herokuapp.com']
 
 USE_I18N = True
 
@@ -191,10 +191,16 @@ LANGUAGES = [
 ]
 LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]  # Path for translation files
 
-# Static and media files settings
+# Static files settings
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
+
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'assets')]
+
+# Add this line:
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Directory to collect static files
+
+# Media files settings
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Message tags customization
@@ -274,7 +280,8 @@ env = environ.Env()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Read the .env file (should be in the root of the project)
-environ.Env.read_env(BASE_DIR / ".env")
+environ.Env.read_env(str(BASE_DIR / ".env"))
+
 
 # Now you can access your environment variables
 CHARGILY_KEY = env("CHARGILY_KEY")

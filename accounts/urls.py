@@ -11,7 +11,7 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('confirmation/<int:user_id>/', views.verify_confirmation, name='verify_confirmation'),  # URL for the account verification page
     path('error/<int:user_id>/', views.expired_code_page, name='error_page'),
-
+    
     path('resend_confirmation_code/<int:user_id>/', views.resend_confirmation_code, name='resend_confirmation_code'),
     path('register_confirme_link/', views.register_confirme_link, name='register_confirme_link'),
     path('logout/', views.logout, name='logout'),

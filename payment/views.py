@@ -206,8 +206,11 @@ from django.http import FileResponse, HttpResponseForbidden
 from .models import Invoice
 from django.contrib.auth.decorators import login_required
 
-# Define pdfkit configuration for wkhtmltopdf
-WKHTMLTOPDF_CMD = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'  # Update with your wkhtmltopdf path
+# Check if running on Heroku
+if 'DYNO' in os.environ:
+    WKHTMLTOPDF_CMD = '/app/bin/wkhtmltopdf'
+else:
+    WKHTMLTOPDF_CMD = r'C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe'  # Local path
 pdfkit_config = pdfkit.configuration(wkhtmltopdf=WKHTMLTOPDF_CMD)
 
 @login_required

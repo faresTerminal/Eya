@@ -73,7 +73,7 @@ class Account(AbstractBaseUser):
     confirmation_code_sent_at = models.DateTimeField(null=True, blank=True)
     confirmation_code = models.CharField(max_length=6, blank=True, null=True)  # Adjust length as needed
     is_confirmed = models.BooleanField(default=False)  # To track whether the account is confirmed
-
+   
     # Other methods...
     
     def generate_confirmation_code(self):
