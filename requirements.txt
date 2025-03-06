@@ -71,7 +71,7 @@ graphene==2.1.9
 graphene-django==2.16.0
 graphql-core==2.3.2
 graphql-relay==2.0.1
-gunicorn==20.0.4
+gunicorn
 h11==0.14.0
 hyperlink==21.0.0
 idna==3.10
@@ -118,7 +118,6 @@ python-decouple==3.4
 python-dotenv==1.0.1
 python-gettext==5.0
 python-http-client==3.3.7
-python-magic-bin
 python-slugify==8.0.4
 python-social-auth==0.3.6
 python-utils==3.9.1
