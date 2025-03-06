@@ -63,10 +63,10 @@ psycopg2
 gunicorn
 python-utils==2.0.0
 pytz==2023.3
+python-decouple
 django-phone-field==1.8.1
 psycopg2-binary
 pwntools
-python-decouple==3.1
 python-gettext
 python-http-client
 PyJWT
