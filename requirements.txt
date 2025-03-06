@@ -1,5 +1,5 @@
 setuptools>=57.0.0
-
+twilio
 pip>=21.0
 Django==3.0.7
 django-allauth
@@ -66,7 +66,7 @@ pytz==2023.3
 django-phone-field==1.8.1
 psycopg2-binary
 pwntools
-python-decouple
+python-decouple==3.1
 python-gettext
 python-http-client
 PyJWT
