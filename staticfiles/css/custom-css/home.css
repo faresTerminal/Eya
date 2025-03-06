@@ -1,0 +1,22 @@
+
+        /* Add your RTL CSS styles here */
+body {
+       font-family: 'Cairo', sans-serif !important;
+     }
+
+    
+
+#countdown-timer {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #666; /* Choose your desired text color */
+        /* Choose your desired background color */
+       
+        border-radius: 5px;
+        padding: 10px;
+        display: inline-block;
+
+        }
+        .banner {
+          position: relative;
+}
